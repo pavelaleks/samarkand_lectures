@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages редирект для SPA
+      var path = window.location.pathname;
+      var basePath = '/samarkand_lectures';
+      
+      // Если путь начинается с basePath, убираем его
+      if (path.startsWith(basePath + '/')) {
+        path = path.substring(basePath.length);
+      } else if (path.startsWith(basePath)) {
+        path = path.substring(basePath.length);
+      }
+      
+      // Редиректим на index.html для обработки React Router
+      window.location.replace(basePath + '/index.html' + path + window.location.search + window.location.hash);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
+

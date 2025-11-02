@@ -24,9 +24,9 @@ function copyDir(src, dest) {
 export default defineConfig({
   plugins: [
     react(),
-    // Плагин для копирования PDF файлов при сборке
+    // Плагин для копирования статических файлов при сборке
     {
-      name: 'copy-pdf-files',
+      name: 'copy-static-files',
       closeBundle() {
         const dataDir = resolve(__dirname, 'src', 'data')
         const distDataDir = resolve(__dirname, 'dist', 'src', 'data')
@@ -34,6 +34,14 @@ export default defineConfig({
         if (fs.existsSync(dataDir)) {
           copyDir(dataDir, distDataDir)
           console.log('✅ Скопированы файлы из src/data в dist/src/data')
+        }
+        
+        // Копируем 404.html для GitHub Pages SPA routing
+        const public404 = resolve(__dirname, 'public', '404.html')
+        const dist404 = resolve(__dirname, 'dist', '404.html')
+        if (fs.existsSync(public404)) {
+          copyFileSync(public404, dist404)
+          console.log('✅ Скопирован 404.html')
         }
       }
     },
