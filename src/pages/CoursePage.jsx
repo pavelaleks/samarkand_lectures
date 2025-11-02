@@ -49,9 +49,9 @@ export default function CoursePage() {
       >
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-6 transition-colors text-sm sm:text-base"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg mb-6 transition-all duration-200 font-medium text-base sm:text-lg group"
         >
-          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           <span>Назад к курсам</span>
@@ -71,7 +71,7 @@ export default function CoursePage() {
 
       <div className="space-y-4 sm:space-y-6">
         <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900 dark:text-white">
-          Лекции {lectures.length > 0 && `(${lectures.length})`}
+          Краткое содержание {lectures.length > 0 && `(${lectures.length})`}
         </h2>
         
         {lectures.length > 0 ? (

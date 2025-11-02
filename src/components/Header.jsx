@@ -10,7 +10,7 @@ export default function Header() {
             <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               Курсы профессора Павла Алексеева
             </h1>
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 font-medium">
               Самаркандский государственный университет им. Шарофа Шафирова
             </p>
           </Link>

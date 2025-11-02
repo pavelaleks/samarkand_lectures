@@ -20,17 +20,6 @@ export default function Home() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      {/* Hero Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12 sm:mb-16"
-      >
-        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 mb-6">
-          Три курса, три исследовательские траектории
-        </p>
-      </motion.div>
-
       {/* About Instructor Section */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -72,6 +61,18 @@ export default function Home() {
             </a>
           </div>
         </div>
+      </motion.div>
+
+      {/* Hero Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="text-center mb-12 sm:mb-16"
+      >
+        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
+          Три курса, три исследовательские траектории
+        </p>
       </motion.div>
 
       {/* Courses Grid */}
