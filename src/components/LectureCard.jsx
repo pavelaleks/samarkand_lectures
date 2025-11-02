@@ -84,54 +84,18 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                     href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 group cursor-pointer"
-                    style={{ height: '180px' }}
+                    className="flex items-center gap-3 p-4 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/30 dark:to-orange-800/30 rounded-xl hover:shadow-lg transition-all duration-200 group"
+                    style={{ minHeight: '64px' }}
                   >
-                    <div className="h-full w-full flex flex-col items-center justify-center relative p-6">
-                      {/* Фон с градиентом */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 dark:from-red-900/20 dark:via-orange-900/20 dark:to-yellow-900/20 opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                      
-                      {/* Содержимое */}
-                      <div className="relative z-10 text-center">
-                        {/* Иконка PDF */}
-                        <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                          <svg 
-                            className="w-16 h-16 mx-auto text-red-600 dark:text-red-400" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path 
-                              strokeLinecap="round" 
-                              strokeLinejoin="round" 
-                              strokeWidth={1.5} 
-                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" 
-                            />
-                          </svg>
-                        </div>
-                        
-                        {/* Текст */}
-                        <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
-                          Презентация PDF
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                          Нажмите для просмотра
-                        </p>
-                        
-                        {/* Кнопка */}
-                        <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 dark:from-red-500 dark:to-orange-500 dark:hover:from-red-600 dark:hover:to-orange-600 text-white rounded-lg font-semibold shadow-md group-hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
-                          <span className="text-sm">Открыть презентацию</span>
-                          <svg 
-                            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
+                    <svg className="w-8 h-8 text-red-600 dark:text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="flex-1 text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+                      Открыть презентацию PDF
+                    </span>
+                    <svg className="w-5 h-5 text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
                   </a>
                 </div>
               )}
