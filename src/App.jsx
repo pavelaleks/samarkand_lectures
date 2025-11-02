@@ -11,6 +11,19 @@ function App() {
     // В dev режиме BASE_URL может быть '/', в production '/samarkand_lectures/'
     const baseUrl = import.meta.env.BASE_URL === '/' ? '/samarkand_lectures/' : (import.meta.env.BASE_URL || '/samarkand_lectures/')
     
+    // Восстанавливаем путь из sessionStorage (если были редирект через 404.html)
+    useEffect(() => {
+      const savedPath = sessionStorage.getItem('redirectPath')
+      if (savedPath) {
+        sessionStorage.removeItem('redirectPath')
+        const fullPath = baseUrl.slice(0, -1) + savedPath
+        if (window.location.pathname !== fullPath) {
+          window.history.replaceState(null, '', fullPath)
+          window.location.reload()
+        }
+      }
+    }, [baseUrl])
+    
     return (
       <ThemeProvider>
         <BrowserRouter basename={baseUrl}>

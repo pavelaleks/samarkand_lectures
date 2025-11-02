@@ -27,11 +27,13 @@
         return;
       }
       
-      // Редиректим на index.html, сохраняя путь
-      // React Router обработает путь через basename
-      var redirectUrl = basePath + '/index.html';
+      // Сохраняем оригинальный путь в sessionStorage
+      if (path && path !== '/' && path !== '/index.html') {
+        sessionStorage.setItem('redirectPath', path);
+      }
       
-      // Просто загружаем index.html - React Router сам разберется с путем через basename
+      // Редиректим на index.html
+      var redirectUrl = basePath + '/index.html';
       window.location.replace(redirectUrl);
     </script>
   </head>
