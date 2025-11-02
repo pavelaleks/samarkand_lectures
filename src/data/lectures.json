@@ -7,8 +7,44 @@
       "gammaUrl": "https://gamma.app/embed/iti4sjrsnaqw48i",
       "id": "alternative-1",
       "htmlFile": "src/data/alternative/лекции/1.html",
-      "presentationPdf": null,
-      "materials": []
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/1.pdf",
+      "materials": [
+        {
+          "fileName": "10_moore-punkauthenticity.pdf",
+          "displayName": "moore-punkauthenticity",
+          "path": "src/data/alternative/материалы/10_moore-punkauthenticity.pdf"
+        },
+        {
+          "fileName": "10_muzykalnye-fenziny-i-pank-grafika.pdf",
+          "displayName": "muzykalnye-fenziny-i-pank-grafika",
+          "path": "src/data/alternative/материалы/10_muzykalnye-fenziny-i-pank-grafika.pdf"
+        },
+        {
+          "fileName": "10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
+          "displayName": "Real_Punks_and_PretendersThe_Social_Orga",
+          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
+        },
+        {
+          "fileName": "1_Fowler_Genre and the Literary Canon_1979.pdf",
+          "displayName": "Fowler_Genre and the Literary Canon_1979",
+          "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf"
+        },
+        {
+          "fileName": "1_Zhang Longxi_Canon_and_World_Literature.pdf",
+          "displayName": "Zhang Longxi_Canon_and_World_Literature",
+          "path": "src/data/alternative/материалы/1_Zhang Longxi_Canon_and_World_Literature.pdf"
+        },
+        {
+          "fileName": "1_Иванов_Канон vs андеграунд.pdf",
+          "displayName": "Иванов_Канон vs андеграунд",
+          "path": "src/data/alternative/материалы/1_Иванов_Канон vs андеграунд.pdf"
+        },
+        {
+          "fileName": "1_Энгстрем_Ресайклинг подзнесоветской контркультуры.pdf",
+          "displayName": "Энгстрем_Ресайклинг подзнесоветской контркультуры",
+          "path": "src/data/alternative/материалы/1_Энгстрем_Ресайклинг подзнесоветской контркультуры.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -17,7 +53,23 @@
       "id": "alternative-10",
       "htmlFile": "src/data/alternative/лекции/10.html",
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/10.pdf",
-      "materials": []
+      "materials": [
+        {
+          "fileName": "10_moore-punkauthenticity.pdf",
+          "displayName": "moore-punkauthenticity",
+          "path": "src/data/alternative/материалы/10_moore-punkauthenticity.pdf"
+        },
+        {
+          "fileName": "10_muzykalnye-fenziny-i-pank-grafika.pdf",
+          "displayName": "muzykalnye-fenziny-i-pank-grafika",
+          "path": "src/data/alternative/материалы/10_muzykalnye-fenziny-i-pank-grafika.pdf"
+        },
+        {
+          "fileName": "10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
+          "displayName": "Real_Punks_and_PretendersThe_Social_Orga",
+          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -88,8 +140,24 @@
       "title": "Канон и контрканон: механизмы исключения и включения.",
       "id": "alternative-2",
       "htmlFile": "src/data/alternative/лекции/2.html",
-      "presentationPdf": null,
-      "materials": []
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/2.pdf",
+      "materials": [
+        {
+          "fileName": "2_Canon Anti-Canon and Judicial Dissent.pdf",
+          "displayName": "Canon Anti-Canon and Judicial Dissent",
+          "path": "src/data/alternative/материалы/2_Canon Anti-Canon and Judicial Dissent.pdf"
+        },
+        {
+          "fileName": "2_Canon_Formation_Revisited_Canon_and_Cult.pdf",
+          "displayName": "Canon_Formation_Revisited_Canon_and_Cult",
+          "path": "src/data/alternative/материалы/2_Canon_Formation_Revisited_Canon_and_Cult.pdf"
+        },
+        {
+          "fileName": "2_Романенко_Трансформация канона.pdf",
+          "displayName": "Романенко_Трансформация канона",
+          "path": "src/data/alternative/материалы/2_Романенко_Трансформация канона.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -97,8 +165,29 @@
       "title": "Авангард и модернизм как прецеденты альтернативных литератур.",
       "id": "alternative-3",
       "htmlFile": "src/data/alternative/лекции/3.html",
-      "presentationPdf": null,
-      "materials": []
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/3.pdf",
+      "materials": [
+        {
+          "fileName": "3_Авангард в контексте революции.pdf",
+          "displayName": "Авангард в контексте революции",
+          "path": "src/data/alternative/материалы/3_Авангард в контексте революции.pdf"
+        },
+        {
+          "fileName": "3_Авангард в художественной картине мира.pdf",
+          "displayName": "Авангард в художественной картине мира",
+          "path": "src/data/alternative/материалы/3_Авангард в художественной картине мира.pdf"
+        },
+        {
+          "fileName": "3_Авангард и проблема традиции.pdf",
+          "displayName": "Авангард и проблема традиции",
+          "path": "src/data/alternative/материалы/3_Авангард и проблема традиции.pdf"
+        },
+        {
+          "fileName": "3_Русский авангард.pdf",
+          "displayName": "Русский авангард",
+          "path": "src/data/alternative/материалы/3_Русский авангард.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -106,8 +195,34 @@
       "title": "Самиздат и андеграунд в СССР: феномен альтернативной культуры.",
       "id": "alternative-4",
       "htmlFile": "src/data/alternative/лекции/4.html",
-      "presentationPdf": null,
-      "materials": []
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/4.pdf",
+      "materials": [
+        {
+          "fileName": "4_Пенская_Самиздат.pdf",
+          "displayName": "Пенская_Самиздат",
+          "path": "src/data/alternative/материалы/4_Пенская_Самиздат.pdf"
+        },
+        {
+          "fileName": "4_Поженин_Андеграунд.pdf",
+          "displayName": "Поженин_Андеграунд",
+          "path": "src/data/alternative/материалы/4_Поженин_Андеграунд.pdf"
+        },
+        {
+          "fileName": "4_Поженин_Самиздат Ленинграда.pdf",
+          "displayName": "Поженин_Самиздат Ленинграда",
+          "path": "src/data/alternative/материалы/4_Поженин_Самиздат Ленинграда.pdf"
+        },
+        {
+          "fileName": "4_Полторацкий_Новосибирский самиздат.pdf",
+          "displayName": "Полторацкий_Новосибирский самиздат",
+          "path": "src/data/alternative/материалы/4_Полторацкий_Новосибирский самиздат.pdf"
+        },
+        {
+          "fileName": "4_Федулов_Самиздат_1970-1980.pdf",
+          "displayName": "Федулов_Самиздат_1970-1980",
+          "path": "src/data/alternative/материалы/4_Федулов_Самиздат_1970-1980.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -116,7 +231,38 @@
       "id": "alternative-5",
       "htmlFile": "src/data/alternative/лекции/5.html",
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/5.pdf",
-      "materials": []
+      "materials": [
+        {
+          "fileName": "5_Comparative Stylistic Fanfiction Analysis.pdf",
+          "displayName": "Comparative Stylistic Fanfiction Analysis",
+          "path": "src/data/alternative/материалы/5_Comparative Stylistic Fanfiction Analysis.pdf"
+        },
+        {
+          "fileName": "5_Fandom, fan fiction and the creative mind.pdf",
+          "displayName": "Fandom, fan fiction and the creative mind",
+          "path": "src/data/alternative/материалы/5_Fandom, fan fiction and the creative mind.pdf"
+        },
+        {
+          "fileName": "5_Денисова_Фанфикшн.pdf",
+          "displayName": "Денисова_Фанфикшн",
+          "path": "src/data/alternative/материалы/5_Денисова_Фанфикшн.pdf"
+        },
+        {
+          "fileName": "5_Московкина_Фанфикшн.pdf",
+          "displayName": "Московкина_Фанфикшн",
+          "path": "src/data/alternative/материалы/5_Московкина_Фанфикшн.pdf"
+        },
+        {
+          "fileName": "5_Самутина_Великие читательницы.pdf",
+          "displayName": "Самутина_Великие читательницы",
+          "path": "src/data/alternative/материалы/5_Самутина_Великие читательницы.pdf"
+        },
+        {
+          "fileName": "5_Шатрова_жанры фанфиков.pdf",
+          "displayName": "Шатрова_жанры фанфиков",
+          "path": "src/data/alternative/материалы/5_Шатрова_жанры фанфиков.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -125,7 +271,43 @@
       "id": "alternative-6",
       "htmlFile": "src/data/alternative/лекции/6.html",
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/6.pdf",
-      "materials": []
+      "materials": [
+        {
+          "fileName": "6_Evolutionary Horror Study.pdf",
+          "displayName": "Evolutionary Horror Study",
+          "path": "src/data/alternative/материалы/6_Evolutionary Horror Study.pdf"
+        },
+        {
+          "fileName": "6_Supernatural Horror in Literature.pdf",
+          "displayName": "Supernatural Horror in Literature",
+          "path": "src/data/alternative/материалы/6_Supernatural Horror in Literature.pdf"
+        },
+        {
+          "fileName": "6_THE ROLE OF HORROR IN MODERN.pdf",
+          "displayName": "THE ROLE OF HORROR IN MODERN",
+          "path": "src/data/alternative/материалы/6_THE ROLE OF HORROR IN MODERN.pdf"
+        },
+        {
+          "fileName": "6_The True Crime Genre.pdf",
+          "displayName": "The True Crime Genre",
+          "path": "src/data/alternative/материалы/6_The True Crime Genre.pdf"
+        },
+        {
+          "fileName": "6_Trash or Treasure.pdf",
+          "displayName": "Trash or Treasure",
+          "path": "src/data/alternative/материалы/6_Trash or Treasure.pdf"
+        },
+        {
+          "fileName": "6_Детектив в критике и науке.pdf",
+          "displayName": "Детектив в критике и науке",
+          "path": "src/data/alternative/материалы/6_Детектив в критике и науке.pdf"
+        },
+        {
+          "fileName": "6_Рецензия на книгу Лахманн_дискурсы фантастического.pdf",
+          "displayName": "Рецензия на книгу Лахманн_дискурсы фантастического",
+          "path": "src/data/alternative/материалы/6_Рецензия на книгу Лахманн_дискурсы фантастического.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -164,7 +346,28 @@
       "id": "alternative-8",
       "htmlFile": "src/data/alternative/лекции/8.html",
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/8.pdf",
-      "materials": []
+      "materials": [
+        {
+          "fileName": "8_Digital Storytelling in Research_ A Systematic Review.pdf",
+          "displayName": "Digital Storytelling in Research_ A Systematic Review",
+          "path": "src/data/alternative/материалы/8_Digital Storytelling in Research_ A Systematic Review.pdf"
+        },
+        {
+          "fileName": "8_russkaya-literatura-v-tsifrovuyu-epohu.pdf",
+          "displayName": "russkaya-literatura-v-tsifrovuyu-epohu",
+          "path": "src/data/alternative/материалы/8_russkaya-literatura-v-tsifrovuyu-epohu.pdf"
+        },
+        {
+          "fileName": "8_tsifrovizatsiya-v-obla_sti-literatury.pdf",
+          "displayName": "tsifrovizatsiya-v-obla_sti-literatury",
+          "path": "src/data/alternative/материалы/8_tsifrovizatsiya-v-obla_sti-literatury.pdf"
+        },
+        {
+          "fileName": "8_yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty.pdf",
+          "displayName": "yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty",
+          "path": "src/data/alternative/материалы/8_yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
@@ -173,7 +376,43 @@
       "id": "alternative-9",
       "htmlFile": "src/data/alternative/лекции/9.html",
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/9.pdf",
-      "materials": []
+      "materials": [
+        {
+          "fileName": "9_aleksey-kozlov-britanskiy-bit.pdf",
+          "displayName": "aleksey-kozlov-britanskiy-bit",
+          "path": "src/data/alternative/материалы/9_aleksey-kozlov-britanskiy-bit.pdf"
+        },
+        {
+          "fileName": "9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf",
+          "displayName": "Aztlan_ Martinez_With_ Imperious Eye_Spr98",
+          "path": "src/data/alternative/материалы/9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf"
+        },
+        {
+          "fileName": "9_rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya.pdf",
+          "displayName": "rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya",
+          "path": "src/data/alternative/материалы/9_rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya.pdf"
+        },
+        {
+          "fileName": "9_rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov.pdf",
+          "displayName": "rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov",
+          "path": "src/data/alternative/материалы/9_rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov.pdf"
+        },
+        {
+          "fileName": "9_subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka.pdf",
+          "displayName": "subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka",
+          "path": "src/data/alternative/материалы/9_subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka.pdf"
+        },
+        {
+          "fileName": "9_Керуак и культура битников.pdf",
+          "displayName": "Керуак и культура битников",
+          "path": "src/data/alternative/материалы/9_Керуак и культура битников.pdf"
+        },
+        {
+          "fileName": "9_Мотив пути в поэме Гинзберга Вопль.pdf",
+          "displayName": "Мотив пути в поэме Гинзберга Вопль",
+          "path": "src/data/alternative/материалы/9_Мотив пути в поэме Гинзберга Вопль.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
