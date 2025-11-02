@@ -10,8 +10,9 @@ export default function LectureCard({ lecture, courseSlug, index }) {
   useEffect(() => {
     if (isOpen && lecture.htmlFile && !htmlContent) {
       setLoadingHtml(true)
-      // Путь к HTML файлу (middleware в vite.config.js обработает его)
-      const htmlPath = `/${lecture.htmlFile}`
+      // Путь к HTML файлу с учетом base URL
+      const baseUrl = import.meta.env.BASE_URL || '/samarkand_lectures/'
+      const htmlPath = `${baseUrl}${lecture.htmlFile}`
       console.log('Загрузка HTML:', htmlPath)
       fetch(htmlPath)
         .then(res => {
@@ -83,9 +84,9 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                     {/* PDF Viewer Container */}
                     <div className="relative w-full bg-gray-200 dark:bg-gray-800">
                       <div className="overflow-x-auto overflow-y-auto" style={{ maxHeight: '700px' }}>
-                        <iframe
-                          src={`/${lecture.presentationPdf}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
-                          className="w-full"
+                      <iframe
+                        src={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
+                        className="w-full"
                           style={{
                             height: '700px',
                             minHeight: '600px',
@@ -103,7 +104,7 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                         Используйте горизонтальную прокрутку для навигации по слайдам
                       </span>
                       <a
-                        href={`/${lecture.presentationPdf}`}
+                        href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 whitespace-nowrap"
@@ -241,7 +242,7 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                     {lecture.materials.map((material, idx) => (
                       <a
                         key={idx}
-                        href={`/${material.path}`}
+                        href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${material.path}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-xl hover:shadow-lg transition-all duration-200 group"
