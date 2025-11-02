@@ -11,7 +11,7 @@ export default function Header() {
               Материалы к лекционным курсам проф. П.В. Алексеева
             </h1>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 font-medium">
-              Самаркандский государственный университет им. Шарофа Шафирова
+              Самаркандский государственный университет им. Шарофа Рашидова
             </p>
           </Link>
           <ThemeToggle />
