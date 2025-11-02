@@ -25,6 +25,46 @@
           "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
         },
         {
+          "fileName": "11_Feminism and literary translation.pdf",
+          "displayName": "Feminism and literary translation",
+          "path": "src/data/alternative/материалы/11_Feminism and literary translation.pdf"
+        },
+        {
+          "fileName": "11_Feminism and the Study of Literature.pdf",
+          "displayName": "Feminism and the Study of Literature",
+          "path": "src/data/alternative/материалы/11_Feminism and the Study of Literature.pdf"
+        },
+        {
+          "fileName": "11_Feminism on Fantasy Literature.pdf",
+          "displayName": "Feminism on Fantasy Literature",
+          "path": "src/data/alternative/материалы/11_Feminism on Fantasy Literature.pdf"
+        },
+        {
+          "fileName": "11_Frankenstein_Feminism and Literary Theory.pdf",
+          "displayName": "Frankenstein_Feminism and Literary Theory",
+          "path": "src/data/alternative/материалы/11_Frankenstein_Feminism and Literary Theory.pdf"
+        },
+        {
+          "fileName": "11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf",
+          "displayName": "izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu",
+          "path": "src/data/alternative/материалы/11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf"
+        },
+        {
+          "fileName": "11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf",
+          "displayName": "novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv",
+          "path": "src/data/alternative/материалы/11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf"
+        },
+        {
+          "fileName": "11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf",
+          "displayName": "vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature",
+          "path": "src/data/alternative/материалы/11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf"
+        },
+        {
+          "fileName": "11_Waves_of_Feminism_in_Literature_and_thei.pdf",
+          "displayName": "Waves_of_Feminism_in_Literature_and_thei",
+          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
+        },
+        {
           "fileName": "1_Fowler_Genre and the Literary Canon_1979.pdf",
           "displayName": "Fowler_Genre and the Literary Canon_1979",
           "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf"
@@ -76,9 +116,50 @@
       "number": "11",
       "title": "Феминистская литература как альтернативные традиции.",
       "id": "alternative-11",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/alternative/лекции/11.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/11.pdf",
+      "materials": [
+        {
+          "fileName": "11_Feminism and literary translation.pdf",
+          "displayName": "Feminism and literary translation",
+          "path": "src/data/alternative/материалы/11_Feminism and literary translation.pdf"
+        },
+        {
+          "fileName": "11_Feminism and the Study of Literature.pdf",
+          "displayName": "Feminism and the Study of Literature",
+          "path": "src/data/alternative/материалы/11_Feminism and the Study of Literature.pdf"
+        },
+        {
+          "fileName": "11_Feminism on Fantasy Literature.pdf",
+          "displayName": "Feminism on Fantasy Literature",
+          "path": "src/data/alternative/материалы/11_Feminism on Fantasy Literature.pdf"
+        },
+        {
+          "fileName": "11_Frankenstein_Feminism and Literary Theory.pdf",
+          "displayName": "Frankenstein_Feminism and Literary Theory",
+          "path": "src/data/alternative/материалы/11_Frankenstein_Feminism and Literary Theory.pdf"
+        },
+        {
+          "fileName": "11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf",
+          "displayName": "izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu",
+          "path": "src/data/alternative/материалы/11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf"
+        },
+        {
+          "fileName": "11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf",
+          "displayName": "novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv",
+          "path": "src/data/alternative/материалы/11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf"
+        },
+        {
+          "fileName": "11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf",
+          "displayName": "vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature",
+          "path": "src/data/alternative/материалы/11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf"
+        },
+        {
+          "fileName": "11_Waves_of_Feminism_in_Literature_and_thei.pdf",
+          "displayName": "Waves_of_Feminism_in_Literature_and_thei",
+          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
