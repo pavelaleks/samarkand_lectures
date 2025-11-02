@@ -16,12 +16,10 @@ function App() {
       const savedPath = sessionStorage.getItem('redirectPath')
       if (savedPath) {
         sessionStorage.removeItem('redirectPath')
-        // Используем window.location вместо reload для плавного перехода
         const fullPath = baseUrl.slice(0, -1) + savedPath
-        if (window.location.pathname !== fullPath && window.location.pathname.includes('/index.html')) {
+        // Просто устанавливаем правильный путь - React Router обработает его через basename
+        if (window.location.pathname !== fullPath) {
           window.history.replaceState(null, '', fullPath)
-          // Триггерим событие popstate для React Router
-          window.dispatchEvent(new PopStateEvent('popstate', { state: null }))
         }
       }
     }, [baseUrl])

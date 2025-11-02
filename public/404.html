@@ -27,13 +27,21 @@
         return;
       }
       
-      // Сохраняем оригинальный путь в sessionStorage
+      // Редиректим напрямую, сохраняя путь
+      // GitHub Pages будет обслуживать index.html, а React Router обработает путь
+      var redirectUrl = basePath;
+      
+      if (path && path !== '/' && path !== '/index.html' && !path.match(/\.(html|css|js|json|pdf|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)) {
+        redirectUrl += path;
+      } else {
+        redirectUrl += '/';
+      }
+      
+      // Сохраняем путь для восстановления после загрузки index.html
       if (path && path !== '/' && path !== '/index.html') {
         sessionStorage.setItem('redirectPath', path);
       }
       
-      // Редиректим на index.html
-      var redirectUrl = basePath + '/index.html';
       window.location.replace(redirectUrl);
     </script>
   </head>
