@@ -30,6 +30,13 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 120px; /* Учитываем высоту sticky header */
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 140px;
+  }
 }
 
 /* Custom scrollbar */

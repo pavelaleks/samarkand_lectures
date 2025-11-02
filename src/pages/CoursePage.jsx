@@ -20,6 +20,12 @@ export default function CoursePage() {
       })
     
     setLectures(courseLectures)
+    
+    // Прокручиваем к началу страницы при загрузке/переходе
+    // Используем небольшой таймаут, чтобы React Router успел обновить DOM
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }, 0)
   }, [slug])
 
   if (!course) {
@@ -41,11 +47,12 @@ export default function CoursePage() {
   const bgGradient = colorClasses[course.color] || colorClasses.blue
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-8 sm:pb-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 sm:mb-12"
+        style={{ paddingTop: '120px', marginTop: '-120px' }}
       >
         <Link
           to="/"
