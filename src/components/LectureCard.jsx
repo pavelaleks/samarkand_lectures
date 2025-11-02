@@ -5,6 +5,16 @@ export default function LectureCard({ lecture, courseSlug, index }) {
   const [isOpen, setIsOpen] = useState(false)
   const [htmlContent, setHtmlContent] = useState('')
   const [loadingHtml, setLoadingHtml] = useState(false)
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024)
+
+  // Отслеживаем размер окна для адаптивной высоты PDF
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Загружаем HTML контент когда карточка открывается
   useEffect(() => {
@@ -83,25 +93,28 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                   <div className="rounded-xl overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
                     {/* PDF Viewer Container */}
                     <div className="relative w-full bg-gray-200 dark:bg-gray-800">
-                      <div className="overflow-x-auto overflow-y-auto" style={{ maxHeight: '700px' }}>
-                      <iframe
-                        src={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`}
-                        className="w-full"
+                      <div className="overflow-x-auto overflow-y-auto">
+                        <iframe
+                          src={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}#toolbar=1&navpanes=0&scrollbar=1&view=FitH&zoom=page-width`}
+                          className="w-full block border-0"
                           style={{
-                            height: '700px',
-                            minHeight: '600px',
-                            border: 'none',
-                            display: 'block'
+                            // Адаптивная высота: меньше на мобильных для лучшей видимости горизонтальных слайдов
+                            height: windowWidth < 640 ? '280px' : windowWidth < 1024 ? '450px' : '650px',
+                            minHeight: windowWidth < 640 ? '250px' : windowWidth < 1024 ? '400px' : '600px',
+                            maxHeight: '700px',
+                            // Включаем поддержку жестов для масштабирования на мобильных
+                            touchAction: 'pan-x pan-y pinch-zoom'
                           }}
                           title={`Презентация: ${lecture.title}`}
                           loading="lazy"
+                          allow="fullscreen"
                         />
                       </div>
                     </div>
                     {/* Footer with controls */}
                     <div className="p-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-2">
                       <span className="text-xs text-gray-600 dark:text-gray-400 text-center sm:text-left">
-                        Используйте горизонтальную прокрутку для навигации по слайдам
+                        Используйте горизонтальную прокрутку и жесты для навигации
                       </span>
                       <a
                         href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}`}
