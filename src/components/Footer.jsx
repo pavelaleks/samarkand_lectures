@@ -33,7 +33,7 @@ export default function Footer() {
           
           {/* Copyright */}
           <div className="text-center text-xs text-gray-500 dark:text-gray-500 pt-2 border-t border-gray-200 dark:border-gray-700">
-            <p>© 2025 Самаркандский государственный университет им. Шарофа Шафирова</p>
+            <p>© 2025 Самаркандский государственный университет им. Шарофа Рашидова</p>
             <p className="mt-1">Профессор Павел Викторович Алексеев</p>
           </div>
         </div>
