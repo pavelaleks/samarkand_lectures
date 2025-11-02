@@ -5,16 +5,6 @@ export default function LectureCard({ lecture, courseSlug, index }) {
   const [isOpen, setIsOpen] = useState(false)
   const [htmlContent, setHtmlContent] = useState('')
   const [loadingHtml, setLoadingHtml] = useState(false)
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024)
-
-  // Отслеживаем размер окна для адаптивной высоты PDF
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // Загружаем HTML контент когда карточка открывается
   useEffect(() => {
@@ -87,48 +77,62 @@ export default function LectureCard({ lecture, courseSlug, index }) {
               {/* PDF Presentation */}
               {lecture.presentationPdf && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                  <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                     Презентация (PDF)
                   </h3>
-                  <div className="rounded-xl overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
-                    {/* PDF Viewer Container */}
-                    <div className="relative w-full bg-gray-200 dark:bg-gray-800">
-                      <div className="overflow-x-auto overflow-y-auto">
-                        <iframe
-                          src={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}#toolbar=1&navpanes=0&scrollbar=1&view=FitH&zoom=page-width`}
-                          className="w-full block border-0"
-                          style={{
-                            // Адаптивная высота: меньше на мобильных для лучшей видимости горизонтальных слайдов
-                            height: windowWidth < 640 ? '280px' : windowWidth < 1024 ? '450px' : '650px',
-                            minHeight: windowWidth < 640 ? '250px' : windowWidth < 1024 ? '400px' : '600px',
-                            maxHeight: '700px',
-                            // Включаем поддержку жестов для масштабирования на мобильных
-                            touchAction: 'pan-x pan-y pinch-zoom'
-                          }}
-                          title={`Презентация: ${lecture.title}`}
-                          loading="lazy"
-                          allow="fullscreen"
-                        />
+                  <a
+                    href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 group cursor-pointer"
+                    style={{ height: '180px' }}
+                  >
+                    <div className="h-full w-full flex flex-col items-center justify-center relative p-6">
+                      {/* Фон с градиентом */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 dark:from-red-900/20 dark:via-orange-900/20 dark:to-yellow-900/20 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                      
+                      {/* Содержимое */}
+                      <div className="relative z-10 text-center">
+                        {/* Иконка PDF */}
+                        <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                          <svg 
+                            className="w-16 h-16 mx-auto text-red-600 dark:text-red-400" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round" 
+                              strokeWidth={1.5} 
+                              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" 
+                            />
+                          </svg>
+                        </div>
+                        
+                        {/* Текст */}
+                        <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+                          Презентация PDF
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                          Нажмите для просмотра
+                        </p>
+                        
+                        {/* Кнопка */}
+                        <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 dark:from-red-500 dark:to-orange-500 dark:hover:from-red-600 dark:hover:to-orange-600 text-white rounded-lg font-semibold shadow-md group-hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                          <span className="text-sm">Открыть презентацию</span>
+                          <svg 
+                            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                    {/* Footer with controls */}
-                    <div className="p-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-2">
-                      <span className="text-xs text-gray-600 dark:text-gray-400 text-center sm:text-left">
-                        Используйте горизонтальную прокрутку и жесты для навигации
-                      </span>
-                      <a
-                        href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${lecture.presentationPdf}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 whitespace-nowrap"
-                      >
-                        Открыть в новой вкладке
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
+                  </a>
                 </div>
               )}
 
