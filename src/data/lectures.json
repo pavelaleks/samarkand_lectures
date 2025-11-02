@@ -1,4 +1,202 @@
 {
-  "lectures": []
+  "lectures": [
+    {
+      "id": "alternative-1",
+      "courseSlug": "alternative",
+      "lectureNumber": "1",
+      "title": "Альтернативная литература как понятие: «вне канона», «контркультура», «нон-мейнстрим».",
+      "contentFile": "src/data/alternative/лекции/1.docx",
+      "contentType": "docx",
+      "presentation": null,
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.232Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": false,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-10",
+      "courseSlug": "alternative",
+      "lectureNumber": "10",
+      "title": "Контркультурные движения: битники, хиппи, панк-литература.",
+      "contentFile": "src/data/alternative/лекции/10.docx",
+      "contentType": "docx",
+      "presentation": {
+        "fileName": "10.pdf",
+        "path": "/src/data/alternative/презентации/10.pdf"
+      },
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.233Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": true,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-2",
+      "courseSlug": "alternative",
+      "lectureNumber": "2",
+      "title": "Канон и контрканон: механизмы исключения и включения.",
+      "contentFile": "src/data/alternative/лекции/2.docx",
+      "contentType": "docx",
+      "presentation": null,
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.233Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": false,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-3",
+      "courseSlug": "alternative",
+      "lectureNumber": "3",
+      "title": "Авангард и модернизм как прецеденты альтернативных литератур.",
+      "contentFile": "src/data/alternative/лекции/3.docx",
+      "contentType": "docx",
+      "presentation": null,
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.233Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": false,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-4",
+      "courseSlug": "alternative",
+      "lectureNumber": "4",
+      "title": "Самиздат и андеграунд в СССР: феномен альтернативной культуры.",
+      "contentFile": "src/data/alternative/лекции/4.docx",
+      "contentType": "docx",
+      "presentation": null,
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.233Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": false,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-5",
+      "courseSlug": "alternative",
+      "lectureNumber": "5",
+      "title": "Фанфикшн и «вторичная литература»: творчество читателя.",
+      "contentFile": "src/data/alternative/лекции/5.docx",
+      "contentType": "docx",
+      "presentation": {
+        "fileName": "5.pdf",
+        "path": "/src/data/alternative/презентации/5.pdf"
+      },
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.233Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": true,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-6",
+      "courseSlug": "alternative",
+      "lectureNumber": "6",
+      "title": "Литература жанровая и «низовая»: детектив, фантастика, хоррор.",
+      "contentFile": "src/data/alternative/лекции/6.docx",
+      "contentType": "docx",
+      "presentation": {
+        "fileName": "6.pdf",
+        "path": "/src/data/alternative/презентации/6.pdf"
+      },
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.233Z",
+        "updatedAt": "2025-11-02T10:24:08.233Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": true,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-7",
+      "courseSlug": "alternative",
+      "lectureNumber": "7",
+      "title": "Роман-игра, книга-лабиринт, интерактивный текст (Г. Гаррисон, Р. Шаттерхэнд).",
+      "contentFile": "src/data/alternative/лекции/7.docx",
+      "contentType": "docx",
+      "presentation": {
+        "fileName": "7.pdf",
+        "path": "/src/data/alternative/презентации/7.pdf"
+      },
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.234Z",
+        "updatedAt": "2025-11-02T10:24:08.234Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": true,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-8",
+      "courseSlug": "alternative",
+      "lectureNumber": "8",
+      "title": "Цифровая литература: гипертекст, электронная поэзия, digital storytelling.",
+      "contentFile": "src/data/alternative/лекции/8.docx",
+      "contentType": "docx",
+      "presentation": {
+        "fileName": "8.pdf",
+        "path": "/src/data/alternative/презентации/8.pdf"
+      },
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.234Z",
+        "updatedAt": "2025-11-02T10:24:08.234Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": true,
+        "materialsCount": 0
+      }
+    },
+    {
+      "id": "alternative-9",
+      "courseSlug": "alternative",
+      "lectureNumber": "9",
+      "title": "Контркультурные движения: битники, хиппи.",
+      "contentFile": "src/data/alternative/лекции/9.docx",
+      "contentType": "docx",
+      "presentation": {
+        "fileName": "9.pdf",
+        "path": "/src/data/alternative/презентации/9.pdf"
+      },
+      "materials": [],
+      "metadata": {
+        "createdAt": "2025-11-02T10:24:08.234Z",
+        "updatedAt": "2025-11-02T10:24:08.234Z",
+        "status": "draft",
+        "hasContent": true,
+        "hasPresentation": true,
+        "materialsCount": 0
+      }
+    }
+  ]
 }
-

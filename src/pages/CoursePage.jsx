@@ -1,13 +1,25 @@
 import { useParams, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import LectureCard from '../components/LectureCard'
 import coursesData from '../data/courses.json'
+import lecturesIndex from '../data/lectures.json'
 import { useLanguage } from '../contexts/LanguageContext'
 
 export default function CoursePage() {
   const { slug } = useParams()
   const { t } = useLanguage()
+  const [lectures, setLectures] = useState([])
   const course = coursesData.courses.find(c => c.slug === slug)
+  
+  useEffect(() => {
+    // Загружаем лекции из индекса для текущего курса
+    const courseLectures = lecturesIndex.lectures
+      .filter(l => l.courseSlug === slug)
+      .sort((a, b) => a.lectureNumber.localeCompare(b.lectureNumber, undefined, { numeric: true }))
+    
+    setLectures(courseLectures)
+  }, [slug])
 
   if (!course) {
     return (
@@ -52,16 +64,28 @@ export default function CoursePage() {
 
       <div className="space-y-4">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-          Лекции ({course.lectures.length})
+          Лекции ({lectures.length > 0 ? lectures.length : course.lectures.length})
         </h2>
-        {course.lectures.map((lecture, index) => (
-          <LectureCard
-            key={lecture.id}
-            lecture={lecture}
-            courseSlug={slug}
-            index={index}
-          />
-        ))}
+        {lectures.length > 0 ? (
+          lectures.map((lecture, index) => (
+            <LectureCard
+              key={lecture.id}
+              lecture={lecture}
+              courseSlug={slug}
+              index={index}
+            />
+          ))
+        ) : (
+          // Fallback к статическим данным, если индекс пуст
+          course.lectures.map((lecture, index) => (
+            <LectureCard
+              key={lecture.id}
+              lecture={lecture}
+              courseSlug={slug}
+              index={index}
+            />
+          ))
+        )}
       </div>
     </div>
   )
