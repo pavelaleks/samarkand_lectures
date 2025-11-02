@@ -95,18 +95,6 @@ export default function Home() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Hero Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="text-center mb-12 sm:mb-16"
-      >
-        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400">
-          Три курса, три исследовательские траектории
-        </p>
-      </motion.div>
-
       {/* Courses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {courses.map((course, index) => (
