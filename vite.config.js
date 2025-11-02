@@ -2,10 +2,41 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import fs from 'fs'
+import { copyFileSync, mkdirSync, readdirSync } from 'fs'
+
+// Функция для копирования директории
+function copyDir(src, dest) {
+  if (!fs.existsSync(dest)) {
+    mkdirSync(dest, { recursive: true })
+  }
+  const entries = readdirSync(src, { withFileTypes: true })
+  for (const entry of entries) {
+    const srcPath = resolve(src, entry.name)
+    const destPath = resolve(dest, entry.name)
+    if (entry.isDirectory()) {
+      copyDir(srcPath, destPath)
+    } else {
+      copyFileSync(srcPath, destPath)
+    }
+  }
+}
 
 export default defineConfig({
   plugins: [
     react(),
+    // Плагин для копирования файлов из src/data в dist при сборке
+    {
+      name: 'copy-data-files',
+      closeBundle() {
+        const dataDir = resolve(__dirname, 'src', 'data')
+        const distDataDir = resolve(__dirname, 'dist', 'src', 'data')
+        
+        if (fs.existsSync(dataDir)) {
+          copyDir(dataDir, distDataDir)
+          console.log('✅ Скопированы файлы из src/data в dist/src/data')
+        }
+      }
+    },
     // Плагин для обслуживания статических файлов из src/data
     {
       name: 'static-files',
