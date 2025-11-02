@@ -134,7 +134,28 @@
       "id": "alternative-7",
       "htmlFile": "src/data/alternative/лекции/7.html",
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/7.pdf",
-      "materials": []
+      "materials": [
+        {
+          "fileName": "7_Fenici_Gamebooks and branching narratives.pdf",
+          "displayName": "Fenici_Gamebooks and branching narratives",
+          "path": "src/data/alternative/материалы/7_Fenici_Gamebooks and branching narratives.pdf"
+        },
+        {
+          "fileName": "7_Зейналова_Гипертекстовая литература.pdf",
+          "displayName": "Зейналова_Гипертекстовая литература",
+          "path": "src/data/alternative/материалы/7_Зейналова_Гипертекстовая литература.pdf"
+        },
+        {
+          "fileName": "7_Исакова_роман-игра.pdf",
+          "displayName": "Исакова_роман-игра",
+          "path": "src/data/alternative/материалы/7_Исакова_роман-игра.pdf"
+        },
+        {
+          "fileName": "7_Шулятьева_К теории разветвленного повествования.pdf",
+          "displayName": "Шулятьева_К теории разветвленного повествования",
+          "path": "src/data/alternative/материалы/7_Шулятьева_К теории разветвленного повествования.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
