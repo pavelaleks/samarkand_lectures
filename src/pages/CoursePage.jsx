@@ -45,7 +45,8 @@ export default function CoursePage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8 sm:mb-12"
+        className="mb-8 sm:mb-12 scroll-mt-24"
+        id="course-title"
       >
         <Link
           to="/"
@@ -71,7 +72,7 @@ export default function CoursePage() {
 
       <div className="space-y-4 sm:space-y-6">
         <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900 dark:text-white">
-          Краткое содержание {lectures.length > 0 && `(${lectures.length})`}
+          Содержание курса {lectures.length > 0 && `(${lectures.length})`}
         </h2>
         
         {lectures.length > 0 ? (
