@@ -24,9 +24,9 @@ function copyDir(src, dest) {
 export default defineConfig({
   plugins: [
     react(),
-    // Плагин для копирования файлов из src/data в dist при сборке
+    // Плагин для копирования PDF файлов при сборке
     {
-      name: 'copy-data-files',
+      name: 'copy-pdf-files',
       closeBundle() {
         const dataDir = resolve(__dirname, 'src', 'data')
         const distDataDir = resolve(__dirname, 'dist', 'src', 'data')
@@ -37,44 +37,81 @@ export default defineConfig({
         }
       }
     },
-    // Плагин для обслуживания статических файлов из src/data
+    // Плагин для обслуживания статических файлов в dev режиме
     {
       name: 'static-files',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          // Проверяем, запрашивается ли файл из src/data
-          // Учитываем base path
-          const basePath = '/samarkand_lectures'
-          let urlPath = req.url
+          let urlPath = req.url || ''
           
-          // Убираем base path если есть
-          if (urlPath.startsWith(basePath)) {
+          if (urlPath.includes('?')) {
+            urlPath = urlPath.split('?')[0]
+          }
+          
+          // Декодируем URL для обработки кириллицы
+          try {
+            urlPath = decodeURIComponent(urlPath)
+          } catch {
+            // Если декодирование не удалось, используем как есть
+          }
+          
+          const basePath = '/samarkand_lectures'
+          if (urlPath.startsWith(basePath + '/')) {
+            urlPath = urlPath.substring(basePath.length)
+          } else if (urlPath.startsWith(basePath)) {
             urlPath = urlPath.substring(basePath.length)
           }
           
-          if (urlPath && urlPath.startsWith('/src/data/')) {
-            // Преобразуем URL путь в файловый путь
-            const relativePath = urlPath.substring(1) // убираем ведущий /
+          // Пропускаем JSON файлы - они должны обрабатываться Vite как модули
+          if (urlPath.endsWith('.json') && !urlPath.includes('/src/data/')) {
+            next()
+            return
+          }
+          
+          if (urlPath && urlPath.includes('src/data/')) {
+            let relativePath = urlPath.startsWith('/') ? urlPath.substring(1) : urlPath
+            const idx = relativePath.indexOf('src/data/')
+            if (idx >= 0) {
+              relativePath = relativePath.substring(idx)
+            }
+            
             const filePath = resolve(__dirname, relativePath)
             
-            // Проверяем существование файла
-            if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-              // Определяем MIME тип
-              let contentType = 'application/octet-stream'
-              if (filePath.endsWith('.html')) contentType = 'text/html; charset=utf-8'
-              if (filePath.endsWith('.pdf')) contentType = 'application/pdf'
-              if (filePath.endsWith('.docx')) contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-              if (filePath.endsWith('.doc')) contentType = 'application/msword'
-              if (filePath.endsWith('.md')) contentType = 'text/markdown'
-              
-              // Читаем и отдаём файл
-              const fileBuffer = fs.readFileSync(filePath)
-              res.setHeader('Content-Type', contentType)
-              res.setHeader('Content-Length', fileBuffer.length)
-              res.end(fileBuffer)
-              return
+            // Логирование для отладки
+            if (filePath.includes('.html') || filePath.includes('.pdf')) {
+              console.log('📄 Попытка загрузки:', filePath, '| Существует:', fs.existsSync(filePath))
+            }
+            
+            if (fs.existsSync(filePath)) {
+              const stats = fs.statSync(filePath)
+              if (stats.isFile()) {
+                // Не обрабатываем JSON - пусть Vite обрабатывает
+                if (filePath.endsWith('.json')) {
+                  next()
+                  return
+                }
+                
+                let contentType = 'application/octet-stream'
+                if (filePath.endsWith('.pdf')) contentType = 'application/pdf'
+                if (filePath.endsWith('.html')) contentType = 'text/html; charset=utf-8'
+                if (filePath.endsWith('.docx')) contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                if (filePath.endsWith('.doc')) contentType = 'application/msword'
+                if (filePath.endsWith('.md')) contentType = 'text/markdown'
+                
+                try {
+                  const fileBuffer = fs.readFileSync(filePath)
+                  res.setHeader('Content-Type', contentType)
+                  res.setHeader('Content-Length', fileBuffer.length)
+                  res.setHeader('Cache-Control', 'no-cache')
+                  res.end(fileBuffer)
+                  return
+                } catch (err) {
+                  console.error('Ошибка чтения файла:', filePath, err.message)
+                }
+              }
             }
           }
+          
           next()
         })
       }
@@ -87,11 +124,4 @@ export default defineConfig({
     },
   },
   publicDir: 'public',
-  server: {
-    fs: {
-      // Разрешаем доступ к файлам лекций
-      allow: ['..']
-    }
-  }
 })
-

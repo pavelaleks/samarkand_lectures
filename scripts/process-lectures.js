@@ -11,210 +11,157 @@ async function findLectures() {
   
   for (const course of courses) {
     const lecturesDir = path.join(ROOT, 'src', 'data', course, 'лекции')
-    const presentationsDir = path.join(ROOT, 'src', 'data', course, 'презентации')
-    const materialsDir = path.join(ROOT, 'src', 'data', course, 'материалы')
     
     try {
-      // Ищем файлы лекций (.html, .docx, .doc, .md)
       const files = await fs.readdir(lecturesDir)
-      const lectureFiles = files.filter(f => 
-        f.endsWith('.html') ||
-        f.endsWith('.docx') || 
-        f.endsWith('.doc') || 
-        f.endsWith('.md')
-      )
+      const jsonFiles = files.filter(f => f.endsWith('.json'))
       
-      // Ищем презентации
-      let presentations = []
-      try {
-        const presFiles = await fs.readdir(presentationsDir)
-        presentations = presFiles.filter(f => f.endsWith('.pdf'))
-      } catch {
-        // Папка может не существовать
-      }
-      
-      // Ищем материалы
-      let materials = []
-      try {
-        const matFiles = await fs.readdir(materialsDir)
-        materials = matFiles.filter(f => f.endsWith('.pdf'))
-      } catch {
-        // Папка может не существовать
-      }
-      
-      for (const file of lectureFiles) {
-        const lectureNumber = file.replace(/\.(html|docx|doc|md)$/, '')
+      for (const file of jsonFiles) {
         const filePath = path.join(lecturesDir, file)
+        const content = await fs.readFile(filePath, 'utf-8')
+        const lectureData = JSON.parse(content)
+        const lectureNumber = lectureData.number || file.replace('.json', '')
         
-        // Определяем тип файла
-        let contentType = 'text'
-        let content = null
-        
-        if (file.endsWith('.html')) {
-          contentType = 'html'
-          try {
-            content = await fs.readFile(filePath, 'utf-8')
-          } catch {
-            content = null
-          }
-        } else if (file.endsWith('.md')) {
-          contentType = 'text'
-          try {
-            content = await fs.readFile(filePath, 'utf-8')
-          } catch {
-            content = null
-          }
-        } else if (file.endsWith('.docx') || file.endsWith('.doc')) {
-          // Для .docx/.doc файлов только запоминаем путь, контент извлечём через библиотеку
-          contentType = 'docx'
+        // Ищем HTML файл для этой лекции
+        let htmlFile = null
+        const htmlFileName = `${lectureNumber}.html`
+        const htmlFilePath = path.join(lecturesDir, htmlFileName)
+        try {
+          await fs.access(htmlFilePath)
+          htmlFile = `src/data/${course}/лекции/${htmlFileName}`.replace(/\\/g, '/')
+        } catch {
+          // HTML файл не найден, это нормально
         }
         
-        // Ищем соответствующую презентацию (по номеру)
-        const presentation = presentations.find(p => 
-          p.replace(/\.pdf$/, '') === lectureNumber
-        )
+        // Ищем PDF презентацию для этой лекции
+        let presentationPdf = null
+        const courseDir = path.join(ROOT, 'src', 'data', course)
+        try {
+          // Простой подход: ищем во всех папках PDF файлы с нужным номером
+          const courseFiles = await fs.readdir(courseDir, { withFileTypes: true })
+          const num = lectureNumber.toString()
+          const numPadded = num.padStart(2, '0')
+          
+          // Сначала ищем папку с названием похожим на "презентации"
+          let presentationsDirEntry = courseFiles.find(item => 
+            item.isDirectory() && (
+              item.name === 'презентации' ||
+              item.name.toLowerCase().includes('презентац') ||
+              item.name.toLowerCase().includes('presentation')
+            )
+          )
+          
+          // Если не нашли, ищем любую папку с PDF файлами
+          if (!presentationsDirEntry) {
+            for (const item of courseFiles) {
+              if (item.isDirectory() && item.name !== 'лекции' && item.name !== 'материалы') {
+                const dirPath = path.join(courseDir, item.name)
+                try {
+                  const files = await fs.readdir(dirPath)
+                  const hasPdf = files.some(f => f.endsWith('.pdf'))
+                  if (hasPdf) {
+                    presentationsDirEntry = item
+                    break
+                  }
+                } catch {
+                  // Игнорируем
+                }
+              }
+            }
+          }
+          
+          if (presentationsDirEntry) {
+            const presentationsDir = path.join(courseDir, presentationsDirEntry.name)
+            const presFiles = await fs.readdir(presentationsDir)
+            const presFile = presFiles.find(f => {
+              if (!f.toLowerCase().endsWith('.pdf')) return false
+              const baseName = f.replace(/\.pdf$/i, '').toLowerCase()
+              // Проверяем: "1", "01", "1_что-то", начинается с "1_" или "01_"
+              return baseName === num || 
+                     baseName === numPadded ||
+                     baseName.startsWith(`${num}_`) ||
+                     baseName.startsWith(`${numPadded}_`) ||
+                     f.startsWith(`${num}.`) ||
+                     f.startsWith(`${numPadded}.`) ||
+                     f.startsWith(`${num}_`) ||
+                     f.startsWith(`${numPadded}_`)
+            })
+            if (presFile) {
+              presentationPdf = `src/data/${course}/${presentationsDirEntry.name}/${presFile}`.replace(/\\/g, '/')
+              console.log(`  ✓ Найдена презентация: ${presFile} для лекции ${lectureNumber}`)
+            }
+          }
+        } catch (err) {
+          console.error(`Ошибка поиска презентации для лекции ${lectureNumber}:`, err.message)
+        }
         
-        // Ищем материалы (могут быть с произвольными названиями)
-        const lectureMaterials = materials.filter(m => {
-          // Проверяем, начинается ли название файла с номера лекции
-          const fileName = m.replace(/\.pdf$/, '')
-          return fileName.startsWith(lectureNumber)
-        })
+        // Ищем PDF материалы для этой лекции
+        const materialsDir = path.join(ROOT, 'src', 'data', course, 'материалы')
+        let materials = []
+        try {
+          const matFiles = await fs.readdir(materialsDir)
+          materials = matFiles
+            .filter(m => m.startsWith(lectureNumber) && m.endsWith('.pdf'))
+            .map(m => ({
+              fileName: m,
+              displayName: m.replace(/^\d+[-_\s]+/, '').replace(/\.pdf$/i, ''),
+              path: `src/data/${course}/материалы/${m}`.replace(/\\/g, '/')
+            }))
+        } catch {
+          // Папка может не существовать
+        }
         
         lectures.push({
           courseSlug: course,
-          lectureNumber,
-          filePath,
-          fileName: file,
-          contentType,
-          content,
-          presentation: presentation ? {
-            fileName: presentation,
-            path: path.join(presentationsDir, presentation).replace(ROOT, '').replace(/\\/g, '/')
-          } : null,
-          materials: lectureMaterials.map(m => ({
-            fileName: m,
-            displayName: m.replace(/\.pdf$/i, '').replace(/^\d+\s*[-_]\s*/, ''),
-            path: path.join(materialsDir, m).replace(ROOT, '').replace(/\\/g, '/')
-          }))
+          ...lectureData,
+          htmlFile,
+          presentationPdf,
+          materials
         })
       }
-    } catch (error) {
-      console.log(`Директория ${lecturesDir} не найдена, пропускаю`)
+    } catch {
+      // Директория может не существовать
     }
   }
   
   return lectures
 }
 
-async function readLecturesIndex() {
-  try {
-    const indexPath = path.join(ROOT, 'src', 'data', 'lectures.json')
-    const content = await fs.readFile(indexPath, 'utf-8')
-    return JSON.parse(content)
-  } catch {
-    return { lectures: [] }
-  }
-}
-
 async function updateLecturesIndex(lecturesData) {
   const indexPath = path.join(ROOT, 'src', 'data', 'lectures.json')
-  await fs.writeFile(
-    indexPath,
-    JSON.stringify(lecturesData, null, 2),
-    'utf-8'
-  )
+  
+  // Убеждаемся, что директория существует
+  const dataDir = path.dirname(indexPath)
+  try {
+    await fs.mkdir(dataDir, { recursive: true })
+  } catch (err) {
+    // Директория уже существует, это нормально
+  }
+  
+  // Записываем файл
+  try {
+    await fs.writeFile(
+      indexPath,
+      JSON.stringify(lecturesData, null, 2),
+      'utf-8'
+    )
+    console.log(`📝 Индекс записан: ${indexPath}`)
+  } catch (err) {
+    console.error('❌ Ошибка записи файла:', err.message)
+    console.error('Путь:', indexPath)
+    throw err
+  }
 }
 
 async function main() {
-  console.log('🔍 Поиск файлов лекций...')
-  const foundLectures = await findLectures()
-  console.log(`Найдено ${foundLectures.length} лекций`)
+  console.log('🔍 Поиск лекций...')
+  const lectures = await findLectures()
+  console.log(`Найдено ${lectures.length} лекций`)
   
-  console.log('📖 Загрузка индекса...')
-  const indexData = await readLecturesIndex()
-  const existingLectures = new Map(
-    indexData.lectures.map(l => [`${l.courseSlug}-${l.lectureNumber}`, l])
-  )
+  const lecturesData = { lectures }
+  await updateLecturesIndex(lecturesData)
   
-  // Загружаем заголовки из courses.json
-  const coursesData = JSON.parse(
-    await fs.readFile(path.join(ROOT, 'src', 'data', 'courses.json'), 'utf-8')
-  )
-  const titleMap = new Map()
-  for (const course of coursesData.courses) {
-    for (const lecture of course.lectures || []) {
-      titleMap.set(`${course.slug}-${lecture.id}`, lecture.title)
-    }
-  }
-  
-  // Добавляем только НОВЫЕ лекции, существующие не трогаем
-  let added = 0
-  let skipped = 0
-  
-  for (const lecture of foundLectures) {
-    const key = `${lecture.courseSlug}-${lecture.lectureNumber}`
-    
-    // Если лекция уже существует - пропускаем
-    if (existingLectures.has(key)) {
-      const existing = existingLectures.get(key)
-      // Обновляем только презентации и материалы, если они добавились
-      const hasNewPresentation = lecture.presentation && !existing.presentation
-      const hasNewMaterials = lecture.materials.length > (existing.materials?.length || 0)
-      
-      if (hasNewPresentation || hasNewMaterials) {
-        if (hasNewPresentation) {
-          existing.presentation = lecture.presentation
-          existing.metadata.hasPresentation = true
-        }
-        if (hasNewMaterials) {
-          existing.materials = lecture.materials
-          existing.metadata.materialsCount = lecture.materials.length
-        }
-        existing.metadata.updatedAt = new Date().toISOString()
-        console.log(`↻ Обновлены материалы для лекции: ${existing.title}`)
-      } else {
-        skipped++
-      }
-      continue
-    }
-    
-    // Для новых лекций берём заголовок из courses.json или дефолтный
-    const title = titleMap.get(`${lecture.courseSlug}-${lecture.lectureNumber}`) 
-      || `Лекция ${lecture.lectureNumber}`
-    
-    const lectureData = {
-      id: `${lecture.courseSlug}-${lecture.lectureNumber}`,
-      courseSlug: lecture.courseSlug,
-      lectureNumber: lecture.lectureNumber,
-      title,
-      contentFile: `src/data/${lecture.courseSlug}/лекции/${lecture.fileName}`,
-      contentType: lecture.contentType === 'html' ? 'html' : lecture.contentType === 'docx' ? 'docx' : 'text',
-      presentation: lecture.presentation || null,
-      materials: lecture.materials || [],
-      metadata: {
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        status: "draft",
-        hasContent: true,
-        hasPresentation: !!lecture.presentation,
-        materialsCount: lecture.materials.length
-      }
-    }
-    
-    existingLectures.set(key, lectureData)
-    console.log(`➕ Добавлена новая лекция: ${title}`)
-    added++
-  }
-  
-  // Сохраняем обновленный индекс
-  indexData.lectures = Array.from(existingLectures.values())
-  await updateLecturesIndex(indexData)
-  
-  console.log(`\n✅ Индекс обновлен:`)
-  console.log(`   ➕ Добавлено новых: ${added}`)
-  console.log(`   ⏭️  Пропущено (уже есть): ${skipped}`)
-  console.log(`   📚 Всего лекций в индексе: ${indexData.lectures.length}`)
+  console.log(`✅ Индекс обновлен. Всего лекций: ${lectures.length}`)
 }
 
 main().catch(console.error)

@@ -1,202 +1,464 @@
 {
   "lectures": [
     {
-      "id": "alternative-1",
       "courseSlug": "alternative",
-      "lectureNumber": "1",
+      "number": "1",
       "title": "Альтернативная литература как понятие: «вне канона», «контркультура», «нон-мейнстрим».",
-      "contentFile": "src/data/alternative/лекции/1.docx",
-      "contentType": "docx",
-      "presentation": null,
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.232Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": false,
-        "materialsCount": 0
-      }
+      "gammaUrl": "https://gamma.app/embed/iti4sjrsnaqw48i",
+      "id": "alternative-1",
+      "htmlFile": "src/data/alternative/лекции/1.html",
+      "presentationPdf": null,
+      "materials": []
     },
     {
+      "courseSlug": "alternative",
+      "number": "10",
+      "title": "Контркультурные движения: панк-литература.",
       "id": "alternative-10",
-      "courseSlug": "alternative",
-      "lectureNumber": "10",
-      "title": "Контркультурные движения: битники, хиппи, панк-литература.",
-      "contentFile": "src/data/alternative/лекции/10.docx",
-      "contentType": "docx",
-      "presentation": {
-        "fileName": "10.pdf",
-        "path": "/src/data/alternative/презентации/10.pdf"
-      },
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.233Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": true,
-        "materialsCount": 0
-      }
+      "htmlFile": "src/data/alternative/лекции/10.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/10.pdf",
+      "materials": []
     },
     {
-      "id": "alternative-2",
       "courseSlug": "alternative",
-      "lectureNumber": "2",
+      "number": "11",
+      "title": "Феминистская литература как альтернативные традиции.",
+      "id": "alternative-11",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "12",
+      "title": "Постколониальные и субальтернативные тексты: «литература без центра».",
+      "id": "alternative-12",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "13",
+      "title": "Комикс и графический роман как форма «пограничной литературы».",
+      "id": "alternative-13",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "14",
+      "title": "Нон-фикшн и документалистика как вызов художественности.",
+      "id": "alternative-14",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "15",
+      "title": "Литература и игра: геймификация, гейм-нарратив.",
+      "id": "alternative-15",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "16",
+      "title": "Альтернативная литература и рынок: издательства, премии, фестивали.",
+      "id": "alternative-16",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "17",
+      "title": "Будущее альтернативной литературы: AI-тексты, метаверс.",
+      "id": "alternative-17",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "alternative",
+      "number": "2",
       "title": "Канон и контрканон: механизмы исключения и включения.",
-      "contentFile": "src/data/alternative/лекции/2.docx",
-      "contentType": "docx",
-      "presentation": null,
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.233Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": false,
-        "materialsCount": 0
-      }
+      "id": "alternative-2",
+      "htmlFile": "src/data/alternative/лекции/2.html",
+      "presentationPdf": null,
+      "materials": []
     },
     {
-      "id": "alternative-3",
       "courseSlug": "alternative",
-      "lectureNumber": "3",
+      "number": "3",
       "title": "Авангард и модернизм как прецеденты альтернативных литератур.",
-      "contentFile": "src/data/alternative/лекции/3.docx",
-      "contentType": "docx",
-      "presentation": null,
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.233Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": false,
-        "materialsCount": 0
-      }
+      "id": "alternative-3",
+      "htmlFile": "src/data/alternative/лекции/3.html",
+      "presentationPdf": null,
+      "materials": []
     },
     {
-      "id": "alternative-4",
       "courseSlug": "alternative",
-      "lectureNumber": "4",
+      "number": "4",
       "title": "Самиздат и андеграунд в СССР: феномен альтернативной культуры.",
-      "contentFile": "src/data/alternative/лекции/4.docx",
-      "contentType": "docx",
-      "presentation": null,
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.233Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": false,
-        "materialsCount": 0
-      }
+      "id": "alternative-4",
+      "htmlFile": "src/data/alternative/лекции/4.html",
+      "presentationPdf": null,
+      "materials": []
     },
     {
-      "id": "alternative-5",
       "courseSlug": "alternative",
-      "lectureNumber": "5",
+      "number": "5",
       "title": "Фанфикшн и «вторичная литература»: творчество читателя.",
-      "contentFile": "src/data/alternative/лекции/5.docx",
-      "contentType": "docx",
-      "presentation": {
-        "fileName": "5.pdf",
-        "path": "/src/data/alternative/презентации/5.pdf"
-      },
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.233Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": true,
-        "materialsCount": 0
-      }
+      "id": "alternative-5",
+      "htmlFile": "src/data/alternative/лекции/5.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/5.pdf",
+      "materials": []
     },
     {
-      "id": "alternative-6",
       "courseSlug": "alternative",
-      "lectureNumber": "6",
+      "number": "6",
       "title": "Литература жанровая и «низовая»: детектив, фантастика, хоррор.",
-      "contentFile": "src/data/alternative/лекции/6.docx",
-      "contentType": "docx",
-      "presentation": {
-        "fileName": "6.pdf",
-        "path": "/src/data/alternative/презентации/6.pdf"
-      },
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.233Z",
-        "updatedAt": "2025-11-02T10:24:08.233Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": true,
-        "materialsCount": 0
-      }
+      "id": "alternative-6",
+      "htmlFile": "src/data/alternative/лекции/6.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/6.pdf",
+      "materials": []
     },
     {
-      "id": "alternative-7",
       "courseSlug": "alternative",
-      "lectureNumber": "7",
+      "number": "7",
       "title": "Роман-игра, книга-лабиринт, интерактивный текст (Г. Гаррисон, Р. Шаттерхэнд).",
-      "contentFile": "src/data/alternative/лекции/7.docx",
-      "contentType": "docx",
-      "presentation": {
-        "fileName": "7.pdf",
-        "path": "/src/data/alternative/презентации/7.pdf"
-      },
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.234Z",
-        "updatedAt": "2025-11-02T10:24:08.234Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": true,
-        "materialsCount": 0
-      }
+      "id": "alternative-7",
+      "htmlFile": "src/data/alternative/лекции/7.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/7.pdf",
+      "materials": []
     },
     {
-      "id": "alternative-8",
       "courseSlug": "alternative",
-      "lectureNumber": "8",
+      "number": "8",
       "title": "Цифровая литература: гипертекст, электронная поэзия, digital storytelling.",
-      "contentFile": "src/data/alternative/лекции/8.docx",
-      "contentType": "docx",
-      "presentation": {
-        "fileName": "8.pdf",
-        "path": "/src/data/alternative/презентации/8.pdf"
-      },
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.234Z",
-        "updatedAt": "2025-11-02T10:24:08.234Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": true,
-        "materialsCount": 0
-      }
+      "id": "alternative-8",
+      "htmlFile": "src/data/alternative/лекции/8.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/8.pdf",
+      "materials": []
     },
     {
-      "id": "alternative-9",
       "courseSlug": "alternative",
-      "lectureNumber": "9",
+      "number": "9",
       "title": "Контркультурные движения: битники, хиппи.",
-      "contentFile": "src/data/alternative/лекции/9.docx",
-      "contentType": "docx",
-      "presentation": {
-        "fileName": "9.pdf",
-        "path": "/src/data/alternative/презентации/9.pdf"
-      },
-      "materials": [],
-      "metadata": {
-        "createdAt": "2025-11-02T10:24:08.234Z",
-        "updatedAt": "2025-11-02T10:24:08.234Z",
-        "status": "draft",
-        "hasContent": true,
-        "hasPresentation": true,
-        "materialsCount": 0
-      }
+      "id": "alternative-9",
+      "htmlFile": "src/data/alternative/лекции/9.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/9.pdf",
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "1",
+      "title": "Введение в имагологию: история дисциплины, основные понятия (auto-/hetero-image, meta-image).",
+      "id": "imagology-1",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "10",
+      "title": "Имагология и перевод: посредничество и трансфер.",
+      "id": "imagology-10",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "11",
+      "title": "Имагология и религиозный дискурс: образ ислама и мусульманина.",
+      "id": "imagology-11",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "12",
+      "title": "Россия и Восток: конструкция «внутреннего Востока».",
+      "id": "imagology-12",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "13",
+      "title": "Образ мусульманского Востока в поэтике русских романтиков.",
+      "id": "imagology-13",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "14",
+      "title": "Достоевский и Восток: имагологическая перспектива.",
+      "id": "imagology-14",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "15",
+      "title": "Пушкин и Восток: ориентализация пространства и текста.",
+      "id": "imagology-15",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "16",
+      "title": "Лермонтов и Восток: «Восточный текст» в поэтике романтизма.",
+      "id": "imagology-16",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "17",
+      "title": "ХХ век: постколониальный поворот в имагологии.",
+      "id": "imagology-17",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "2",
+      "title": "Классическая имагология: школа Дизеринка, работы Беллера и Лирссена.",
+      "id": "imagology-2",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "3",
+      "title": "Имагология и компаративистика: место в мировой гуманитаристике.",
+      "id": "imagology-3",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "4",
+      "title": "Нация, этничность, стереотип: категории анализа.",
+      "id": "imagology-4",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "5",
+      "title": "Имагология и ориентализм: С. Саид и его критики.",
+      "id": "imagology-5",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "6",
+      "title": "Восточный текст в русской литературе: постановка проблемы.",
+      "id": "imagology-6",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "7",
+      "title": "Травелог как имагологический источник: жанр и специфика анализа.",
+      "id": "imagology-7",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "8",
+      "title": "Имагология и геопоэтика: воображаемая география.",
+      "id": "imagology-8",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "imagology",
+      "number": "9",
+      "title": "Gender imagology: образы женщины и мужчины «Другого».",
+      "id": "imagology-9",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "1",
+      "title": "Теория литературного процесса: понятие, структура, методология.",
+      "id": "modern-literature-1",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "10",
+      "title": "Литература и медиа: цифровая среда, соцсети, фанфикшн.",
+      "id": "modern-literature-10",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "11",
+      "title": "Интермедиальность и трансмедиальность в литературе XXI века.",
+      "id": "modern-literature-11",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "12",
+      "title": "Литература и политика идентичности: гендер, этничность, постколониализм.",
+      "id": "modern-literature-12",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "13",
+      "title": "Глобальная литература: мир-системный подход и «world literature».",
+      "id": "modern-literature-13",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "14",
+      "title": "Теории рецепции и читательские практики.",
+      "id": "modern-literature-14",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "15",
+      "title": "Современные писатели как фигуры литературного процесса (примерный набор: Пелевин, Улицкая, Быков, Пастернак–Нобелевский прецедент, нон-фикшн-авторы).",
+      "id": "modern-literature-15",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "16",
+      "title": "Литературные премии, фестивали, книжные ярмарки как элемент процесса.",
+      "id": "modern-literature-16",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "17",
+      "title": "Теория литературного процесса сегодня: перспективы и вызовы.",
+      "id": "modern-literature-17",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "2",
+      "title": "Историко-литературный процесс и его модели: Гегель, Веселовский, Бахтин, современные концепции.",
+      "id": "modern-literature-2",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "3",
+      "title": "Литературное направление, школа, поколение: различие и динамика.",
+      "id": "modern-literature-3",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "4",
+      "title": "Канон и контрканон: механизмы формирования.",
+      "id": "modern-literature-4",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "5",
+      "title": "Литературное поле (П. Бурдьё): институты, критика, рынок.",
+      "id": "modern-literature-5",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "6",
+      "title": "Литература и идеология: марксизм, постмарксизм, культурные исследования.",
+      "id": "modern-literature-6",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "7",
+      "title": "Модернизм и авангард: теория и практика.",
+      "id": "modern-literature-7",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "8",
+      "title": "Постмодернизм и метамодерн: теоретические подходы.",
+      "id": "modern-literature-8",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
+    },
+    {
+      "courseSlug": "modern-literature",
+      "number": "9",
+      "title": "Современные жанровые трансформации: роман, драма, поэзия.",
+      "id": "modern-literature-9",
+      "htmlFile": null,
+      "presentationPdf": null,
+      "materials": []
     }
   ]
 }

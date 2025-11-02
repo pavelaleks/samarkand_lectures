@@ -4,19 +4,20 @@ import { motion } from 'framer-motion'
 import LectureCard from '../components/LectureCard'
 import coursesData from '../data/courses.json'
 import lecturesIndex from '../data/lectures.json'
-import { useLanguage } from '../contexts/LanguageContext'
 
 export default function CoursePage() {
   const { slug } = useParams()
-  const { t } = useLanguage()
   const [lectures, setLectures] = useState([])
   const course = coursesData.courses.find(c => c.slug === slug)
   
   useEffect(() => {
-    // Загружаем лекции из индекса для текущего курса
     const courseLectures = lecturesIndex.lectures
       .filter(l => l.courseSlug === slug)
-      .sort((a, b) => a.lectureNumber.localeCompare(b.lectureNumber, undefined, { numeric: true }))
+      .sort((a, b) => {
+        const numA = parseInt(a.number) || 0
+        const numB = parseInt(b.number) || 0
+        return numA - numB
+      })
     
     setLectures(courseLectures)
   }, [slug])
@@ -32,59 +33,62 @@ export default function CoursePage() {
     )
   }
 
+  const colorClasses = {
+    green: 'from-green-500 to-emerald-600',
+    blue: 'from-blue-500 to-cyan-600',
+    yellow: 'from-yellow-500 to-amber-600',
+  }
+  const bgGradient = colorClasses[course.color] || colorClasses.blue
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-8 sm:mb-12"
       >
         <Link
           to="/"
-          className="text-blue-600 dark:text-blue-400 hover:underline mb-4 inline-block"
+          className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-6 transition-colors text-sm sm:text-base"
         >
-          ← Назад
+          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>Назад к курсам</span>
         </Link>
-        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+        
+        <div className={`h-3 rounded-2xl bg-gradient-to-r ${bgGradient} mb-6`}></div>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
           {course.title}
         </h1>
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+        <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
           {course.description}
         </p>
-        <p className="text-gray-600 dark:text-gray-400 italic mb-6">
+        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 italic mb-6">
           {course.descriptionEn}
         </p>
-        <Link
-          to={`/tests?course=${slug}`}
-          className="btn-primary inline-block"
-        >
-          {t('takeTest')}
-        </Link>
       </motion.div>
 
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-          Лекции ({lectures.length > 0 ? lectures.length : course.lectures.length})
+      <div className="space-y-4 sm:space-y-6">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900 dark:text-white">
+          Лекции {lectures.length > 0 && `(${lectures.length})`}
         </h2>
+        
         {lectures.length > 0 ? (
           lectures.map((lecture, index) => (
             <LectureCard
-              key={lecture.id}
+              key={lecture.id || `${lecture.courseSlug}-${lecture.number}`}
               lecture={lecture}
               courseSlug={slug}
               index={index}
             />
           ))
         ) : (
-          // Fallback к статическим данным, если индекс пуст
-          course.lectures.map((lecture, index) => (
-            <LectureCard
-              key={lecture.id}
-              lecture={lecture}
-              courseSlug={slug}
-              index={index}
-            />
-          ))
+          <div className="card text-center py-12">
+            <p className="text-gray-600 dark:text-gray-400">
+              Лекции пока не добавлены. Добавьте файлы в папку <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">src/data/{slug}/лекции/</code>
+            </p>
+          </div>
         )}
       </div>
     </div>
