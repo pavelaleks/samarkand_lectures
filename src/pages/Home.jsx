@@ -61,8 +61,7 @@ export default function Home() {
                 <div className="text-center sm:text-left">
                   <p className="text-base sm:text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-4">
                     <strong>Павел Викторович Алексеев</strong> — доктор филологических наук, профессор. 
-                    Специализируется на имагологии, русском ориентализме, сравнительных литературных исследованиях 
-                    и литературе путешествий.
+                    Специализируется на имагологии, русском ориентализме, сравнительных литературных исследованиях, литературе путешествий и digital humanities.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start items-center">
                     <a
