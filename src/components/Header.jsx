@@ -8,7 +8,7 @@ export default function Header() {
         <div className="flex justify-between items-center py-4">
           <Link to="/" className="flex-1 group">
             <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              Лекционные курсы П.В. Алексеева: материалы
+              Материалы к лекционным курсам
             </h1>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 font-medium">
               Самаркандский государственный университет им. Шарофа Шафирова
