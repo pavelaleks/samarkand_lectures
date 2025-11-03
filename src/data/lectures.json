@@ -65,6 +65,81 @@
           "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
         },
         {
+          "fileName": "12_A Companion to Postcolonial Studies.pdf",
+          "displayName": "A Companion to Postcolonial Studies",
+          "path": "src/data/alternative/материалы/12_A Companion to Postcolonial Studies.pdf"
+        },
+        {
+          "fileName": "12_Domesticating the subaltern in the global novel in English.pdf",
+          "displayName": "Domesticating the subaltern in the global novel in English",
+          "path": "src/data/alternative/материалы/12_Domesticating the subaltern in the global novel in English.pdf"
+        },
+        {
+          "fileName": "12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf",
+          "displayName": "Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia",
+          "path": "src/data/alternative/материалы/12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf"
+        },
+        {
+          "fileName": "12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
+          "displayName": "notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers",
+          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf"
+        },
+        {
+          "fileName": "12_Orientalism_on_the_Margins_The_Ottoman_E.pdf",
+          "displayName": "Orientalism_on_the_Margins_The_Ottoman_E",
+          "path": "src/data/alternative/материалы/12_Orientalism_on_the_Margins_The_Ottoman_E.pdf"
+        },
+        {
+          "fileName": "12_Orientalism_Reversed_Russian_Literature.pdf",
+          "displayName": "Orientalism_Reversed_Russian_Literature",
+          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf"
+        },
+        {
+          "fileName": "12_Review_of_Alexander_Etkind_Internal_Colo.pdf",
+          "displayName": "Review_of_Alexander_Etkind_Internal_Colo",
+          "path": "src/data/alternative/материалы/12_Review_of_Alexander_Etkind_Internal_Colo.pdf"
+        },
+        {
+          "fileName": "12_Spivak-Can the Subaltern Speak.pdf",
+          "displayName": "Spivak-Can the Subaltern Speak",
+          "path": "src/data/alternative/материалы/12_Spivak-Can the Subaltern Speak.pdf"
+        },
+        {
+          "fileName": "12_Subaltern and Marginal Figures in Literature.pdf",
+          "displayName": "Subaltern and Marginal Figures in Literature",
+          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf"
+        },
+        {
+          "fileName": "12_Subaltern Studies as Postcolonial Criticism.pdf",
+          "displayName": "Subaltern Studies as Postcolonial Criticism",
+          "path": "src/data/alternative/материалы/12_Subaltern Studies as Postcolonial Criticism.pdf"
+        },
+        {
+          "fileName": "12_Subaltern_Classics_in_Anti_and_Post_Col.pdf",
+          "displayName": "Subaltern_Classics_in_Anti_and_Post_Col",
+          "path": "src/data/alternative/материалы/12_Subaltern_Classics_in_Anti_and_Post_Col.pdf"
+        },
+        {
+          "fileName": "12_The Subaltern Writings in India An Overview of Dalit Literature.pdf",
+          "displayName": "The Subaltern Writings in India An Overview of Dalit Literature",
+          "path": "src/data/alternative/материалы/12_The Subaltern Writings in India An Overview of Dalit Literature.pdf"
+        },
+        {
+          "fileName": "12_The_Janus_faced_Empire_Distorting_Orient.pdf",
+          "displayName": "The_Janus_faced_Empire_Distorting_Orient",
+          "path": "src/data/alternative/материалы/12_The_Janus_faced_Empire_Distorting_Orient.pdf"
+        },
+        {
+          "fileName": "12_Thomas_RefiguringtheSubaltern_Published.pdf",
+          "displayName": "Thomas_RefiguringtheSubaltern_Published",
+          "path": "src/data/alternative/материалы/12_Thomas_RefiguringtheSubaltern_Published.pdf"
+        },
+        {
+          "fileName": "12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf",
+          "displayName": "Vera_Tolz_The_Formation_of_Academic_Orie",
+          "path": "src/data/alternative/материалы/12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf"
+        },
+        {
           "fileName": "1_Fowler_Genre and the Literary Canon_1979.pdf",
           "displayName": "Fowler_Genre and the Literary Canon_1979",
           "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf"
@@ -166,9 +241,85 @@
       "number": "12",
       "title": "Постколониальные и субальтернативные тексты: «литература без центра».",
       "id": "alternative-12",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/alternative/лекции/12.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/12.pdf",
+      "materials": [
+        {
+          "fileName": "12_A Companion to Postcolonial Studies.pdf",
+          "displayName": "A Companion to Postcolonial Studies",
+          "path": "src/data/alternative/материалы/12_A Companion to Postcolonial Studies.pdf"
+        },
+        {
+          "fileName": "12_Domesticating the subaltern in the global novel in English.pdf",
+          "displayName": "Domesticating the subaltern in the global novel in English",
+          "path": "src/data/alternative/материалы/12_Domesticating the subaltern in the global novel in English.pdf"
+        },
+        {
+          "fileName": "12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf",
+          "displayName": "Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia",
+          "path": "src/data/alternative/материалы/12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf"
+        },
+        {
+          "fileName": "12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
+          "displayName": "notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers",
+          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf"
+        },
+        {
+          "fileName": "12_Orientalism_on_the_Margins_The_Ottoman_E.pdf",
+          "displayName": "Orientalism_on_the_Margins_The_Ottoman_E",
+          "path": "src/data/alternative/материалы/12_Orientalism_on_the_Margins_The_Ottoman_E.pdf"
+        },
+        {
+          "fileName": "12_Orientalism_Reversed_Russian_Literature.pdf",
+          "displayName": "Orientalism_Reversed_Russian_Literature",
+          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf"
+        },
+        {
+          "fileName": "12_Review_of_Alexander_Etkind_Internal_Colo.pdf",
+          "displayName": "Review_of_Alexander_Etkind_Internal_Colo",
+          "path": "src/data/alternative/материалы/12_Review_of_Alexander_Etkind_Internal_Colo.pdf"
+        },
+        {
+          "fileName": "12_Spivak-Can the Subaltern Speak.pdf",
+          "displayName": "Spivak-Can the Subaltern Speak",
+          "path": "src/data/alternative/материалы/12_Spivak-Can the Subaltern Speak.pdf"
+        },
+        {
+          "fileName": "12_Subaltern and Marginal Figures in Literature.pdf",
+          "displayName": "Subaltern and Marginal Figures in Literature",
+          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf"
+        },
+        {
+          "fileName": "12_Subaltern Studies as Postcolonial Criticism.pdf",
+          "displayName": "Subaltern Studies as Postcolonial Criticism",
+          "path": "src/data/alternative/материалы/12_Subaltern Studies as Postcolonial Criticism.pdf"
+        },
+        {
+          "fileName": "12_Subaltern_Classics_in_Anti_and_Post_Col.pdf",
+          "displayName": "Subaltern_Classics_in_Anti_and_Post_Col",
+          "path": "src/data/alternative/материалы/12_Subaltern_Classics_in_Anti_and_Post_Col.pdf"
+        },
+        {
+          "fileName": "12_The Subaltern Writings in India An Overview of Dalit Literature.pdf",
+          "displayName": "The Subaltern Writings in India An Overview of Dalit Literature",
+          "path": "src/data/alternative/материалы/12_The Subaltern Writings in India An Overview of Dalit Literature.pdf"
+        },
+        {
+          "fileName": "12_The_Janus_faced_Empire_Distorting_Orient.pdf",
+          "displayName": "The_Janus_faced_Empire_Distorting_Orient",
+          "path": "src/data/alternative/материалы/12_The_Janus_faced_Empire_Distorting_Orient.pdf"
+        },
+        {
+          "fileName": "12_Thomas_RefiguringtheSubaltern_Published.pdf",
+          "displayName": "Thomas_RefiguringtheSubaltern_Published",
+          "path": "src/data/alternative/материалы/12_Thomas_RefiguringtheSubaltern_Published.pdf"
+        },
+        {
+          "fileName": "12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf",
+          "displayName": "Vera_Tolz_The_Formation_of_Academic_Orie",
+          "path": "src/data/alternative/материалы/12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
