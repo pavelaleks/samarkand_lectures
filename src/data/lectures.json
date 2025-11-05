@@ -245,6 +245,76 @@
           "path": "src/data/alternative/материалы/14_Сборник англ. статей про нон-фикшн.pdf"
         },
         {
+          "fileName": "15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf",
+          "displayName": "Directing narrative in gameplay player interaction in shaping narrative in the",
+          "path": "src/data/alternative/материалы/15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf"
+        },
+        {
+          "fileName": "15_Elements of Anti-World.pdf",
+          "displayName": "Elements of Anti-World",
+          "path": "src/data/alternative/материалы/15_Elements of Anti-World.pdf"
+        },
+        {
+          "fileName": "15_gamevironments_article_Deshbandhu.pdf",
+          "displayName": "gamevironments_article_Deshbandhu",
+          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf"
+        },
+        {
+          "fileName": "15_Interactivity A review of the concept.pdf",
+          "displayName": "Interactivity A review of the concept",
+          "path": "src/data/alternative/материалы/15_Interactivity A review of the concept.pdf"
+        },
+        {
+          "fileName": "15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf",
+          "displayName": "Ludonarrative_Hermeneutics_A_Way_Out_and",
+          "path": "src/data/alternative/материалы/15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf"
+        },
+        {
+          "fileName": "15_Narrative Guidance of Interactivity.pdf",
+          "displayName": "Narrative Guidance of Interactivity",
+          "path": "src/data/alternative/материалы/15_Narrative Guidance of Interactivity.pdf"
+        },
+        {
+          "fileName": "15_Narrative...pdf",
+          "displayName": "Narrative..",
+          "path": "src/data/alternative/материалы/15_Narrative...pdf"
+        },
+        {
+          "fileName": "15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf",
+          "displayName": "Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt",
+          "path": "src/data/alternative/материалы/15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf"
+        },
+        {
+          "fileName": "15_Playing the Text, Performing the Future.pdf",
+          "displayName": "Playing the Text, Performing the Future",
+          "path": "src/data/alternative/материалы/15_Playing the Text, Performing the Future.pdf"
+        },
+        {
+          "fileName": "15_Remodelling narrative spaces.pdf",
+          "displayName": "Remodelling narrative spaces",
+          "path": "src/data/alternative/материалы/15_Remodelling narrative spaces.pdf"
+        },
+        {
+          "fileName": "15_Study on the Interactive Storytelling Structure and Flow of Games.pdf",
+          "displayName": "Study on the Interactive Storytelling Structure and Flow of Games",
+          "path": "src/data/alternative/материалы/15_Study on the Interactive Storytelling Structure and Flow of Games.pdf"
+        },
+        {
+          "fileName": "15_The future of interactive literature.pdf",
+          "displayName": "The future of interactive literature",
+          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf"
+        },
+        {
+          "fileName": "15_The Influence of Interactivity on Immersion.pdf",
+          "displayName": "The Influence of Interactivity on Immersion",
+          "path": "src/data/alternative/материалы/15_The Influence of Interactivity on Immersion.pdf"
+        },
+        {
+          "fileName": "15_The Semiotics of Time Structure in Ludic Space.pdf",
+          "displayName": "The Semiotics of Time Structure in Ludic Space",
+          "path": "src/data/alternative/материалы/15_The Semiotics of Time Structure in Ludic Space.pdf"
+        },
+        {
           "fileName": "1_Fowler_Genre and the Literary Canon_1979.pdf",
           "displayName": "Fowler_Genre and the Literary Canon_1979",
           "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf"
@@ -556,9 +626,80 @@
       "number": "15",
       "title": "Литература и игра: геймификация, гейм-нарратив.",
       "id": "alternative-15",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/alternative/лекции/15.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/15.pdf",
+      "materials": [
+        {
+          "fileName": "15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf",
+          "displayName": "Directing narrative in gameplay player interaction in shaping narrative in the",
+          "path": "src/data/alternative/материалы/15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf"
+        },
+        {
+          "fileName": "15_Elements of Anti-World.pdf",
+          "displayName": "Elements of Anti-World",
+          "path": "src/data/alternative/материалы/15_Elements of Anti-World.pdf"
+        },
+        {
+          "fileName": "15_gamevironments_article_Deshbandhu.pdf",
+          "displayName": "gamevironments_article_Deshbandhu",
+          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf"
+        },
+        {
+          "fileName": "15_Interactivity A review of the concept.pdf",
+          "displayName": "Interactivity A review of the concept",
+          "path": "src/data/alternative/материалы/15_Interactivity A review of the concept.pdf"
+        },
+        {
+          "fileName": "15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf",
+          "displayName": "Ludonarrative_Hermeneutics_A_Way_Out_and",
+          "path": "src/data/alternative/материалы/15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf"
+        },
+        {
+          "fileName": "15_Narrative Guidance of Interactivity.pdf",
+          "displayName": "Narrative Guidance of Interactivity",
+          "path": "src/data/alternative/материалы/15_Narrative Guidance of Interactivity.pdf"
+        },
+        {
+          "fileName": "15_Narrative...pdf",
+          "displayName": "Narrative..",
+          "path": "src/data/alternative/материалы/15_Narrative...pdf"
+        },
+        {
+          "fileName": "15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf",
+          "displayName": "Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt",
+          "path": "src/data/alternative/материалы/15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf"
+        },
+        {
+          "fileName": "15_Playing the Text, Performing the Future.pdf",
+          "displayName": "Playing the Text, Performing the Future",
+          "path": "src/data/alternative/материалы/15_Playing the Text, Performing the Future.pdf"
+        },
+        {
+          "fileName": "15_Remodelling narrative spaces.pdf",
+          "displayName": "Remodelling narrative spaces",
+          "path": "src/data/alternative/материалы/15_Remodelling narrative spaces.pdf"
+        },
+        {
+          "fileName": "15_Study on the Interactive Storytelling Structure and Flow of Games.pdf",
+          "displayName": "Study on the Interactive Storytelling Structure and Flow of Games",
+          "path": "src/data/alternative/материалы/15_Study on the Interactive Storytelling Structure and Flow of Games.pdf"
+        },
+        {
+          "fileName": "15_The future of interactive literature.pdf",
+          "displayName": "The future of interactive literature",
+          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf"
+        },
+        {
+          "fileName": "15_The Influence of Interactivity on Immersion.pdf",
+          "displayName": "The Influence of Interactivity on Immersion",
+          "path": "src/data/alternative/материалы/15_The Influence of Interactivity on Immersion.pdf"
+        },
+        {
+          "fileName": "15_The Semiotics of Time Structure in Ludic Space.pdf",
+          "displayName": "The Semiotics of Time Structure in Ludic Space",
+          "path": "src/data/alternative/материалы/15_The Semiotics of Time Structure in Ludic Space.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
