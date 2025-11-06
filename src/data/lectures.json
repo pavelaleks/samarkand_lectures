@@ -10,311 +10,6 @@
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/1.pdf",
       "materials": [
         {
-          "fileName": "10_moore-punkauthenticity.pdf",
-          "displayName": "moore-punkauthenticity",
-          "path": "src/data/alternative/материалы/10_moore-punkauthenticity.pdf"
-        },
-        {
-          "fileName": "10_muzykalnye-fenziny-i-pank-grafika.pdf",
-          "displayName": "muzykalnye-fenziny-i-pank-grafika",
-          "path": "src/data/alternative/материалы/10_muzykalnye-fenziny-i-pank-grafika.pdf"
-        },
-        {
-          "fileName": "10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
-          "displayName": "Real_Punks_and_PretendersThe_Social_Orga",
-          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
-        },
-        {
-          "fileName": "11_Feminism and literary translation.pdf",
-          "displayName": "Feminism and literary translation",
-          "path": "src/data/alternative/материалы/11_Feminism and literary translation.pdf"
-        },
-        {
-          "fileName": "11_Feminism and the Study of Literature.pdf",
-          "displayName": "Feminism and the Study of Literature",
-          "path": "src/data/alternative/материалы/11_Feminism and the Study of Literature.pdf"
-        },
-        {
-          "fileName": "11_Feminism on Fantasy Literature.pdf",
-          "displayName": "Feminism on Fantasy Literature",
-          "path": "src/data/alternative/материалы/11_Feminism on Fantasy Literature.pdf"
-        },
-        {
-          "fileName": "11_Frankenstein_Feminism and Literary Theory.pdf",
-          "displayName": "Frankenstein_Feminism and Literary Theory",
-          "path": "src/data/alternative/материалы/11_Frankenstein_Feminism and Literary Theory.pdf"
-        },
-        {
-          "fileName": "11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf",
-          "displayName": "izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu",
-          "path": "src/data/alternative/материалы/11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf"
-        },
-        {
-          "fileName": "11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf",
-          "displayName": "novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv",
-          "path": "src/data/alternative/материалы/11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf"
-        },
-        {
-          "fileName": "11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf",
-          "displayName": "vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature",
-          "path": "src/data/alternative/материалы/11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf"
-        },
-        {
-          "fileName": "11_Waves_of_Feminism_in_Literature_and_thei.pdf",
-          "displayName": "Waves_of_Feminism_in_Literature_and_thei",
-          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
-        },
-        {
-          "fileName": "12_A Companion to Postcolonial Studies.pdf",
-          "displayName": "A Companion to Postcolonial Studies",
-          "path": "src/data/alternative/материалы/12_A Companion to Postcolonial Studies.pdf"
-        },
-        {
-          "fileName": "12_Domesticating the subaltern in the global novel in English.pdf",
-          "displayName": "Domesticating the subaltern in the global novel in English",
-          "path": "src/data/alternative/материалы/12_Domesticating the subaltern in the global novel in English.pdf"
-        },
-        {
-          "fileName": "12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf",
-          "displayName": "Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia",
-          "path": "src/data/alternative/материалы/12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf"
-        },
-        {
-          "fileName": "12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
-          "displayName": "notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers",
-          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf"
-        },
-        {
-          "fileName": "12_Orientalism_on_the_Margins_The_Ottoman_E.pdf",
-          "displayName": "Orientalism_on_the_Margins_The_Ottoman_E",
-          "path": "src/data/alternative/материалы/12_Orientalism_on_the_Margins_The_Ottoman_E.pdf"
-        },
-        {
-          "fileName": "12_Orientalism_Reversed_Russian_Literature.pdf",
-          "displayName": "Orientalism_Reversed_Russian_Literature",
-          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf"
-        },
-        {
-          "fileName": "12_Review_of_Alexander_Etkind_Internal_Colo.pdf",
-          "displayName": "Review_of_Alexander_Etkind_Internal_Colo",
-          "path": "src/data/alternative/материалы/12_Review_of_Alexander_Etkind_Internal_Colo.pdf"
-        },
-        {
-          "fileName": "12_Spivak-Can the Subaltern Speak.pdf",
-          "displayName": "Spivak-Can the Subaltern Speak",
-          "path": "src/data/alternative/материалы/12_Spivak-Can the Subaltern Speak.pdf"
-        },
-        {
-          "fileName": "12_Subaltern and Marginal Figures in Literature.pdf",
-          "displayName": "Subaltern and Marginal Figures in Literature",
-          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf"
-        },
-        {
-          "fileName": "12_Subaltern Studies as Postcolonial Criticism.pdf",
-          "displayName": "Subaltern Studies as Postcolonial Criticism",
-          "path": "src/data/alternative/материалы/12_Subaltern Studies as Postcolonial Criticism.pdf"
-        },
-        {
-          "fileName": "12_Subaltern_Classics_in_Anti_and_Post_Col.pdf",
-          "displayName": "Subaltern_Classics_in_Anti_and_Post_Col",
-          "path": "src/data/alternative/материалы/12_Subaltern_Classics_in_Anti_and_Post_Col.pdf"
-        },
-        {
-          "fileName": "12_The Subaltern Writings in India An Overview of Dalit Literature.pdf",
-          "displayName": "The Subaltern Writings in India An Overview of Dalit Literature",
-          "path": "src/data/alternative/материалы/12_The Subaltern Writings in India An Overview of Dalit Literature.pdf"
-        },
-        {
-          "fileName": "12_The_Janus_faced_Empire_Distorting_Orient.pdf",
-          "displayName": "The_Janus_faced_Empire_Distorting_Orient",
-          "path": "src/data/alternative/материалы/12_The_Janus_faced_Empire_Distorting_Orient.pdf"
-        },
-        {
-          "fileName": "12_Thomas_RefiguringtheSubaltern_Published.pdf",
-          "displayName": "Thomas_RefiguringtheSubaltern_Published",
-          "path": "src/data/alternative/материалы/12_Thomas_RefiguringtheSubaltern_Published.pdf"
-        },
-        {
-          "fileName": "12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf",
-          "displayName": "Vera_Tolz_The_Formation_of_Academic_Orie",
-          "path": "src/data/alternative/материалы/12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf"
-        },
-        {
-          "fileName": "13_Comics as verba-visual texts.pdf",
-          "displayName": "Comics as verba-visual texts",
-          "path": "src/data/alternative/материалы/13_Comics as verba-visual texts.pdf"
-        },
-        {
-          "fileName": "13_ComicsLinguistics.pdf",
-          "displayName": "ComicsLinguistics",
-          "path": "src/data/alternative/материалы/13_ComicsLinguistics.pdf"
-        },
-        {
-          "fileName": "13_Defining Comics.pdf",
-          "displayName": "Defining Comics",
-          "path": "src/data/alternative/материалы/13_Defining Comics.pdf"
-        },
-        {
-          "fileName": "13_Getting_Graphic_with_the_Past_Graphic_No.pdf",
-          "displayName": "Getting_Graphic_with_the_Past_Graphic_No",
-          "path": "src/data/alternative/материалы/13_Getting_Graphic_with_the_Past_Graphic_No.pdf"
-        },
-        {
-          "fileName": "13_Meskin_Comics as Literature.pdf",
-          "displayName": "Meskin_Comics as Literature",
-          "path": "src/data/alternative/материалы/13_Meskin_Comics as Literature.pdf"
-        },
-        {
-          "fileName": "13_Narrative_in_Comics.pdf",
-          "displayName": "Narrative_in_Comics",
-          "path": "src/data/alternative/материалы/13_Narrative_in_Comics.pdf"
-        },
-        {
-          "fileName": "13_What_is_Graphic_about_Graphic_Novels.pdf",
-          "displayName": "What_is_Graphic_about_Graphic_Novels",
-          "path": "src/data/alternative/материалы/13_What_is_Graphic_about_Graphic_Novels.pdf"
-        },
-        {
-          "fileName": "13_К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА».pdf",
-          "displayName": "К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА»",
-          "path": "src/data/alternative/материалы/13_К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА».pdf"
-        },
-        {
-          "fileName": "13_Нарратология комикса.pdf",
-          "displayName": "Нарратология комикса",
-          "path": "src/data/alternative/материалы/13_Нарратология комикса.pdf"
-        },
-        {
-          "fileName": "13_Нужна ли комиксу теория.pdf",
-          "displayName": "Нужна ли комиксу теория",
-          "path": "src/data/alternative/материалы/13_Нужна ли комиксу теория.pdf"
-        },
-        {
-          "fileName": "13_Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ.pdf",
-          "displayName": "Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ",
-          "path": "src/data/alternative/материалы/13_Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ.pdf"
-        },
-        {
-          "fileName": "13_Японские комиксы манга в России_ введение в проблематику чтения.pdf",
-          "displayName": "Японские комиксы манга в России_ введение в проблематику чтения",
-          "path": "src/data/alternative/материалы/13_Японские комиксы манга в России_ введение в проблематику чтения.pdf"
-        },
-        {
-          "fileName": "14_A Simple Approach to Classify Fictional and Non-Fictional Genres.pdf",
-          "displayName": "A Simple Approach to Classify Fictional and Non-Fictional Genres",
-          "path": "src/data/alternative/материалы/14_A Simple Approach to Classify Fictional and Non-Fictional Genres.pdf"
-        },
-        {
-          "fileName": "14_Bridging the gap between fiction and nonfiction in the literature.pdf",
-          "displayName": "Bridging the gap between fiction and nonfiction in the literature",
-          "path": "src/data/alternative/материалы/14_Bridging the gap between fiction and nonfiction in the literature.pdf"
-        },
-        {
-          "fileName": "14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf",
-          "displayName": "chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra",
-          "path": "src/data/alternative/материалы/14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf"
-        },
-        {
-          "fileName": "14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf",
-          "displayName": "dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov",
-          "path": "src/data/alternative/материалы/14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf"
-        },
-        {
-          "fileName": "14_Mapping Nonfiction Narrative.pdf",
-          "displayName": "Mapping Nonfiction Narrative",
-          "path": "src/data/alternative/материалы/14_Mapping Nonfiction Narrative.pdf"
-        },
-        {
-          "fileName": "14_Notes toward a Supreme Nonfiction.pdf",
-          "displayName": "Notes toward a Supreme Nonfiction",
-          "path": "src/data/alternative/материалы/14_Notes toward a Supreme Nonfiction.pdf"
-        },
-        {
-          "fileName": "14_The Non-fiction Novel.pdf",
-          "displayName": "The Non-fiction Novel",
-          "path": "src/data/alternative/материалы/14_The Non-fiction Novel.pdf"
-        },
-        {
-          "fileName": "14_tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki.pdf",
-          "displayName": "tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki",
-          "path": "src/data/alternative/материалы/14_tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki.pdf"
-        },
-        {
-          "fileName": "14_Сборник англ. статей про нон-фикшн.pdf",
-          "displayName": "Сборник англ. статей про нон-фикшн",
-          "path": "src/data/alternative/материалы/14_Сборник англ. статей про нон-фикшн.pdf"
-        },
-        {
-          "fileName": "15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf",
-          "displayName": "Directing narrative in gameplay player interaction in shaping narrative in the",
-          "path": "src/data/alternative/материалы/15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf"
-        },
-        {
-          "fileName": "15_Elements of Anti-World.pdf",
-          "displayName": "Elements of Anti-World",
-          "path": "src/data/alternative/материалы/15_Elements of Anti-World.pdf"
-        },
-        {
-          "fileName": "15_gamevironments_article_Deshbandhu.pdf",
-          "displayName": "gamevironments_article_Deshbandhu",
-          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf"
-        },
-        {
-          "fileName": "15_Interactivity A review of the concept.pdf",
-          "displayName": "Interactivity A review of the concept",
-          "path": "src/data/alternative/материалы/15_Interactivity A review of the concept.pdf"
-        },
-        {
-          "fileName": "15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf",
-          "displayName": "Ludonarrative_Hermeneutics_A_Way_Out_and",
-          "path": "src/data/alternative/материалы/15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf"
-        },
-        {
-          "fileName": "15_Narrative Guidance of Interactivity.pdf",
-          "displayName": "Narrative Guidance of Interactivity",
-          "path": "src/data/alternative/материалы/15_Narrative Guidance of Interactivity.pdf"
-        },
-        {
-          "fileName": "15_Narrative...pdf",
-          "displayName": "Narrative..",
-          "path": "src/data/alternative/материалы/15_Narrative...pdf"
-        },
-        {
-          "fileName": "15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf",
-          "displayName": "Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt",
-          "path": "src/data/alternative/материалы/15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf"
-        },
-        {
-          "fileName": "15_Playing the Text, Performing the Future.pdf",
-          "displayName": "Playing the Text, Performing the Future",
-          "path": "src/data/alternative/материалы/15_Playing the Text, Performing the Future.pdf"
-        },
-        {
-          "fileName": "15_Remodelling narrative spaces.pdf",
-          "displayName": "Remodelling narrative spaces",
-          "path": "src/data/alternative/материалы/15_Remodelling narrative spaces.pdf"
-        },
-        {
-          "fileName": "15_Study on the Interactive Storytelling Structure and Flow of Games.pdf",
-          "displayName": "Study on the Interactive Storytelling Structure and Flow of Games",
-          "path": "src/data/alternative/материалы/15_Study on the Interactive Storytelling Structure and Flow of Games.pdf"
-        },
-        {
-          "fileName": "15_The future of interactive literature.pdf",
-          "displayName": "The future of interactive literature",
-          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf"
-        },
-        {
-          "fileName": "15_The Influence of Interactivity on Immersion.pdf",
-          "displayName": "The Influence of Interactivity on Immersion",
-          "path": "src/data/alternative/материалы/15_The Influence of Interactivity on Immersion.pdf"
-        },
-        {
-          "fileName": "15_The Semiotics of Time Structure in Ludic Space.pdf",
-          "displayName": "The Semiotics of Time Structure in Ludic Space",
-          "path": "src/data/alternative/материалы/15_The Semiotics of Time Structure in Ludic Space.pdf"
-        },
-        {
           "fileName": "1_Fowler_Genre and the Literary Canon_1979.pdf",
           "displayName": "Fowler_Genre and the Literary Canon_1979",
           "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf"
@@ -345,6 +40,11 @@
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/10.pdf",
       "materials": [
         {
+          "fileName": "10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
+          "displayName": "Real_Punks_and_PretendersThe_Social_Orga",
+          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
+        },
+        {
           "fileName": "10_moore-punkauthenticity.pdf",
           "displayName": "moore-punkauthenticity",
           "path": "src/data/alternative/материалы/10_moore-punkauthenticity.pdf"
@@ -353,11 +53,6 @@
           "fileName": "10_muzykalnye-fenziny-i-pank-grafika.pdf",
           "displayName": "muzykalnye-fenziny-i-pank-grafika",
           "path": "src/data/alternative/материалы/10_muzykalnye-fenziny-i-pank-grafika.pdf"
-        },
-        {
-          "fileName": "10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
-          "displayName": "Real_Punks_and_PretendersThe_Social_Orga",
-          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
         }
       ]
     },
@@ -390,6 +85,11 @@
           "path": "src/data/alternative/материалы/11_Frankenstein_Feminism and Literary Theory.pdf"
         },
         {
+          "fileName": "11_Waves_of_Feminism_in_Literature_and_thei.pdf",
+          "displayName": "Waves_of_Feminism_in_Literature_and_thei",
+          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
+        },
+        {
           "fileName": "11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf",
           "displayName": "izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu",
           "path": "src/data/alternative/материалы/11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf"
@@ -403,11 +103,6 @@
           "fileName": "11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf",
           "displayName": "vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature",
           "path": "src/data/alternative/материалы/11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf"
-        },
-        {
-          "fileName": "11_Waves_of_Feminism_in_Literature_and_thei.pdf",
-          "displayName": "Waves_of_Feminism_in_Literature_and_thei",
-          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
         }
       ]
     },
@@ -435,19 +130,14 @@
           "path": "src/data/alternative/материалы/12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf"
         },
         {
-          "fileName": "12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
-          "displayName": "notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers",
-          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf"
+          "fileName": "12_Orientalism_Reversed_Russian_Literature.pdf",
+          "displayName": "Orientalism_Reversed_Russian_Literature",
+          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf"
         },
         {
           "fileName": "12_Orientalism_on_the_Margins_The_Ottoman_E.pdf",
           "displayName": "Orientalism_on_the_Margins_The_Ottoman_E",
           "path": "src/data/alternative/материалы/12_Orientalism_on_the_Margins_The_Ottoman_E.pdf"
-        },
-        {
-          "fileName": "12_Orientalism_Reversed_Russian_Literature.pdf",
-          "displayName": "Orientalism_Reversed_Russian_Literature",
-          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf"
         },
         {
           "fileName": "12_Review_of_Alexander_Etkind_Internal_Colo.pdf",
@@ -460,14 +150,14 @@
           "path": "src/data/alternative/материалы/12_Spivak-Can the Subaltern Speak.pdf"
         },
         {
-          "fileName": "12_Subaltern and Marginal Figures in Literature.pdf",
-          "displayName": "Subaltern and Marginal Figures in Literature",
-          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf"
-        },
-        {
           "fileName": "12_Subaltern Studies as Postcolonial Criticism.pdf",
           "displayName": "Subaltern Studies as Postcolonial Criticism",
           "path": "src/data/alternative/материалы/12_Subaltern Studies as Postcolonial Criticism.pdf"
+        },
+        {
+          "fileName": "12_Subaltern and Marginal Figures in Literature.pdf",
+          "displayName": "Subaltern and Marginal Figures in Literature",
+          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf"
         },
         {
           "fileName": "12_Subaltern_Classics_in_Anti_and_Post_Col.pdf",
@@ -493,6 +183,11 @@
           "fileName": "12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf",
           "displayName": "Vera_Tolz_The_Formation_of_Academic_Orie",
           "path": "src/data/alternative/материалы/12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf"
+        },
+        {
+          "fileName": "12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
+          "displayName": "notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers",
+          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf"
         }
       ]
     },
@@ -585,16 +280,6 @@
           "path": "src/data/alternative/материалы/14_Bridging the gap between fiction and nonfiction in the literature.pdf"
         },
         {
-          "fileName": "14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf",
-          "displayName": "chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra",
-          "path": "src/data/alternative/материалы/14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf"
-        },
-        {
-          "fileName": "14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf",
-          "displayName": "dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov",
-          "path": "src/data/alternative/материалы/14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf"
-        },
-        {
           "fileName": "14_Mapping Nonfiction Narrative.pdf",
           "displayName": "Mapping Nonfiction Narrative",
           "path": "src/data/alternative/материалы/14_Mapping Nonfiction Narrative.pdf"
@@ -608,6 +293,16 @@
           "fileName": "14_The Non-fiction Novel.pdf",
           "displayName": "The Non-fiction Novel",
           "path": "src/data/alternative/материалы/14_The Non-fiction Novel.pdf"
+        },
+        {
+          "fileName": "14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf",
+          "displayName": "chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra",
+          "path": "src/data/alternative/материалы/14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf"
+        },
+        {
+          "fileName": "14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf",
+          "displayName": "dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov",
+          "path": "src/data/alternative/материалы/14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf"
         },
         {
           "fileName": "14_tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki.pdf",
@@ -638,11 +333,6 @@
           "fileName": "15_Elements of Anti-World.pdf",
           "displayName": "Elements of Anti-World",
           "path": "src/data/alternative/материалы/15_Elements of Anti-World.pdf"
-        },
-        {
-          "fileName": "15_gamevironments_article_Deshbandhu.pdf",
-          "displayName": "gamevironments_article_Deshbandhu",
-          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf"
         },
         {
           "fileName": "15_Interactivity A review of the concept.pdf",
@@ -685,11 +375,6 @@
           "path": "src/data/alternative/материалы/15_Study on the Interactive Storytelling Structure and Flow of Games.pdf"
         },
         {
-          "fileName": "15_The future of interactive literature.pdf",
-          "displayName": "The future of interactive literature",
-          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf"
-        },
-        {
           "fileName": "15_The Influence of Interactivity on Immersion.pdf",
           "displayName": "The Influence of Interactivity on Immersion",
           "path": "src/data/alternative/материалы/15_The Influence of Interactivity on Immersion.pdf"
@@ -698,6 +383,16 @@
           "fileName": "15_The Semiotics of Time Structure in Ludic Space.pdf",
           "displayName": "The Semiotics of Time Structure in Ludic Space",
           "path": "src/data/alternative/материалы/15_The Semiotics of Time Structure in Ludic Space.pdf"
+        },
+        {
+          "fileName": "15_The future of interactive literature.pdf",
+          "displayName": "The future of interactive literature",
+          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf"
+        },
+        {
+          "fileName": "15_gamevironments_article_Deshbandhu.pdf",
+          "displayName": "gamevironments_article_Deshbandhu",
+          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf"
         }
       ]
     },
@@ -963,14 +658,14 @@
       "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/9.pdf",
       "materials": [
         {
-          "fileName": "9_aleksey-kozlov-britanskiy-bit.pdf",
-          "displayName": "aleksey-kozlov-britanskiy-bit",
-          "path": "src/data/alternative/материалы/9_aleksey-kozlov-britanskiy-bit.pdf"
-        },
-        {
           "fileName": "9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf",
           "displayName": "Aztlan_ Martinez_With_ Imperious Eye_Spr98",
           "path": "src/data/alternative/материалы/9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf"
+        },
+        {
+          "fileName": "9_aleksey-kozlov-britanskiy-bit.pdf",
+          "displayName": "aleksey-kozlov-britanskiy-bit",
+          "path": "src/data/alternative/материалы/9_aleksey-kozlov-britanskiy-bit.pdf"
         },
         {
           "fileName": "9_rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya.pdf",
