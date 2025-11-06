@@ -100,8 +100,24 @@ async function findLectures() {
         let materials = []
         try {
           const matFiles = await fs.readdir(materialsDir)
+          // Создаем регулярное выражение для точного совпадения номера лекции
+          // Проверяем, что файл начинается с номера лекции, за которым следует разделитель (_, -, или пробел)
+          // Важно: после номера НЕ должно быть цифры (чтобы "10_" не совпадало с "1")
+          const lectureNum = lectureNumber.toString()
+          // Экранируем специальные символы regex в номере лекции
+          const escapedNum = lectureNum.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+          // Регулярка: начало строки + номер + (разделитель без цифры после ИЛИ .pdf в конце)
+          // Используем границу слова или проверку: после номера идет разделитель, а не цифра
+          // Это гарантирует, что "10_" не совпадет с "1", а "1_test.pdf" совпадет
+          const lectureRegex = new RegExp(`^${escapedNum}(?![0-9])([-_\\s]|\\.pdf$)`, 'i')
+          
           materials = matFiles
-            .filter(m => m.startsWith(lectureNumber) && m.endsWith('.pdf'))
+            .filter(m => {
+              if (!m.toLowerCase().endsWith('.pdf')) return false
+              // Проверяем точное совпадение: номер лекции + разделитель или сразу .pdf
+              // И убеждаемся, что после номера не идет еще одна цифра
+              return lectureRegex.test(m)
+            })
             .map(m => ({
               fileName: m,
               displayName: m.replace(/^\d+[-_\s]+/, '').replace(/\.pdf$/i, ''),
