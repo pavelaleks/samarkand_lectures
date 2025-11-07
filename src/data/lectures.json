@@ -461,9 +461,60 @@
       "number": "17",
       "title": "Будущее альтернативной литературы: AI-тексты, метаверс.",
       "id": "alternative-17",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/alternative/лекции/17.html",
+      "presentationPdf": "src/data/alternative/РїСЂРµР·РµРЅС‚Р°С†РёРё/17.pdf",
+      "materials": [
+        {
+          "fileName": "17_Artificial and Post-Artificial Texts.pdf",
+          "displayName": "Artificial and Post-Artificial Texts",
+          "path": "src/data/alternative/материалы/17_Artificial and Post-Artificial Texts.pdf"
+        },
+        {
+          "fileName": "17_Artificial Intelligence in Education.pdf",
+          "displayName": "Artificial Intelligence in Education",
+          "path": "src/data/alternative/материалы/17_Artificial Intelligence in Education.pdf"
+        },
+        {
+          "fileName": "17_ayiter_further-dimensions-typography.pdf",
+          "displayName": "ayiter_further-dimensions-typography",
+          "path": "src/data/alternative/материалы/17_ayiter_further-dimensions-typography.pdf"
+        },
+        {
+          "fileName": "17_Exploring the boundaries of.pdf",
+          "displayName": "Exploring the boundaries of",
+          "path": "src/data/alternative/материалы/17_Exploring the boundaries of.pdf"
+        },
+        {
+          "fileName": "17_From Fiction to Reality.pdf",
+          "displayName": "From Fiction to Reality",
+          "path": "src/data/alternative/материалы/17_From Fiction to Reality.pdf"
+        },
+        {
+          "fileName": "17_Innovative Integration of Poetry and Visual Arts.pdf",
+          "displayName": "Innovative Integration of Poetry and Visual Arts",
+          "path": "src/data/alternative/материалы/17_Innovative Integration of Poetry and Visual Arts.pdf"
+        },
+        {
+          "fileName": "17_Literary Criticism in the Postdigital Age.pdf",
+          "displayName": "Literary Criticism in the Postdigital Age",
+          "path": "src/data/alternative/материалы/17_Literary Criticism in the Postdigital Age.pdf"
+        },
+        {
+          "fileName": "17_Literature, Narrativity and Composition.pdf",
+          "displayName": "Literature, Narrativity and Composition",
+          "path": "src/data/alternative/материалы/17_Literature, Narrativity and Composition.pdf"
+        },
+        {
+          "fileName": "17_Phantasmagorical simulation theory.pdf",
+          "displayName": "Phantasmagorical simulation theory",
+          "path": "src/data/alternative/материалы/17_Phantasmagorical simulation theory.pdf"
+        },
+        {
+          "fileName": "17_What is novel about the Metaverse.pdf",
+          "displayName": "What is novel about the Metaverse",
+          "path": "src/data/alternative/материалы/17_What is novel about the Metaverse.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "alternative",
