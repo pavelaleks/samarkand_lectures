@@ -954,9 +954,35 @@
       "number": "1",
       "title": "Теория литературного процесса: понятие, структура, методология.",
       "id": "modern-literature-1",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/modern-literature/лекции/1.html",
+      "presentationPdf": "src/data/modern-literature/Р»РµРєС†РёРё/1.pdf",
+      "materials": [
+        {
+          "fileName": "1_Hack-DoctrineLiteraryForms-1916.pdf",
+          "displayName": "Hack-DoctrineLiteraryForms-1916",
+          "path": "src/data/modern-literature/материалы/1_Hack-DoctrineLiteraryForms-1916.pdf"
+        },
+        {
+          "fileName": "1_Jane_Meet_Charles_Literature_Evolution_a.pdf",
+          "displayName": "Jane_Meet_Charles_Literature_Evolution_a",
+          "path": "src/data/modern-literature/материалы/1_Jane_Meet_Charles_Literature_Evolution_a.pdf"
+        },
+        {
+          "fileName": "1_kuskin.pdf",
+          "displayName": "kuskin",
+          "path": "src/data/modern-literature/материалы/1_kuskin.pdf"
+        },
+        {
+          "fileName": "1_literary_history_as_a_challenge_to_liter.pdf",
+          "displayName": "literary_history_as_a_challenge_to_liter",
+          "path": "src/data/modern-literature/материалы/1_literary_history_as_a_challenge_to_liter.pdf"
+        },
+        {
+          "fileName": "1_sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_.pdf",
+          "displayName": "sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_",
+          "path": "src/data/modern-literature/материалы/1_sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",
@@ -1035,18 +1061,60 @@
       "number": "2",
       "title": "Историко-литературный процесс и его модели: Гегель, Веселовский, Бахтин, современные концепции.",
       "id": "modern-literature-2",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/modern-literature/лекции/2.html",
+      "presentationPdf": "src/data/modern-literature/Р»РµРєС†РёРё/2.pdf",
+      "materials": [
+        {
+          "fileName": "2_Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011.pdf",
+          "displayName": "Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011",
+          "path": "src/data/modern-literature/материалы/2_Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011.pdf"
+        },
+        {
+          "fileName": "2_istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta.pdf",
+          "displayName": "istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta",
+          "path": "src/data/modern-literature/материалы/2_istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta.pdf"
+        },
+        {
+          "fileName": "2_Istorich_poetika.pdf",
+          "displayName": "Istorich_poetika",
+          "path": "src/data/modern-literature/материалы/2_Istorich_poetika.pdf"
+        },
+        {
+          "fileName": "2_Veselovskij_A._N._Istoricheskaya_poetika._1989.pdf",
+          "displayName": "Veselovskij_A._N._Istoricheskaya_poetika._1989",
+          "path": "src/data/modern-literature/материалы/2_Veselovskij_A._N._Istoricheskaya_poetika._1989.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",
       "number": "3",
       "title": "Литературное направление, школа, поколение: различие и динамика.",
       "id": "modern-literature-3",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/modern-literature/лекции/3.html",
+      "presentationPdf": "src/data/modern-literature/Р»РµРєС†РёРё/3.pdf",
+      "materials": [
+        {
+          "fileName": "3_kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed.pdf",
+          "displayName": "kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed",
+          "path": "src/data/modern-literature/материалы/3_kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed.pdf"
+        },
+        {
+          "fileName": "3_Literaturnaya_entciklopediya_terminov_i_ponyatij._2001.pdf",
+          "displayName": "Literaturnaya_entciklopediya_terminov_i_ponyatij._2001",
+          "path": "src/data/modern-literature/материалы/3_Literaturnaya_entciklopediya_terminov_i_ponyatij._2001.pdf"
+        },
+        {
+          "fileName": "3_razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo.pdf",
+          "displayName": "razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo",
+          "path": "src/data/modern-literature/материалы/3_razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo.pdf"
+        },
+        {
+          "fileName": "3_Teoriya_literatury._T._4._2001_ocr.pdf",
+          "displayName": "Teoriya_literatury._T._4._2001_ocr",
+          "path": "src/data/modern-literature/материалы/3_Teoriya_literatury._T._4._2001_ocr.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",
