@@ -1121,27 +1121,90 @@
       "number": "4",
       "title": "Канон и контрканон: механизмы формирования.",
       "id": "modern-literature-4",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/modern-literature/лекции/4.html",
+      "presentationPdf": "src/data/modern-literature/Р»РµРєС†РёРё/4.pdf",
+      "materials": [
+        {
+          "fileName": "4_Meletinskij_E.M._Poetika_mifa._1976.pdf",
+          "displayName": "Meletinskij_E.M._Poetika_mifa._1976",
+          "path": "src/data/modern-literature/материалы/4_Meletinskij_E.M._Poetika_mifa._1976.pdf"
+        },
+        {
+          "fileName": "4_Rejtblat_A._Ot_Bovy_k_Balmontu._2009.pdf",
+          "displayName": "Rejtblat_A._Ot_Bovy_k_Balmontu._2009",
+          "path": "src/data/modern-literature/материалы/4_Rejtblat_A._Ot_Bovy_k_Balmontu._2009.pdf"
+        },
+        {
+          "fileName": "4_Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi.pdf",
+          "displayName": "Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi",
+          "path": "src/data/modern-literature/материалы/4_Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",
       "number": "5",
       "title": "Литературное поле (П. Бурдьё): институты, критика, рынок.",
       "id": "modern-literature-5",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/modern-literature/лекции/5.html",
+      "presentationPdf": "src/data/modern-literature/Р»РµРєС†РёРё/5.pdf",
+      "materials": [
+        {
+          "fileName": "5_Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka.pdf",
+          "displayName": "Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka",
+          "path": "src/data/modern-literature/материалы/5_Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka.pdf"
+        },
+        {
+          "fileName": "5_Burdye_P_-_Pole_literatury.pdf",
+          "displayName": "Burdye_P_-_Pole_literatury",
+          "path": "src/data/modern-literature/материалы/5_Burdye_P_-_Pole_literatury.pdf"
+        },
+        {
+          "fileName": "5_Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast.pdf",
+          "displayName": "Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast",
+          "path": "src/data/modern-literature/материалы/5_Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast.pdf"
+        },
+        {
+          "fileName": "5_Struktura_gabitus_praktika.pdf",
+          "displayName": "Struktura_gabitus_praktika",
+          "path": "src/data/modern-literature/материалы/5_Struktura_gabitus_praktika.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",
       "number": "6",
       "title": "Литература и идеология: марксизм, постмарксизм, культурные исследования.",
       "id": "modern-literature-6",
-      "htmlFile": null,
-      "presentationPdf": null,
-      "materials": []
+      "htmlFile": "src/data/modern-literature/лекции/6.html",
+      "presentationPdf": "src/data/modern-literature/Р»РµРєС†РёРё/6.pdf",
+      "materials": [
+        {
+          "fileName": "6_Eagleton_Terry_Ideology_Fiction_Narrativ.pdf",
+          "displayName": "Eagleton_Terry_Ideology_Fiction_Narrativ",
+          "path": "src/data/modern-literature/материалы/6_Eagleton_Terry_Ideology_Fiction_Narrativ.pdf"
+        },
+        {
+          "fileName": "6_IDEOLOGY_AND_LITERATURE.pdf",
+          "displayName": "IDEOLOGY_AND_LITERATURE",
+          "path": "src/data/modern-literature/материалы/6_IDEOLOGY_AND_LITERATURE.pdf"
+        },
+        {
+          "fileName": "6_Negritude-Literature and Ideology.pdf",
+          "displayName": "Negritude-Literature and Ideology",
+          "path": "src/data/modern-literature/материалы/6_Negritude-Literature and Ideology.pdf"
+        },
+        {
+          "fileName": "6_Ramon-Saldivar--Narrative-and-Ideology.pdf",
+          "displayName": "Ramon-Saldivar--Narrative-and-Ideology",
+          "path": "src/data/modern-literature/материалы/6_Ramon-Saldivar--Narrative-and-Ideology.pdf"
+        },
+        {
+          "fileName": "6_The_Concept_of_Ideology_in_Marxist_Liter.pdf",
+          "displayName": "The_Concept_of_Ideology_in_Marxist_Liter",
+          "path": "src/data/modern-literature/материалы/6_The_Concept_of_Ideology_in_Marxist_Liter.pdf"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",
