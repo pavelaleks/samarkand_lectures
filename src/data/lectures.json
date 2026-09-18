@@ -1398,29 +1398,27 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "1_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/1_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в цифровые гуманитарные исследования (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "1_Программа_курса.pdf",
-          "displayName": "Программа курса",
-          "path": "src/data/digital-humanities/материалы/1_Программа_курса.pdf"
+          "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
+          "displayName": "Моретти Ф. Дальнее чтение (2016)",
+          "path": "src/data/digital-humanities/материалы/Moretti_Dalnee_chtenie_2016.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "1_Пучковская_Введение_в_цифровые_гуманитарные_исследования_ИТМО.pdf",
-          "displayName": "Пучковская Введение в цифровые гуманитарные исследования ИТМО",
-          "path": "src/data/digital-humanities/материалы/1_Пучковская_Введение_в_цифровые_гуманитарные_исследования_ИТМО.pdf"
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "1_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/1_Семинар.pdf"
-        },
-        {
-          "fileName": "1_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/1_Текст_лекции_PDF.pdf"
+          "displayName": "Moretti F. Conjectures on World Literature // New Left Review (полный текст)",
+          "url": "https://newleftreview.org/issues/ii1/articles/franco-moretti-conjectures-on-world-literature",
+          "kind": "link"
         }
       ]
     },
@@ -1433,19 +1431,20 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "2_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/2_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — разделы о данных и проектах (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "2_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/2_Семинар.pdf"
+          "displayName": "Cursor Documentation",
+          "url": "https://docs.cursor.com/",
+          "kind": "link"
         },
         {
-          "fileName": "2_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/2_Текст_лекции_PDF.pdf"
+          "displayName": "Unicode / UTF-8 FAQ",
+          "url": "https://www.unicode.org/faq/utf_bom.html",
+          "kind": "link"
         }
       ]
     },
@@ -1458,19 +1457,26 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "3_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/3_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — корпуса и предобработка (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "3_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/3_Семинар.pdf"
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "3_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/3_Текст_лекции_PDF.pdf"
+          "displayName": "Национальный корпус русского языка (НКРЯ)",
+          "url": "https://ruscorpora.ru/",
+          "kind": "link"
+        },
+        {
+          "displayName": "Bird, Klein, Loper. Natural Language Processing with Python (NLTK Book)",
+          "url": "https://www.nltk.org/book/",
+          "kind": "link"
         }
       ]
     },
@@ -1483,19 +1489,21 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "4_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/4_Практическое_занятие.pdf"
+          "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
+          "displayName": "Моретти Ф. Дальнее чтение (2016) — количественные подходы",
+          "path": "src/data/digital-humanities/материалы/Moretti_Dalnee_chtenie_2016.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "4_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/4_Семинар.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "4_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/4_Текст_лекции_PDF.pdf"
+          "displayName": "Zipf’s law — обзор (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Zipf%27s_law",
+          "kind": "link"
         }
       ]
     },
@@ -1508,19 +1516,25 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "5_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/5_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — стилиометрия / анализ текста (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "5_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/5_Семинар.pdf"
+          "displayName": "Гид по Voyant Tools, ч. I: подготовка корпуса (Системный Блокъ)",
+          "url": "https://sysblok.ru/philology/gid-po-voyant-tools-podgotovka-korpusa/",
+          "kind": "link"
         },
         {
-          "fileName": "5_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/5_Текст_лекции_PDF.pdf"
+          "displayName": "Гид по Voyant Tools, ч. II: анализ и визуализация (Системный Блокъ)",
+          "url": "https://sysblok.ru/philology/gid-po-voyant-tools-analiz-i-vizualizacija/",
+          "kind": "link"
+        },
+        {
+          "displayName": "Eder M. et al. / stylometry discussion in DHQ (Delta and authorship)",
+          "url": "https://www.digitalhumanities.org/dhq/vol/15/4/000579/000579.html",
+          "kind": "link"
         }
       ]
     },
@@ -1533,19 +1547,25 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "6_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/6_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — NLP и NER (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "6_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/6_Семинар.pdf"
+          "displayName": "Natasha — документация NLP для русского языка",
+          "url": "https://natasha.github.io/",
+          "kind": "link"
         },
         {
-          "fileName": "6_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/6_Текст_лекции_PDF.pdf"
+          "displayName": "spaCy: Named Entities",
+          "url": "https://spacy.io/usage/linguistic-features#named-entities",
+          "kind": "link"
+        },
+        {
+          "displayName": "NLTK Book — online",
+          "url": "https://www.nltk.org/book/",
+          "kind": "link"
         }
       ]
     },
@@ -1558,19 +1578,21 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "7_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/7_Практическое_занятие.pdf"
+          "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
+          "displayName": "Моретти Ф. Дальнее чтение — теория сетей и анализ сюжета (2016)",
+          "path": "src/data/digital-humanities/материалы/Moretti_Dalnee_chtenie_2016.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "7_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/7_Семинар.pdf"
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "7_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/7_Текст_лекции_PDF.pdf"
+          "displayName": "Moretti F. Network Theory, Plot Analysis (Stanford Literary Lab Pamphlet 2, PDF)",
+          "url": "https://litlab.stanford.edu/LiteraryLabPamphlet2.pdf",
+          "kind": "link"
         }
       ]
     },
@@ -1583,19 +1605,20 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "8_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/8_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — анализ данных / NLP (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "8_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/8_Семинар.pdf"
+          "displayName": "NLTK Book, Ch. 6: Learning to Classify Text",
+          "url": "https://www.nltk.org/book/ch06.html",
+          "kind": "link"
         },
         {
-          "fileName": "8_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/8_Текст_лекции_PDF.pdf"
+          "displayName": "VADER Sentiment (Hutto & Gilbert) — репозиторий и описание",
+          "url": "https://github.com/cjhutto/vaderSentiment",
+          "kind": "link"
         }
       ]
     },
@@ -1608,19 +1631,20 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "9_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/9_Практическое_занятие.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — тематическое моделирование (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "9_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/9_Семинар.pdf"
+          "displayName": "Blei D. Probabilistic Topic Models (Communications of the ACM, PDF)",
+          "url": "https://www.cs.columbia.edu/~blei/papers/Blei2012.pdf",
+          "kind": "link"
         },
         {
-          "fileName": "9_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/9_Текст_лекции_PDF.pdf"
+          "displayName": "Gensim: LDA tutorial",
+          "url": "https://radimrehurek.com/gensim/auto_examples/tutorials/run_lda.html",
+          "kind": "link"
         }
       ]
     },
@@ -1633,19 +1657,19 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "10_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/10_Практическое_занятие.pdf"
+          "displayName": "Prompt Engineering Guide (русская версия)",
+          "url": "https://www.promptingguide.ai/ru",
+          "kind": "link"
         },
         {
-          "fileName": "10_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/10_Семинар.pdf"
+          "displayName": "Vaswani et al. Attention Is All You Need (arXiv PDF)",
+          "url": "https://arxiv.org/pdf/1706.03762",
+          "kind": "link"
         },
         {
-          "fileName": "10_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/10_Текст_лекции_PDF.pdf"
+          "displayName": "OpenAI: Prompt Engineering guide",
+          "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+          "kind": "link"
         }
       ]
     },
@@ -1658,19 +1682,19 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "11_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/11_Практическое_занятие.pdf"
+          "displayName": "Prompt Engineering Guide (русская версия)",
+          "url": "https://www.promptingguide.ai/ru",
+          "kind": "link"
         },
         {
-          "fileName": "11_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/11_Семинар.pdf"
+          "displayName": "OpenAI API Reference",
+          "url": "https://platform.openai.com/docs/api-reference",
+          "kind": "link"
         },
         {
-          "fileName": "11_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/11_Текст_лекции_PDF.pdf"
+          "displayName": "NLTK Book — online",
+          "url": "https://www.nltk.org/book/",
+          "kind": "link"
         }
       ]
     },
@@ -1683,19 +1707,21 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "12_Практическое_занятие.pdf",
-          "displayName": "Практическое занятие",
-          "path": "src/data/digital-humanities/материалы/12_Практическое_занятие.pdf"
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022) — репрезентация знания",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "12_Семинар.pdf",
-          "displayName": "Семинар",
-          "path": "src/data/digital-humanities/материалы/12_Семинар.pdf"
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — визуализация (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
         },
         {
-          "fileName": "12_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/12_Текст_лекции_PDF.pdf"
+          "displayName": "Streamlit documentation",
+          "url": "https://docs.streamlit.io/",
+          "kind": "link"
         }
       ]
     },
@@ -1708,9 +1734,26 @@
       "presentationPdf": null,
       "materials": [
         {
-          "fileName": "13_Текст_лекции_PDF.pdf",
-          "displayName": "Текст лекции PDF",
-          "path": "src/data/digital-humanities/материалы/13_Текст_лекции_PDF.pdf"
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
+        },
+        {
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
+        },
+        {
+          "displayName": "ALLEA. Living Guidelines on the Responsible Use of Generative AI in Research",
+          "url": "https://allea.org/portfolio-item/living-guidelines-on-the-responsible-use-of-generative-ai-in-research/",
+          "kind": "link"
+        },
+        {
+          "displayName": "Moretti F. Conjectures on World Literature // New Left Review",
+          "url": "https://newleftreview.org/issues/ii1/articles/franco-moretti-conjectures-on-world-literature",
+          "kind": "link"
         }
       ]
     }

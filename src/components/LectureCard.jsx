@@ -240,13 +240,19 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                     </h3>
                   </div>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    Статьи, книги и другие материалы для изучения
+                    Книги и статьи для чтения к занятию (PDF или ссылка на полный текст)
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {lecture.materials.map((material, idx) => (
+                    {lecture.materials.map((material, idx) => {
+                      const baseUrl = import.meta.env.BASE_URL || '/samarkand_lectures/'
+                      const href = material.url
+                        ? material.url
+                        : `${baseUrl}${material.path}`
+                      const isLink = Boolean(material.url)
+                      return (
                       <a
                         key={idx}
-                        href={`${import.meta.env.BASE_URL || '/samarkand_lectures/'}${material.path}`}
+                        href={href}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-start gap-3 p-4 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl hover:shadow-lg transition-all duration-200 group border border-emerald-100 dark:border-emerald-800/50 hover:border-emerald-300 dark:hover:border-emerald-600"
@@ -254,22 +260,31 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                       >
                         <div className="flex-shrink-0 mt-0.5">
                           <div className="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center group-hover:bg-emerald-200 dark:group-hover:bg-emerald-900/60 transition-colors">
-                            <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                            </svg>
+                            {isLink ? (
+                              <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                              </svg>
+                            ) : (
+                              <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                              </svg>
+                            )}
                           </div>
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
                             {material.displayName || material.fileName}
                           </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">PDF документ</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {isLink ? 'Открыть в сети' : 'PDF для чтения'}
+                          </p>
                         </div>
                         <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                       </a>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}

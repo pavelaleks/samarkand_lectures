@@ -1,5 +1,24 @@
 {
   "number": "5",
   "title": "Стилиометрия и компьютерная атрибуция текста",
-  "id": "digital-humanities-5"
+  "id": "digital-humanities-5",
+  "readings": [
+    {
+      "displayName": "Пучковская и др. Введение в DH — стилиометрия / анализ текста (ИТМО, 2021)",
+      "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+      "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf"
+    },
+    {
+      "displayName": "Гид по Voyant Tools, ч. I: подготовка корпуса (Системный Блокъ)",
+      "url": "https://sysblok.ru/philology/gid-po-voyant-tools-podgotovka-korpusa/"
+    },
+    {
+      "displayName": "Гид по Voyant Tools, ч. II: анализ и визуализация (Системный Блокъ)",
+      "url": "https://sysblok.ru/philology/gid-po-voyant-tools-analiz-i-vizualizacija/"
+    },
+    {
+      "displayName": "Eder M. et al. / stylometry discussion in DHQ (Delta and authorship)",
+      "url": "https://www.digitalhumanities.org/dhq/vol/15/4/000579/000579.html"
+    }
+  ]
 }

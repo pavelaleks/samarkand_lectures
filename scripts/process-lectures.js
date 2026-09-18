@@ -95,41 +95,56 @@ async function findLectures() {
           console.error(`Ошибка поиска презентации для лекции ${lectureNumber}:`, err.message)
         }
         
-        // Ищем PDF материалы для этой лекции
-        const materialsDir = path.join(ROOT, 'src', 'data', course, 'материалы')
+        // Материалы для чтения: приоритет у поля readings в JSON лекции
+        // (книги/статьи/ссылки). Иначе — старый режим: PDF с префиксом номера.
         let materials = []
-        try {
-          const matFiles = await fs.readdir(materialsDir)
-          // Создаем регулярное выражение для точного совпадения номера лекции
-          // Проверяем, что файл начинается с номера лекции, за которым следует разделитель (_, -, или пробел)
-          // Важно: после номера НЕ должно быть цифры (чтобы "10_" не совпадало с "1")
-          const lectureNum = lectureNumber.toString()
-          // Экранируем специальные символы regex в номере лекции
-          const escapedNum = lectureNum.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-          // Регулярка: начало строки + номер + (разделитель без цифры после ИЛИ .pdf в конце)
-          // Используем границу слова или проверку: после номера идет разделитель, а не цифра
-          // Это гарантирует, что "10_" не совпадет с "1", а "1_test.pdf" совпадет
-          const lectureRegex = new RegExp(`^${escapedNum}(?![0-9])([-_\\s]|\\.pdf$)`, 'i')
-          
-          materials = matFiles
-            .filter(m => {
-              if (!m.toLowerCase().endsWith('.pdf')) return false
-              // Проверяем точное совпадение: номер лекции + разделитель или сразу .pdf
-              // И убеждаемся, что после номера не идет еще одна цифра
-              return lectureRegex.test(m)
-            })
-            .map(m => ({
-              fileName: m,
-              displayName: m.replace(/^\d+[-_\s]+/, '').replace(/\.pdf$/i, ''),
-              path: `src/data/${course}/материалы/${m}`.replace(/\\/g, '/')
-            }))
-        } catch {
-          // Папка может не существовать
+        if (Array.isArray(lectureData.readings) && lectureData.readings.length > 0) {
+          materials = lectureData.readings.map((r) => {
+            if (r.url) {
+              return {
+                displayName: r.displayName || r.title || r.url,
+                url: r.url,
+                kind: 'link',
+              }
+            }
+            const fileName = r.fileName || (r.path ? r.path.split('/').pop() : '')
+            return {
+              fileName,
+              displayName: r.displayName || r.title || fileName,
+              path: r.path || `src/data/${course}/материалы/${fileName}`.replace(/\\/g, '/'),
+              kind: 'pdf',
+            }
+          })
+        } else {
+          const materialsDir = path.join(ROOT, 'src', 'data', course, 'материалы')
+          try {
+            const matFiles = await fs.readdir(materialsDir)
+            const lectureNum = lectureNumber.toString()
+            const escapedNum = lectureNum.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            const lectureRegex = new RegExp(`^${escapedNum}(?![0-9])([-_\\s]|\\.pdf$)`, 'i')
+
+            materials = matFiles
+              .filter(m => {
+                if (!m.toLowerCase().endsWith('.pdf')) return false
+                return lectureRegex.test(m)
+              })
+              .map(m => ({
+                fileName: m,
+                displayName: m.replace(/^\d+[-_\s]+/, '').replace(/\.pdf$/i, ''),
+                path: `src/data/${course}/материалы/${m}`.replace(/\\/g, '/'),
+                kind: 'pdf',
+              }))
+          } catch {
+            // Папка может не существовать
+          }
         }
-        
+
+        // Не дублируем readings в индексе отдельным полем — они уже в materials
+        const { readings: _readings, ...lectureRest } = lectureData
+
         lectures.push({
           courseSlug: course,
-          ...lectureData,
+          ...lectureRest,
           htmlFile,
           presentationPdf,
           materials

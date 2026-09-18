@@ -1,5 +1,24 @@
 {
   "number": "6",
   "title": "Автоматическое извлечение знаний: NER-технологии",
-  "id": "digital-humanities-6"
+  "id": "digital-humanities-6",
+  "readings": [
+    {
+      "displayName": "Пучковская и др. Введение в DH — NLP и NER (ИТМО, 2021)",
+      "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+      "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf"
+    },
+    {
+      "displayName": "Natasha — документация NLP для русского языка",
+      "url": "https://natasha.github.io/"
+    },
+    {
+      "displayName": "spaCy: Named Entities",
+      "url": "https://spacy.io/usage/linguistic-features#named-entities"
+    },
+    {
+      "displayName": "NLTK Book — online",
+      "url": "https://www.nltk.org/book/"
+    }
+  ]
 }

@@ -1,5 +1,20 @@
 {
   "number": "9",
   "title": "Тематическое моделирование художественной прозы",
-  "id": "digital-humanities-9"
+  "id": "digital-humanities-9",
+  "readings": [
+    {
+      "displayName": "Пучковская и др. Введение в DH — тематическое моделирование (ИТМО, 2021)",
+      "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+      "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf"
+    },
+    {
+      "displayName": "Blei D. Probabilistic Topic Models (Communications of the ACM, PDF)",
+      "url": "https://www.cs.columbia.edu/~blei/papers/Blei2012.pdf"
+    },
+    {
+      "displayName": "Gensim: LDA tutorial",
+      "url": "https://radimrehurek.com/gensim/auto_examples/tutorials/run_lda.html"
+    }
+  ]
 }

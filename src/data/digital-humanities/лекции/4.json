@@ -1,5 +1,21 @@
 {
   "number": "4",
   "title": "Квантитативные методы и закон Ципфа в литературоведении",
-  "id": "digital-humanities-4"
+  "id": "digital-humanities-4",
+  "readings": [
+    {
+      "displayName": "Моретти Ф. Дальнее чтение (2016) — количественные подходы",
+      "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
+      "path": "src/data/digital-humanities/материалы/Moretti_Dalnee_chtenie_2016.pdf"
+    },
+    {
+      "displayName": "Пучковская и др. Введение в DH (ИТМО, 2021)",
+      "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+      "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf"
+    },
+    {
+      "displayName": "Zipf’s law — обзор (Wikipedia)",
+      "url": "https://en.wikipedia.org/wiki/Zipf%27s_law"
+    }
+  ]
 }

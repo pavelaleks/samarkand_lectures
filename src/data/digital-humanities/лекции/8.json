@@ -1,5 +1,20 @@
 {
   "number": "8",
   "title": "Анализ тональности и эмоциональное картирование",
-  "id": "digital-humanities-8"
+  "id": "digital-humanities-8",
+  "readings": [
+    {
+      "displayName": "Пучковская и др. Введение в DH — анализ данных / NLP (ИТМО, 2021)",
+      "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+      "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf"
+    },
+    {
+      "displayName": "NLTK Book, Ch. 6: Learning to Classify Text",
+      "url": "https://www.nltk.org/book/ch06.html"
+    },
+    {
+      "displayName": "VADER Sentiment (Hutto & Gilbert) — репозиторий и описание",
+      "url": "https://github.com/cjhutto/vaderSentiment"
+    }
+  ]
 }

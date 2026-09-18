@@ -1,5 +1,26 @@
 {
   "number": "1",
   "title": "Введение в Digital Humanities и концепцию ИИ-соавторства",
-  "id": "digital-humanities-1"
+  "id": "digital-humanities-1",
+  "readings": [
+    {
+      "displayName": "Пучковская и др. Введение в цифровые гуманитарные исследования (ИТМО, 2021)",
+      "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+      "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf"
+    },
+    {
+      "displayName": "Моретти Ф. Дальнее чтение (2016)",
+      "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
+      "path": "src/data/digital-humanities/материалы/Moretti_Dalnee_chtenie_2016.pdf"
+    },
+    {
+      "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
+      "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+      "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf"
+    },
+    {
+      "displayName": "Moretti F. Conjectures on World Literature // New Left Review (полный текст)",
+      "url": "https://newleftreview.org/issues/ii1/articles/franco-moretti-conjectures-on-world-literature"
+    }
+  ]
 }

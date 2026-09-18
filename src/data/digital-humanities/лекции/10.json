@@ -1,5 +1,19 @@
 {
   "number": "10",
   "title": "Большие языковые модели (LLM) и Prompt Engineering",
-  "id": "digital-humanities-10"
+  "id": "digital-humanities-10",
+  "readings": [
+    {
+      "displayName": "Prompt Engineering Guide (русская версия)",
+      "url": "https://www.promptingguide.ai/ru"
+    },
+    {
+      "displayName": "Vaswani et al. Attention Is All You Need (arXiv PDF)",
+      "url": "https://arxiv.org/pdf/1706.03762"
+    },
+    {
+      "displayName": "OpenAI: Prompt Engineering guide",
+      "url": "https://platform.openai.com/docs/guides/prompt-engineering"
+    }
+  ]
 }
