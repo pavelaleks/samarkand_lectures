@@ -4,7 +4,7 @@ import CourseCard from '../components/CourseCard'
 import coursesData from '../data/courses.json'
 
 export default function Home() {
-  const courses = coursesData.courses
+  const courses = coursesData.courses.filter(c => c.visible !== false)
   const [isInstructorOpen, setIsInstructorOpen] = useState(false)
 
   if (!courses || courses.length === 0) {

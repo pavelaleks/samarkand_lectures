@@ -43,6 +43,7 @@ export default function CoursePage() {
     green: 'from-green-500 to-emerald-600',
     blue: 'from-blue-500 to-cyan-600',
     yellow: 'from-yellow-500 to-amber-600',
+    teal: 'from-teal-500 to-cyan-700',
   }
   const bgGradient = colorClasses[course.color] || colorClasses.blue
 

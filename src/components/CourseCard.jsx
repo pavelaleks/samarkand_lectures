@@ -5,6 +5,7 @@ const colorClasses = {
   green: 'from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700',
   blue: 'from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700',
   yellow: 'from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700',
+  teal: 'from-teal-500 to-cyan-700 hover:from-teal-600 hover:to-cyan-800',
 }
 
 export default function CourseCard({ course, index }) {
@@ -28,6 +29,14 @@ export default function CourseCard({ course, index }) {
         <path d="M30 75 L50 55 L70 75" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.6" />
       </svg>
     ),
+    'digital-humanities': (
+      <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
+        <rect x="18" y="28" width="28" height="44" rx="3" fill="currentColor" opacity="0.7" />
+        <rect x="54" y="28" width="28" height="44" rx="3" fill="currentColor" opacity="0.45" />
+        <circle cx="32" cy="50" r="6" fill="currentColor" opacity="0.9" />
+        <path d="M60 40 L76 50 L60 60" stroke="currentColor" strokeWidth="3" fill="none" opacity="0.8" />
+      </svg>
+    ),
     'modern-literature': (
       <svg className="w-full h-full" viewBox="0 0 100 100" fill="none">
         <rect x="25" y="20" width="50" height="60" rx="3" fill="currentColor" opacity="0.7" />
@@ -44,6 +53,7 @@ export default function CourseCard({ course, index }) {
     green: 'text-green-400',
     blue: 'text-blue-400',
     yellow: 'text-yellow-400',
+    teal: 'text-teal-400',
   }
   const iconColor = iconColorClasses[course.color] || iconColorClasses.blue
   const IconComponent = courseIcons[course.slug] || courseIcons.alternative

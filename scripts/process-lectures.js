@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 
 async function findLectures() {
-  const courses = ['alternative', 'imagology', 'modern-literature']
+  const courses = ['alternative', 'imagology', 'modern-literature', 'digital-humanities']
   const lectures = []
   
   for (const course of courses) {

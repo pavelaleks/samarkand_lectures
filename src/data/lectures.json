@@ -1388,6 +1388,331 @@
           "path": "src/data/modern-literature/материалы/9_Жанр в современном литературоведении.pdf"
         }
       ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "1",
+      "title": "Введение в Digital Humanities и концепцию ИИ-соавторства",
+      "id": "digital-humanities-1",
+      "htmlFile": "src/data/digital-humanities/лекции/1.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "1_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/1_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "1_Программа_курса.pdf",
+          "displayName": "Программа курса",
+          "path": "src/data/digital-humanities/материалы/1_Программа_курса.pdf"
+        },
+        {
+          "fileName": "1_Пучковская_Введение_в_цифровые_гуманитарные_исследования_ИТМО.pdf",
+          "displayName": "Пучковская Введение в цифровые гуманитарные исследования ИТМО",
+          "path": "src/data/digital-humanities/материалы/1_Пучковская_Введение_в_цифровые_гуманитарные_исследования_ИТМО.pdf"
+        },
+        {
+          "fileName": "1_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/1_Семинар.pdf"
+        },
+        {
+          "fileName": "1_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/1_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "2",
+      "title": "Анатомия текстовых данных и среда разработки Cursor",
+      "id": "digital-humanities-2",
+      "htmlFile": "src/data/digital-humanities/лекции/2.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "2_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/2_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "2_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/2_Семинар.pdf"
+        },
+        {
+          "fileName": "2_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/2_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "3",
+      "title": "Основы корпусной филологии и предобработка текста",
+      "id": "digital-humanities-3",
+      "htmlFile": "src/data/digital-humanities/лекции/3.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "3_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/3_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "3_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/3_Семинар.pdf"
+        },
+        {
+          "fileName": "3_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/3_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "4",
+      "title": "Квантитативные методы и закон Ципфа в литературоведении",
+      "id": "digital-humanities-4",
+      "htmlFile": "src/data/digital-humanities/лекции/4.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "4_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/4_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "4_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/4_Семинар.pdf"
+        },
+        {
+          "fileName": "4_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/4_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "5",
+      "title": "Стилиометрия и компьютерная атрибуция текста",
+      "id": "digital-humanities-5",
+      "htmlFile": "src/data/digital-humanities/лекции/5.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "5_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/5_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "5_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/5_Семинар.pdf"
+        },
+        {
+          "fileName": "5_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/5_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "6",
+      "title": "Автоматическое извлечение знаний: NER-технологии",
+      "id": "digital-humanities-6",
+      "htmlFile": "src/data/digital-humanities/лекции/6.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "6_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/6_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "6_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/6_Семинар.pdf"
+        },
+        {
+          "fileName": "6_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/6_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "7",
+      "title": "Сетевой анализ художественного текста",
+      "id": "digital-humanities-7",
+      "htmlFile": "src/data/digital-humanities/лекции/7.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "7_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/7_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "7_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/7_Семинар.pdf"
+        },
+        {
+          "fileName": "7_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/7_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "8",
+      "title": "Анализ тональности и эмоциональное картирование",
+      "id": "digital-humanities-8",
+      "htmlFile": "src/data/digital-humanities/лекции/8.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "8_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/8_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "8_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/8_Семинар.pdf"
+        },
+        {
+          "fileName": "8_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/8_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "9",
+      "title": "Тематическое моделирование художественной прозы",
+      "id": "digital-humanities-9",
+      "htmlFile": "src/data/digital-humanities/лекции/9.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "9_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/9_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "9_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/9_Семинар.pdf"
+        },
+        {
+          "fileName": "9_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/9_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "10",
+      "title": "Большие языковые модели (LLM) и Prompt Engineering",
+      "id": "digital-humanities-10",
+      "htmlFile": "src/data/digital-humanities/лекции/10.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "10_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/10_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "10_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/10_Семинар.pdf"
+        },
+        {
+          "fileName": "10_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/10_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "11",
+      "title": "Интеграция LLM в программные скрипты через API",
+      "id": "digital-humanities-11",
+      "htmlFile": "src/data/digital-humanities/лекции/11.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "11_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/11_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "11_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/11_Семинар.pdf"
+        },
+        {
+          "fileName": "11_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/11_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "12",
+      "title": "Визуализация результатов и веб-панели для филологов",
+      "id": "digital-humanities-12",
+      "htmlFile": "src/data/digital-humanities/лекции/12.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "12_Практическое_занятие.pdf",
+          "displayName": "Практическое занятие",
+          "path": "src/data/digital-humanities/материалы/12_Практическое_занятие.pdf"
+        },
+        {
+          "fileName": "12_Семинар.pdf",
+          "displayName": "Семинар",
+          "path": "src/data/digital-humanities/материалы/12_Семинар.pdf"
+        },
+        {
+          "fileName": "12_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/12_Текст_лекции_PDF.pdf"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "13",
+      "title": "Верификация данных и цифровая этика исследований",
+      "id": "digital-humanities-13",
+      "htmlFile": "src/data/digital-humanities/лекции/13.html",
+      "presentationPdf": null,
+      "materials": [
+        {
+          "fileName": "13_Текст_лекции_PDF.pdf",
+          "displayName": "Текст лекции PDF",
+          "path": "src/data/digital-humanities/материалы/13_Текст_лекции_PDF.pdf"
+        }
+      ]
     }
   ]
 }
