@@ -91,7 +91,7 @@ export default function CoursePage() {
                 Лаборатория
               </h2>
               <p className="text-sm sm:text-base text-teal-900/80 dark:text-teal-100/80 leading-relaxed">
-                13 коротких работ к лекциям: очистка текста, частоты, сеть, тональность, промпт и верификация — прямо в браузере, без установки Python.
+                Учебные активности к лекциям: иллюстрация метода, построение графиков (Ципф и др.), практика notes/ и проверка своего кода — не галерея картинок.
               </p>
             </div>
             <span className="text-teal-700 dark:text-teal-300 font-semibold inline-flex items-center gap-1">

@@ -23,6 +23,7 @@ export function CleanText() {
   const [removePages, setRemovePages] = useState(true)
   const [collapseSpaces, setCollapseSpaces] = useState(true)
   const [removeSiteJunk, setRemoveSiteJunk] = useState(true)
+  const [dramaNote, setDramaNote] = useState('')
 
   const { clean, removed } = useMemo(() => {
     let t = text.replace(/\r\n/g, '\n')
@@ -58,14 +59,19 @@ export function CleanText() {
 
   return (
     <div className="space-y-4">
+      <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
+        <strong>Ваше действие.</strong> Это рабочее поле, не иллюстрация: меняйте галочки и текст слева —
+        справа мгновенно видно следствие для частотного анализа.
+      </div>
       <div className="flex flex-wrap gap-2">
         <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => setText(SAMPLES.dirty)}>
-          Учебный «грязный» пример
+          1. Подставить «грязный» пример
         </button>
         <button type="button" className={btnSecondary} onClick={() => downloadText('clean_utf8.txt', clean)}>
-          Скачать clean.txt
+          3. Скачать clean.txt
         </button>
       </div>
+      <p className="text-sm font-semibold">2. Включите/выключите правила и сравните колонки</p>
       <div className="flex flex-wrap gap-4 text-sm">
         {[
           [removeUrls, setRemoveUrls, 'Убирать URL'],
@@ -81,17 +87,27 @@ export function CleanText() {
       </div>
       <div className="grid md:grid-cols-2 gap-4">
         <label className="block">
-          <span className="text-sm font-semibold">До</span>
+          <span className="text-sm font-semibold">До (редактируйте)</span>
           <textarea value={text} onChange={(e) => setText(e.target.value)} rows={12} className={mono} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold">После</span>
+          <span className="text-sm font-semibold">После (результат очистки)</span>
           <textarea readOnly value={clean} rows={12} className={`${mono} border-teal-300 dark:border-teal-700 bg-teal-50/40 dark:bg-teal-950/20`} />
         </label>
       </div>
       <p className="text-sm text-gray-600 dark:text-gray-400">
         Сработавшие правила: {removed.length ? removed.join(', ') : 'ничего не изменено'}.
       </p>
+      <label className="block text-sm font-semibold rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Ваше действие (обязательно): какое правило вы бы отключили для драмы и почему?
+        <textarea
+          value={dramaNote}
+          onChange={(e) => setDramaNote(e.target.value)}
+          rows={3}
+          className={field}
+          placeholder="Например: не схлопывал бы пустые строки — снесёт ремарки…"
+        />
+      </label>
     </div>
   )
 }

@@ -8,12 +8,14 @@ import {
   TopicLite,
   VerifyLab,
 } from './guided'
+import { ZipfBuild } from './ZipfBuild'
 
 const TOOLS = {
   CloseDistant,
   CleanText,
   CorpusPassport,
   Frequencies,
+  ZipfBuild,
   StylometryLite,
   NerLite,
   NetworkLab,

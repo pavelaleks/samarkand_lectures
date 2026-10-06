@@ -2,11 +2,18 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import labs from '../data/labs.json'
 
-const levelColor = {
-  старт: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200',
-  ядро: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-200',
-  продвинутый: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200',
-  синтез: 'bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-100',
+const activityStyle = {
+  illustrate: 'bg-sky-100 text-sky-900 dark:bg-sky-900/40 dark:text-sky-100',
+  build: 'bg-teal-100 text-teal-900 dark:bg-teal-900/40 dark:text-teal-100',
+  code: 'bg-indigo-100 text-indigo-900 dark:bg-indigo-900/40 dark:text-indigo-100',
+  practice: 'bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-100',
+}
+
+const activityLabel = {
+  illustrate: 'Иллюстрация',
+  build: 'Построение',
+  code: 'Код',
+  practice: 'Практика',
 }
 
 export default function LabHub() {
@@ -31,8 +38,22 @@ export default function LabHub() {
           {labs.subtitle}
         </p>
 
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+          {(labs.activityTypes || []).map((t) => (
+            <div
+              key={t.id}
+              className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4"
+            >
+              <p className={`inline-block text-xs font-bold px-2 py-0.5 rounded-md mb-2 ${activityStyle[t.id]}`}>
+                {t.title}
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="rounded-2xl border border-teal-200 dark:border-teal-800/50 bg-teal-50/60 dark:bg-teal-950/25 p-5 sm:p-6 max-w-3xl">
-          <h2 className="font-bold text-teal-900 dark:text-teal-200 mb-3">Как пользоваться</h2>
+          <h2 className="font-bold text-teal-900 dark:text-teal-200 mb-3">Как работать (для студента)</h2>
           <ol className="list-decimal ml-5 space-y-2 text-gray-800 dark:text-gray-200">
             {labs.howTo.map((step) => (
               <li key={step}>{step}</li>
@@ -41,6 +62,7 @@ export default function LabHub() {
         </div>
       </motion.div>
 
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Работы к лекциям</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {labs.works.map((work, index) => (
           <motion.div
@@ -55,22 +77,19 @@ export default function LabHub() {
             >
               <div className="flex flex-wrap items-center gap-2 mb-3 text-xs sm:text-sm">
                 <span className="font-bold text-teal-700 dark:text-teal-300">Л{work.lecture}</span>
-                <span className={`px-2 py-0.5 rounded-md font-medium ${levelColor[work.level] || levelColor['ядро']}`}>
-                  {work.level}
+                <span className={`px-2 py-0.5 rounded-md font-semibold ${activityStyle[work.activity] || activityStyle.build}`}>
+                  {activityLabel[work.activity] || work.activity}
                 </span>
                 <span className="text-gray-500">{work.minutes} мин</span>
-                {work.mode === 'interactive' && (
-                  <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200">
-                    в браузере
-                  </span>
-                )}
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-snug">
                 {work.title}
               </h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-                {work.question}
+              <p className="text-sm text-teal-800 dark:text-teal-200/90 mb-2 leading-relaxed">
+                <span className="font-semibold">Чему учимся: </span>
+                {work.goal}
               </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{work.question}</p>
             </Link>
           </motion.div>
         ))}

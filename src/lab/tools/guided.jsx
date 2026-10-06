@@ -16,24 +16,32 @@ export function CloseDistant() {
   const [distantNote, setDistantNote] = useState('')
   const [claim, setClaim] = useState('')
 
+  const done = closeNote.trim() && distantNote.trim() && claim.trim()
+
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-semibold">Фрагмент
+      <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
+        <strong>Ваше действие.</strong> Три поля ниже нужно заполнить своими словами. Пустой экран ≠ выполненная работа.
+      </div>
+      <label className="block text-sm font-semibold">1. Фрагмент
         <textarea value={fragment} onChange={(e) => setFragment(e.target.value)} rows={4} className={mono} />
       </label>
       <div className="grid md:grid-cols-2 gap-4">
-        <label className="block text-sm font-semibold">Close reading
+        <label className="block text-sm font-semibold">2. Close reading
           <span className="block font-normal text-gray-500 mb-1">Цитата + смысл, без частот</span>
           <textarea value={closeNote} onChange={(e) => setCloseNote(e.target.value)} rows={5} className={field} placeholder="Контраст «счастья» и пустой комнаты…" />
         </label>
-        <label className="block text-sm font-semibold">Distant-гипотеза
+        <label className="block text-sm font-semibold">3. Distant-гипотеза
           <span className="block font-normal text-gray-500 mb-1">Что бы считал корпус / модель</span>
           <textarea value={distantNote} onChange={(e) => setDistantNote(e.target.value)} rows={5} className={field} placeholder="Доля слов счастья/пустоты по главам…" />
         </label>
       </div>
-      <label className="block text-sm font-semibold">Одно утверждение и его статус доказательства
+      <label className="block text-sm font-semibold">4. Одно утверждение и статус доказательства
         <textarea value={claim} onChange={(e) => setClaim(e.target.value)} rows={3} className={field} placeholder="Утверждение… Доказывается close / distant / обоими, потому что…" />
       </label>
+      <p className={`text-sm font-medium ${done ? 'text-emerald-700' : 'text-rose-600'}`}>
+        {done ? '✓ Все обязательные поля заполнены — можно переносить в notes/.' : '✗ Заполните поля 2–4.'}
+      </p>
     </div>
   )
 }
