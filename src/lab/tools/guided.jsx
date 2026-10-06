@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { SAMPLES, SENTIMENT_LEXICON } from '../samples'
+import { useLabReport } from '../LabReportContext'
+import { PROMPT_SCENARIOS, SAMPLES, SENTIMENT_LEXICON } from '../samples'
 import { downloadText, splitChapters, tokenize } from '../textUtils'
 
 const field =
@@ -15,32 +16,57 @@ export function CloseDistant() {
   const [closeNote, setCloseNote] = useState('')
   const [distantNote, setDistantNote] = useState('')
   const [claim, setClaim] = useState('')
-
   const done = closeNote.trim() && distantNote.trim() && claim.trim()
+
+  useLabReport(
+    () => ({
+      title: 'Close и distant на одном фрагменте',
+      body: [
+        '## Фрагмент',
+        fragment,
+        '',
+        '## Close reading',
+        closeNote || '— не заполнено —',
+        '',
+        '## Distant-гипотеза',
+        distantNote || '— не заполнено —',
+        '',
+        '## Утверждение и статус доказательства',
+        claim || '— не заполнено —',
+        '',
+        `Статус: ${done ? 'обязательные поля заполнены' : 'есть пустые поля'}`,
+      ].join('\n'),
+    }),
+    [fragment, closeNote, distantNote, claim, done]
+  )
 
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
-        <strong>Ваше действие.</strong> Три поля ниже нужно заполнить своими словами. Пустой экран ≠ выполненная работа.
+        <strong>Ваше действие.</strong> Три поля ниже нужно заполнить своими словами. Затем — «Скачать мой результат».
       </div>
-      <label className="block text-sm font-semibold">1. Фрагмент
+      <label className="block text-sm font-semibold">
+        1. Фрагмент
         <textarea value={fragment} onChange={(e) => setFragment(e.target.value)} rows={4} className={mono} />
       </label>
       <div className="grid md:grid-cols-2 gap-4">
-        <label className="block text-sm font-semibold">2. Close reading
+        <label className="block text-sm font-semibold">
+          2. Close reading
           <span className="block font-normal text-gray-500 mb-1">Цитата + смысл, без частот</span>
-          <textarea value={closeNote} onChange={(e) => setCloseNote(e.target.value)} rows={5} className={field} placeholder="Контраст «счастья» и пустой комнаты…" />
+          <textarea value={closeNote} onChange={(e) => setCloseNote(e.target.value)} rows={5} className={field} />
         </label>
-        <label className="block text-sm font-semibold">3. Distant-гипотеза
+        <label className="block text-sm font-semibold">
+          3. Distant-гипотеза
           <span className="block font-normal text-gray-500 mb-1">Что бы считал корпус / модель</span>
-          <textarea value={distantNote} onChange={(e) => setDistantNote(e.target.value)} rows={5} className={field} placeholder="Доля слов счастья/пустоты по главам…" />
+          <textarea value={distantNote} onChange={(e) => setDistantNote(e.target.value)} rows={5} className={field} />
         </label>
       </div>
-      <label className="block text-sm font-semibold">4. Одно утверждение и статус доказательства
-        <textarea value={claim} onChange={(e) => setClaim(e.target.value)} rows={3} className={field} placeholder="Утверждение… Доказывается close / distant / обоими, потому что…" />
+      <label className="block text-sm font-semibold">
+        4. Утверждение и статус доказательства
+        <textarea value={claim} onChange={(e) => setClaim(e.target.value)} rows={3} className={field} />
       </label>
       <p className={`text-sm font-medium ${done ? 'text-emerald-700' : 'text-rose-600'}`}>
-        {done ? '✓ Все обязательные поля заполнены — можно переносить в notes/.' : '✗ Заполните поля 2–4.'}
+        {done ? '✓ Поля заполнены — скачайте результат внизу страницы.' : '✗ Заполните поля 2–4.'}
       </p>
     </div>
   )
@@ -59,9 +85,8 @@ export function CorpusPassport() {
     owner: '',
   })
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }))
-
-  const md = useMemo(() => {
-    return `# Паспорт корпуса
+  const md = useMemo(
+    () => `# Паспорт корпуса
 
 - Исследователь: ${form.owner || '—'}
 - Автор текстов: ${form.author || '—'}
@@ -75,8 +100,11 @@ export function CorpusPassport() {
 - Дата заполнения: ${new Date().toISOString().slice(0, 10)}
 
 > Без паспорта корпус — папка файлов, а не научный объект.
-`
-  }, [form])
+`,
+    [form]
+  )
+
+  useLabReport(() => ({ title: 'Паспорт корпуса', body: md }), [md])
 
   return (
     <div className="space-y-3">
@@ -91,13 +119,14 @@ export function CorpusPassport() {
         ['criteria', 'Критерии включения'],
         ['exclusions', 'Что исключили'],
       ].map(([k, label]) => (
-        <label key={k} className="block text-sm font-semibold">{label}
+        <label key={k} className="block text-sm font-semibold">
+          {label}
           <input value={form[k]} onChange={(e) => set(k, e.target.value)} className={field} />
         </label>
       ))}
       <pre className="rounded-xl bg-gray-50 dark:bg-gray-900 p-4 text-xs overflow-x-auto whitespace-pre-wrap">{md}</pre>
       <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => downloadText('source.md', md)}>
-        Скачать source.md
+        Скачать только source.md
       </button>
     </div>
   )
@@ -106,6 +135,7 @@ export function CorpusPassport() {
 export function TopicLite() {
   const [text, setText] = useState(SAMPLES.cleanChekhov)
   const [windowSize, setWindowSize] = useState(30)
+  const [verify, setVerify] = useState({ motif: '', quote: '', counter: '' })
 
   const clusters = useMemo(() => {
     const tokens = tokenize(text).filter((w) => w.length > 3)
@@ -133,16 +163,41 @@ export function TopicLite() {
     return { topPairs, topWords }
   }, [text, windowSize])
 
-  const [verify, setVerify] = useState({ motif: '', quote: '', counter: '' })
+  useLabReport(
+    () => ({
+      title: 'Темы без магии: кластеры слов',
+      body: [
+        '## Топ слов совместной встречаемости',
+        ...clusters.topWords.map(([w, c]) => `- ${w}: ${c}`),
+        '',
+        '## Пары',
+        ...clusters.topPairs.map(([k, c]) => `- ${k.replace('|', ' — ')} ×${c}`),
+        '',
+        '## Верификация',
+        `Мотив: ${verify.motif || '—'}`,
+        `Цитата: ${verify.quote || '—'}`,
+        `Опровержение/сужение: ${verify.counter || '—'}`,
+      ].join('\n'),
+    }),
+    [clusters, verify]
+  )
 
   return (
     <div className="space-y-4">
       <p className="text-sm text-amber-800 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/30 rounded-xl p-3">
-        Это не LDA. Мы только смотрим, какие слова часто оказываются в одном окне — чтобы потренировать таблицу верификации.
+        Это не LDA. Тренируем таблицу верификации — затем скачайте результат.
       </p>
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={7} className={mono} />
-      <label className="text-sm">Размер окна
-        <input type="number" min={15} max={80} value={windowSize} onChange={(e) => setWindowSize(+e.target.value || 30)} className={`${field} w-28`} />
+      <label className="text-sm">
+        Размер окна
+        <input
+          type="number"
+          min={15}
+          max={80}
+          value={windowSize}
+          onChange={(e) => setWindowSize(+e.target.value || 30)}
+          className={`${field} w-28`}
+        />
       </label>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
@@ -150,7 +205,8 @@ export function TopicLite() {
           <ul className="text-sm space-y-1">
             {clusters.topWords.map(([w, c]) => (
               <li key={w} className="flex justify-between border-b border-gray-100 dark:border-gray-800 py-1">
-                <span className="font-mono">{w}</span><span>{c}</span>
+                <span className="font-mono">{w}</span>
+                <span>{c}</span>
               </li>
             ))}
           </ul>
@@ -159,65 +215,207 @@ export function TopicLite() {
           <h3 className="font-semibold mb-2">Пары в окнах</h3>
           <ul className="text-sm space-y-1">
             {clusters.topPairs.map(([k, c]) => (
-              <li key={k} className="font-mono">{k.replace('|', ' — ')} <span className="text-gray-500">×{c}</span></li>
+              <li key={k} className="font-mono">
+                {k.replace('|', ' — ')} <span className="text-gray-500">×{c}</span>
+              </li>
             ))}
           </ul>
         </div>
       </div>
       <div className="rounded-xl border border-teal-200 dark:border-teal-800 p-4 space-y-2">
         <h3 className="font-semibold">Таблица верификации (одна тема)</h3>
-        <input placeholder="Ожидаемый мотив" value={verify.motif} onChange={(e) => setVerify({ ...verify, motif: e.target.value })} className={field} />
-        <input placeholder="Подтверждающая цитата" value={verify.quote} onChange={(e) => setVerify({ ...verify, quote: e.target.value })} className={field} />
-        <input placeholder="Что опровергает или сужает" value={verify.counter} onChange={(e) => setVerify({ ...verify, counter: e.target.value })} className={field} />
+        <input
+          placeholder="Ожидаемый мотив"
+          value={verify.motif}
+          onChange={(e) => setVerify({ ...verify, motif: e.target.value })}
+          className={field}
+        />
+        <input
+          placeholder="Подтверждающая цитата"
+          value={verify.quote}
+          onChange={(e) => setVerify({ ...verify, quote: e.target.value })}
+          className={field}
+        />
+        <input
+          placeholder="Что опровергает или сужает"
+          value={verify.counter}
+          onChange={(e) => setVerify({ ...verify, counter: e.target.value })}
+          className={field}
+        />
       </div>
     </div>
   )
 }
 
 export function PromptLab() {
-  const [role, setRole] = useState('Ты помощник филолога. Не выдумывай цитат.')
-  const [task, setTask] = useState('Найди возможную иронию в фрагменте и объясни кратко.')
-  const [limits, setLimits] = useState('Отвечай по-русски. Каждое наблюдение снабди точной цитатой из фрагмента. Если уверенность низкая — скажи об этом.')
-  const [format, setFormat] = useState('1) наблюдение\n2) цитата\n3) уверенность: высокая/средняя/низкая')
-  const [fragment, setFragment] = useState(SAMPLES.promptFragment)
-  const [checks, setChecks] = useState({ quote: false, invent: false, limit: false })
+  const [scenarioId, setScenarioId] = useState(PROMPT_SCENARIOS[0].id)
+  const scenario = PROMPT_SCENARIOS.find((s) => s.id === scenarioId) || PROMPT_SCENARIOS[0]
 
-  const prompt = `РОЛЬ:\n${role}\n\nЗАДАЧА:\n${task}\n\nОГРАНИЧЕНИЯ:\n${limits}\n\nФОРМАТ ОТВЕТА:\n${format}\n\nФРАГМЕНТ:\n"""\n${fragment}\n"""\n`
+  const [role, setRole] = useState(scenario.role)
+  const [task, setTask] = useState(scenario.task)
+  const [limits, setLimits] = useState(scenario.limits)
+  const [format, setFormat] = useState(scenario.format)
+  const [fragment, setFragment] = useState(SAMPLES[scenario.sampleKey] || '')
+  const [modelAnswer, setModelAnswer] = useState('')
+  const [checks, setChecks] = useState({ quote: false, invent: false, limit: false, genre: false })
+  const [manualNotes, setManualNotes] = useState('')
+
+  const applyScenario = (id) => {
+    const s = PROMPT_SCENARIOS.find((x) => x.id === id) || PROMPT_SCENARIOS[0]
+    setScenarioId(s.id)
+    setRole(s.role)
+    setTask(s.task)
+    setLimits(s.limits)
+    setFormat(s.format)
+    if (s.sampleKey && SAMPLES[s.sampleKey]) setFragment(SAMPLES[s.sampleKey])
+    else if (s.genre === 'custom') setFragment('')
+    setModelAnswer('')
+    setChecks({ quote: false, invent: false, limit: false, genre: false })
+  }
+
+  const prompt = `РОЛЬ:\n${role}\n\nЗАДАЧА:\n${task}\n\nОГРАНИЧЕНИЯ:\n${limits}\n\nФОРМАТ ОТВЕТА:\n${format}\n\nЖАНР / ТИП ФРАГМЕНТА: ${scenario.genreLabel}\n\nФРАГМЕНТ:\n"""\n${fragment}\n"""\n`
+
+  useLabReport(
+    () => ({
+      title: `Промпт-лаборатория: ${scenario.title}`,
+      body: [
+        `## Сценарий`,
+        `${scenario.genreLabel} — ${scenario.title}`,
+        '',
+        '## Собранный промпт',
+        '```',
+        prompt,
+        '```',
+        '',
+        '## Ответ модели (вставлен студентом)',
+        modelAnswer || '— не вставлен —',
+        '',
+        '## Чеклист верификации',
+        `- Цитаты есть во фрагменте: ${checks.quote ? 'да' : 'нет'}`,
+        `- Нет выдуманных деталей: ${checks.invent ? 'да' : 'нет'}`,
+        `- Есть оговорка о границах: ${checks.limit ? 'да' : 'нет'}`,
+        `- Учтена специфика жанра (${scenario.genreLabel}): ${checks.genre ? 'да' : 'нет'}`,
+        '',
+        '## Заметки вручную',
+        manualNotes || '—',
+      ].join('\n'),
+    }),
+    [scenario, prompt, modelAnswer, checks, manualNotes]
+  )
 
   return (
-    <div className="space-y-3">
-      {[
-        ['role', role, setRole, 'Роль'],
-        ['task', task, setTask, 'Задача'],
-        ['limits', limits, setLimits, 'Ограничения'],
-        ['format', format, setFormat, 'Формат'],
-        ['fragment', fragment, setFragment, 'Фрагмент'],
-      ].map(([key, val, setter, label]) => (
-        <label key={key} className="block text-sm font-semibold">{label}
-          <textarea value={val} onChange={(e) => setter(e.target.value)} rows={key === 'fragment' ? 4 : 3} className={key === 'fragment' ? mono : field} />
-        </label>
-      ))}
-      <pre className="rounded-xl bg-gray-50 dark:bg-gray-900 p-4 text-xs whitespace-pre-wrap overflow-x-auto">{prompt}</pre>
-      <div className="flex flex-wrap gap-2">
-        <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => navigator.clipboard.writeText(prompt)}>
-          Копировать промпт
-        </button>
-        <button type="button" className={btnSecondary} onClick={() => downloadText('prompt_v1.txt', prompt)}>
-          Скачать prompt_v1.txt
-        </button>
+    <div className="space-y-4">
+      <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm space-y-2">
+        <p>
+          <strong>Как работать с промптом.</strong> Выберите жанр → соберите промпт → скопируйте в Cursor /
+          ChatGPT / другую модель → вставьте ответ сюда → отметьте проверки → скачайте результат.
+        </p>
+        <p className="text-amber-900/80 dark:text-amber-100/80">
+          Сайт не вызывает API и не тратит ваши ключи. Применение промпта — снаружи; фиксация и
+          верификация — здесь.
+        </p>
       </div>
-      <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-sm space-y-2">
-        <p className="font-semibold">После ответа модели отметьте:</p>
+
+      <div>
+        <p className="text-sm font-semibold mb-2">1. Выберите тип текста / сценарий</p>
+        <div className="grid sm:grid-cols-2 gap-2">
+          {PROMPT_SCENARIOS.map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => applyScenario(s.id)}
+              className={`text-left rounded-xl border p-3 transition-all ${
+                scenarioId === s.id
+                  ? 'border-teal-500 bg-teal-50 dark:bg-teal-950/40 ring-1 ring-teal-400'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-teal-300'
+              }`}
+            >
+              <span className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300">
+                {s.genreLabel}
+              </span>
+              <span className="block font-semibold text-sm mt-0.5">{s.title}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-sm font-semibold">2. Соберите промпт (можно править)</p>
         {[
-          ['quote', 'Каждая цитата реально есть во фрагменте'],
-          ['invent', 'Нет выдуманных деталей сцены'],
-          ['limit', 'Есть явная оговорка о границах метода'],
-        ].map(([k, label]) => (
-          <label key={k} className="flex items-center gap-2">
-            <input type="checkbox" checked={checks[k]} onChange={(e) => setChecks({ ...checks, [k]: e.target.checked })} />
+          ['role', role, setRole, 'Роль'],
+          ['task', task, setTask, 'Задача'],
+          ['limits', limits, setLimits, 'Ограничения'],
+          ['format', format, setFormat, 'Формат ответа'],
+        ].map(([key, val, setter, label]) => (
+          <label key={key} className="block text-sm font-semibold">
             {label}
+            <textarea value={val} onChange={(e) => setter(e.target.value)} rows={3} className={field} />
           </label>
         ))}
+        <label className="block text-sm font-semibold">
+          Фрагмент ({scenario.genreLabel}) — учебный пример или свой текст
+          <textarea value={fragment} onChange={(e) => setFragment(e.target.value)} rows={7} className={mono} />
+        </label>
+        {scenario.sampleKey && (
+          <button
+            type="button"
+            className={btnSecondary}
+            onClick={() => setFragment(SAMPLES[scenario.sampleKey] || '')}
+          >
+            Вернуть учебный фрагмент ({scenario.genreLabel})
+          </button>
+        )}
+      </div>
+
+      <div>
+        <p className="text-sm font-semibold mb-2">3. Готовый промпт — примените во внешней модели</p>
+        <pre className="rounded-xl bg-gray-950 text-gray-100 p-4 text-xs whitespace-pre-wrap overflow-x-auto mb-3">
+          {prompt}
+        </pre>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="btn-primary !py-2 !px-4 !min-h-0 text-sm"
+            onClick={() => navigator.clipboard.writeText(prompt)}
+          >
+            Копировать промпт
+          </button>
+          <button type="button" className={btnSecondary} onClick={() => downloadText('prompt_v1.txt', prompt)}>
+            Скачать prompt_v1.txt
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-sm font-semibold">4. Вставьте ответ модели и проверьте</p>
+        <textarea
+          value={modelAnswer}
+          onChange={(e) => setModelAnswer(e.target.value)}
+          rows={8}
+          className={mono}
+          placeholder="Вставьте сюда ответ LLM…"
+        />
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-sm space-y-2">
+          {[
+            ['quote', 'Каждая цитата реально есть во фрагменте'],
+            ['invent', 'Нет выдуманных деталей / реплик / строк'],
+            ['limit', 'Есть явная оговорка о границах метода'],
+            ['genre', `Учтена специфика жанра (${scenario.genreLabel})`],
+          ].map(([k, label]) => (
+            <label key={k} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={checks[k]}
+                onChange={(e) => setChecks({ ...checks, [k]: e.target.checked })}
+              />
+              {label}
+            </label>
+          ))}
+        </div>
+        <label className="block text-sm font-semibold">
+          Что пришлось поправить вручную / какая галлюцинация
+          <textarea value={manualNotes} onChange={(e) => setManualNotes(e.target.value)} rows={3} className={field} />
+        </label>
       </div>
     </div>
   )
@@ -226,38 +424,92 @@ export function PromptLab() {
 export function PipelineLab() {
   const empty = { chapter: '', thesis: '', quote: '', confidence: 'средняя', flag: '' }
   const [rows, setRows] = useState([
-    { chapter: '1', thesis: 'Контраст утра и внутреннего напряжения', quote: 'Утро было ясным', confidence: 'высокая', flag: '' },
-    { chapter: '3', thesis: 'Возможная ирония «блаженства»', quote: 'Какое блаженство', confidence: 'средняя', flag: 'irony_risk' },
+    {
+      chapter: '1',
+      thesis: 'Контраст утра и внутреннего напряжения',
+      quote: 'Утро было ясным',
+      confidence: 'высокая',
+      flag: '',
+    },
+    {
+      chapter: '3',
+      thesis: 'Возможная ирония «блаженства»',
+      quote: 'Какое блаженство',
+      confidence: 'средняя',
+      flag: 'irony_risk',
+    },
   ])
 
   const csv = useMemo(() => {
     const header = 'chapter,thesis,quote,confidence,flag'
     const body = rows
-      .map((r) => [r.chapter, r.thesis, r.quote, r.confidence, r.flag].map((c) => `"${String(c).replace(/"/g, '""')}"`).join(','))
+      .map((r) =>
+        [r.chapter, r.thesis, r.quote, r.confidence, r.flag]
+          .map((c) => `"${String(c).replace(/"/g, '""')}"`)
+          .join(',')
+      )
       .join('\n')
     return `${header}\n${body}\n`
   }, [rows])
 
   const emptyQuotes = rows.filter((r) => !r.quote.trim()).length
-
   const update = (i, k, v) => setRows((rs) => rs.map((r, idx) => (idx === i ? { ...r, [k]: v } : r)))
+
+  useLabReport(
+    () => ({
+      title: 'От главы к таблице',
+      body: ['## CSV', '```csv', csv.trim(), '```', '', `Пустых цитат: ${emptyQuotes}`].join('\n'),
+    }),
+    [csv, emptyQuotes]
+  )
 
   return (
     <div className="space-y-4">
       <div className="space-y-3">
         {rows.map((r, i) => (
           <div key={i} className="grid sm:grid-cols-2 gap-2 rounded-xl border border-gray-200 dark:border-gray-700 p-3">
-            <input placeholder="Глава" value={r.chapter} onChange={(e) => update(i, 'chapter', e.target.value)} className={field} />
-            <input placeholder="confidence" value={r.confidence} onChange={(e) => update(i, 'confidence', e.target.value)} className={field} />
-            <input placeholder="Тезис" value={r.thesis} onChange={(e) => update(i, 'thesis', e.target.value)} className={`${field} sm:col-span-2`} />
-            <input placeholder="Цитата" value={r.quote} onChange={(e) => update(i, 'quote', e.target.value)} className={`${field} sm:col-span-2`} />
-            <input placeholder="flag (например irony_risk)" value={r.flag} onChange={(e) => update(i, 'flag', e.target.value)} className={`${field} sm:col-span-2`} />
+            <input
+              placeholder="Глава"
+              value={r.chapter}
+              onChange={(e) => update(i, 'chapter', e.target.value)}
+              className={field}
+            />
+            <input
+              placeholder="confidence"
+              value={r.confidence}
+              onChange={(e) => update(i, 'confidence', e.target.value)}
+              className={field}
+            />
+            <input
+              placeholder="Тезис"
+              value={r.thesis}
+              onChange={(e) => update(i, 'thesis', e.target.value)}
+              className={`${field} sm:col-span-2`}
+            />
+            <input
+              placeholder="Цитата"
+              value={r.quote}
+              onChange={(e) => update(i, 'quote', e.target.value)}
+              className={`${field} sm:col-span-2`}
+            />
+            <input
+              placeholder="flag (например irony_risk)"
+              value={r.flag}
+              onChange={(e) => update(i, 'flag', e.target.value)}
+              className={`${field} sm:col-span-2`}
+            />
           </div>
         ))}
       </div>
       <div className="flex flex-wrap gap-2">
-        <button type="button" className={btnSecondary} onClick={() => setRows([...rows, { ...empty }])}>Добавить строку</button>
-        <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => downloadText('irony_table.csv', csv, 'text/csv;charset=utf-8')}>
+        <button type="button" className={btnSecondary} onClick={() => setRows([...rows, { ...empty }])}>
+          Добавить строку
+        </button>
+        <button
+          type="button"
+          className="btn-primary !py-2 !px-4 !min-h-0 text-sm"
+          onClick={() => downloadText('irony_table.csv', csv, 'text/csv;charset=utf-8')}
+        >
           Скачать CSV
         </button>
       </div>
@@ -271,6 +523,7 @@ export function PipelineLab() {
 export function MiniPanel() {
   const [text, setText] = useState(SAMPLES.cleanChekhov)
   const [filter, setFilter] = useState('all')
+  const [evalNote, setEvalNote] = useState('')
 
   const data = useMemo(() => {
     const chapters = splitChapters(text)
@@ -286,22 +539,41 @@ export function MiniPanel() {
   const shown = filter === 'all' ? data : data.filter((d) => String(d.id) === filter)
   const maxAbs = Math.max(0.01, ...data.map((d) => Math.abs(d.score)))
 
+  useLabReport(
+    () => ({
+      title: 'Мини-панель исследования',
+      body: [
+        '## Метрики по сегментам',
+        ...data.map((d) => `- ${d.title}: score=${d.score.toFixed(4)}, tokens=${d.tokens}`),
+        '',
+        `Фильтр при сдаче: ${filter}`,
+        '',
+        '## Оценка панели',
+        evalNote || '—',
+      ].join('\n'),
+    }),
+    [data, filter, evalNote]
+  )
+
   return (
     <div className="space-y-4">
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} className={mono} />
-      <div className="flex flex-wrap items-center gap-3">
-        <label className="text-sm">Фильтр сегмента
-          <select value={filter} onChange={(e) => setFilter(e.target.value)} className={field}>
-            <option value="all">Все (честный вид по умолчанию)</option>
-            {data.map((d) => (
-              <option key={d.id} value={String(d.id)}>{d.title}</option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <label className="text-sm">
+        Фильтр сегмента
+        <select value={filter} onChange={(e) => setFilter(e.target.value)} className={field}>
+          <option value="all">Все (честный вид по умолчанию)</option>
+          {data.map((d) => (
+            <option key={d.id} value={String(d.id)}>
+              {d.title}
+            </option>
+          ))}
+        </select>
+      </label>
       <div className="rounded-2xl border border-gray-200 dark:border-gray-700 p-5 bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900">
         <h3 className="text-lg font-bold mb-1">Доля словарной тональности по сегментам</h3>
-        <p className="text-xs text-gray-500 mb-4">единица = сегмент; метрика = средний score словаря; процедура = MiniPanel</p>
+        <p className="text-xs text-gray-500 mb-4">
+          единица = сегмент; метрика = средний score словаря; процедура = MiniPanel
+        </p>
         <div className="space-y-2 mb-4">
           {shown.map((d) => (
             <div key={d.id} className="flex items-center gap-2 text-sm">
@@ -320,13 +592,11 @@ export function MiniPanel() {
             </div>
           ))}
         </div>
-        <details className="text-sm">
-          <summary className="cursor-pointer font-semibold">Метод и ограничения</summary>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Словарный sentiment не ловит иронию. Вид по умолчанию — все сегменты. Фильтр сужает картину только после того, как аудитория видела базу.
-          </p>
-        </details>
       </div>
+      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Ваше действие: работает / прозрачна / научно ценна — кратко
+        <textarea value={evalNote} onChange={(e) => setEvalNote(e.target.value)} rows={3} className={field} />
+      </label>
     </div>
   )
 }
@@ -345,6 +615,25 @@ export function VerifyLab() {
   const [after, setAfter] = useState('')
   const done = ok.filter(Boolean).length
 
+  useLabReport(
+    () => ({
+      title: 'Верификация и этика вывода',
+      body: [
+        '## Чеклист',
+        ...items.map((label, i) => `- [${ok[i] ? 'x' : ' '}] ${label}`),
+        '',
+        `Отмечено: ${done}/${items.length}`,
+        '',
+        '## Было',
+        before || '—',
+        '',
+        '## Стало',
+        after || '—',
+      ].join('\n'),
+    }),
+    [ok, before, after, done]
+  )
+
   return (
     <div className="space-y-4">
       <ul className="space-y-2">
@@ -362,11 +651,15 @@ export function VerifyLab() {
           </li>
         ))}
       </ul>
-      <p className="text-sm">Отмечено: <strong>{done}/{items.length}</strong>. Зелёный свет не требуется — требуется честность.</p>
-      <label className="block text-sm font-semibold">Было (красивый вывод)
+      <p className="text-sm">
+        Отмечено: <strong>{done}/{items.length}</strong>
+      </p>
+      <label className="block text-sm font-semibold">
+        Было (красивый вывод)
         <textarea value={before} onChange={(e) => setBefore(e.target.value)} rows={3} className={field} />
       </label>
-      <label className="block text-sm font-semibold">Стало (после верификации)
+      <label className="block text-sm font-semibold">
+        Стало (после верификации)
         <textarea value={after} onChange={(e) => setAfter(e.target.value)} rows={3} className={field} />
       </label>
     </div>

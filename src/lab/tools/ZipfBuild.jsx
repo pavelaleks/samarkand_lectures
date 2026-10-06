@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useLabReport } from '../LabReportContext'
 import CodeRunner from '../CodeRunner'
 import { SAMPLES } from '../samples'
 import { countTokens, tokenize, topN, ttr, windowTtr } from '../textUtils'
@@ -79,6 +80,32 @@ export function ZipfBuild() {
   }, [text])
 
   const maxY = Math.max(stats.f1 || 1, ...stats.zipf.map((r) => r.freq))
+
+  useLabReport(
+    () => ({
+      title: 'Ципф: теория → график → свой код',
+      body: [
+        `Шаг: ${step}`,
+        '',
+        '## Ответ по формуле (шаг 1)',
+        guess || '—',
+        '',
+        `Токенов: ${stats.tokens}; types: ${stats.types}; TTR: ${stats.ttrAll.toFixed(3)}`,
+        '',
+        '## Ранг–частота (факт vs Ципф)',
+        ...stats.zipf.slice(0, 12).map(
+          (r) => `- r=${r.rank} ${r.word}: факт=${r.freq}, Ципф≈${r.zipfPredict}, Δ=${r.freq - r.zipfPredict}`
+        ),
+        '',
+        '## TTR по окнам',
+        ...stats.windows.map((w) => `- окно ${w.index}: ${w.ttr.toFixed(3)}`),
+        '',
+        '## Интерпретация расхождений',
+        interp || '—',
+      ].join('\n'),
+    }),
+    [step, guess, interp, stats]
+  )
 
   return (
     <div className="space-y-4">

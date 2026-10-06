@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useLabReport } from '../LabReportContext'
 import { FUNCTION_WORDS, RU_NAMES, SAMPLES, SENTIMENT_LEXICON } from '../samples'
 import {
   countTokens,
@@ -56,6 +57,31 @@ export function CleanText() {
     }
     return { clean: t, removed: log }
   }, [text, removeUrls, removePages, collapseSpaces, removeSiteJunk])
+
+  useLabReport(
+    () => ({
+      title: 'Очистка «грязного» текста',
+      body: [
+        '## Правила',
+        `- URL: ${removeUrls}`,
+        `- стр. N: ${removePages}`,
+        `- пробелы: ${collapseSpaces}`,
+        `- сайт-мусор: ${removeSiteJunk}`,
+        '',
+        `Сработало: ${removed.join(', ') || 'ничего'}`,
+        '',
+        '## До',
+        text,
+        '',
+        '## После',
+        clean,
+        '',
+        '## Правило для драмы',
+        dramaNote || '— не заполнено —',
+      ].join('\n'),
+    }),
+    [text, clean, removed, removeUrls, removePages, collapseSpaces, removeSiteJunk, dramaNote]
+  )
 
   return (
     <div className="space-y-4">
@@ -225,6 +251,7 @@ export function Frequencies() {
 
 export function SentimentLab() {
   const [text, setText] = useState(SAMPLES.cleanChekhov)
+  const [ironyNote, setIronyNote] = useState('')
 
   const rows = useMemo(() => {
     const chapters = splitChapters(text)
@@ -244,6 +271,20 @@ export function SentimentLab() {
   }, [text])
 
   const maxAbs = Math.max(0.01, ...rows.map((r) => Math.abs(r.score)))
+
+  useLabReport(
+    () => ({
+      title: 'Тональность и ловушка иронии',
+      body: [
+        '## Scores по сегментам',
+        ...rows.map((r) => `- ${r.title}: ${r.score.toFixed(4)} | hits: ${r.hits.join(', ') || 'нет'}`),
+        '',
+        '## Разбор иронии (а/б/в)',
+        ironyNote || '— не заполнено —',
+      ].join('\n'),
+    }),
+    [rows, ironyNote]
+  )
 
   return (
     <div className="space-y-4">
@@ -277,6 +318,10 @@ export function SentimentLab() {
           </div>
         ))}
       </div>
+      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Ваше действие: (а) смысл человека; (б) ярлык словаря; (в) какую путаницу уровней даёт ярлык
+        <textarea value={ironyNote} onChange={(e) => setIronyNote(e.target.value)} rows={4} className={field} />
+      </label>
     </div>
   )
 }
@@ -337,6 +382,26 @@ export function NetworkLab() {
     return { ...n, x: width / 2 + Math.cos(angle) * r, y: height / 2 + Math.sin(angle) * r }
   })
   const byId = Object.fromEntries(placed.map((n) => [n.id, n]))
+  const [ruleNote, setRuleNote] = useState('')
+
+  useLabReport(
+    () => ({
+      title: 'Сеть персонажей',
+      body: [
+        `Режим: ${mode}`,
+        '',
+        '## Узлы (степень)',
+        ...graph.nodes.map((n) => `- ${n.label}: ${n.degree}`),
+        '',
+        '## Рёбра',
+        ...graph.edges.map((e) => `- ${e.a} — ${e.b}`),
+        '',
+        '## Правило связи / спорное ребро',
+        ruleNote || '— не заполнено —',
+      ].join('\n'),
+    }),
+    [mode, graph, ruleNote]
+  )
 
   return (
     <div className="space-y-4">
@@ -374,9 +439,13 @@ export function NetworkLab() {
               </li>
             ))}
           </ul>
-          <p className="text-xs text-gray-500 mt-3">Рёбер: {graph.edges.length}. Запишите правило связи одной фразой.</p>
+          <p className="text-xs text-gray-500 mt-3">Рёбер: {graph.edges.length}.</p>
         </div>
       </div>
+      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Ваше действие: правило связи одной фразой + одно спорное ребро
+        <textarea value={ruleNote} onChange={(e) => setRuleNote(e.target.value)} rows={3} className={field} />
+      </label>
     </div>
   )
 }
@@ -384,6 +453,7 @@ export function NetworkLab() {
 export function StylometryLite() {
   const [a, setA] = useState(SAMPLES.twoStylesA)
   const [b, setB] = useState(SAMPLES.twoStylesB)
+  const [conclusion, setConclusion] = useState('')
 
   const cmp = useMemo(() => {
     const ta = tokenize(a)
@@ -398,6 +468,22 @@ export function StylometryLite() {
     const distance = rows.reduce((s, r) => s + r.diff, 0) / Math.max(rows.length, 1)
     return { rows: rows.sort((x, y) => y.diff - x.diff).slice(0, 15), distance, na: ta.length, nb: tb.length }
   }, [a, b])
+
+  useLabReport(
+    () => ({
+      title: 'Стилиометрия: частоты как признаки',
+      body: [
+        `Дистанция: ${cmp.distance.toFixed(4)} (A=${cmp.na}, B=${cmp.nb})`,
+        '',
+        '## Топ |Δ|',
+        ...cmp.rows.map((r) => `- ${r.w}: A=${r.fa.toFixed(4)} B=${r.fb.toFixed(4)} |Δ|=${r.diff.toFixed(4)}`),
+        '',
+        '## Осторожный вывод',
+        conclusion || '— не заполнено —',
+      ].join('\n'),
+    }),
+    [cmp, conclusion]
+  )
 
   return (
     <div className="space-y-4">
@@ -422,6 +508,10 @@ export function StylometryLite() {
           ))}
         </tbody>
       </table>
+      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Ваше действие: осторожная формулировка сходства (и чего это не доказывает)
+        <textarea value={conclusion} onChange={(e) => setConclusion(e.target.value)} rows={3} className={field} />
+      </label>
     </div>
   )
 }
@@ -430,6 +520,7 @@ export function NerLite() {
   const [text, setText] = useState(SAMPLES.names)
   const [extra, setExtra] = useState('Раскольников, Соня, Разумихин')
   const [removed, setRemoved] = useState(() => new Set())
+  const [auditNote, setAuditNote] = useState('')
 
   const candidates = useMemo(() => {
     const dict = new Set([...RU_NAMES, ...extra.split(/[,;\n]/).map((s) => s.trim().toLowerCase()).filter(Boolean)])
@@ -448,6 +539,23 @@ export function NerLite() {
 
   const visible = candidates.filter((c) => !removed.has(c.label.toLowerCase()))
 
+  useLabReport(
+    () => ({
+      title: 'Имена и сущности (учебный NER)',
+      body: [
+        '## Оставшиеся кандидаты',
+        ...visible.map((c) => `- ${c.label} ×${c.count} (${c.score > 1 ? 'словарь' : 'эвристика'})`),
+        '',
+        '## Вычеркнуто',
+        [...removed].join(', ') || '—',
+        '',
+        '## Аудит (2 ложных + 1 пропуск + правило)',
+        auditNote || '— не заполнено —',
+      ].join('\n'),
+    }),
+    [visible, removed, auditNote]
+  )
+
   return (
     <div className="space-y-4">
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={7} className={mono} />
@@ -463,6 +571,10 @@ export function NerLite() {
         ))}
       </ul>
       <button type="button" className={btnSecondary} onClick={() => setRemoved(new Set())}>Сбросить вычёркивания</button>
+      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Ваше действие: 2 ложных кандидата, 1 пропуск, правило одной фразой
+        <textarea value={auditNote} onChange={(e) => setAuditNote(e.target.value)} rows={3} className={field} />
+      </label>
     </div>
   )
 }
