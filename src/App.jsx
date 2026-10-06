@@ -5,6 +5,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import CoursePage from './pages/CoursePage'
+import LabHub from './pages/LabHub'
+import LabWork from './pages/LabWork'
 
 function App() {
   try {
@@ -32,6 +34,8 @@ function App() {
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/courses/digital-humanities/lab" element={<LabHub />} />
+                <Route path="/courses/digital-humanities/lab/:workSlug" element={<LabWork />} />
                 <Route path="/courses/:slug" element={<CoursePage />} />
               </Routes>
             </main>

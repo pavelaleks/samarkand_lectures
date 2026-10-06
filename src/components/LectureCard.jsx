@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import labs from '../data/labs.json'
 
 export default function LectureCard({ lecture, courseSlug, index }) {
   const [isOpen, setIsOpen] = useState(false)
   const [htmlContent, setHtmlContent] = useState('')
   const [loadingHtml, setLoadingHtml] = useState(false)
+
+  const labWork =
+    courseSlug === 'digital-humanities'
+      ? labs.works.find((w) => String(w.lecture) === String(lecture.number))
+      : null
 
   // Загружаем HTML контент когда карточка открывается
   useEffect(() => {
@@ -74,6 +81,26 @@ export default function LectureCard({ lecture, courseSlug, index }) {
             className="overflow-hidden"
           >
             <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              {labWork && (
+                <Link
+                  to={`/courses/digital-humanities/lab/${labWork.slug}`}
+                  className="mb-6 flex items-center gap-3 p-4 rounded-xl border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950/30 hover:shadow-md transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-teal-600 text-white flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-teal-900 dark:text-teal-100">Лаборатория · {labWork.title}</p>
+                    <p className="text-xs text-teal-800/80 dark:text-teal-200/80 mt-0.5">{labWork.minutes} · открыть работу к этой лекции</p>
+                  </div>
+                  <svg className="w-5 h-5 text-teal-600 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              )}
+
               {/* PDF Presentation */}
               {lecture.presentationPdf && (
                 <div className="mb-6">
