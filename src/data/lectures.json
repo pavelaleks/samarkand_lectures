@@ -1395,7 +1395,7 @@
       "title": "Введение в Digital Humanities и концепцию ИИ-соавторства",
       "id": "digital-humanities-1",
       "htmlFile": "src/data/digital-humanities/лекции/1.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/1.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1428,7 +1428,7 @@
       "title": "Анатомия текстовых данных и среда разработки Cursor",
       "id": "digital-humanities-2",
       "htmlFile": "src/data/digital-humanities/лекции/2.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/2.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1454,7 +1454,7 @@
       "title": "Основы корпусной филологии и предобработка текста",
       "id": "digital-humanities-3",
       "htmlFile": "src/data/digital-humanities/лекции/3.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/3.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1486,7 +1486,7 @@
       "title": "Квантитативные методы и закон Ципфа в литературоведении",
       "id": "digital-humanities-4",
       "htmlFile": "src/data/digital-humanities/лекции/4.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/4.pdf",
       "materials": [
         {
           "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
@@ -1513,7 +1513,7 @@
       "title": "Стилиометрия и компьютерная атрибуция текста",
       "id": "digital-humanities-5",
       "htmlFile": "src/data/digital-humanities/лекции/5.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/5.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1544,7 +1544,7 @@
       "title": "Автоматическое извлечение знаний: NER-технологии",
       "id": "digital-humanities-6",
       "htmlFile": "src/data/digital-humanities/лекции/6.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/6.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1575,7 +1575,7 @@
       "title": "Сетевой анализ художественного текста",
       "id": "digital-humanities-7",
       "htmlFile": "src/data/digital-humanities/лекции/7.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/7.pdf",
       "materials": [
         {
           "fileName": "Moretti_Dalnee_chtenie_2016.pdf",
@@ -1602,7 +1602,7 @@
       "title": "Анализ тональности и эмоциональное картирование",
       "id": "digital-humanities-8",
       "htmlFile": "src/data/digital-humanities/лекции/8.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/8.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1628,7 +1628,7 @@
       "title": "Тематическое моделирование художественной прозы",
       "id": "digital-humanities-9",
       "htmlFile": "src/data/digital-humanities/лекции/9.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/9.pdf",
       "materials": [
         {
           "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
@@ -1654,7 +1654,7 @@
       "title": "Большие языковые модели (LLM) и Prompt Engineering",
       "id": "digital-humanities-10",
       "htmlFile": "src/data/digital-humanities/лекции/10.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/10.pdf",
       "materials": [
         {
           "displayName": "Prompt Engineering Guide (русская версия)",
@@ -1679,7 +1679,7 @@
       "title": "Интеграция LLM в программные скрипты через API",
       "id": "digital-humanities-11",
       "htmlFile": "src/data/digital-humanities/лекции/11.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/11.pdf",
       "materials": [
         {
           "displayName": "Prompt Engineering Guide (русская версия)",
@@ -1704,7 +1704,7 @@
       "title": "Визуализация результатов и веб-панели для филологов",
       "id": "digital-humanities-12",
       "htmlFile": "src/data/digital-humanities/лекции/12.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/12.pdf",
       "materials": [
         {
           "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
@@ -1731,7 +1731,7 @@
       "title": "Верификация данных и цифровая этика исследований",
       "id": "digital-humanities-13",
       "htmlFile": "src/data/digital-humanities/лекции/13.html",
-      "presentationPdf": null,
+      "presentationPdf": "src/data/digital-humanities/presentations/13.pdf",
       "materials": [
         {
           "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
