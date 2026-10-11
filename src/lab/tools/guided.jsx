@@ -42,7 +42,7 @@ export function CloseDistant() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
+      <div className="student-action rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
         <strong>Ваше действие.</strong> Три поля ниже нужно заполнить своими словами. Затем — «Скачать мой результат».
       </div>
       <label className="block text-sm font-semibold">
@@ -51,7 +51,7 @@ export function CloseDistant() {
       </label>
       <div className="grid md:grid-cols-2 gap-4">
         <label className="block text-sm font-semibold">
-          2. Close reading
+          2. Close reading (вслух на лекции)
           <span className="block font-normal text-gray-500 mb-1">Цитата + смысл, без частот</span>
           <textarea value={closeNote} onChange={(e) => setCloseNote(e.target.value)} rows={5} className={field} />
         </label>
@@ -65,7 +65,7 @@ export function CloseDistant() {
         4. Утверждение и статус доказательства
         <textarea value={claim} onChange={(e) => setClaim(e.target.value)} rows={3} className={field} />
       </label>
-      <p className={`text-sm font-medium ${done ? 'text-emerald-700' : 'text-rose-600'}`}>
+      <p className={`student-action text-sm font-medium ${done ? 'text-emerald-700' : 'text-rose-600'}`}>
         {done ? '✓ Поля заполнены — скачайте результат внизу страницы.' : '✗ Заполните поля 2–4.'}
       </p>
     </div>
@@ -593,8 +593,8 @@ export function MiniPanel() {
           ))}
         </div>
       </div>
-      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
-        Ваше действие: работает / прозрачна / научно ценна — кратко
+      <label className="student-action block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Комментарий к показу: работает / прозрачна / научно ценна — кратко
         <textarea value={evalNote} onChange={(e) => setEvalNote(e.target.value)} rows={3} className={field} />
       </label>
     </div>

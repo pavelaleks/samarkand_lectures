@@ -85,7 +85,7 @@ export function CleanText() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
+      <div className="student-action rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm">
         <strong>Ваше действие.</strong> Это рабочее поле, не иллюстрация: меняйте галочки и текст слева —
         справа мгновенно видно следствие для частотного анализа.
       </div>
@@ -124,8 +124,8 @@ export function CleanText() {
       <p className="text-sm text-gray-600 dark:text-gray-400">
         Сработавшие правила: {removed.length ? removed.join(', ') : 'ничего не изменено'}.
       </p>
-      <label className="block text-sm font-semibold rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50/80 dark:bg-amber-950/20 p-4">
-        Ваше действие (обязательно): какое правило вы бы отключили для драмы и почему?
+      <label className="student-action block text-sm font-semibold rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Комментарий к показу: какое правило вы бы отключили для драмы и почему?
         <textarea
           value={dramaNote}
           onChange={(e) => setDramaNote(e.target.value)}
@@ -318,8 +318,8 @@ export function SentimentLab() {
           </div>
         ))}
       </div>
-      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
-        Ваше действие: (а) смысл человека; (б) ярлык словаря; (в) какую путаницу уровней даёт ярлык
+      <label className="student-action block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Комментарий к показу: (а) смысл человека; (б) ярлык словаря; (в) какую путаницу уровней даёт ярлык
         <textarea value={ironyNote} onChange={(e) => setIronyNote(e.target.value)} rows={4} className={field} />
       </label>
     </div>
@@ -442,8 +442,8 @@ export function NetworkLab() {
           <p className="text-xs text-gray-500 mt-3">Рёбер: {graph.edges.length}.</p>
         </div>
       </div>
-      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
-        Ваше действие: правило связи одной фразой + одно спорное ребро
+      <label className="student-action block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Комментарий к показу: правило связи одной фразой + одно спорное ребро
         <textarea value={ruleNote} onChange={(e) => setRuleNote(e.target.value)} rows={3} className={field} />
       </label>
     </div>
@@ -508,8 +508,8 @@ export function StylometryLite() {
           ))}
         </tbody>
       </table>
-      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
-        Ваше действие: осторожная формулировка сходства (и чего это не доказывает)
+      <label className="student-action block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Комментарий к показу: осторожная формулировка сходства (и чего это не доказывает)
         <textarea value={conclusion} onChange={(e) => setConclusion(e.target.value)} rows={3} className={field} />
       </label>
     </div>
@@ -571,8 +571,8 @@ export function NerLite() {
         ))}
       </ul>
       <button type="button" className={btnSecondary} onClick={() => setRemoved(new Set())}>Сбросить вычёркивания</button>
-      <label className="block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
-        Ваше действие: 2 ложных кандидата, 1 пропуск, правило одной фразой
+      <label className="student-action block text-sm font-semibold rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+        Комментарий к показу: 2 ложных кандидата, 1 пропуск, правило одной фразой
         <textarea value={auditNote} onChange={(e) => setAuditNote(e.target.value)} rows={3} className={field} />
       </label>
     </div>

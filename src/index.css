@@ -56,3 +56,9 @@ html {
   @apply bg-gray-500 dark:bg-gray-500;
 }
 
+
+
+/* Lecture demo mode: hide assignment-only chrome */
+.demo-stage .student-action {
+  display: none !important;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -7,6 +7,11 @@ import Home from './pages/Home'
 import CoursePage from './pages/CoursePage'
 import LabHub from './pages/LabHub'
 import LabWork from './pages/LabWork'
+
+function LabWorkRedirect() {
+  const { workSlug } = useParams()
+  return <Navigate to={`/courses/digital-humanities/demo/${workSlug}`} replace />
+}
 
 function App() {
   try {
@@ -34,8 +39,10 @@ function App() {
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/courses/digital-humanities/lab" element={<LabHub />} />
-                <Route path="/courses/digital-humanities/lab/:workSlug" element={<LabWork />} />
+                <Route path="/courses/digital-humanities/demo" element={<LabHub />} />
+                <Route path="/courses/digital-humanities/demo/:workSlug" element={<LabWork />} />
+                <Route path="/courses/digital-humanities/lab" element={<Navigate to="/courses/digital-humanities/demo" replace />} />
+                <Route path="/courses/digital-humanities/lab/:workSlug" element={<LabWorkRedirect />} />
                 <Route path="/courses/:slug" element={<CoursePage />} />
               </Routes>
             </main>

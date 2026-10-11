@@ -78,20 +78,20 @@ export default function CoursePage() {
 
         {slug === 'digital-humanities' && (
           <Link
-            to="/courses/digital-humanities/lab"
+            to="/courses/digital-humanities/demo"
             className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-teal-300 dark:border-teal-700 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/30 hover:shadow-xl transition-all group mb-2"
           >
             <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl sm:text-2xl font-bold text-teal-900 dark:text-teal-100 mb-1">
-                Лаборатория
+                Демо-стенд
               </h2>
               <p className="text-sm sm:text-base text-teal-900/80 dark:text-teal-100/80 leading-relaxed">
-                Учебные активности к лекциям: иллюстрация метода, построение графиков (Ципф и др.), практика notes/ и проверка своего кода — не галерея картинок.
+                Живой показ методов с лекции: очистка, Ципф, NER, сети, тональность, промпты. Задания для практики даются отдельно.
               </p>
             </div>
             <span className="text-teal-700 dark:text-teal-300 font-semibold inline-flex items-center gap-1">

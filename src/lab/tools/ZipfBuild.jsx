@@ -47,7 +47,7 @@ function Step({ n, title, children, active }) {
 }
 
 export function ZipfBuild() {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(2)
   const [text, setText] = useState(SAMPLES.cleanChekhov)
   const [guess, setGuess] = useState('')
   const [interp, setInterp] = useState('')
@@ -133,7 +133,7 @@ export function ZipfBuild() {
             самое частое слово (ранг 1) встречается примерно в два раза чаще второго, в три раза чаще
             третьего и т.д. Формула-памятка: <code className="text-sm">f(r) ≈ f₁ / r</code>.
           </p>
-          <div className="rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-4 mb-4">
+          <div className="student-action rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-4 mb-4">
             <p className="text-sm font-semibold text-amber-900 dark:text-amber-200 mb-2">
               Ваше действие (не пролистывайте)
             </p>
@@ -239,8 +239,8 @@ export function ZipfBuild() {
             </table>
           </div>
 
-          <label className="block text-sm font-semibold mb-4">
-            Ваше действие: где теория расходится с текстом сильнее всего — и почему (норма языка /
+          <label className="student-action block text-sm font-semibold mb-4">
+            Комментарий к показу (опционально): где теория расходится с текстом сильнее всего — и почему (норма языка /
             артефакт / поэтика)?
             <textarea value={interp} onChange={(e) => setInterp(e.target.value)} rows={3} className={field} />
           </label>

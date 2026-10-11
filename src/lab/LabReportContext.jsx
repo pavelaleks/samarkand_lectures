@@ -26,14 +26,16 @@ function loadStudent() {
 
 const LabReportContext = createContext(null)
 
-export function LabReportProvider({ children, work }) {
+export function LabReportProvider({ children, work, mode = 'demo' }) {
   const builderRef = useRef(null)
   const [ready, setReady] = useState(false)
   const [student, setStudent] = useState(loadStudent)
+  const isDemo = mode === 'demo'
 
   useEffect(() => {
+    if (isDemo) return
     localStorage.setItem(STORAGE_KEY, JSON.stringify(student))
-  }, [student])
+  }, [student, isDemo])
 
   const register = useCallback((builder) => {
     builderRef.current = builder
@@ -87,7 +89,7 @@ export function LabReportProvider({ children, work }) {
       '',
       '## Задание к семинару',
       '',
-      work?.task || '',
+      work?.task || work?.practiceHook || '',
       '',
     ].join('\n')
 
@@ -114,11 +116,18 @@ export function LabReportProvider({ children, work }) {
         updateStudent,
         courseMeta: COURSE_META,
         work,
+        mode,
+        isDemo,
       }}
     >
       {children}
     </LabReportContext.Provider>
   )
+}
+
+export function useDemoMode() {
+  const ctx = useContext(LabReportContext)
+  return Boolean(ctx?.isDemo)
 }
 
 export function useLabReport(builder, deps = []) {
@@ -127,7 +136,7 @@ export function useLabReport(builder, deps = []) {
   builderRef.current = builder
 
   useEffect(() => {
-    if (!ctx) return undefined
+    if (!ctx || ctx.isDemo) return undefined
     const stable = () => builderRef.current()
     return ctx.register(stable)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,7 +145,7 @@ export function useLabReport(builder, deps = []) {
 
 export function LabDownloadBar() {
   const ctx = useContext(LabReportContext)
-  if (!ctx) return null
+  if (!ctx || ctx.isDemo) return null
 
   const { student, updateStudent, courseMeta, work, download, ready } = ctx
   const today = new Date().toLocaleDateString('ru-RU', {
@@ -153,9 +162,8 @@ export function LabDownloadBar() {
           Скачать результат работы
         </h2>
         <p className="text-sm text-teal-900/85 dark:text-teal-100/85 leading-relaxed">
-          После заполнения полей выше получите файл Markdown для <code className="text-xs">notes/</code> или
-          семинара. Ваши ФИО и группа вводятся вручную; курс, преподаватель, дата и номер лекции
-          подставляются автоматически.
+          После заполнения полей выше получите файл Markdown. Ваши ФИО и группа вводятся вручную;
+          курс, преподаватель, дата и номер лекции подставляются автоматически.
         </p>
       </div>
 
