@@ -25,62 +25,90 @@ const FUNCTION_WORDS = new Set(
 )
 
 /**
- * Учебные изотопии (семантические поля).
- * Подсветка в Close: словоформа попадает в поле, если совпал regex основы/корня.
- * Берётся ПЕРВОЕ совпавшее поле сверху вниз — это эвристика, не «тема произведения».
+ * Учебные изотопии. Совпадение только с НАЧАЛА словоформы (prefix),
+ * иначе «капустой» ловит подстроку «стой», «насекомое» — «сел» и т.п.
+ * Берётся первое совпавшее поле сверху вниз.
  */
 const MOTIF_FIELDS = [
   {
     id: 'body',
     title: 'Тело / жест',
     color: 'bg-rose-200 dark:bg-rose-800/60',
-    // Только соматика и жест — не одежда и не реквизит
-    re: /рук|глаз|взгляд|рот|лиц|щек|плеч|сердец|сердц|кров|жест|сжал|сжат|бледн|дыхан|задых|палец|губы|лоб|шея/i,
+    stems: [
+      'рук', 'глаз', 'взгляд', 'рот', 'рта', 'лиц', 'щек', 'плеч', 'сердец', 'сердц', 'кров',
+      'жест', 'сжал', 'сжат', 'бледн', 'дыхан', 'задых', 'палец', 'пальц', 'губ', 'лоб', 'шея', 'шеи',
+    ],
   },
   {
     id: 'veil',
     title: 'Покров / сокрытие',
     color: 'bg-fuchsia-200 dark:bg-fuchsia-900/50',
-    // Костюм, маска, завеса — посредники видимости, не часть тела
-    re: /вуал|маск|покрывал|занав|плащ|платок|капор|фата|покров|скры|пряч/i,
+    stems: ['вуал', 'маск', 'покрывал', 'занав', 'плащ', 'платок', 'капор', 'фата', 'покров', 'скры', 'пряч'],
   },
   {
     id: 'light',
     title: 'Свет / тьма',
     color: 'bg-slate-300 dark:bg-slate-600/70',
-    re: /тёмн|темн|свет|тень|ноч|мрак|сумрак|огн|луч|сия/i,
+    stems: ['тёмн', 'темн', 'свет', 'тень', 'тен', 'ноч', 'мрак', 'сумрак', 'огн', 'луч', 'сия'],
   },
   {
     id: 'space',
     title: 'Пространство',
     color: 'bg-emerald-200 dark:bg-emerald-900/50',
-    re: /комнат|дом|улиц|ворот|окн|двер|мост|сад|город|порог|стен|угл|перил/i,
+    stems: ['комнат', 'дом', 'улиц', 'ворот', 'окн', 'двер', 'мост', 'сад', 'город', 'порог', 'стен', 'угл', 'перил'],
   },
   {
     id: 'time',
     title: 'Время',
     color: 'bg-orange-200 dark:bg-orange-900/40',
-    re: /вчера|сегодня|завтра|утро|вечер|ноч|час|миг|вдруг|опять|снова|тогда|теперь/i,
+    stems: ['вчера', 'сегодня', 'завтра', 'утро', 'утр', 'вечер', 'ноч', 'час', 'миг', 'вдруг', 'опять', 'снова', 'тогда', 'теперь'],
   },
   {
     id: 'motion',
     title: 'Движение / действие',
     color: 'bg-amber-200 dark:bg-amber-800/50',
-    re: /бежал|сбеж|вышел|вошёл|вошел|шёл|шел|идёт|идет|шата|стой|стоя|ветр|каса|упал|сел|вста/i,
+    // Короткие основы вроде «сел/стой» опасны внутри других слов — только явные глагольные префиксы
+    stems: [
+      'беж', 'сбеж', 'выш', 'вош', 'вошёл', 'вошел', 'шёл', 'шел', 'шли', 'шла',
+      'идт', 'иду', 'идё', 'идеш', 'идут', 'шата', 'стой', 'стоя', 'стоит', 'стоят',
+      'ветр', 'каса', 'упал', 'упав', 'встал', 'встань', 'встава', 'бежал',
+    ],
   },
   {
     id: 'speech',
     title: 'Речь / диалог',
     color: 'bg-sky-200 dark:bg-sky-800/50',
-    re: /сказал|говор|крикн|спрос|отвеч|шепт|молч|отчего|оттого|шутк|забыд|забуду|голос|слов/i,
+    stems: [
+      'сказ', 'говор', 'крикн', 'крич', 'спрос', 'отвеч', 'шепт', 'молч', 'отчего', 'оттого',
+      'шутк', 'забуду', 'забыл', 'голос', 'слов',
+    ],
   },
   {
     id: 'feeling',
     title: 'Чувство / аффект',
     color: 'bg-violet-200 dark:bg-violet-800/50',
-    re: /печат|счаст|страх|стыд|люб|жутк|мучит|умру|терпк|спокойн|улыб|радость|горе|тоск|злост|нежн/i,
+    stems: [
+      'печат', 'счаст', 'страх', 'стыд', 'люб', 'жутк', 'мучит', 'муч', 'умру', 'терпк',
+      'спокойн', 'улыб', 'радость', 'радост', 'горе', 'тоск', 'злост', 'нежн',
+    ],
   },
 ]
+
+/** Prefix match: «капустой».startsWith(«стой») === false; «стоит».startsWith(«стой») === true */
+function wordMatchesStems(word, stems) {
+  const w = word.toLowerCase()
+  return stems.some((stem) => {
+    const s = stem.toLowerCase().trim()
+    if (!s || s.length < 2) return false
+    // очень короткие основы (2–3 буквы) — только точное начало и длина слова ненамного больше
+    if (s.length <= 3) return w === s || (w.startsWith(s) && w.length <= s.length + 4)
+    return w.startsWith(s)
+  })
+}
+
+function fieldForWord(word) {
+  return MOTIF_FIELDS.find((f) => wordMatchesStems(word, f.stems)) || null
+}
 
 function lexiconScoreForWord(w) {
   if (SENTIMENT_LEXICON[w] != null) return SENTIMENT_LEXICON[w]
@@ -125,7 +153,7 @@ function analyzeCloseDistant(text) {
   const contentTops = topN(contentCounter, 10)
 
   const fieldHits = MOTIF_FIELDS.map((f) => {
-    const words = [...new Set(contentTokens.filter((w) => f.re.test(w)))]
+    const words = [...new Set(contentTokens.filter((w) => wordMatchesStems(w, f.stems)))]
     return { ...f, words, count: words.length }
   }).filter((f) => f.count > 0)
   fieldHits.sort((a, b) => b.count - a.count)
@@ -188,7 +216,7 @@ function analyzeCloseDistant(text) {
     const chunk = m[0]
     const isWord = /^[а-яёa-z]+$/i.test(chunk)
     const lower = chunk.toLowerCase()
-    const field = isWord ? MOTIF_FIELDS.find((f) => f.re.test(lower)) : null
+    const field = isWord ? fieldForWord(lower) : null
     const sent = isWord ? lexiconScoreForWord(lower) : null
     parts.push({ chunk, field, sent })
   }
@@ -289,10 +317,10 @@ export function CloseDistant() {
             <div className="rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/70 dark:bg-violet-950/30 p-5">
               <h3 className="text-lg font-bold text-violet-900 dark:text-violet-100 mb-1">Close reading</h3>
               <p className="text-sm text-violet-800/90 dark:text-violet-200/90 mb-3 leading-relaxed">
-                <strong>Как подсвечивается.</strong> Каждая словоформа сверяется с учебными изотопиями (тело,
-                покров/сокрытие, свет/тьма, пространство, время, движение, речь, аффект). Совпадение — по
-                «корню» в правиле поля; при нескольких берётся <em>первое</em> поле в списке. Вуаль и маска —
-                в «покрове» (видимость), а не в «теле». Неподсвеченное ≠ неважное — просто вне словаря.
+                <strong>Как подсвечивается.</strong> Словоформа попадает в поле, только если начинается с
+                одной из учебных основ (prefix), а не если основа спряталась в середине слова — иначе
+                «капустой» ошибочно цепляло бы «стой». При нескольких совпадениях берётся первое поле.
+                Неподсвеченное ≠ неважное.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-gray-900 dark:text-gray-100 mb-4 whitespace-pre-wrap">
                 {stats.parts.map((p, i) =>
