@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -13,27 +13,27 @@ function LabWorkRedirect() {
   return <Navigate to={`/courses/digital-humanities/demo/${workSlug}`} replace />
 }
 
+/** After GitHub Pages 404.html → index, restore the deep link via React Router. */
+function SpaPathRestore() {
+  const navigate = useNavigate()
+  useEffect(() => {
+    const savedPath = sessionStorage.getItem('redirectPath')
+    if (!savedPath) return
+    sessionStorage.removeItem('redirectPath')
+    navigate(savedPath, { replace: true })
+  }, [navigate])
+  return null
+}
+
 function App() {
   try {
-    // В dev режиме BASE_URL может быть '/', в production '/samarkand_lectures/'
-    const baseUrl = import.meta.env.BASE_URL === '/' ? '/samarkand_lectures/' : (import.meta.env.BASE_URL || '/samarkand_lectures/')
-    
-    // Восстанавливаем путь из sessionStorage (если были редирект через 404.html)
-    useEffect(() => {
-      const savedPath = sessionStorage.getItem('redirectPath')
-      if (savedPath) {
-        sessionStorage.removeItem('redirectPath')
-        const fullPath = baseUrl.slice(0, -1) + savedPath
-        // Просто устанавливаем правильный путь - React Router обработает его через basename
-        if (window.location.pathname !== fullPath) {
-          window.history.replaceState(null, '', fullPath)
-        }
-      }
-    }, [baseUrl])
+    // В production Vite BASE_URL = '/samarkand_lectures/'
+    const baseUrl = import.meta.env.BASE_URL || '/samarkand_lectures/'
     
     return (
       <ThemeProvider>
         <BrowserRouter basename={baseUrl}>
+          <SpaPathRestore />
           <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
             <Header />
             <main className="flex-grow">

@@ -1,58 +1,44 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script>
-      // GitHub Pages редирект для SPA
-      var path = window.location.pathname;
-      var basePath = '/samarkand_lectures';
-      
-      // Убираем basePath из начала пути
-      if (path.startsWith(basePath + '/')) {
-        path = path.substring(basePath.length);
-      } else if (path === basePath || path === basePath + '/') {
-        path = '/';
-      }
-      
-      // Если путь не начинается с /, добавляем его
-      if (!path.startsWith('/')) {
-        path = '/' + path;
-      }
-      
-      // Если путь заканчивается на .html, .css, .js и т.д. - не редиректим
-      if (path.match(/\.(html|css|js|json|pdf|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)) {
-        // Это статический файл, не редиректим
-        return;
-      }
-      
-      // Редиректим напрямую, сохраняя путь
-      // GitHub Pages будет обслуживать index.html, а React Router обработает путь
-      var redirectUrl = basePath;
-      
-      if (path && path !== '/' && path !== '/index.html' && !path.match(/\.(html|css|js|json|pdf|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)) {
-        redirectUrl += path;
-      } else {
-        redirectUrl += '/';
-      }
-      
-      // Сохраняем путь для восстановления после загрузки index.html
-      if (path && path !== '/' && path !== '/index.html') {
-        sessionStorage.setItem('redirectPath', path);
-      }
-      
-      window.location.replace(redirectUrl);
+      // GitHub Pages SPA: deep links hit 404.html. Save the path, then load index.html
+      // (NOT the same deep URL — that caused an infinite "Redirecting..." loop).
+      ;(function () {
+        var basePath = '/samarkand_lectures'
+        var path = window.location.pathname || '/'
+
+        if (path.indexOf(basePath + '/') === 0) {
+          path = path.substring(basePath.length)
+        } else if (path === basePath || path === basePath + '/') {
+          path = '/'
+        }
+
+        if (path.charAt(0) !== '/') path = '/' + path
+
+        // Static assets: do nothing (should not land here)
+        if (/\.(html|css|js|json|pdf|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i.test(path)) {
+          return
+        }
+
+        if (path && path !== '/' && path !== '/index.html') {
+          try {
+            sessionStorage.setItem('redirectPath', path)
+          } catch (e) {}
+        }
+
+        // Always go to the app shell; App.jsx restores redirectPath via history.replaceState
+        window.location.replace(basePath + '/')
+      })()
     </script>
   </head>
   <body>
-    <p>Redirecting...</p>
-    <script>
-      // Fallback на случай если JavaScript не сработал
-      setTimeout(function() {
-        window.location.href = '/samarkand_lectures/';
-      }, 1000);
-    </script>
+    <p>Redirecting…</p>
+    <noscript>
+      <p><a href="/samarkand_lectures/">Открыть сайт</a></p>
+    </noscript>
   </body>
 </html>
-
