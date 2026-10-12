@@ -24,37 +24,53 @@ const FUNCTION_WORDS = new Set(
   ].map((w) => w.toLowerCase())
 )
 
-/** Учебные семантические поля — не NLP «истина», а кандидаты для проверки close reading. */
+/**
+ * Учебные изотопии (семантические поля).
+ * Подсветка в Close: словоформа попадает в поле, если совпал regex основы/корня.
+ * Берётся ПЕРВОЕ совпавшее поле сверху вниз — это эвристика, не «тема произведения».
+ */
 const MOTIF_FIELDS = [
   {
     id: 'body',
     title: 'Тело / жест',
     color: 'bg-rose-200 dark:bg-rose-800/60',
-    re: /рук|глаз|рот|лиц|плеч|перил|вуал|жест|сжал|бледн/i,
+    re: /рук|глаз|взгляд|рот|лиц|щек|плеч|сердец|сердц|кров|перил|вуал|жест|сжал|сжат|бледн|дыхан|задых/i,
   },
   {
     id: 'light',
     title: 'Свет / тьма',
     color: 'bg-slate-300 dark:bg-slate-600/70',
-    re: /тёмн|темн|свет|тень|ноч|мрак|вуал/i,
+    re: /тёмн|темн|свет|тень|ноч|мрак|сумрак|огн|луч|сия/i,
+  },
+  {
+    id: 'space',
+    title: 'Пространство',
+    color: 'bg-emerald-200 dark:bg-emerald-900/50',
+    re: /комнат|дом|улиц|ворот|окн|двер|мост|сад|город|комнат|порог|стен|угл/i,
+  },
+  {
+    id: 'time',
+    title: 'Время',
+    color: 'bg-orange-200 dark:bg-orange-900/40',
+    re: /вчера|сегодня|завтра|утро|вечер|ноч|час|миг|вдруг|опять|снова|тогда|теперь/i,
   },
   {
     id: 'motion',
-    title: 'Движение / побег',
+    title: 'Движение / действие',
     color: 'bg-amber-200 dark:bg-amber-800/50',
-    re: /бежал|сбеж|вышел|шата|стой|ветру|ворот|каса/i,
+    re: /бежал|бежал|сбеж|вышел|вошёл|вошел|шёл|шел|идёт|идет|шата|стой|стоя|ветр|каса|упал|сел|вста/i,
   },
   {
     id: 'speech',
     title: 'Речь / диалог',
     color: 'bg-sky-200 dark:bg-sky-800/50',
-    re: /сказал|крикн|спрос|отчего|оттого|шутк|забыд/i,
+    re: /сказал|говор|крикн|спрос|отвеч|шепт|молч|отчего|оттого|шутк|забыд|забуду|голос|слов/i,
   },
   {
     id: 'feeling',
-    title: 'Чувство / состояние',
+    title: 'Чувство / аффект',
     color: 'bg-violet-200 dark:bg-violet-800/50',
-    re: /печат|счаст|страх|люб|жутк|мучит|задых|умру|терпк|спокойн|улыб/i,
+    re: /печат|счаст|страх|стыд|люб|жутк|мучит|умру|терпк|спокойн|улыб|радость|горе|тоск|злост|нежн/i,
   },
 ]
 
@@ -110,25 +126,51 @@ function analyzeCloseDistant(text) {
   const posHits = sentiment.hits.filter((h) => h.score > 0)
   const negHits = sentiment.hits.filter((h) => h.score < 0)
 
-  const topFields = fieldHits.slice(0, 3).map((f) => f.title)
-  const topWords = contentTops.slice(0, 5).map(([w]) => w)
+  const topFields = fieldHits.slice(0, 3)
+  const topWords = contentTops.slice(0, 6).map(([w]) => w)
+  const leadField = topFields[0]
+  const leadWords = leadField ? leadField.words.slice(0, 4) : []
+
   const hypothesis =
     topWords.length === 0
-      ? 'Текст слишком короткий — distant-гипотезу строить не из чего.'
-      : `Гипотеза скрипта: текст тяготеет к полям «${topFields.join('», «') || '—'}»; опорные словоформы — ${topWords
-          .map((w) => `«${w}»`)
-          .join(', ')}. Наивная тональность: ${sentiment.label}${
-          posHits.length && negHits.length
-            ? ` (плюс: ${posHits.map((h) => h.word).join(', ')}; минус: ${negHits.map((h) => h.word).join(', ')})`
-            : ''
-        }.`
+      ? 'Фрагмент слишком короткий или почти без знаменательных слов — рабочей гипотезы нет. Вставьте связный отрывок.'
+      : [
+          `Рабочая гипотеза (distant, черновик для проверки close reading).`,
+          ``,
+          leadField
+            ? `1) Доминирующая изотопия — «${leadField.title}» (опоры: ${leadWords.map((w) => `«${w}»`).join(', ')}${
+                leadField.words.length > 4 ? '…' : ''
+              }). ${
+                topFields.length > 1
+                  ? `Рядом с ней проступают ещё: ${topFields
+                      .slice(1)
+                      .map((f) => `«${f.title}» (${f.words.slice(0, 3).map((w) => `«${w}»`).join(', ')})`)
+                      .join('; ')}.`
+                  : ''
+              }`
+            : `1) Устойчивой изотопии по учебным полям не видно — смысловой каркас, возможно, держится на словах вне словаря полей.`,
+          ``,
+          `2) Лексический каркас фрагмента (топ знаменательных словоформ): ${topWords
+            .map((w) => `«${w}»`)
+            .join(', ')}. Имеет смысл спросить: это сюжетные опоры, атмосфера или шум частотности?`,
+          ``,
+          `3) Аффект по учебному словарю: ${sentiment.label}${
+            sentiment.hits.length
+              ? ` (плюс: ${posHits.map((h) => `«${h.word}»`).join(', ') || '—'}; минус: ${
+                  negHits.map((h) => `«${h.word}»`).join(', ') || '—'
+                })`
+              : ''
+          }. Словарь не видит иронию, отрицание и жест — вердикт об «эмоции текста» без цитаты недопустим.`,
+          ``,
+          `4) Вопрос к close reading: подтверждает ли ключевая цитата доминирование «${
+            leadField?.title || 'выделенного поля'
+          }», или главный смысл держится на слове/жесте, которое частота и словарь недооценили?`,
+        ].join('\n')
 
   const trapNote =
-    posHits.some((h) => /улыб/.test(h.word)) && negHits.length > 0
-      ? 'Внимание: словарь увидел «улыб…» как плюс рядом с минусом. Close reading должен решить, ирония это, жест или ловушка метода.'
-      : posHits.some((h) => /счаст|радость|блажен/.test(h.word)) && negHits.length > 0
-        ? 'Внимание: в тексте есть и «плюс», и «минус» по словарю — без close нельзя решить, что доминирует.'
-        : null
+    posHits.length > 0 && negHits.length > 0
+      ? 'Методологическое предупреждение: в словаре одновременно «плюс» и «минус». Для литературоведа это сигнал проверить контраст, иронию или смену точки зрения — а не усреднять эмоцию.'
+      : null
 
   // Close: color by motif field
   const parts = []
@@ -225,9 +267,11 @@ export function CloseDistant() {
             className="rounded-2xl border-2 border-cyan-400 dark:border-cyan-600 bg-cyan-50 dark:bg-cyan-950/40 p-5"
           >
             <h3 className="text-sm font-bold uppercase tracking-wide text-cyan-800 dark:text-cyan-200 mb-2">
-              Гипотеза distant (её и проверяем)
+              Рабочая гипотеза distant
             </h3>
-            <p className="text-lg text-gray-900 dark:text-gray-100 leading-relaxed mb-2">{stats.hypothesis}</p>
+            <pre className="whitespace-pre-wrap font-sans text-base sm:text-lg text-gray-900 dark:text-gray-100 leading-relaxed mb-2">
+              {stats.hypothesis}
+            </pre>
             {stats.trapNote && (
               <p className="text-base font-medium text-amber-900 dark:text-amber-200 mt-2">{stats.trapNote}</p>
             )}
@@ -236,9 +280,11 @@ export function CloseDistant() {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/70 dark:bg-violet-950/30 p-5">
               <h3 className="text-lg font-bold text-violet-900 dark:text-violet-100 mb-1">Close reading</h3>
-              <p className="text-sm text-violet-800/80 dark:text-violet-200/80 mb-3">
-                Цвет = семантическое поле-кандидат. Это не «истина текста», а то, куда close может ткнуть
-                цитатой.
+              <p className="text-sm text-violet-800/90 dark:text-violet-200/90 mb-3 leading-relaxed">
+                <strong>Как подсвечивается.</strong> Каждая словоформа проверяется по списку учебных изотопий
+                (тело, свет/тьма, пространство, время, движение, речь, аффект). Если в слове есть «корень» из
+                правила поля — оно красится; при нескольких совпадениях берётся <em>первое</em> поле в списке.
+                Неподсвеченное слово не «неважно» — оно просто вне учебного словаря полей.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-gray-900 dark:text-gray-100 mb-4 whitespace-pre-wrap">
                 {stats.parts.map((p, i) =>
