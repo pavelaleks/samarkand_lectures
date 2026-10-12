@@ -1,0 +1,2098 @@
+{
+  "source": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/index.htm",
+  "note": "Учебный демонстрационный материал лекции 1: кураторские дискурсы, не универсальный NLP-движок.",
+  "cycle_totals": {
+    "stories": 37,
+    "words": 64126,
+    "love": 259,
+    "unhappy": 43,
+    "memory": 164,
+    "regret": 110,
+    "body": 880,
+    "garden": 410,
+    "love_per1k": 4.0,
+    "unhappy_per1k": 0.7,
+    "memory_per1k": 2.6,
+    "regret_per1k": 1.7,
+    "body_per1k": 13.7,
+    "garden_per1k": 6.4,
+    "love_forms": [
+      "любви",
+      "поцеловал",
+      "любовь",
+      "люблю",
+      "любите",
+      "любил",
+      "поцеловала",
+      "нежно"
+    ],
+    "unhappy_forms": [
+      "бросила",
+      "бросил",
+      "бросили",
+      "разлуки",
+      "ревность",
+      "бросилась",
+      "обиделся",
+      "разлуку"
+    ],
+    "memory_forms": [
+      "давно",
+      "прежде",
+      "помню",
+      "прошло",
+      "помнишь",
+      "молодости",
+      "бывало",
+      "старинного"
+    ],
+    "regret_forms": [
+      "грустно",
+      "жалость",
+      "жаль",
+      "напрасно",
+      "стыда",
+      "жалостью",
+      "горе",
+      "стыдно"
+    ],
+    "body_forms": [
+      "глаза",
+      "руку",
+      "руки",
+      "глазами",
+      "лицо",
+      "глаз",
+      "волосы",
+      "губы"
+    ],
+    "garden_forms": [
+      "ночь",
+      "аллеи",
+      "ночи",
+      "ночью",
+      "дождь",
+      "сад",
+      "сада",
+      "саду"
+    ]
+  },
+  "title_story": {
+    "slug": "temnye-allei",
+    "title": "Тёмные аллеи",
+    "words": 1189,
+    "love": 10,
+    "love_per1k": 8.4,
+    "love_forms": [
+      "люблю",
+      "любовь",
+      "поцеловал",
+      "любила",
+      "любить",
+      "любил",
+      "поцеловала"
+    ],
+    "unhappy": 6,
+    "unhappy_per1k": 5.0,
+    "unhappy_forms": [
+      "бессердечно",
+      "бросили",
+      "обиды",
+      "изменила",
+      "бросила",
+      "бросил"
+    ],
+    "memory": 10,
+    "memory_per1k": 8.4,
+    "memory_forms": [
+      "давно",
+      "помните",
+      "молодость",
+      "старинного",
+      "помню",
+      "памяти"
+    ],
+    "regret": 3,
+    "regret_per1k": 2.5,
+    "regret_forms": [
+      "стыдом",
+      "стыдился",
+      "стыда"
+    ],
+    "body": 15,
+    "body_per1k": 12.6,
+    "body_forms": [
+      "руку",
+      "руками",
+      "рукой",
+      "волосы",
+      "глаз",
+      "лицо",
+      "глазами",
+      "губе"
+    ],
+    "garden": 2,
+    "garden_per1k": 1.7,
+    "garden_forms": [
+      "дождями",
+      "аллеи"
+    ]
+  },
+  "stories": [
+    {
+      "slug": "temnye-allei",
+      "title": "Темные аллеи",
+      "part": null,
+      "words": 1189,
+      "love": 10,
+      "love_per1k": 8.4,
+      "love_forms": [
+        "люблю",
+        "любовь",
+        "поцеловал",
+        "любила",
+        "любить",
+        "любил",
+        "поцеловала"
+      ],
+      "unhappy": 6,
+      "unhappy_per1k": 5.0,
+      "unhappy_forms": [
+        "бессердечно",
+        "бросили",
+        "обиды",
+        "изменила",
+        "бросила",
+        "бросил"
+      ],
+      "memory": 10,
+      "memory_per1k": 8.4,
+      "memory_forms": [
+        "давно",
+        "помните",
+        "молодость",
+        "старинного",
+        "помню",
+        "памяти"
+      ],
+      "regret": 3,
+      "regret_per1k": 2.5,
+      "regret_forms": [
+        "стыдом",
+        "стыдился",
+        "стыда"
+      ],
+      "body": 15,
+      "body_per1k": 12.6,
+      "body_forms": [
+        "руку",
+        "руками",
+        "рукой",
+        "волосы",
+        "глаз",
+        "лицо",
+        "глазами",
+        "губе"
+      ],
+      "garden": 2,
+      "garden_per1k": 1.7,
+      "garden_forms": [
+        "дождями",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "kavkaz",
+      "title": "Кавказ",
+      "part": null,
+      "words": 1199,
+      "love": 2,
+      "love_per1k": 1.7,
+      "love_forms": [
+        "любящей",
+        "поцеловала"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 1,
+      "memory_per1k": 0.8,
+      "memory_forms": [
+        "прошло"
+      ],
+      "regret": 2,
+      "regret_per1k": 1.7,
+      "regret_forms": [
+        "жалостью",
+        "жалостно"
+      ],
+      "body": 10,
+      "body_per1k": 8.3,
+      "body_forms": [
+        "лицо",
+        "руку",
+        "глаз",
+        "рукой",
+        "глаза",
+        "волос"
+      ],
+      "garden": 9,
+      "garden_per1k": 7.5,
+      "garden_forms": [
+        "ночи",
+        "дожди",
+        "дождь",
+        "садясь",
+        "звезды",
+        "ночь",
+        "луна",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "ballada",
+      "title": "Баллада",
+      "part": null,
+      "words": 1732,
+      "love": 6,
+      "love_per1k": 3.5,
+      "love_forms": [
+        "любимая",
+        "любовный",
+        "любовь",
+        "любится",
+        "любимой",
+        "любимым"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 4,
+      "memory_per1k": 2.3,
+      "memory_forms": [
+        "вспомнить",
+        "старину",
+        "давно",
+        "прошли"
+      ],
+      "regret": 1,
+      "regret_per1k": 0.6,
+      "regret_forms": [
+        "горе"
+      ],
+      "body": 9,
+      "body_per1k": 5.2,
+      "body_forms": [
+        "глаза",
+        "руки",
+        "руку",
+        "плечико",
+        "глазами",
+        "глазом"
+      ],
+      "garden": 14,
+      "garden_per1k": 8.1,
+      "garden_forms": [
+        "ночь",
+        "ночному",
+        "ночи",
+        "садилась",
+        "ночью",
+        "лунки",
+        "лунку",
+        "садясь"
+      ]
+    },
+    {
+      "slug": "stepa",
+      "title": "Степа",
+      "part": null,
+      "words": 1412,
+      "love": 2,
+      "love_per1k": 1.4,
+      "love_forms": [
+        "любил",
+        "поцеловал"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 2,
+      "memory_per1k": 1.4,
+      "memory_forms": [
+        "давно",
+        "прошлом"
+      ],
+      "regret": 1,
+      "regret_per1k": 0.7,
+      "regret_forms": [
+        "жалкая"
+      ],
+      "body": 22,
+      "body_per1k": 15.6,
+      "body_forms": [
+        "глаза",
+        "руками",
+        "глазами",
+        "плечо",
+        "руки",
+        "рукой",
+        "лицо",
+        "рук"
+      ],
+      "garden": 3,
+      "garden_per1k": 2.1,
+      "garden_forms": [
+        "дождь",
+        "ночь",
+        "звезды"
+      ]
+    },
+    {
+      "slug": "muza",
+      "title": "Муза",
+      "part": null,
+      "words": 1675,
+      "love": 6,
+      "love_per1k": 3.6,
+      "love_forms": [
+        "поцеловала",
+        "любовь",
+        "страсть",
+        "любезностью"
+      ],
+      "unhappy": 3,
+      "unhappy_per1k": 1.8,
+      "unhappy_forms": [
+        "бросила"
+      ],
+      "memory": 3,
+      "memory_per1k": 1.8,
+      "memory_forms": [
+        "молодости",
+        "памяти",
+        "старинную"
+      ],
+      "regret": 3,
+      "regret_per1k": 1.8,
+      "regret_forms": [
+        "жалкое",
+        "печальный",
+        "стыдно"
+      ],
+      "body": 19,
+      "body_per1k": 11.3,
+      "body_forms": [
+        "волосы",
+        "глаза",
+        "лице",
+        "глаз",
+        "губернии",
+        "глазами",
+        "волосах",
+        "глазах"
+      ],
+      "garden": 20,
+      "garden_per1k": 11.9,
+      "garden_forms": [
+        "дождя",
+        "ночи",
+        "дождь",
+        "ночь",
+        "луной",
+        "дожди",
+        "лунные",
+        "лунным"
+      ]
+    },
+    {
+      "slug": "pozdnij-chas",
+      "title": "Поздний час",
+      "part": null,
+      "words": 1783,
+      "love": 4,
+      "love_per1k": 2.2,
+      "love_forms": [
+        "поцеловал",
+        "любви",
+        "нежности",
+        "поцелую"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.6,
+      "unhappy_forms": [
+        "бросились"
+      ],
+      "memory": 7,
+      "memory_per1k": 3.9,
+      "memory_forms": [
+        "давно",
+        "прежде",
+        "помнить",
+        "памятниками",
+        "памятников"
+      ],
+      "regret": 3,
+      "regret_per1k": 1.7,
+      "regret_forms": [
+        "жалостливого",
+        "грусть",
+        "жалость"
+      ],
+      "body": 14,
+      "body_per1k": 7.9,
+      "body_forms": [
+        "глаз",
+        "руку",
+        "глазах",
+        "глаза",
+        "волос",
+        "глазам",
+        "волосы",
+        "лица"
+      ],
+      "garden": 26,
+      "garden_per1k": 14.6,
+      "garden_forms": [
+        "ночь",
+        "ночи",
+        "садами",
+        "сада",
+        "звезду",
+        "рощи",
+        "ночного",
+        "ветра"
+      ]
+    },
+    {
+      "slug": "rusya",
+      "title": "Руся",
+      "part": null,
+      "words": 2598,
+      "love": 15,
+      "love_per1k": 5.8,
+      "love_forms": [
+        "любит",
+        "поцеловала",
+        "люблю",
+        "любоваться",
+        "нежностью",
+        "нежно",
+        "поцеловал",
+        "любишь"
+      ],
+      "unhappy": 2,
+      "unhappy_per1k": 0.8,
+      "unhappy_forms": [
+        "разлуки",
+        "бросился"
+      ],
+      "memory": 4,
+      "memory_per1k": 1.5,
+      "memory_forms": [
+        "давно",
+        "помня",
+        "прошлое",
+        "старинного"
+      ],
+      "regret": 5,
+      "regret_per1k": 1.9,
+      "regret_forms": [
+        "печально",
+        "напрасно",
+        "стыдясь",
+        "печальный",
+        "грустишь"
+      ],
+      "body": 36,
+      "body_per1k": 13.9,
+      "body_forms": [
+        "глаза",
+        "руки",
+        "руку",
+        "руке",
+        "волосы",
+        "глаз",
+        "глазок",
+        "плечо"
+      ],
+      "garden": 26,
+      "garden_per1k": 10.0,
+      "garden_forms": [
+        "ночам",
+        "сада",
+        "дождь",
+        "ночь",
+        "сад",
+        "садись",
+        "садом",
+        "ветром"
+      ]
+    },
+    {
+      "slug": "krasavica",
+      "title": "Красавица",
+      "part": null,
+      "words": 304,
+      "love": 0,
+      "love_per1k": 0.0,
+      "love_forms": [],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 0,
+      "memory_per1k": 0.0,
+      "memory_forms": [],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 2,
+      "body_per1k": 6.6,
+      "body_forms": [
+        "губернских",
+        "руками"
+      ],
+      "garden": 2,
+      "garden_per1k": 6.6,
+      "garden_forms": [
+        "ночь",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "durochka",
+      "title": "Дурочка",
+      "part": null,
+      "words": 443,
+      "love": 0,
+      "love_per1k": 0.0,
+      "love_forms": [],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 1,
+      "memory_per1k": 2.3,
+      "memory_forms": [
+        "прошлое"
+      ],
+      "regret": 2,
+      "regret_per1k": 4.5,
+      "regret_forms": [
+        "стыда",
+        "жалостливые"
+      ],
+      "body": 6,
+      "body_per1k": 13.5,
+      "body_forms": [
+        "лица",
+        "руки",
+        "руке",
+        "плечо",
+        "плечико",
+        "глазки"
+      ],
+      "garden": 2,
+      "garden_per1k": 4.5,
+      "garden_forms": [
+        "ночь",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "antigona",
+      "title": "Антигона",
+      "part": null,
+      "words": 2316,
+      "love": 9,
+      "love_per1k": 3.9,
+      "love_forms": [
+        "любовь",
+        "любви",
+        "любите",
+        "поцелуя"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 2,
+      "memory_per1k": 0.9,
+      "memory_forms": [
+        "молодостью",
+        "прежде"
+      ],
+      "regret": 3,
+      "regret_per1k": 1.3,
+      "regret_forms": [
+        "жаль",
+        "грустью",
+        "горе"
+      ],
+      "body": 33,
+      "body_per1k": 14.2,
+      "body_forms": [
+        "глазами",
+        "глаза",
+        "руку",
+        "лицо",
+        "лица",
+        "глаз",
+        "рукой",
+        "плечо"
+      ],
+      "garden": 16,
+      "garden_per1k": 6.9,
+      "garden_forms": [
+        "ночной",
+        "ветра",
+        "дождь",
+        "дождя",
+        "аллее",
+        "ночью",
+        "ночную",
+        "дождевые"
+      ]
+    },
+    {
+      "slug": "smaragd",
+      "title": "Смарагд",
+      "part": null,
+      "words": 303,
+      "love": 1,
+      "love_per1k": 3.3,
+      "love_forms": [
+        "обнимает"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 3.3,
+      "unhappy_forms": [
+        "обиделись"
+      ],
+      "memory": 0,
+      "memory_per1k": 0.0,
+      "memory_forms": [],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 5,
+      "body_per1k": 16.5,
+      "body_forms": [
+        "руку",
+        "плечи",
+        "губы",
+        "плечами"
+      ],
+      "garden": 7,
+      "garden_per1k": 23.1,
+      "garden_forms": [
+        "луна",
+        "ночная",
+        "луны",
+        "звезды",
+        "звезду",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "volki",
+      "title": "Волки",
+      "part": null,
+      "words": 535,
+      "love": 2,
+      "love_per1k": 3.7,
+      "love_forms": [
+        "обнимает",
+        "поцелуем"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 1.9,
+      "unhappy_forms": [
+        "бросилась"
+      ],
+      "memory": 1,
+      "memory_per1k": 1.9,
+      "memory_forms": [
+        "давно"
+      ],
+      "regret": 1,
+      "regret_per1k": 1.9,
+      "regret_forms": [
+        "печальный"
+      ],
+      "body": 12,
+      "body_per1k": 22.4,
+      "body_forms": [
+        "щеку",
+        "губы",
+        "рук",
+        "плечи",
+        "лицо",
+        "глаза",
+        "лица",
+        "глазах"
+      ],
+      "garden": 5,
+      "garden_per1k": 9.3,
+      "garden_forms": [
+        "ночи",
+        "звезды",
+        "звезд",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "vizitnye-kartochki",
+      "title": "Визитные карточки",
+      "part": null,
+      "words": 1568,
+      "love": 7,
+      "love_per1k": 4.5,
+      "love_forms": [
+        "нежность",
+        "страсти",
+        "любви",
+        "нежностью",
+        "страстью",
+        "поцеловал",
+        "любовью"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 1,
+      "memory_per1k": 0.6,
+      "memory_forms": [
+        "старинного"
+      ],
+      "regret": 5,
+      "regret_per1k": 3.2,
+      "regret_forms": [
+        "жалостью",
+        "печальной",
+        "сожалению",
+        "жалость"
+      ],
+      "body": 28,
+      "body_per1k": 17.9,
+      "body_forms": [
+        "волосы",
+        "глаза",
+        "губы",
+        "плечо",
+        "волос",
+        "лица",
+        "рукава",
+        "лицо"
+      ],
+      "garden": 10,
+      "garden_per1k": 6.4,
+      "garden_forms": [
+        "ветер",
+        "ночью",
+        "ветру",
+        "ветром",
+        "ветра",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "zojka-i-valeriya",
+      "title": "Зойка и Валерия",
+      "part": null,
+      "words": 3718,
+      "love": 14,
+      "love_per1k": 3.8,
+      "love_forms": [
+        "любви",
+        "люблю",
+        "нежны",
+        "поцеловал",
+        "любил",
+        "любовником",
+        "поцелуев",
+        "страстный"
+      ],
+      "unhappy": 3,
+      "unhappy_per1k": 0.8,
+      "unhappy_forms": [
+        "ревность",
+        "обидчивость"
+      ],
+      "memory": 8,
+      "memory_per1k": 2.2,
+      "memory_forms": [
+        "старинной",
+        "старинных",
+        "прежде",
+        "вспомнить",
+        "давно",
+        "бывало",
+        "помнишь"
+      ],
+      "regret": 5,
+      "regret_per1k": 1.3,
+      "regret_forms": [
+        "жалкой",
+        "жалким",
+        "стыдом",
+        "жалости",
+        "горькой"
+      ],
+      "body": 56,
+      "body_per1k": 15.1,
+      "body_forms": [
+        "глаза",
+        "глазами",
+        "руки",
+        "губы",
+        "глаз",
+        "лицом",
+        "руку",
+        "руке"
+      ],
+      "garden": 20,
+      "garden_per1k": 5.4,
+      "garden_forms": [
+        "аллеи",
+        "аллее",
+        "ночи",
+        "садилась",
+        "ночь",
+        "сада",
+        "аллеей",
+        "ночью"
+      ]
+    },
+    {
+      "slug": "tanya",
+      "title": "Таня",
+      "part": null,
+      "words": 4856,
+      "love": 22,
+      "love_per1k": 4.5,
+      "love_forms": [
+        "люблю",
+        "любви",
+        "любить",
+        "любите",
+        "любовных",
+        "поцеловал",
+        "поцелуй",
+        "нежное"
+      ],
+      "unhappy": 3,
+      "unhappy_per1k": 0.6,
+      "unhappy_forms": [
+        "бросил",
+        "ревность",
+        "разлук"
+      ],
+      "memory": 14,
+      "memory_per1k": 2.9,
+      "memory_forms": [
+        "прежде",
+        "бывало",
+        "молодостью",
+        "прошлом",
+        "давно",
+        "юностью",
+        "молодость",
+        "помнила"
+      ],
+      "regret": 10,
+      "regret_per1k": 2.1,
+      "regret_forms": [
+        "горе",
+        "грустные",
+        "жалких",
+        "жалость",
+        "жалком",
+        "грустны",
+        "стыда",
+        "напрасных"
+      ],
+      "body": 56,
+      "body_per1k": 11.5,
+      "body_forms": [
+        "глаза",
+        "руки",
+        "лицо",
+        "руку",
+        "глаз",
+        "губы",
+        "глазами",
+        "лицом"
+      ],
+      "garden": 49,
+      "garden_per1k": 10.1,
+      "garden_forms": [
+        "ночь",
+        "сад",
+        "ночью",
+        "ночной",
+        "ветер",
+        "ночи",
+        "луна",
+        "ветром"
+      ]
+    },
+    {
+      "slug": "v-parizhe",
+      "title": "В Париже",
+      "part": null,
+      "words": 2340,
+      "love": 8,
+      "love_per1k": 3.4,
+      "love_forms": [
+        "поцеловал",
+        "любил",
+        "любовной",
+        "любите",
+        "любовных",
+        "любящим",
+        "любовно"
+      ],
+      "unhappy": 3,
+      "unhappy_per1k": 1.3,
+      "unhappy_forms": [
+        "бросила"
+      ],
+      "memory": 3,
+      "memory_per1k": 1.3,
+      "memory_forms": [
+        "давно"
+      ],
+      "regret": 6,
+      "regret_per1k": 2.6,
+      "regret_forms": [
+        "грустью",
+        "напрасно",
+        "тоска",
+        "грустная",
+        "грустно",
+        "горького"
+      ],
+      "body": 34,
+      "body_per1k": 14.5,
+      "body_forms": [
+        "глаза",
+        "руки",
+        "руку",
+        "губы",
+        "лица",
+        "лицом",
+        "глазами",
+        "волосы"
+      ],
+      "garden": 11,
+      "garden_per1k": 4.7,
+      "garden_forms": [
+        "дождь",
+        "ветром",
+        "ночь",
+        "ночью",
+        "дождем",
+        "дождя",
+        "ночной"
+      ]
+    },
+    {
+      "slug": "galya-ganskaya",
+      "title": "Галя Ганская",
+      "part": null,
+      "words": 2217,
+      "love": 10,
+      "love_per1k": 4.5,
+      "love_forms": [
+        "поцеловал",
+        "любовное",
+        "любовный",
+        "страстный",
+        "любовных",
+        "поцеловать",
+        "нежно",
+        "страстна"
+      ],
+      "unhappy": 6,
+      "unhappy_per1k": 2.7,
+      "unhappy_forms": [
+        "бросила",
+        "бросили",
+        "бросил",
+        "обиделся"
+      ],
+      "memory": 12,
+      "memory_per1k": 5.4,
+      "memory_forms": [
+        "помнишь",
+        "давно",
+        "вспомнилась",
+        "молодости",
+        "прошло",
+        "бывало"
+      ],
+      "regret": 2,
+      "regret_per1k": 0.9,
+      "regret_forms": [
+        "стыда",
+        "жалость"
+      ],
+      "body": 24,
+      "body_per1k": 10.8,
+      "body_forms": [
+        "глаза",
+        "глазами",
+        "губы",
+        "волосы",
+        "глазах",
+        "щек",
+        "лицу",
+        "руку"
+      ],
+      "garden": 4,
+      "garden_per1k": 1.8,
+      "garden_forms": [
+        "дождем",
+        "садами",
+        "ветром",
+        "сады"
+      ]
+    },
+    {
+      "slug": "genrih",
+      "title": "Генрих",
+      "part": null,
+      "words": 3412,
+      "love": 9,
+      "love_per1k": 2.6,
+      "love_forms": [
+        "нежно",
+        "люблю",
+        "нежностью",
+        "любви",
+        "любил",
+        "любовь"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.3,
+      "unhappy_forms": [
+        "бросил"
+      ],
+      "memory": 6,
+      "memory_per1k": 1.8,
+      "memory_forms": [
+        "давно",
+        "прежде",
+        "старинной",
+        "молодости",
+        "прошлый"
+      ],
+      "regret": 10,
+      "regret_per1k": 2.9,
+      "regret_forms": [
+        "жалко",
+        "грустно",
+        "жаль",
+        "грустью",
+        "печально",
+        "жалкое",
+        "жалостно",
+        "тоской"
+      ],
+      "body": 40,
+      "body_per1k": 11.7,
+      "body_forms": [
+        "глазами",
+        "лицо",
+        "лица",
+        "руки",
+        "волосы",
+        "щеки",
+        "руку",
+        "губами"
+      ],
+      "garden": 20,
+      "garden_per1k": 5.9,
+      "garden_forms": [
+        "ночи",
+        "ночью",
+        "ветер",
+        "садах",
+        "ночном",
+        "ночь",
+        "ночной",
+        "ночевать"
+      ]
+    },
+    {
+      "slug": "natali",
+      "title": "Натали",
+      "part": null,
+      "words": 8268,
+      "love": 51,
+      "love_per1k": 6.2,
+      "love_forms": [
+        "любви",
+        "любовь",
+        "люблю",
+        "любовных",
+        "поцеловал",
+        "любил",
+        "поцелуй",
+        "страсти"
+      ],
+      "unhappy": 4,
+      "unhappy_per1k": 0.5,
+      "unhappy_forms": [
+        "бросил",
+        "покину",
+        "разлуку",
+        "разлуки"
+      ],
+      "memory": 18,
+      "memory_per1k": 2.2,
+      "memory_forms": [
+        "давно",
+        "прошло",
+        "прежде",
+        "старинной",
+        "молодости",
+        "помнишь",
+        "молодость",
+        "помните"
+      ],
+      "regret": 17,
+      "regret_per1k": 2.1,
+      "regret_forms": [
+        "жаль",
+        "тоской",
+        "грустно",
+        "напрасно",
+        "стыдлива",
+        "стыд",
+        "стыдно",
+        "грустью"
+      ],
+      "body": 129,
+      "body_per1k": 15.6,
+      "body_forms": [
+        "руку",
+        "глаза",
+        "руки",
+        "глаз",
+        "волосы",
+        "лицо",
+        "руке",
+        "глазами"
+      ],
+      "garden": 69,
+      "garden_per1k": 8.3,
+      "garden_forms": [
+        "ночь",
+        "саду",
+        "сада",
+        "аллее",
+        "ночи",
+        "сад",
+        "ветром",
+        "дождь"
+      ]
+    },
+    {
+      "slug": "v-odnoj-znakomoj-ulice",
+      "title": "В одной знакомой улице",
+      "part": null,
+      "words": 475,
+      "love": 2,
+      "love_per1k": 4.2,
+      "love_forms": [
+        "обнимая",
+        "нежности"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 6,
+      "memory_per1k": 12.6,
+      "memory_forms": [
+        "помню"
+      ],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 8,
+      "body_per1k": 16.8,
+      "body_forms": [
+        "губы",
+        "глаза",
+        "лицо",
+        "плечо",
+        "руки"
+      ],
+      "garden": 6,
+      "garden_per1k": 12.6,
+      "garden_forms": [
+        "ночью",
+        "ветер",
+        "ночной",
+        "ветром",
+        "ветра",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "rechnoj-traktir",
+      "title": "Речной трактир",
+      "part": null,
+      "words": 2017,
+      "love": 2,
+      "love_per1k": 1.0,
+      "love_forms": [
+        "обнимая",
+        "поцеловав"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 5,
+      "memory_per1k": 2.5,
+      "memory_forms": [
+        "молодости",
+        "давно",
+        "вспомнил",
+        "старинный",
+        "прошлом"
+      ],
+      "regret": 7,
+      "regret_per1k": 3.5,
+      "regret_forms": [
+        "грустно",
+        "жалость",
+        "напрасно",
+        "горе",
+        "жалостную",
+        "грусть"
+      ],
+      "body": 27,
+      "body_per1k": 13.4,
+      "body_forms": [
+        "руку",
+        "глаза",
+        "волосами",
+        "глазами",
+        "руки",
+        "руке",
+        "глаз",
+        "глазам"
+      ],
+      "garden": 9,
+      "garden_per1k": 4.5,
+      "garden_forms": [
+        "ночь",
+        "ночью",
+        "ночными",
+        "ночи",
+        "дождем",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "kuma",
+      "title": "Кума",
+      "part": null,
+      "words": 763,
+      "love": 4,
+      "love_per1k": 5.2,
+      "love_forms": [
+        "любите",
+        "поцеловать",
+        "поцеловал"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 5,
+      "memory_per1k": 6.6,
+      "memory_forms": [
+        "давно",
+        "помните",
+        "помню"
+      ],
+      "regret": 2,
+      "regret_per1k": 2.6,
+      "regret_forms": [
+        "жаль",
+        "грустно"
+      ],
+      "body": 14,
+      "body_per1k": 18.3,
+      "body_forms": [
+        "руку",
+        "рук",
+        "руки",
+        "глаза",
+        "губами",
+        "руках",
+        "рукавчиками",
+        "глаз"
+      ],
+      "garden": 9,
+      "garden_per1k": 11.8,
+      "garden_forms": [
+        "ночует",
+        "ночи",
+        "садовый",
+        "ночь",
+        "ночной",
+        "ночном",
+        "дождя",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "nachalo",
+      "title": "Начало",
+      "part": null,
+      "words": 934,
+      "love": 1,
+      "love_per1k": 1.1,
+      "love_forms": [
+        "нежный"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 3,
+      "memory_per1k": 3.2,
+      "memory_forms": [
+        "старинного",
+        "прошло",
+        "вспомнил"
+      ],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 19,
+      "body_per1k": 20.3,
+      "body_forms": [
+        "глаза",
+        "глаз",
+        "глазами",
+        "лицо",
+        "лицом",
+        "лицам",
+        "руку",
+        "руками"
+      ],
+      "garden": 2,
+      "garden_per1k": 2.1,
+      "garden_forms": [
+        "саду",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "dubki",
+      "title": "Дубки",
+      "part": null,
+      "words": 1226,
+      "love": 5,
+      "love_per1k": 4.1,
+      "love_forms": [
+        "любить",
+        "страстно",
+        "любой",
+        "обнимает",
+        "страсть"
+      ],
+      "unhappy": 3,
+      "unhappy_per1k": 2.4,
+      "unhappy_forms": [
+        "бросил",
+        "бросилась",
+        "разлуки"
+      ],
+      "memory": 6,
+      "memory_per1k": 4.9,
+      "memory_forms": [
+        "давно",
+        "памяти",
+        "прошли",
+        "прошла",
+        "прошло"
+      ],
+      "regret": 1,
+      "regret_per1k": 0.8,
+      "regret_forms": [
+        "горько"
+      ],
+      "body": 19,
+      "body_per1k": 15.5,
+      "body_forms": [
+        "глаза",
+        "глаз",
+        "лицо",
+        "руку",
+        "лицом",
+        "руках",
+        "рукавами",
+        "лицу"
+      ],
+      "garden": 9,
+      "garden_per1k": 7.3,
+      "garden_forms": [
+        "ночь",
+        "сада",
+        "ветры",
+        "ночевкой",
+        "дождалась",
+        "ветру",
+        "ночью",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "madrid",
+      "title": "Мадрид",
+      "part": null,
+      "words": 1528,
+      "love": 9,
+      "love_per1k": 5.9,
+      "love_forms": [
+        "страсть",
+        "поцеловал",
+        "любовь",
+        "любят",
+        "люблю",
+        "поцелуемся"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 3,
+      "memory_per1k": 2.0,
+      "memory_forms": [
+        "давно",
+        "помню"
+      ],
+      "regret": 3,
+      "regret_per1k": 2.0,
+      "regret_forms": [
+        "грустный",
+        "стыдливо",
+        "стыдно"
+      ],
+      "body": 16,
+      "body_per1k": 10.5,
+      "body_forms": [
+        "глаза",
+        "губы",
+        "плечо",
+        "руки",
+        "щеки",
+        "волосатые",
+        "рукой",
+        "волосами"
+      ],
+      "garden": 2,
+      "garden_per1k": 1.3,
+      "garden_forms": [
+        "ночном",
+        "садясь"
+      ]
+    },
+    {
+      "slug": "vtoroj-kofejnik",
+      "title": "Второй кофейник",
+      "part": null,
+      "words": 617,
+      "love": 3,
+      "love_per1k": 4.9,
+      "love_forms": [
+        "любила",
+        "любовница"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 1.6,
+      "unhappy_forms": [
+        "бросил"
+      ],
+      "memory": 0,
+      "memory_per1k": 0.0,
+      "memory_forms": [],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 6,
+      "body_per1k": 9.7,
+      "body_forms": [
+        "рукам",
+        "глазастые",
+        "рукой",
+        "волосы",
+        "глаза"
+      ],
+      "garden": 1,
+      "garden_per1k": 1.6,
+      "garden_forms": [
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "holodnaya-osen",
+      "title": "Холодная осень",
+      "part": null,
+      "words": 1108,
+      "love": 4,
+      "love_per1k": 3.6,
+      "love_forms": [
+        "люблю",
+        "поцеловал",
+        "поцеловав",
+        "любовью"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.9,
+      "unhappy_forms": [
+        "разлуку"
+      ],
+      "memory": 9,
+      "memory_per1k": 8.1,
+      "memory_forms": [
+        "вспомнил",
+        "помню",
+        "прошли",
+        "помнить",
+        "прошло",
+        "памяти",
+        "прошлым",
+        "давно"
+      ],
+      "regret": 4,
+      "regret_per1k": 3.6,
+      "regret_forms": [
+        "грустно",
+        "горько"
+      ],
+      "body": 9,
+      "body_per1k": 8.1,
+      "body_forms": [
+        "руках",
+        "руке",
+        "рукав",
+        "лица",
+        "лицо",
+        "глаза",
+        "руки"
+      ],
+      "garden": 6,
+      "garden_per1k": 5.4,
+      "garden_forms": [
+        "саду",
+        "звезды",
+        "луны",
+        "сад",
+        "звездами",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "parohod-saratov",
+      "title": "Пароход \"Саратов",
+      "part": null,
+      "words": 1089,
+      "love": 2,
+      "love_per1k": 1.8,
+      "love_forms": [
+        "любить",
+        "любви"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.9,
+      "unhappy_forms": [
+        "бросил"
+      ],
+      "memory": 4,
+      "memory_per1k": 3.7,
+      "memory_forms": [
+        "давно"
+      ],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 24,
+      "body_per1k": 22.0,
+      "body_forms": [
+        "глаза",
+        "волосы",
+        "глазами",
+        "лицо",
+        "плеча",
+        "рукавами",
+        "руке",
+        "руку"
+      ],
+      "garden": 4,
+      "garden_per1k": 3.7,
+      "garden_forms": [
+        "дождь",
+        "садах",
+        "сад",
+        "ночь"
+      ]
+    },
+    {
+      "slug": "voron",
+      "title": "Ворон",
+      "part": null,
+      "words": 1757,
+      "love": 13,
+      "love_per1k": 7.4,
+      "love_forms": [
+        "любезная",
+        "нежным",
+        "любил",
+        "любовью",
+        "любимых",
+        "нежности",
+        "нежно",
+        "нежном"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.6,
+      "unhappy_forms": [
+        "бросил"
+      ],
+      "memory": 6,
+      "memory_per1k": 3.4,
+      "memory_forms": [
+        "прежде",
+        "вспомнив",
+        "давно",
+        "памятный",
+        "помнить"
+      ],
+      "regret": 2,
+      "regret_per1k": 1.1,
+      "regret_forms": [
+        "грустно",
+        "жалкой"
+      ],
+      "body": 32,
+      "body_per1k": 18.2,
+      "body_forms": [
+        "лицом",
+        "рукой",
+        "глаз",
+        "руки",
+        "глаза",
+        "плечо",
+        "губернском",
+        "губернаторши"
+      ],
+      "garden": 2,
+      "garden_per1k": 1.1,
+      "garden_forms": [
+        "дождь",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "kamarg",
+      "title": "Камарг",
+      "part": null,
+      "words": 269,
+      "love": 0,
+      "love_per1k": 0.0,
+      "love_forms": [],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 1,
+      "memory_per1k": 3.7,
+      "memory_forms": [
+        "прошла"
+      ],
+      "regret": 1,
+      "regret_per1k": 3.7,
+      "regret_forms": [
+        "грустно"
+      ],
+      "body": 11,
+      "body_per1k": 40.9,
+      "body_forms": [
+        "глаза",
+        "руку",
+        "лицом",
+        "губы",
+        "губе",
+        "лицо",
+        "волос",
+        "плечах"
+      ],
+      "garden": 1,
+      "garden_per1k": 3.7,
+      "garden_forms": [
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "sto-rupij",
+      "title": "Сто рупий",
+      "part": null,
+      "words": 297,
+      "love": 1,
+      "love_per1k": 3.4,
+      "love_forms": [
+        "нежности"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 1,
+      "memory_per1k": 3.4,
+      "memory_forms": [
+        "старинного"
+      ],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 5,
+      "body_per1k": 16.8,
+      "body_forms": [
+        "губами",
+        "плечах",
+        "руках",
+        "волосы",
+        "лица"
+      ],
+      "garden": 1,
+      "garden_per1k": 3.4,
+      "garden_forms": [
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "mest",
+      "title": "Месть",
+      "part": null,
+      "words": 2246,
+      "love": 8,
+      "love_per1k": 3.6,
+      "love_forms": [
+        "любознательны",
+        "нежной",
+        "любознательности",
+        "любили",
+        "любила",
+        "любви",
+        "поцеловать"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.4,
+      "unhappy_forms": [
+        "бросила"
+      ],
+      "memory": 4,
+      "memory_per1k": 1.8,
+      "memory_forms": [
+        "прошлое",
+        "прошлой",
+        "давно"
+      ],
+      "regret": 5,
+      "regret_per1k": 2.2,
+      "regret_forms": [
+        "печальную",
+        "стыдно",
+        "печально",
+        "жалкого"
+      ],
+      "body": 20,
+      "body_per1k": 8.9,
+      "body_forms": [
+        "руку",
+        "волосы",
+        "лицо",
+        "глаза",
+        "плечом",
+        "глазами",
+        "плеч",
+        "лица"
+      ],
+      "garden": 4,
+      "garden_per1k": 1.8,
+      "garden_forms": [
+        "садике",
+        "звездами",
+        "ночь",
+        "дождь"
+      ]
+    },
+    {
+      "slug": "kacheli",
+      "title": "Качели",
+      "part": null,
+      "words": 367,
+      "love": 2,
+      "love_per1k": 5.4,
+      "love_forms": [
+        "любимые",
+        "любви"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 0,
+      "memory_per1k": 0.0,
+      "memory_forms": [],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 10,
+      "body_per1k": 27.2,
+      "body_forms": [
+        "глаза",
+        "лицо",
+        "глазами",
+        "лице",
+        "глазах",
+        "руку",
+        "плечи"
+      ],
+      "garden": 5,
+      "garden_per1k": 13.6,
+      "garden_forms": [
+        "аллеи",
+        "звезда",
+        "ветром"
+      ]
+    },
+    {
+      "slug": "chistyj-ponedelnik",
+      "title": "Чистый понедельник",
+      "part": null,
+      "words": 3806,
+      "love": 18,
+      "love_per1k": 4.7,
+      "love_forms": [
+        "любовь",
+        "любви",
+        "любите",
+        "люблю",
+        "поцелуя",
+        "любимые",
+        "любила",
+        "страстной"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 8,
+      "memory_per1k": 2.1,
+      "memory_forms": [
+        "прошла",
+        "памятник",
+        "давно",
+        "прошли",
+        "прошлый",
+        "старины",
+        "прошло"
+      ],
+      "regret": 5,
+      "regret_per1k": 1.3,
+      "regret_forms": [
+        "грустно",
+        "грустными",
+        "грусти",
+        "жалостных"
+      ],
+      "body": 59,
+      "body_per1k": 15.5,
+      "body_forms": [
+        "глаза",
+        "волос",
+        "руку",
+        "руки",
+        "волосы",
+        "глаз",
+        "плечом",
+        "лицо"
+      ],
+      "garden": 14,
+      "garden_per1k": 3.7,
+      "garden_forms": [
+        "лунной",
+        "ночи",
+        "садах",
+        "звезды",
+        "садилась",
+        "садился",
+        "звездочки",
+        "ночное"
+      ]
+    },
+    {
+      "slug": "chasovnya",
+      "title": "Часовня",
+      "part": null,
+      "words": 200,
+      "love": 0,
+      "love_per1k": 0.0,
+      "love_forms": [],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 1,
+      "memory_per1k": 5.0,
+      "memory_forms": [
+        "давно"
+      ],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 1,
+      "body_per1k": 5.0,
+      "body_forms": [
+        "глазами"
+      ],
+      "garden": 4,
+      "garden_per1k": 20.0,
+      "garden_forms": [
+        "садом",
+        "ночью",
+        "ветер",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "vesnoj-v-iudee",
+      "title": "Весной, в Иудее",
+      "part": null,
+      "words": 1360,
+      "love": 2,
+      "love_per1k": 1.5,
+      "love_forms": [
+        "поцеловал",
+        "поцелуи"
+      ],
+      "unhappy": 0,
+      "unhappy_per1k": 0.0,
+      "unhappy_forms": [],
+      "memory": 3,
+      "memory_per1k": 2.2,
+      "memory_forms": [
+        "молодости",
+        "прошла",
+        "бывало"
+      ],
+      "regret": 0,
+      "regret_per1k": 0.0,
+      "regret_forms": [],
+      "body": 28,
+      "body_per1k": 20.6,
+      "body_forms": [
+        "глазами",
+        "руки",
+        "глаза",
+        "губам",
+        "лицо",
+        "лицом",
+        "волосами",
+        "плечам"
+      ],
+      "garden": 3,
+      "garden_per1k": 2.2,
+      "garden_forms": [
+        "дожди",
+        "ветры",
+        "аллеи"
+      ]
+    },
+    {
+      "slug": "nochleg",
+      "title": "Ночлег",
+      "part": null,
+      "words": 2144,
+      "love": 5,
+      "love_per1k": 2.3,
+      "love_forms": [
+        "любила",
+        "нежным",
+        "нежности",
+        "поцеловала",
+        "поцелуй"
+      ],
+      "unhappy": 1,
+      "unhappy_per1k": 0.5,
+      "unhappy_forms": [
+        "обиделся"
+      ],
+      "memory": 2,
+      "memory_per1k": 0.9,
+      "memory_forms": [
+        "старинный",
+        "памяти"
+      ],
+      "regret": 1,
+      "regret_per1k": 0.5,
+      "regret_forms": [
+        "жалко"
+      ],
+      "body": 22,
+      "body_per1k": 10.3,
+      "body_forms": [
+        "глазами",
+        "лицо",
+        "рукой",
+        "глаз",
+        "лице",
+        "губами",
+        "губы",
+        "волосы"
+      ],
+      "garden": 12,
+      "garden_per1k": 5.6,
+      "garden_forms": [
+        "ночь",
+        "ночи",
+        "луна",
+        "садами",
+        "лунную",
+        "звездами",
+        "луну"
+      ]
+    }
+  ],
+  "discourses": [
+    {
+      "id": "love",
+      "title": "Любовь",
+      "color": "#fb7185"
+    },
+    {
+      "id": "unhappy",
+      "title": "Несчастная любовь",
+      "color": "#f87171"
+    },
+    {
+      "id": "memory",
+      "title": "Память / прошлое",
+      "color": "#fb923c"
+    },
+    {
+      "id": "regret",
+      "title": "Сожаление / печаль",
+      "color": "#a78bfa"
+    },
+    {
+      "id": "body",
+      "title": "Тело / взгляд",
+      "color": "#f9a8d4"
+    },
+    {
+      "id": "garden",
+      "title": "Сад / аллея / ночь",
+      "color": "#6ee7b7"
+    }
+  ]
+}

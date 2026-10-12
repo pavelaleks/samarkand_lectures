@@ -1,0 +1,261 @@
+[
+  {
+    "slug": "temnye-allei",
+    "title": "Темные аллеи",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/temnye-allei.htm",
+    "chars": 7924,
+    "words": 1190
+  },
+  {
+    "slug": "kavkaz",
+    "title": "Кавказ",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/kavkaz.htm",
+    "chars": 7919,
+    "words": 1199
+  },
+  {
+    "slug": "ballada",
+    "title": "Баллада",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/ballada.htm",
+    "chars": 10977,
+    "words": 1732
+  },
+  {
+    "slug": "stepa",
+    "title": "Степа",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/stepa.htm",
+    "chars": 9478,
+    "words": 1412
+  },
+  {
+    "slug": "muza",
+    "title": "Муза",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/muza.htm",
+    "chars": 11189,
+    "words": 1675
+  },
+  {
+    "slug": "pozdnij-chas",
+    "title": "Поздний час",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/pozdnij-chas.htm",
+    "chars": 11785,
+    "words": 1793
+  },
+  {
+    "slug": "rusya",
+    "title": "Руся",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/rusya.htm",
+    "chars": 16871,
+    "words": 2598
+  },
+  {
+    "slug": "krasavica",
+    "title": "Красавица",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/krasavica.htm",
+    "chars": 2055,
+    "words": 304
+  },
+  {
+    "slug": "durochka",
+    "title": "Дурочка",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/durochka.htm",
+    "chars": 2967,
+    "words": 443
+  },
+  {
+    "slug": "antigona",
+    "title": "Антигона",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/antigona.htm",
+    "chars": 15607,
+    "words": 2316
+  },
+  {
+    "slug": "smaragd",
+    "title": "Смарагд",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/smaragd.htm",
+    "chars": 1951,
+    "words": 303
+  },
+  {
+    "slug": "volki",
+    "title": "Волки",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/volki.htm",
+    "chars": 3589,
+    "words": 535
+  },
+  {
+    "slug": "vizitnye-kartochki",
+    "title": "Визитные карточки",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/vizitnye-kartochki.htm",
+    "chars": 10401,
+    "words": 1568
+  },
+  {
+    "slug": "zojka-i-valeriya",
+    "title": "Зойка и Валерия",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/zojka-i-valeriya.htm",
+    "chars": 24661,
+    "words": 3718
+  },
+  {
+    "slug": "tanya",
+    "title": "Таня",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/tanya.htm",
+    "chars": 30867,
+    "words": 4856
+  },
+  {
+    "slug": "v-parizhe",
+    "title": "В Париже",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/v-parizhe.htm",
+    "chars": 16435,
+    "words": 2440
+  },
+  {
+    "slug": "galya-ganskaya",
+    "title": "Галя Ганская",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/galya-ganskaya.htm",
+    "chars": 14556,
+    "words": 2222
+  },
+  {
+    "slug": "genrih",
+    "title": "Генрих",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/genrih.htm",
+    "chars": 23370,
+    "words": 3429
+  },
+  {
+    "slug": "natali",
+    "title": "Натали",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/natali.htm",
+    "chars": 53698,
+    "words": 8277
+  },
+  {
+    "slug": "v-odnoj-znakomoj-ulice",
+    "title": "В одной знакомой улице",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/v-odnoj-znakomoj-ulice.htm",
+    "chars": 3203,
+    "words": 475
+  },
+  {
+    "slug": "rechnoj-traktir",
+    "title": "Речной трактир",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/rechnoj-traktir.htm",
+    "chars": 13625,
+    "words": 2017
+  },
+  {
+    "slug": "kuma",
+    "title": "Кума",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/kuma.htm",
+    "chars": 5093,
+    "words": 766
+  },
+  {
+    "slug": "nachalo",
+    "title": "Начало",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/nachalo.htm",
+    "chars": 6128,
+    "words": 934
+  },
+  {
+    "slug": "dubki",
+    "title": "Дубки",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/dubki.htm",
+    "chars": 8011,
+    "words": 1226
+  },
+  {
+    "slug": "madrid",
+    "title": "Мадрид",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/madrid.htm",
+    "chars": 9640,
+    "words": 1528
+  },
+  {
+    "slug": "vtoroj-kofejnik",
+    "title": "Второй кофейник",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/vtoroj-kofejnik.htm",
+    "chars": 4003,
+    "words": 617
+  },
+  {
+    "slug": "holodnaya-osen",
+    "title": "Холодная осень",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/holodnaya-osen.htm",
+    "chars": 7184,
+    "words": 1108
+  },
+  {
+    "slug": "parohod-saratov",
+    "title": "Пароход \"Саратов",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/parohod-saratov.htm",
+    "chars": 7395,
+    "words": 1089
+  },
+  {
+    "slug": "voron",
+    "title": "Ворон",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/voron.htm",
+    "chars": 11736,
+    "words": 1757
+  },
+  {
+    "slug": "kamarg",
+    "title": "Камарг",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/kamarg.htm",
+    "chars": 1999,
+    "words": 273
+  },
+  {
+    "slug": "sto-rupij",
+    "title": "Сто рупий",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/sto-rupij.htm",
+    "chars": 2060,
+    "words": 297
+  },
+  {
+    "slug": "mest",
+    "title": "Месть",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/mest.htm",
+    "chars": 15341,
+    "words": 2328
+  },
+  {
+    "slug": "kacheli",
+    "title": "Качели",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/kacheli.htm",
+    "chars": 2392,
+    "words": 367
+  },
+  {
+    "slug": "chistyj-ponedelnik",
+    "title": "Чистый понедельник",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/chistyj-ponedelnik.htm",
+    "chars": 25427,
+    "words": 3806
+  },
+  {
+    "slug": "chasovnya",
+    "title": "Часовня",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/chasovnya.htm",
+    "chars": 1278,
+    "words": 200
+  },
+  {
+    "slug": "vesnoj-v-iudee",
+    "title": "Весной, в Иудее",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/vesnoj-v-iudee.htm",
+    "chars": 9375,
+    "words": 1360
+  },
+  {
+    "slug": "nochleg",
+    "title": "Ночлег",
+    "url": "https://bunin-lit.ru/bunin/rasskaz/temnye-allei/nochleg.htm",
+    "chars": 14411,
+    "words": 2144
+  }
+]
