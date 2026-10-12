@@ -5,40 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script>
-      // GitHub Pages SPA: deep links hit 404.html. Save the path, then load index.html
-      // (NOT the same deep URL — that caused an infinite "Redirecting..." loop).
+      // GitHub Pages has no server rewrite for SPA routes.
+      // Save the deep path in the query string and load index.html.
       ;(function () {
         var basePath = '/samarkand_lectures'
         var path = window.location.pathname || '/'
+        var search = window.location.search || ''
+        var hash = window.location.hash || ''
 
         if (path.indexOf(basePath + '/') === 0) {
           path = path.substring(basePath.length)
         } else if (path === basePath || path === basePath + '/') {
           path = '/'
         }
-
         if (path.charAt(0) !== '/') path = '/' + path
 
-        // Static assets: do nothing (should not land here)
         if (/\.(html|css|js|json|pdf|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i.test(path)) {
           return
         }
 
+        var target = basePath + '/'
         if (path && path !== '/' && path !== '/index.html') {
-          try {
-            sessionStorage.setItem('redirectPath', path)
-          } catch (e) {}
+          target += '?redirect=' + encodeURIComponent(path + search + hash)
         }
-
-        // Always go to the app shell; App.jsx restores redirectPath via history.replaceState
-        window.location.replace(basePath + '/')
+        window.location.replace(target)
       })()
     </script>
   </head>
   <body>
     <p>Redirecting…</p>
-    <noscript>
-      <p><a href="/samarkand_lectures/">Открыть сайт</a></p>
-    </noscript>
+    <noscript><p><a href="/samarkand_lectures/">Открыть сайт</a></p></noscript>
   </body>
 </html>

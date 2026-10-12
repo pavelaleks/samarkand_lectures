@@ -13,11 +13,14 @@ function LabWorkRedirect() {
   return <Navigate to={`/courses/digital-humanities/demo/${workSlug}`} replace />
 }
 
-/** After GitHub Pages 404.html → index, restore the deep link via React Router. */
+/** After GitHub Pages 404.html → /?redirect=/path, restore the deep link. */
 function SpaPathRestore() {
   const navigate = useNavigate()
   useEffect(() => {
-    const savedPath = sessionStorage.getItem('redirectPath')
+    const params = new URLSearchParams(window.location.search)
+    const fromQuery = params.get('redirect')
+    const fromSession = sessionStorage.getItem('redirectPath')
+    const savedPath = fromQuery || fromSession
     if (!savedPath) return
     sessionStorage.removeItem('redirectPath')
     navigate(savedPath, { replace: true })
