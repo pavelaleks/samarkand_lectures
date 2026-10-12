@@ -76,7 +76,7 @@ export function CorpusPassport() {
 }
 
 export function TopicLite() {
-  const [text, setText] = useState(SAMPLES.cleanChekhov)
+  const [text, setText] = useState(SAMPLES.buninHolodnaya)
   const [windowSize, setWindowSize] = useState(30)
   const [verify, setVerify] = useState({ motif: '', quote: '', counter: '' })
 
@@ -368,17 +368,17 @@ export function PipelineLab() {
   const empty = { chapter: '', thesis: '', quote: '', confidence: 'средняя', flag: '' }
   const [rows, setRows] = useState([
     {
-      chapter: '1',
-      thesis: 'Контраст утра и внутреннего напряжения',
-      quote: 'Утро было ясным',
-      confidence: 'высокая',
+      chapter: 'Холодная осень',
+      thesis: 'Прощание кодируется как «единственный вечер» любви',
+      quote: 'И вот настал наш прощальный вечер',
+      confidence: 'средняя',
       flag: '',
     },
     {
-      chapter: '3',
-      thesis: 'Возможная ирония «блаженства»',
-      quote: 'Какое блаженство',
-      confidence: 'средняя',
+      chapter: 'Тёмные аллеи',
+      thesis: 'Формула «всё проходит» спорит с «не всё забывается»',
+      quote: 'Все проходит, да не все забывается',
+      confidence: 'высокая',
       flag: 'irony_risk',
     },
   ])
@@ -464,7 +464,7 @@ export function PipelineLab() {
 }
 
 export function MiniPanel() {
-  const [text, setText] = useState(SAMPLES.cleanChekhov)
+  const [text, setText] = useState(SAMPLES.buninChapters)
   const [filter, setFilter] = useState('all')
   const [evalNote, setEvalNote] = useState('')
 
@@ -554,8 +554,8 @@ export function VerifyLab() {
     'Вывод сужен до того, что реально показал метод',
   ]
   const [ok, setOk] = useState(() => items.map(() => false))
-  const [before, setBefore] = useState('')
-  const [after, setAfter] = useState('')
+  const [before, setBefore] = useState('В «Холодной осени» Бунин прославляет войну и героическую гибель.')
+  const [after, setAfter] = useState('Текст держит память о любви и утрате; война — фон катастрофы, не объект прославления. Вывод сужен до проверяемых цитат.')
   const done = ok.filter(Boolean).length
 
   useLabReport(

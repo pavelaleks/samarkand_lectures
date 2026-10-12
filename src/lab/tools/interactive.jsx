@@ -91,7 +91,7 @@ export function CleanText() {
       </div>
       <div className="flex flex-wrap gap-2">
         <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => setText(SAMPLES.dirty)}>
-          1. Подставить «грязный» пример
+          1. Подставить «грязный» Бунин
         </button>
         <button type="button" className={btnSecondary} onClick={() => downloadText('clean_utf8.txt', clean)}>
           3. Скачать clean.txt
@@ -139,7 +139,7 @@ export function CleanText() {
 }
 
 export function Frequencies() {
-  const [text, setText] = useState(SAMPLES.cleanChekhov)
+  const [text, setText] = useState(SAMPLES.buninHolodnaya)
   const [windowSize, setWindowSize] = useState(40)
   const [nTop, setNTop] = useState(15)
 
@@ -169,8 +169,8 @@ export function Frequencies() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2 items-end">
-        <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => setText(SAMPLES.cleanChekhov)}>
-          Учебный текст
+        <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => setText(SAMPLES.buninHolodnaya)}>
+          «Холодная осень»
         </button>
         <label className="text-sm">
           Окно TTR
@@ -250,7 +250,7 @@ export function Frequencies() {
 }
 
 export function SentimentLab() {
-  const [text, setText] = useState(SAMPLES.cleanChekhov)
+  const [text, setText] = useState(SAMPLES.buninIrony)
   const [ironyNote, setIronyNote] = useState('')
 
   const rows = useMemo(() => {
@@ -288,8 +288,8 @@ export function SentimentLab() {
 
   return (
     <div className="space-y-4">
-      <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => setText(SAMPLES.cleanChekhov)}>
-        Пример с ловушкой иронии (гл. 3)
+      <button type="button" className="btn-primary !py-2 !px-4 !min-h-0 text-sm" onClick={() => setText(SAMPLES.buninIrony)}>
+        Диалог «всё проходит»
       </button>
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={10} className={mono} />
       <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -518,7 +518,7 @@ export function StylometryLite() {
 
 export function NerLite() {
   const [text, setText] = useState(SAMPLES.names)
-  const [extra, setExtra] = useState('Раскольников, Соня, Разумихин')
+  const [extra, setExtra] = useState('Надежда, Николай Алексеевич, Натали, Виталий Мещерский, Галя Ганская, Таня')
   const [removed, setRemoved] = useState(() => new Set())
   const [auditNote, setAuditNote] = useState('')
 

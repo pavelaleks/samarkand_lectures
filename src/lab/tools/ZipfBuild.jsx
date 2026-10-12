@@ -6,13 +6,14 @@ import { countTokens, tokenize, topN, ttr, windowTtr } from '../textUtils'
 
 const field =
   'mt-1 w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-3 text-sm'
+const btnSecondary = 'px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 text-sm hover:bg-gray-50 dark:hover:bg-gray-700'
 const mono = `${field} font-mono`
 
 const ZIPF_STARTER = `// Учебный фрагмент уже в переменной text.
 // ЗАДАЧА: токенизировать, посчитать частоты, напечатать топ-5:
 // 1 слово частота
 
-const text = ${JSON.stringify(SAMPLES.cleanChekhov)};
+const text = ${JSON.stringify(SAMPLES.buninHolodnaya)};
 
 // TODO: замените [] на tokenize(text)
 const tokens = [];
@@ -48,7 +49,7 @@ function Step({ n, title, children, active }) {
 
 export function ZipfBuild() {
   const [step, setStep] = useState(2)
-  const [text, setText] = useState(SAMPLES.cleanChekhov)
+  const [text, setText] = useState(SAMPLES.buninHolodnaya)
   const [guess, setGuess] = useState('')
   const [interp, setInterp] = useState('')
 
@@ -170,9 +171,16 @@ export function ZipfBuild() {
             <button
               type="button"
               className="btn-primary !py-2 !px-4 !min-h-0 text-sm"
-              onClick={() => setText(SAMPLES.cleanChekhov)}
+              onClick={() => setText(SAMPLES.buninHolodnaya)}
             >
-              Подставить учебный текст
+              «Холодная осень»
+            </button>
+            <button
+              type="button"
+              className={btnSecondary}
+              onClick={() => setText(SAMPLES.buninNatali)}
+            >
+              «Натали» (фрагмент)
             </button>
           </div>
           <textarea value={text} onChange={(e) => setText(e.target.value)} rows={8} className={mono} />

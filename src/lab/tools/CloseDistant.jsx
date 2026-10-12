@@ -584,7 +584,7 @@ function CycleMode() {
 }
 
 export function CloseDistant() {
-  const [mode, setMode] = useState('verse')
+  const [mode, setMode] = useState('prose')
   const current = MODES.find((m) => m.id === mode)
 
   return (
