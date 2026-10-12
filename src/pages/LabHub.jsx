@@ -32,6 +32,26 @@ export default function LabHub() {
             ))}
           </ol>
         </div>
+
+        <Link
+          to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
+          className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3 max-w-3xl rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-5 hover:shadow-lg transition-shadow"
+        >
+          <div className="flex-1">
+            <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-300 mb-1">
+              Корпус для чтения на уроке
+            </p>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+              Бунин · «Тёмные аллеи» — все 37 рассказов
+            </h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+              Оглавление по частям, удобный шрифт, листание рассказов. Не нужно искать тексты на других сайтах.
+            </p>
+          </div>
+          <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-amber-600 text-white text-sm font-semibold">
+            Открыть корпус →
+          </span>
+        </Link>
       </motion.div>
 
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Сцены к лекциям</h2>

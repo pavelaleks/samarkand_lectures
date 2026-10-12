@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useLabReport } from '../LabReportContext'
 import { LECTURE1_LEXICONS } from '../data/lecture1Lexicons'
 import { FUNCTION_WORDS as FUNCTION_WORDS_LIST, SAMPLES } from '../samples'
@@ -460,12 +461,16 @@ function CycleMode() {
           Цикл «Тёмные аллеи» · {totals.stories} рассказов · {totals.words.toLocaleString('ru-RU')} словоупотреблений
         </p>
         <p className="text-sm text-teal-900/90 dark:text-teal-200/90 mt-1">
-          Здесь distant reading уже «большой»: сравниваем плотность дискурсов по всему циклу. Источник текстов:{' '}
+          Здесь distant reading уже «большой»: сравниваем плотность дискурсов по всему циклу. Полные тексты для
+          чтения на уроке — в{' '}
+          <Link className="underline font-semibold" to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei">
+            корпусе «Тёмные аллеи»
+          </Link>
+          . Источник:{' '}
           <a className="underline" href={data.source} target="_blank" rel="noreferrer">
             bunin-lit.ru
           </a>
-          . В репозитории лежат <code className="text-xs">txt/</code> и <code className="text-xs">md/</code> каждого
-          рассказа — учебный корпус для показа.
+          .
         </p>
       </div>
 

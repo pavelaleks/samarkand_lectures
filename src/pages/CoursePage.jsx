@@ -102,6 +102,23 @@ export default function CoursePage() {
             </span>
           </Link>
         )}
+
+        {slug === 'digital-humanities' && (
+          <Link
+            to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50/90 dark:bg-amber-950/30 hover:shadow-xl transition-all group mb-2"
+          >
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-amber-950 dark:text-amber-100 mb-1">
+                Корпус: Бунин · «Тёмные аллеи»
+              </h2>
+              <p className="text-sm sm:text-base text-amber-950/80 dark:text-amber-100/80 leading-relaxed">
+                Все 37 рассказов цикла для чтения прямо на уроке — с оглавлением по частям.
+              </p>
+            </div>
+            <span className="text-amber-800 dark:text-amber-200 font-semibold">Читать →</span>
+          </Link>
+        )}
       </motion.div>
 
       <div className="space-y-4 sm:space-y-6">
