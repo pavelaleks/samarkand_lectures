@@ -88,10 +88,10 @@ export default function CoursePage() {
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl sm:text-2xl font-bold text-teal-900 dark:text-teal-100 mb-1">
-                Демо-стенд
+                Инструменты курса
               </h2>
               <p className="text-sm sm:text-base text-teal-900/80 dark:text-teal-100/80 leading-relaxed">
-                Живой показ методов с лекции: очистка, Ципф, NER, сети, тональность, промпты. Задания для практики даются отдельно.
+                Учебные инструменты и корпус текстов к занятиям.
               </p>
             </div>
             <span className="text-teal-700 dark:text-teal-300 font-semibold inline-flex items-center gap-1">
@@ -113,7 +113,7 @@ export default function CoursePage() {
                 Корпус: Бунин · «Тёмные аллеи»
               </h2>
               <p className="text-sm sm:text-base text-amber-950/80 dark:text-amber-100/80 leading-relaxed">
-                Все 37 рассказов цикла для чтения прямо на уроке — с оглавлением по частям.
+                Все 37 рассказов цикла — с оглавлением по частям.
               </p>
             </div>
             <span className="text-amber-800 dark:text-amber-200 font-semibold">Читать →</span>

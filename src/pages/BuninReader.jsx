@@ -98,7 +98,7 @@ export default function BuninReader() {
           to="/courses/digital-humanities/demo"
           className="inline-flex items-center gap-2 text-teal-700 dark:text-teal-400 hover:underline font-medium"
         >
-          ← К демо-стенду
+          ← К инструментам
         </Link>
         <Link
           to="/courses/digital-humanities/demo/close-distant"
@@ -109,15 +109,11 @@ export default function BuninReader() {
       </div>
 
       <header className="mb-6">
-        <p className="text-sm font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-1">
-          Учебный корпус · чтение на уроке
-        </p>
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2">
           И. А. Бунин · цикл «Тёмные аллеи»
         </h1>
         <p className="text-base text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed">
-          Все {manifest.length || 37} рассказов здесь: выбирайте в оглавлении слева, читайте справа. Тексты для
-          демонстрации метода (источник:{' '}
+          Все {manifest.length || 37} рассказов: слева оглавление, справа текст. Источник:{' '}
           <a
             className="underline text-teal-700 dark:text-teal-400"
             href="https://bunin-lit.ru/bunin/rasskaz/temnye-allei/index.htm"
@@ -126,7 +122,7 @@ export default function BuninReader() {
           >
             bunin-lit.ru
           </a>
-          ).
+          .
         </p>
       </header>
 

@@ -138,7 +138,7 @@ function analyzeFragment(text, config) {
           })`
         : ''
     }.`,
-    `4) Вопрос к залу: какая одна цитата подтверждает или ломает эту гипотезу?`,
+    `4) Проверка: какая одна цитата подтверждает или ломает эту гипотезу?`,
   ].join('\n')
 
   const parts = []
@@ -227,7 +227,7 @@ function TextMode({ modeId }) {
         <p className="text-base font-semibold text-violet-950 dark:text-violet-100">{config.label}</p>
         <p className="text-sm text-violet-900/90 dark:text-violet-200/90 mt-1 leading-relaxed">{config.closeHint}</p>
         <p className="text-xs text-violet-800/80 dark:text-violet-300/80 mt-2">
-          Это учебный стенд с заранее отобранными группами слов — не «движок для любых текстов».
+          Группы слов здесь учебные, подобранные под эти тексты — не универсальный анализатор.
         </p>
       </div>
 
@@ -266,8 +266,8 @@ function TextMode({ modeId }) {
         <div className="rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/70 dark:bg-violet-950/30 p-5">
           <h3 className="text-lg font-bold text-violet-900 dark:text-violet-100 mb-1">Close reading · первый взгляд</h3>
           <p className="text-sm text-violet-800/90 dark:text-violet-200/90 mb-3 leading-relaxed">
-            Подсветка — только по кураторским дискурсам этого текста. Спросите зал <em>до</em> цифр: что держит
-            смысл?
+            Подсветка — по заранее выбранным смысловым группам этого текста. Сначала прочитайте глазами, потом
+            смотрите числа.
           </p>
           <p className="text-base sm:text-lg leading-relaxed text-gray-900 dark:text-gray-100 whitespace-pre-wrap mb-4">
             {stats.parts.map((p, i) =>
@@ -295,9 +295,8 @@ function TextMode({ modeId }) {
           <div>
             <h3 className="text-lg font-bold text-teal-900 dark:text-teal-100 mb-1">Что даёт подсчёт форм</h3>
             <p className="text-sm text-teal-900/80 dark:text-teal-200/80 leading-relaxed">
-              В стенде нет настоящего морфоанализатора: мы группируем заранее отобранные словоформы (учебный
-              аналог лемм). На лекции важно показать: distant <em>усиливает</em> уже увиденное глазами, а не
-              «находит смысл сам».
+              Здесь нет полного морфоанализатора: считаются заранее отобранные словоформы. Подсчёт помогает
+              увидеть уже замеченное глазами, но сам по себе смысл не «находит».
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -557,8 +556,7 @@ function CycleMode() {
         <div className="rounded-2xl border-2 border-cyan-300 dark:border-cyan-700 bg-cyan-50/50 dark:bg-cyan-950/30 p-5 space-y-3">
           <h3 className="font-bold text-lg text-cyan-950 dark:text-cyan-100">{sel?.title}</h3>
           <p className="text-sm text-cyan-900/90 dark:text-cyan-200/90">
-            Абсолютные удары и опорные словоформы. На лекции: «карта подсказывает, куда идти close reading — но не
-            заменяет цитату».
+            Числа по дискурсам и типичные словоформы в этом рассказе.
           </p>
           {sel && (
             <div className="space-y-2">
@@ -579,11 +577,6 @@ function CycleMode() {
               ))}
             </div>
           )}
-          <div className="rounded-xl border border-cyan-200 dark:border-cyan-800 p-3 text-sm leading-relaxed">
-            <strong>Что сказать.</strong> Телесность и сад/ночь — плотный фон цикла; любовь и память вспыхивают
-            неравномерно. «Тёмные аллеи» (заглавный рассказ) силён именно связкой любовь + память + брошенность на
-            короткой дистанции — отсюда эффект при close reading.
-          </div>
         </div>
       </div>
     </div>
@@ -596,32 +589,9 @@ export function CloseDistant() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border border-teal-200 dark:border-teal-800 bg-teal-50/50 dark:bg-teal-950/25 p-4 text-base text-gray-800 dark:text-gray-200 leading-relaxed">
-        <strong>Лекция 1 · три режима одного показа.</strong> Сначала один стих (Ахматова) — как close и distant
-        спорят на малом тексте. Затем проза Бунина — те же приёмы на рассказе про любовь и прошлое. Затем весь цикл —
-        подсчёты, которые уже похожи на исследование.
-      </div>
-
       <ModeTabs mode={mode} setMode={setMode} />
       <p className="text-sm text-gray-600 dark:text-gray-400">{current?.blurb}</p>
-
       {mode === 'cycle' ? <CycleMode /> : <TextMode modeId={mode} />}
-
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
-        <h3 className="font-bold text-gray-900 dark:text-white mb-2">Скрипт на 5–7 минут</h3>
-        <ol className="list-decimal ml-5 space-y-2 text-base text-gray-800 dark:text-gray-200">
-          <li>
-            Режим 1: зал читает Ахматову глазами → включаете подсветку дискурсов → показываете, как словарь тональности
-            ошибается на «улыбнулся».
-          </li>
-          <li>
-            Режим 2: тот же маршрут на «Тёмных аллеях» — любовь / память / «всё проходит».
-          </li>
-          <li>
-            Режим 3: кликаете дискурсы по циклу, открываете «Натали» vs короткий рассказ — wow-эффект масштаба.
-          </li>
-        </ol>
-      </div>
     </div>
   )
 }

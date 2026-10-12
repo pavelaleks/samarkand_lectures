@@ -24,37 +24,25 @@ export default function LabHub() {
           {demos.subtitle}
         </p>
 
-        <div className="rounded-2xl border border-teal-200 dark:border-teal-800/50 bg-teal-50/60 dark:bg-teal-950/25 p-5 sm:p-6 max-w-3xl">
-          <h2 className="font-bold text-teal-900 dark:text-teal-200 mb-3">Как пользоваться на лекции</h2>
-          <ol className="list-decimal ml-5 space-y-2 text-gray-800 dark:text-gray-200">
-            {demos.howTo.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-        </div>
-
         <Link
           to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
-          className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3 max-w-3xl rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-5 hover:shadow-lg transition-shadow"
+          className="flex flex-col sm:flex-row sm:items-center gap-3 max-w-3xl rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-5 hover:shadow-lg transition-shadow"
         >
           <div className="flex-1">
-            <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-300 mb-1">
-              Корпус для чтения на уроке
-            </p>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
               Бунин · «Тёмные аллеи» — все 37 рассказов
             </h2>
             <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-              Оглавление по частям, удобный шрифт, листание рассказов. Не нужно искать тексты на других сайтах.
+              Читайте тексты прямо здесь: оглавление, поиск, листание.
             </p>
           </div>
           <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-amber-600 text-white text-sm font-semibold">
-            Открыть корпус →
+            Читать →
           </span>
         </Link>
       </motion.div>
 
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Сцены к лекциям</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Инструменты</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {demos.works.map((work, index) => (
           <motion.div
@@ -67,21 +55,11 @@ export default function LabHub() {
               to={`/courses/digital-humanities/demo/${work.slug}`}
               className="block h-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 hover:shadow-xl hover:border-teal-300 dark:hover:border-teal-600 transition-all"
             >
-              <div className="flex flex-wrap items-center gap-2 mb-3 text-xs sm:text-sm">
-                <span className="font-bold text-teal-700 dark:text-teal-300">Л{work.lecture}</span>
-                <span className="px-2 py-0.5 rounded-md font-semibold bg-cyan-100 text-cyan-900 dark:bg-cyan-900/40 dark:text-cyan-100">
-                  {work.minutes} мин
-                </span>
-              </div>
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-snug">
                 {work.title}
               </h3>
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-2">{work.question}</p>
-              {work.punchline && (
-                <p className="text-sm text-teal-800 dark:text-teal-200/90 leading-relaxed">
-                  <span className="font-semibold">Итог: </span>
-                  {work.punchline}
-                </p>
+              {work.question && (
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{work.question}</p>
               )}
             </Link>
           </motion.div>
