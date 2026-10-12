@@ -1,6 +1,11 @@
 import { useMemo, useState } from 'react'
 import { useLabReport } from '../LabReportContext'
-import { PROMPT_SCENARIOS, SAMPLES, SENTIMENT_LEXICON } from '../samples'
+import {
+  FUNCTION_WORDS as FUNCTION_WORDS_LIST,
+  PROMPT_SCENARIOS,
+  SAMPLES,
+  SENTIMENT_LEXICON,
+} from '../samples'
 import { countTokens, downloadText, splitChapters, tokenize, topN, ttr } from '../textUtils'
 
 const field =
@@ -10,67 +15,127 @@ const btnSecondary =
   'px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 text-sm hover:bg-gray-50 dark:hover:bg-gray-700'
 
 const FUNCTION_WORDS = new Set(
-  'и в на с по к о а но что как не он она они я мы вы его её их это тот эта те был была было были есть будет бы ли же уже ещё или для от до из у за при'.split(
-    ' '
-  )
+  [
+    ...FUNCTION_WORDS_LIST,
+    'и', 'в', 'на', 'с', 'по', 'к', 'о', 'а', 'но', 'что', 'как', 'не', 'он', 'она', 'они', 'я', 'мы', 'вы',
+    'его', 'её', 'ее', 'их', 'это', 'тот', 'эта', 'те', 'был', 'была', 'было', 'были', 'есть', 'будет',
+    'бы', 'ли', 'же', 'уже', 'ещё', 'еще', 'или', 'для', 'от', 'до', 'из', 'у', 'за', 'при', 'под', 'над',
+    'мне', 'меня', 'мне', 'мне', 'то', 'всё', 'все', 'мне', 'ты', 'мне', 'мне',
+  ].map((w) => w.toLowerCase())
 )
 
-const CLOSE_CUE_RE =
-  /счасть|страх|стыд|смех|засме|голос|пуст|смерть|любов|тишин|свет|тёмн|один|мать|отц|сердц|душ|глаз|руки|комнат|вчера|опять|вдруг|казалось/i
+/** Учебные семантические поля — не NLP «истина», а кандидаты для проверки close reading. */
+const MOTIF_FIELDS = [
+  {
+    id: 'body',
+    title: 'Тело / жест',
+    color: 'bg-rose-200 dark:bg-rose-800/60',
+    re: /рук|глаз|рот|лиц|плеч|перил|вуал|жест|сжал|бледн/i,
+  },
+  {
+    id: 'light',
+    title: 'Свет / тьма',
+    color: 'bg-slate-300 dark:bg-slate-600/70',
+    re: /тёмн|темн|свет|тень|ноч|мрак|вуал/i,
+  },
+  {
+    id: 'motion',
+    title: 'Движение / побег',
+    color: 'bg-amber-200 dark:bg-amber-800/50',
+    re: /бежал|сбеж|вышел|шата|стой|ветру|ворот|каса/i,
+  },
+  {
+    id: 'speech',
+    title: 'Речь / диалог',
+    color: 'bg-sky-200 dark:bg-sky-800/50',
+    re: /сказал|крикн|спрос|отчего|оттого|шутк|забыд/i,
+  },
+  {
+    id: 'feeling',
+    title: 'Чувство / состояние',
+    color: 'bg-violet-200 dark:bg-violet-800/50',
+    re: /печат|счаст|страх|люб|жутк|мучит|задых|умру|терпк|спокойн|улыб/i,
+  },
+]
+
+function scoreSentiment(tokens) {
+  const hits = []
+  let sum = 0
+  for (const w of tokens) {
+    if (SENTIMENT_LEXICON[w] != null) {
+      hits.push({ word: w, score: SENTIMENT_LEXICON[w] })
+      sum += SENTIMENT_LEXICON[w]
+    }
+  }
+  const label =
+    hits.length === 0 ? 'нет опоры в словаре' : sum > 0.4 ? 'скорее «плюс»' : sum < -0.4 ? 'скорее «минус»' : 'смешанный / слабый'
+  return { sum, hits, label }
+}
 
 function analyzeCloseDistant(text) {
   const raw = (text || '').trim()
   const tokens = tokenize(raw)
-  const counter = countTokens(tokens)
-  const tops = topN(counter, 8)
-  const functionHits = tokens.filter((w) => FUNCTION_WORDS.has(w))
-  const contentHits = tokens.filter((w) => !FUNCTION_WORDS.has(w))
-  const cueWords = [...new Set(tokens.filter((w) => CLOSE_CUE_RE.test(w)))]
+  const contentTokens = tokens.filter((w) => !FUNCTION_WORDS.has(w) && w.length > 1)
+  const contentCounter = countTokens(contentTokens)
+  const contentTops = topN(contentCounter, 10)
 
-  const sentences = raw
-    .split(/(?<=[.!?…])\s+/)
-    .map((s) => s.trim())
-    .filter(Boolean)
+  const fieldHits = MOTIF_FIELDS.map((f) => {
+    const words = [...new Set(contentTokens.filter((w) => f.re.test(w)))]
+    return { ...f, words, count: words.length }
+  }).filter((f) => f.count > 0)
+  fieldHits.sort((a, b) => b.count - a.count)
 
-  // Close view: mark cue lemmas / long content words in the original string
+  const sentiment = scoreSentiment(tokens)
+  const posHits = sentiment.hits.filter((h) => h.score > 0)
+  const negHits = sentiment.hits.filter((h) => h.score < 0)
+
+  const topFields = fieldHits.slice(0, 3).map((f) => f.title)
+  const topWords = contentTops.slice(0, 5).map(([w]) => w)
+  const hypothesis =
+    topWords.length === 0
+      ? 'Текст слишком короткий — distant-гипотезу строить не из чего.'
+      : `Гипотеза скрипта: текст тяготеет к полям «${topFields.join('», «') || '—'}»; опорные словоформы — ${topWords
+          .map((w) => `«${w}»`)
+          .join(', ')}. Наивная тональность: ${sentiment.label}${
+          posHits.length && negHits.length
+            ? ` (плюс: ${posHits.map((h) => h.word).join(', ')}; минус: ${negHits.map((h) => h.word).join(', ')})`
+            : ''
+        }.`
+
+  const trapNote =
+    posHits.some((h) => /улыб/.test(h.word)) && negHits.length > 0
+      ? 'Внимание: словарь увидел «улыб…» как плюс рядом с минусом. Close reading должен решить, ирония это, жест или ловушка метода.'
+      : posHits.some((h) => /счаст|радость|блажен/.test(h.word)) && negHits.length > 0
+        ? 'Внимание: в тексте есть и «плюс», и «минус» по словарю — без close нельзя решить, что доминирует.'
+        : null
+
+  // Close: color by motif field
   const parts = []
   const wordRe = /[а-яёa-z]+|[^а-яёa-z]+/gi
   let m
-  const src = raw
-  while ((m = wordRe.exec(src))) {
+  while ((m = wordRe.exec(raw))) {
     const chunk = m[0]
     const isWord = /^[а-яёa-z]+$/i.test(chunk)
     const lower = chunk.toLowerCase()
-    const highlight =
-      isWord && (CLOSE_CUE_RE.test(lower) || (lower.length >= 6 && !FUNCTION_WORDS.has(lower)))
-    parts.push({ chunk, highlight })
+    const field = isWord ? MOTIF_FIELDS.find((f) => f.re.test(lower)) : null
+    const sent = isWord && SENTIMENT_LEXICON[lower] != null ? SENTIMENT_LEXICON[lower] : null
+    parts.push({ chunk, field, sent })
   }
 
   return {
     tokens: tokens.length,
-    types: counter.size,
-    ttr: ttr(tokens),
-    tops,
-    functionShare: tokens.length ? functionHits.length / tokens.length : 0,
-    contentShare: tokens.length ? contentHits.length / tokens.length : 0,
-    cueWords,
-    sentences: sentences.length,
-    avgSentenceLen: sentences.length
-      ? Math.round(sentences.reduce((a, s) => a + tokenize(s).length, 0) / sentences.length)
-      : 0,
+    contentN: contentTokens.length,
+    contentTops,
+    fieldHits,
+    sentiment,
+    hypothesis,
+    trapNote,
     parts,
-    distantClaim:
-      tops.length > 0
-        ? `В этом фрагменте топ словоформ: ${tops
-            .slice(0, 5)
-            .map(([w, f]) => `«${w}»×${f}`)
-            .join(', ')}. Служебные ≈ ${Math.round((functionHits.length / Math.max(tokens.length, 1)) * 100)}%. TTR=${ttr(tokens).toFixed(2)}.`
-        : 'Текст слишком короткий для distant-счёта.',
   }
 }
 
 export function CloseDistant() {
-  const [fragment, setFragment] = useState(SAMPLES.promptFragment || SAMPLES.cleanChekhov.split('\n\n')[0])
+  const [fragment, setFragment] = useState(SAMPLES.akhmatovaVeil)
   const [ran, setRan] = useState(true)
 
   const stats = useMemo(() => analyzeCloseDistant(fragment), [fragment])
@@ -78,149 +143,194 @@ export function CloseDistant() {
   useLabReport(
     () => ({
       title: 'Close и distant на одном фрагменте',
-      body: [
-        '## Фрагмент',
-        fragment,
-        '',
-        '## Distant (скрипт)',
-        stats.distantClaim,
-        '',
-        `Токены: ${stats.tokens}; types: ${stats.types}; TTR: ${stats.ttr.toFixed(3)}`,
-        `Подсветка close-кусков: ${stats.cueWords.join(', ') || '—'}`,
-      ].join('\n'),
+      body: ['## Фрагмент', fragment, '', '## Гипотеза distant', stats.hypothesis, '', stats.trapNote || ''].join(
+        '\n'
+      ),
     }),
     [fragment, stats]
   )
 
   return (
     <div className="space-y-4">
-      <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-        Один и тот же абзац проходит через <strong>два режима</strong>: слева — что замечает близкое чтение
-        (подсветка смысловых опор), справа — что считает скрипт (частоты, TTR, доля служебных). Поля для
-        «сочинения» не нужны: нажимаете запуск и сравниваете.
-      </p>
+      <div className="rounded-2xl border border-teal-200 dark:border-teal-800 bg-teal-50/50 dark:bg-teal-950/25 p-4 text-base text-gray-800 dark:text-gray-200 leading-relaxed">
+        <strong>Зачем этот показ.</strong> Distant на коротком тексте не «доказывает смысл» — он{' '}
+        <em>выдвигает гипотезу</em> (поля, опорные слова, наивная тональность). Close reading решает,
+        подтвердить её, сузить или опровергнуть. Если distant «врёт» — это и есть учебный результат, а не
+        провал метода.
+      </div>
 
       <label className="block text-sm font-semibold">
         Фрагмент
-        <textarea value={fragment} onChange={(e) => { setFragment(e.target.value); setRan(false) }} rows={4} className={mono} />
+        <textarea
+          value={fragment}
+          onChange={(e) => {
+            setFragment(e.target.value)
+            setRan(false)
+          }}
+          rows={8}
+          className={mono}
+        />
       </label>
 
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          className="btn-primary !py-2.5 !px-5 !min-h-0 text-sm"
-          onClick={() => setRan(true)}
-        >
-          Запустить сравнение close / distant
+        <button type="button" className="btn-primary !py-2.5 !px-5 !min-h-0 text-sm" onClick={() => setRan(true)}>
+          Построить гипотезу distant
         </button>
         <button
           type="button"
           className={btnSecondary}
           onClick={() => {
-            setFragment(
-              'Он засмеялся от счастья, глядя на пустую комнату, где ещё вчера звучал голос матери.'
-            )
+            setFragment(SAMPLES.akhmatovaVeil)
             setRan(true)
           }}
         >
-          Учебный пример
+          Ахматова «Сжала руки…»
+        </button>
+        <button
+          type="button"
+          className={btnSecondary}
+          onClick={() => {
+            setFragment(SAMPLES.promptFragment)
+            setRan(true)
+          }}
+        >
+          Проза: «засмеялся от счастья»
         </button>
       </div>
 
       {ran && (
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/70 dark:bg-violet-950/30 p-5">
-            <h3 className="text-lg font-bold text-violet-900 dark:text-violet-100 mb-1">Close reading</h3>
-            <p className="text-sm text-violet-800/80 dark:text-violet-200/80 mb-3">
-              Подсвечены опоры смысла (эмоции, предметы, «тяжёлые» слова) — то, на чём держится цитата.
-            </p>
-            <p className="text-lg leading-relaxed text-gray-900 dark:text-gray-100 mb-4">
-              {stats.parts.map((p, i) =>
-                p.highlight ? (
-                  <mark
-                    key={i}
-                    className="bg-violet-200 dark:bg-violet-700/70 text-inherit rounded px-0.5"
-                  >
-                    {p.chunk}
-                  </mark>
-                ) : (
-                  <span key={i}>{p.chunk}</span>
-                )
-              )}
-            </p>
-            <ul className="text-sm space-y-1.5 text-gray-800 dark:text-gray-200">
-              <li>
-                Предложений: <strong>{stats.sentences}</strong>, ср. длина ≈{' '}
-                <strong>{stats.avgSentenceLen}</strong> токенов
-              </li>
-              <li>
-                Опоры для цитаты:{' '}
-                <strong>{stats.cueWords.length ? stats.cueWords.join(', ') : 'скрипт почти ничего не подсветил — читайте вручную'}</strong>
-              </li>
-              <li className="text-violet-900 dark:text-violet-200 font-medium">
-                На лекции вслух: какая одна цитата несёт смысл абзаца?
-              </li>
-            </ul>
+        <>
+          <div className="rounded-2xl border-2 border-cyan-400 dark:border-cyan-600 bg-cyan-50 dark:bg-cyan-950/40 p-5">
+            <h3 className="text-sm font-bold uppercase tracking-wide text-cyan-800 dark:text-cyan-200 mb-2">
+              Гипотеза distant (её и проверяем)
+            </h3>
+            <p className="text-lg text-gray-900 dark:text-gray-100 leading-relaxed mb-2">{stats.hypothesis}</p>
+            {stats.trapNote && (
+              <p className="text-base font-medium text-amber-900 dark:text-amber-200 mt-2">{stats.trapNote}</p>
+            )}
           </div>
 
-          <div className="rounded-2xl border-2 border-teal-300 dark:border-teal-700 bg-teal-50/70 dark:bg-teal-950/30 p-5">
-            <h3 className="text-lg font-bold text-teal-900 dark:text-teal-100 mb-1">Distant reading</h3>
-            <p className="text-sm text-teal-800/80 dark:text-teal-200/80 mb-3">
-              То, что видит счётчик: частоты, типы, служебная лексика. Смысл «счастья» здесь не появляется.
-            </p>
-            <div className="grid grid-cols-3 gap-2 text-center mb-4">
-              <div className="rounded-xl bg-white/80 dark:bg-gray-900/50 p-2">
-                <div className="text-xl font-bold">{stats.tokens}</div>
-                <div className="text-xs text-gray-500">токенов</div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/70 dark:bg-violet-950/30 p-5">
+              <h3 className="text-lg font-bold text-violet-900 dark:text-violet-100 mb-1">Close reading</h3>
+              <p className="text-sm text-violet-800/80 dark:text-violet-200/80 mb-3">
+                Цвет = семантическое поле-кандидат. Это не «истина текста», а то, куда close может ткнуть
+                цитатой.
+              </p>
+              <p className="text-base sm:text-lg leading-relaxed text-gray-900 dark:text-gray-100 mb-4 whitespace-pre-wrap">
+                {stats.parts.map((p, i) =>
+                  p.field ? (
+                    <mark key={i} className={`${p.field.color} text-inherit rounded px-0.5`} title={p.field.title}>
+                      {p.chunk}
+                    </mark>
+                  ) : (
+                    <span key={i}>{p.chunk}</span>
+                  )
+                )}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-3 text-xs">
+                {MOTIF_FIELDS.map((f) => (
+                  <span key={f.id} className={`px-2 py-1 rounded-md ${f.color}`}>
+                    {f.title}
+                  </span>
+                ))}
               </div>
-              <div className="rounded-xl bg-white/80 dark:bg-gray-900/50 p-2">
-                <div className="text-xl font-bold">{stats.types}</div>
-                <div className="text-xs text-gray-500">types</div>
+              <p className="text-sm font-medium text-violet-900 dark:text-violet-200">
+                Вслух: какая одна цитата опровергает или уточняет гипотезу сверху? (для Ахматовой —
+                часто «улыбнулся спокойно и жутко».)
+              </p>
+            </div>
+
+            <div className="rounded-2xl border-2 border-teal-300 dark:border-teal-700 bg-teal-50/70 dark:bg-teal-950/30 p-5 space-y-4">
+              <div>
+                <h3 className="text-lg font-bold text-teal-900 dark:text-teal-100 mb-1">Distant reading</h3>
+                <p className="text-sm text-teal-800/80 dark:text-teal-200/80">
+                  Без служебных слов: поля смысла, топ знаменательных, наивная тональность словаря.
+                </p>
               </div>
-              <div className="rounded-xl bg-white/80 dark:bg-gray-900/50 p-2">
-                <div className="text-xl font-bold">{stats.ttr.toFixed(2)}</div>
-                <div className="text-xs text-gray-500">TTR</div>
+
+              <div>
+                <h4 className="text-sm font-bold text-teal-900 dark:text-teal-100 mb-2">Семантические поля</h4>
+                {stats.fieldHits.length === 0 ? (
+                  <p className="text-sm text-gray-600">Поля не сработали — расширьте фрагмент или правьте словарь полей.</p>
+                ) : (
+                  <ul className="space-y-2 text-sm">
+                    {stats.fieldHits.map((f) => (
+                      <li key={f.id} className="flex flex-wrap items-baseline gap-2">
+                        <span className={`px-2 py-0.5 rounded-md text-xs font-semibold ${f.color}`}>{f.title}</span>
+                        <span className="font-mono text-gray-800 dark:text-gray-200">{f.words.join(', ')}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div>
+                <h4 className="text-sm font-bold text-teal-900 dark:text-teal-100 mb-2">
+                  Топ знаменательных словоформ
+                </h4>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-left border-b border-teal-200 dark:border-teal-800">
+                      <th className="py-1">слово</th>
+                      <th>n</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {stats.contentTops.map(([w, f]) => (
+                      <tr key={w} className="border-b border-teal-100/80 dark:border-teal-900/40">
+                        <td className="py-1 font-mono">{w}</td>
+                        <td>{f}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-bold text-teal-900 dark:text-teal-100 mb-2">
+                  Наивная тональность (словарь)
+                </h4>
+                <p className="text-sm mb-2">
+                  Итог: <strong>{stats.sentiment.label}</strong>
+                  {stats.sentiment.hits.length > 0 && (
+                    <> · сумма {stats.sentiment.sum.toFixed(1)}</>
+                  )}
+                </p>
+                {stats.sentiment.hits.length > 0 ? (
+                  <ul className="text-sm space-y-1">
+                    {stats.sentiment.hits.map((h) => (
+                      <li key={h.word}>
+                        <span className="font-mono">{h.word}</span>{' '}
+                        <span className={h.score >= 0 ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'}>
+                          {h.score > 0 ? '+' : ''}
+                          {h.score}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-600">Нет совпадений со словарём — для тональности нужен другой список.</p>
+                )}
               </div>
             </div>
-            <p className="text-sm mb-2">
-              Служебные: <strong>{Math.round(stats.functionShare * 100)}%</strong> · знаменательные:{' '}
-              <strong>{Math.round(stats.contentShare * 100)}%</strong>
-            </p>
-            <table className="w-full text-sm mb-3">
-              <thead>
-                <tr className="text-left border-b border-teal-200 dark:border-teal-800">
-                  <th className="py-1">словоформа</th>
-                  <th>частота</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stats.tops.map(([w, f]) => (
-                  <tr key={w} className="border-b border-teal-100/80 dark:border-teal-900/40">
-                    <td className="py-1 font-mono">{w}</td>
-                    <td>{f}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className="text-sm text-teal-950 dark:text-teal-100 leading-relaxed">{stats.distantClaim}</p>
-            <p className="text-sm mt-3 text-teal-900 dark:text-teal-200 font-medium">
-              На лекции вслух: какое утверждение из таблицы было бы ложным для смысла абзаца?
-            </p>
           </div>
-        </div>
-      )}
 
-      {ran && (
-        <div className="rounded-2xl border border-cyan-200 dark:border-cyan-800 bg-cyan-50/80 dark:bg-cyan-950/30 p-5">
-          <h3 className="font-bold text-cyan-900 dark:text-cyan-100 mb-2">Что показать аудитории</h3>
-          <ol className="list-decimal ml-5 space-y-1.5 text-base text-gray-800 dark:text-gray-200">
-            <li>Слева — опора для цитаты (close).</li>
-            <li>Справа — топ частот (distant): часто «он», «на», «где»…</li>
-            <li>
-              Вывод: один текст — два доказательства; distant без close легко врёт о «теме счастья».
-            </li>
-          </ol>
-        </div>
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
+            <h3 className="font-bold text-gray-900 dark:text-white mb-2">Что сказать студентам</h3>
+            <ol className="list-decimal ml-5 space-y-2 text-base text-gray-800 dark:text-gray-200">
+              <li>
+                Distant здесь ценен не «правдой», а <strong>списком проверяемых гипотез</strong> (поля + опорные слова).
+              </li>
+              <li>
+                Наивная тональность часто <strong>ломается на иронии и жесте</strong> («улыбнулся… жутко») — это мост к лекции про sentiment.
+              </li>
+              <li>
+                На корпусе из сотен текстов те же поля дают карту; на одном стихотворении без close они выглядят грубо — и это нормально.
+              </li>
+            </ol>
+          </div>
+        </>
       )}
     </div>
   )
