@@ -27,8 +27,8 @@ function SpaPathRestore() {
 
 function App() {
   try {
-    // В production Vite BASE_URL = '/samarkand_lectures/'
-    const baseUrl = import.meta.env.BASE_URL || '/samarkand_lectures/'
+    // Vite BASE_URL ends with `/`; React Router basename must NOT.
+    const baseUrl = (import.meta.env.BASE_URL || '/samarkand_lectures/').replace(/\/$/, '') || '/'
     
     return (
       <ThemeProvider>
