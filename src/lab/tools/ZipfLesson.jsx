@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ZipfBuild } from './ZipfBuild'
 import { ZIPF_CYCLE } from './zipfCycleData'
 
 const base = import.meta.env.BASE_URL || '/'
@@ -568,11 +567,99 @@ function CycleExplorer() {
         </div>
       </section>
 
-      <section className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/70 dark:bg-rose-950/20 p-4 text-sm leading-relaxed">
-        <strong>Итог, который нельзя перепутать.</strong> Высокие α и R² на длинных текстах и на всём
-        цикле говорят: словарь устроен «по-языковому», устойчиво, без ломаной экспериментальной прозы.
-        Низкая α у «Камарга» говорит о <em>малой длине выборки</em>, а не о том, что рассказ «не
-        бунинский». Для атрибуции авторства Ципфа недостаточно.
+      <section className="space-y-4">
+        <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
+          Шаг 7 · Зачем мы это считали — и что теперь можно сказать о цикле
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          Цифры — не ответ, а способ задать литературоведческий вопрос точнее
+        </h3>
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+          Закон Ципфа сам по себе не «объясняет» любовь у Бунина и не заменяет медленное чтение.
+          Он нужен, чтобы проверить гипотезы о <em>устройстве словаря</em> цикла и не путать эффект
+          длины текста с «сменой стиля».
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-3 text-sm leading-relaxed">
+          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/80 dark:bg-emerald-950/20 p-4">
+            <p className="font-semibold text-gray-900 dark:text-white mb-2">Что расчёт подтверждает</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-800 dark:text-gray-200">
+              <li>
+                На всём цикле α≈{ZIPF_CYCLE.cycleAlpha.toFixed(2)} и R²≈{ZIPF_CYCLE.cycleR2.toFixed(2)} —
+                словарь ведёт себя как нормальный естественный язык, а не как ломаный эксперимент.
+              </li>
+              <li>
+                Части I–III почти совпадают по среднему α: книга едина по частотному режиму, хотя сюжеты
+                и объёмы разные.
+              </li>
+              <li>
+                Высокая доля гапаксов согласуется с ощущением «густой» редкой детали: предметные и
+                сенсорные слова часто встречаются по одному разу.
+              </li>
+              <li>
+                В топе частот — союзы, предлоги, местоимения (<em>и, в, на, я, она, он</em>): каркас
+                любовного нарратива, а не «ключевые слова сюжета».
+              </li>
+            </ul>
+          </div>
+          <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+            <p className="font-semibold text-gray-900 dark:text-white mb-2">Что расчёт опровергает / ограничивает</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-800 dark:text-gray-200">
+              <li>
+                «У „Камарга“ низкая α → другой стиль / не Бунин» — нет: это в первую очередь короткая
+                выборка.
+              </li>
+              <li>
+                «α близка к 1 → доказали авторство» — нет: так устроен почти любой связный текст.
+              </li>
+              <li>
+                «Часть III стилистически иная, потому что среднее α ниже» — осторожно: там просто
+                больше миниатюр.
+              </li>
+              <li>
+                Ципф не измеряет тему любви, ритм фразы, иронию, композицию — только распределение
+                частот словоформ.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-sm leading-relaxed space-y-3">
+          <p className="font-semibold text-gray-900 dark:text-white">Как вернуть результат к тексту (медленное чтение)</p>
+          <ol className="list-decimal pl-5 space-y-2 text-gray-700 dark:text-gray-300">
+            <li>
+              Возьмите рассказ с высокой долей гапаксов и длинный рассказ с α≈0.9. В каждом выпишите
+              10–15 слов, встретившихся один раз: быт, тело, пейзаж, чужое имя?
+            </li>
+            <li>
+              Спросите: редкость слова работает на <em>вспышку детали</em> или на сюжетный повтор?
+              Ципф показывает редкость; смысл даёт контекст.
+            </li>
+            <li>
+              Сравните диалог и описание «на глаз»: служебные слова держат речь, гапаксы чаще сидят в
+              живописи мира — гипотеза для чтения, которую Ципф только подсказывает.
+            </li>
+          </ol>
+        </div>
+
+        <div className="rounded-xl border border-teal-200 dark:border-teal-800 bg-teal-50/70 dark:bg-teal-950/25 p-4 text-sm leading-relaxed">
+          <p className="font-semibold text-gray-900 dark:text-white mb-2">Формула вывода для семинара</p>
+          <p className="text-gray-800 dark:text-gray-200">
+            «По закону Ципфа цикл „Тёмные аллеи“ имеет устойчивый частотный профиль (на корпусе α≈0.95,
+            R²≈0.99). Это говорит о единообразии языкового режима книги и о совместимости „служебного
+            каркаса“ с большим хвостом редких слов. Разброс α между рассказами в основном связан с
+            длиной текста. Сам по себе показатель не атрибутирует авторство и не заменяет анализ
+            поэтики; он уточняет, какие различия стоит объяснять объёмом выборки, а какие — искать в
+            чтении.»
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50/70 dark:bg-rose-950/20 p-4 text-sm leading-relaxed">
+          <strong>Итог, который нельзя перепутать.</strong> Мы считали Ципфа не чтобы «получить красивую
+          α», а чтобы отличить <em>устройство словаря цикла</em> от иллюзий сравнения короткого и
+          длинного текста — и чтобы вернуться к чтению Бунина с более честными вопросами о детали,
+          повторе и единстве книги.
+        </div>
       </section>
     </div>
   )
@@ -859,24 +946,12 @@ export function ZipfLesson() {
         <button type="button" className={tabBtn(tab === 'cycle')} onClick={() => setTab('cycle')}>
           1 · Разбор цикла
         </button>
-        <button type="button" className={tabBtn(tab === 'live')} onClick={() => setTab('live')}>
-          2 · Стенд лекции
-        </button>
         <button type="button" className={tabBtn(tab === 'python')} onClick={() => setTab('python')}>
-          3 · Python и PyCharm с нуля
+          2 · Python и PyCharm с нуля
         </button>
       </div>
 
       {tab === 'cycle' && <CycleExplorer />}
-      {tab === 'live' && (
-        <div className="space-y-3">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Короткий интерактивный стенд для показа на паре: теория → график факт vs f₁/r → TTR по
-            окнам → мини-код.
-          </p>
-          <ZipfBuild />
-        </div>
-      )}
       {tab === 'python' && <PythonGuide />}
     </div>
   )
