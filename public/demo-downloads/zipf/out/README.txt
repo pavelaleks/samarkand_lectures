@@ -1,1 +1,1 @@
-Сюда PyCharm сохранит графики и table.csv после запуска скриптов.
+Сюда zipf_lab.py сохранит Excel, CSV, HTML и PNG.

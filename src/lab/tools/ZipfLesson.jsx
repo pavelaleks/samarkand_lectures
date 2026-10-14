@@ -866,8 +866,9 @@ function PythonGuide() {
           Практика в PyCharm для абсолютных новичков
         </h3>
         <p className="mb-3">
-          Цель: чтобы <strong>у всей группы одинаково получилось</strong> посчитать α и R² и сохранить
-          график PNG. Делайте шаги по порядку, ничего не пропускайте.
+          Цель: чтобы <strong>у всей группы одинаково получилось</strong> прогнать полную
+          лабораторию — 37 рассказов, топ-20, Excel, HTML-отчёт и графики (больше готовых цифр на
+          сайте). Делайте шаги по порядку.
         </p>
         <div className="rounded-xl bg-white/80 dark:bg-gray-900/60 border border-teal-200 dark:border-teal-800 p-3 mb-4 font-mono text-sm">
           <div className="text-xs uppercase tracking-wide text-teal-800 dark:text-teal-300 font-sans font-bold mb-1">
@@ -888,7 +889,7 @@ function PythonGuide() {
           href={`${DL}/scripts_zipf_bunin.zip`}
           download
         >
-          Скачать ZIP (скрипты + тексты + папка out)
+          Скачать ZIP (полная лаборатория: 37 текстов + zipf_lab.py)
         </a>
       </div>
 
@@ -1002,18 +1003,19 @@ function PythonGuide() {
           <li>
             Внутри <code>zipf_bunin</code> должно получиться ровно так (проверьте имена):
             <pre className={codeBox}>{`zipf_bunin/
+  zipf_lab.py              ← ГЛАВНЫЙ файл (Run)
   zipf_one_story.py
   zipf_several_stories.py
   zipf_lib.py
+  stories_meta.json
   requirements.txt
   README.txt
-  sample_texts/
+  sample_texts/            ← 37 рассказов
   out/`}</pre>
           </li>
           <li>
-            В <code>sample_texts/</code> лежат рассказы (<code>holodnaya-osen.txt</code>,{' '}
-            <code>chasovnya.txt</code>, <code>natali.txt</code> и др.). Папка <code>out/</code> пока
-            почти пустая — туда программа сохранит графики.
+            В <code>sample_texts/</code> — все 37 рассказов цикла. Папка <code>out/</code> пока
+            почти пустая: туда <code>zipf_lab.py</code> положит Excel, CSV, HTML и графики.
           </li>
         </ol>
         <div className="rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 p-3 text-sm">
@@ -1036,7 +1038,7 @@ function PythonGuide() {
             Найдите и выберите папку <code>Documents/zipf_bunin</code> → OK / Open.
           </li>
           <li>
-            Слева в Project должно быть видно: <code>zipf_one_story.py</code>,{' '}
+            Слева в Project должно быть видно: <code>zipf_lab.py</code>,{' '}
             <code>sample_texts</code>, <code>out</code>.
           </li>
           <li>
@@ -1101,121 +1103,102 @@ function PythonGuide() {
           </li>
           <li>
             Дождитесь конца установки без красной ошибки. Должны поставиться{' '}
-            <code>matplotlib</code> и <code>numpy</code>.
+            <code>matplotlib</code>, <code>numpy</code> и <code>openpyxl</code> (для Excel).
           </li>
         </ol>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 7. Первый запуск: один рассказ + график (кнопка Run)
+          Шаг 7. Главный запуск: zipf_lab.py (всё сразу)
         </h3>
         <ol className="list-decimal pl-5 space-y-2">
           <li>
-            В дереве проекта дважды кликните <code>zipf_one_story.py</code>.
+            Откройте <code>zipf_lab.py</code> (это главный файл; one_story — только короткая
+            тренировка).
           </li>
           <li>
-            Справа вверху нажмите зелёный треугольник <strong>Run</strong> (или ПКМ по файлу → Run
-            &apos;zipf_one_story&apos;).
+            Нажмите зелёный <strong>Run</strong>. Параметры не нужны (полминуты–пара минут).
+            Все PNG по 37 рассказам: в Parameters напишите <code>--all-plots</code>.
           </li>
           <li>
-            <strong>Параметры указывать не нужно</strong>: скрипт сам возьмёт{' '}
-            <code>sample_texts/holodnaya-osen.txt</code> и сохранит график.
-          </li>
-          <li>
-            Внизу в панели Run / Console должны появиться строки с{' '}
-            <code>α Ципфа</code> и <code>R²</code>, а также сообщение{' '}
-            <code>График сохранён: …</code>.
-          </li>
-          <li>
-            Откройте папку <code>out/</code> в проекте: там появится файл{' '}
-            <code>holodnaya-osen_zipf.png</code>. Откройте его двойным кликом — это ваш график Ципфа.
+            В консоли появятся строки по каждому рассказу и блок «Детектив», затем список файлов в{' '}
+            <code>out/</code>.
           </li>
         </ol>
-        <div className="rounded-xl border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/20 p-3 text-sm">
-          Если дошли до PNG в <code>out/</code> — установка прошла успешно. Дальше можно менять
-          рассказ.
+        <div className="rounded-xl border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/20 p-3 text-sm space-y-2">
+          <p className="font-semibold text-gray-900 dark:text-white">
+            Что появится в out/ — больше, чем готовые цифры на сайте
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>
+              <code>zipf_bunin.xlsx</code> — Excel: metrics, top20_cycle, top20_stories, hapax_samples,
+              theme_probes, detective
+            </li>
+            <li>
+              <code>report.html</code> — отчёт (браузер; Word: Файл → Открыть)
+            </li>
+            <li>
+              CSV: <code>metrics.csv</code>, <code>top20_cycle.csv</code>, <code>top20_stories.csv</code>,{' '}
+              <code>hapax_samples.csv</code>, <code>theme_probes.csv</code>
+            </li>
+            <li>
+              <code>plots/</code> — PNG Ципфа и топ-20 для цикла и каждого рассказа + график «α vs
+              длина»
+            </li>
+          </ul>
         </div>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 8. Другой рассказ через Parameters (тоже просто)
+          Шаг 8. Откройте результаты и исследуйте
         </h3>
         <ol className="list-decimal pl-5 space-y-2">
           <li>
-            Меню <strong>Run → Edit Configurations…</strong>
+            Двойной клик: <code>out/report.html</code> — читайте детектив и сводную таблицу.
           </li>
           <li>
-            Слева выберите конфигурацию <code>zipf_one_story</code>.
+            Откройте <code>out/zipf_bunin.xlsx</code>. На листе <code>top20_stories</code> фильтр{' '}
+            <code>kind = content</code> покажет имена и знаменательные слова в топах.
           </li>
           <li>
-            Поле <strong>Parameters</strong> очистите и вставьте <em>ровно одну</em> из строк:
-            <pre className={codeBox}>{`sample_texts/chasovnya.txt
-sample_texts/chistyj-ponedelnik.txt
-sample_texts/natali.txt
-sample_texts/kavkaz.txt`}</pre>
+            Сравните <code>plots/kamarg_zipf.png</code> и <code>plots/natali_zipf.png</code>: у
+            короткого α ниже из‑за длины выборки.
           </li>
           <li>
-            <strong>Working directory</strong> должен быть папка <code>zipf_bunin</code> (не
-            вложенная).
-          </li>
-          <li>Apply → OK → снова Run.</li>
-          <li>
-            Новый график появится в <code>out/</code>, например{' '}
-            <code>chasovnya_zipf.png</code>.
+            Возьмите 10 слов из <code>hapax_samples.csv</code> и найдите их в тексте на сайте корпуса —
+            практика медленного чтения.
           </li>
         </ol>
+      </section>
+
+      <section className="space-y-3">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 9. Свой текст или быстрый один рассказ
+        </h3>
         <p>
-          Сравните для отчёта: короткий (<em>Часовня</em> / <em>Камарг</em> нет в ZIP, есть{' '}
-          <em>Часовня</em>) и длинный (<em>Чистый понедельник</em> или <em>Натали</em>) — запишите α и
-          R².
+          Положите любой <code>.txt</code> (UTF-8) в <code>sample_texts/</code> и снова Run{' '}
+          <code>zipf_lab.py</code> — новый файл попадёт в таблицы. Для быстрой проверки одного файла
+          можно Run <code>zipf_one_story.py</code> (по умолчанию «Холодная осень»).
         </p>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 9. Несколько рассказов сразу
-        </h3>
-        <ol className="list-decimal pl-5 space-y-2">
-          <li>
-            Откройте <code>zipf_several_stories.py</code>.
-          </li>
-          <li>
-            Нажмите Run <strong>без Parameters</strong>.
-          </li>
-          <li>
-            Скрипт обойдёт всю папку <code>sample_texts/</code>, напечатает таблицу α/R², сохранит:
-            <ul className="list-disc pl-5 mt-2">
-              <li>
-                <code>out/table.csv</code> — таблица для Excel / Numbers
-              </li>
-              <li>
-                <code>out/plots/*.png</code> — график на каждый рассказ
-              </li>
-            </ul>
-          </li>
-        </ol>
-        <p>Только два файла (Parameters):</p>
-        <pre className={codeBox}>sample_texts/kavkaz.txt sample_texts/natali.txt --verbose</pre>
-      </section>
-
-      <section className="space-y-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 10. Что сдавать / что должно получиться
+          Шаг 10. Что сдавать
         </h3>
         <ul className="list-disc pl-5 space-y-2">
           <li>
-            Скрин или файл <code>out/holodnaya-osen_zipf.png</code>
+            <code>out/zipf_bunin.xlsx</code> (или скрин листа metrics)
           </li>
           <li>
-            Две строки чисел: α и R² для короткого и длинного рассказа
+            <code>out/report.html</code> / вставка в Word
           </li>
+          <li>Два PNG: цикл + короткий vs длинный рассказ</li>
           <li>
-            Одна фраза: почему у миниатюры α часто ниже (длина выборки, не «другой автор»)
-          </li>
-          <li>
-            Одна фраза: чего Ципф <em>не</em> доказывает про авторство
+            3–5 предложений: что показал детектив; почему топ-20 ≠ тема; почему низкая α у миниатюры не
+            доказывает другого автора
           </li>
         </ul>
       </section>
@@ -1243,7 +1226,11 @@ sample_texts/kavkaz.txt`}</pre>
           </li>
           <li>
             <strong>Run ничего не делает / другой файл</strong> — откройте именно{' '}
-            <code>zipf_one_story.py</code> и запускайте его, а не пустой Untitled.
+            <code>zipf_lab.py</code> и запускайте его, а не пустой Untitled.
+          </li>
+          <li>
+            <strong>No module named openpyxl</strong> — снова шаг 6; без openpyxl не будет Excel, но
+            CSV и HTML всё равно появятся.
           </li>
         </ul>
       </section>

@@ -127,6 +127,7 @@ def main() -> None:
         "guiraud",
         "hapax",
         "hapax_ratio",
+        "top20_cover",
         "alpha",
         "r2",
     ]

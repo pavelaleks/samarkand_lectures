@@ -1,32 +1,32 @@
-Закон Ципфа · учебный набор (лекция 4)
-=====================================
+Закон Ципфа · полная лабораторная (лекция 4)
+============================================
 
-ОБЯЗАТЕЛЬНОЕ ИМЯ ПАПКИ У ВСЕХ СТУДЕНТОВ:
-
+ОБЯЗАТЕЛЬНАЯ ПАПКА У ВСЕХ:
   Documents/zipf_bunin
 
-Windows:
-  C:\Users\<ВАШ_ЛОГИН>\Documents\zipf_bunin
+ГЛАВНЫЙ ФАЙЛ (нажмите Run один раз):
+  zipf_lab.py
 
-macOS:
-  /Users/<ВАШ_ЛОГИН>/Documents/zipf_bunin
+После Run смотрите папку out/:
+  zipf_bunin.xlsx   — Excel (метрики, топ-20, гапаксы, детектив)
+  report.html       — отчёт (браузер или Word → Открыть)
+  metrics.csv       — таблица для Excel / Numbers
+  top20_cycle.csv
+  top20_stories.csv
+  hapax_samples.csv — редкие слова для медленного чтения
+  theme_probes.csv  — «любовь», «глаза», «сад»… (есть ли в тексте)
+  plots/            — PNG графики (цикл + каждый рассказ)
 
-Как разложить файлы после скачивания ZIP:
-  1) Создайте папку Documents/zipf_bunin
-  2) Распакуйте ZIP
-  3) Скопируйте ВНУТРЬ zipf_bunin всё содержимое архива так, чтобы получилось:
+Дополнительно:
+  zipf_one_story.py      — один рассказ быстро
+  zipf_several_stories.py — короткая сводка
+  zipf_lib.py            — библиотека (не запускать)
+  sample_texts/          — все 37 рассказов цикла
+  stories_meta.json      — названия и порядок частей
 
-zipf_bunin/
-  zipf_one_story.py
-  zipf_several_stories.py
-  zipf_lib.py
-  requirements.txt
-  README.txt
-  sample_texts/
-  out/
-
-В PyCharm: Open → папка zipf_bunin → откройте zipf_one_story.py → Run.
-График появится в out/, числа — в консоли внизу.
+Установка один раз в Terminal PyCharm:
+  python -m pip install -r requirements.txt
+  (на Mac: python3 -m pip install -r requirements.txt)
 
 Подробная инструкция:
 https://pavelaleks.github.io/samarkand_lectures/courses/digital-humanities/demo/zipf

@@ -8,14 +8,15 @@
   2) Нажмите зелёный треугольник Run
   3) Смотрите числа в консоли и график в папке out/
 
-По умолчанию анализируется:
-  sample_texts/holodnaya-osen.txt
-и график сохраняется в:
-  out/holodnaya-osen_zipf.png
+По умолчанию: sample_texts/holodnaya-osen.txt
+График: out/holodnaya-osen_zipf.png
 
-Другой рассказ (Parameters в Run Configuration), примеры:
+Для полной лаборатории (все 37 рассказов + Excel + HTML)
+лучше запустите zipf_lab.py — там больше и интереснее.
+
+Parameters (другой рассказ):
   sample_texts/chasovnya.txt
-  sample_texts/natali.txt --plot out/natali_zipf.png
+  sample_texts/natali.txt
 """
 
 from __future__ import annotations
