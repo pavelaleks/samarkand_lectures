@@ -85,6 +85,87 @@ function MetricExplain({ label, value, kids }) {
   )
 }
 
+
+const SERVICE_WORDS = new Set(
+  `и в на с не я она что он как а ее её все к за по но меня его от у из о до для при без же бы ли да это был была было были ты вы мы нас вас тебя мне мной ним ней них их мой моя мое мои свой своя свое свои тот та то те этот эта эти чтобы уже только еще ещё есть нет так вот там тут когда где кто чем или если ни будто даже ведь лишь почти сам сама само сами себя себе собой под над во со ко об про нибудь ей ему ими вами нами тобой собой нее него них какая какой какое какие какой-то какая-то какой нибудь`.split(
+    /\s+/
+  )
+)
+
+function isServiceWord(w) {
+  return SERVICE_WORDS.has(w)
+}
+
+function Top20Panel({ words, tokens, cover, modeLabel }) {
+  if (!words?.length || !tokens) return null
+  const max = words[0][1]
+  const serviceN = words.filter(([w]) => isServiceWord(w)).length
+  const content = words.filter(([w]) => !isServiceWord(w))
+  const coverPct = ((cover ?? words.reduce((s, [, c]) => s + c, 0) / tokens) * 100).toFixed(1)
+
+  return (
+    <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 sm:p-5 space-y-4">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h4 className="text-base font-bold text-gray-900 dark:text-white">
+          Топ-20 словоформ · {modeLabel}
+        </h4>
+        <div className="text-xs text-gray-500 dark:text-gray-400">
+          покрывают ≈{coverPct}% всех токенов · служебных в топе: {serviceN}/20
+        </div>
+      </div>
+
+      <ol className="space-y-1.5">
+        {words.map(([w, c], i) => {
+          const svc = isServiceWord(w)
+          return (
+            <li key={`${w}-${i}`} className="flex items-center gap-2 text-sm">
+              <span className="w-6 shrink-0 text-right text-xs text-gray-400 tabular-nums">{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                  <span className={`font-mono font-semibold ${svc ? 'text-gray-800 dark:text-gray-200' : 'text-amber-800 dark:text-amber-300'}`}>
+                    {w}
+                  </span>
+                  <span className="tabular-nums text-gray-600 dark:text-gray-400 shrink-0">
+                    {c}
+                    <span className="text-xs text-gray-400 ml-1">({((c / tokens) * 100).toFixed(1)}%)</span>
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${svc ? 'bg-teal-500/80' : 'bg-amber-500'}`}
+                    style={{ width: `${Math.max(4, (c / max) * 100)}%` }}
+                  />
+                </div>
+              </div>
+              <span className={`shrink-0 text-[10px] uppercase tracking-wide w-16 text-right ${svc ? 'text-teal-700 dark:text-teal-400' : 'text-amber-700 dark:text-amber-400'}`}>
+                {svc ? 'служебн.' : 'знаменат.'}
+              </span>
+            </li>
+          )
+        })}
+      </ol>
+
+      {content.length > 0 ? (
+        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+          В топ-20 «пробились» знаменательные / именные формы:{' '}
+          {content.map(([w, c]) => (
+            <span key={w} className="inline-block mr-2 font-mono text-amber-800 dark:text-amber-300">
+              {w} ({c})
+            </span>
+          ))}
+          — это уже след сюжета или героя, а не только грамматический каркас.
+        </p>
+      ) : (
+        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+          Все 20 позиций — служебные слова и местоимения. Тема рассказа в частотном топе{' '}
+          <em>не видна</em>: любовь, сад, осень, смерть почти никогда не входят в топ-20, хотя именно
+          они важны для чтения.
+        </p>
+      )}
+    </div>
+  )
+}
+
 function StoryDecoder({ story }) {
   if (!story) return null
   const a = alphaPlain(story.alpha)
@@ -141,6 +222,13 @@ function StoryDecoder({ story }) {
           повестью; Guiraud чуть спокойнее для сопоставления.
         </MetricExplain>
       </div>
+
+      <Top20Panel
+        words={story.topWords}
+        tokens={story.tokens}
+        cover={story.top20_cover}
+        modeLabel={`рассказ «${story.title}»`}
+      />
 
       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 p-4 text-sm leading-relaxed">
         <p className="font-semibold text-gray-900 dark:text-white mb-2">Одной фразой для конспекта</p>
@@ -346,10 +434,112 @@ function CycleExplorer() {
         <StoryDecoder story={focused} />
       </section>
 
-      {/* 4. Compare */}
+
+      {/* 4. Top-20 wordforms */}
+      <section className="space-y-4">
+        <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
+          Шаг 4 · Топ-20 словоформ: цикл и каждый рассказ
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          Что чаще всего говорит текст — и чего в топе нет
+        </h3>
+        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+          Топ-20 — это двадцать словоформ с наибольшей частотой. На всём цикле ({ZIPF_CYCLE.cycleTokens.toLocaleString('ru-RU')}{' '}
+          токенов) они покрывают ≈{(ZIPF_CYCLE.cycleTop20Cover * 100).toFixed(0)}% текста: почти четверть
+          книги держится на крошечном служебном каркасе. Бирюзовые полоски — союзы, предлоги,
+          местоимения; янтарные — знаменательные слова или имена, если они «пробились» в топ.
+        </p>
+
+        <Top20Panel
+          words={ZIPF_CYCLE.topWords}
+          tokens={ZIPF_CYCLE.cycleTokens}
+          cover={ZIPF_CYCLE.cycleTop20Cover}
+          modeLabel="весь цикл «Тёмные аллеи»"
+        />
+
+        <div className="grid md:grid-cols-2 gap-3 text-sm leading-relaxed">
+          <div className="rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/80 dark:bg-emerald-950/20 p-4">
+            <p className="font-semibold text-gray-900 dark:text-white mb-2">Что это значит</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-800 dark:text-gray-200">
+              <li>
+                В топе цикла — <em>и, в, на, с, не, я, она, он, что, как…</em>: грамматика связного
+                нарратива и местоименная сцена «я / она / он», типичная для любовной новеллы.
+              </li>
+              <li>
+                Слово «любовь» (и почти любая «тема» курса) в топ-20 <strong>не входит</strong>. Частотный
+                пик — не смысловой пик: тему читают в редких словах и контекстах, а не в первых рангах.
+              </li>
+              <li>
+                Покрытие топ-20 ≈{(ZIPF_CYCLE.cycleTop20Cover * 100).toFixed(0)}% при огромном хвосте
+                гапаксов — классическая картина Ципфа: мало «цемента», много одноразовой детали.
+              </li>
+            </ul>
+          </div>
+          <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/20 p-4">
+            <p className="font-semibold text-gray-900 dark:text-white mb-2">Какие выводы можно / нельзя сделать</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-800 dark:text-gray-200">
+              <li>
+                <strong>Можно:</strong> цикл держится на служебном каркасе + сильных местоимениях; редкая
+                лексика отвечает за «живопись» мира.
+              </li>
+              <li>
+                <strong>Можно:</strong> если в топ рассказа входит имя (<em>натали, генрих, николай</em>) —
+                частотный центр смещён к персонажу; это приглашение смотреть, как имя повторяется в
+                композиции.
+              </li>
+              <li>
+                <strong>Нельзя:</strong> вывести «главную тему» рассказа из топ-20 или доказать авторство
+                по списку служебных слов — он почти одинаков у любого русского прозаика.
+              </li>
+              <li>
+                <strong>Осторожно на миниатюрах:</strong> при N≈200 в топ попадают слова с частотой 2 —
+                это шум малой выборки, не «особый стиль».
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 p-4 space-y-3">
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">
+            Сравните топ выбранного рассказа с циклом
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Переключатель тот же, что в шаге 3: смените рассказ выше или здесь — топ-20 обновится.
+            Ищите янтарные строки: имя героя, предмет, жест.
+          </p>
+          <label className="block text-sm max-w-md">
+            Рассказ для топ-20
+            <select
+              className="mt-1 w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-2"
+              value={focused.slug}
+              onChange={(e) => setFocus(e.target.value)}
+            >
+              {ZIPF_CYCLE.stories.map((s) => (
+                <option key={s.slug} value={s.slug}>
+                  {s.order}. {s.title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <Top20Panel
+            words={focused.topWords}
+            tokens={focused.tokens}
+            cover={focused.top20_cover}
+            modeLabel={`«${focused.title}» (N=${focused.tokens})`}
+          />
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Задание на семинар: выберите длинный рассказ (<em>Натали</em>, <em>Чистый понедельник</em>) и
+            миниатюру (<em>Камарг</em>, <em>Часовня</em>). В длинном топ почти совпадёт с циклом; в коротком
+            появятся «случайные» знаменательные слова с частотой 1–2. Запишите один вывод: что в топе
+            устойчиво (каркас), а что зависит от длины выборки.
+          </p>
+        </div>
+      </section>
+
+      {/* 5. Compare */}
       <section className="space-y-3">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 4 · Сравните короткий и длинный
+          Шаг 5 · Сравните короткий и длинный
         </div>
         <p className="text-sm text-gray-700 dark:text-gray-300">
           Слева — выбранный рассказ, справа — текст для сравнения. Смотрите не «кто лучше», а как
@@ -403,10 +593,10 @@ function CycleExplorer() {
         </div>
       </section>
 
-      {/* 5. Interactive charts */}
+      {/* 6. Interactive charts */}
       <section className="space-y-3">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 5 · Интерактивные графики по циклу
+          Шаг 6 · Интерактивные графики по циклу
         </div>
         <p className="text-sm text-gray-700 dark:text-gray-300">
           Наведите на столбик или точку — внизу появится расшифровка. Клик выбирает рассказ для шага 3.
@@ -487,10 +677,10 @@ function CycleExplorer() {
         </p>
       </section>
 
-      {/* 6. Table */}
+      {/* 7. Table */}
       <section className="space-y-3">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 6 · Таблица всех рассказов
+          Шаг 7 · Таблица всех рассказов
         </div>
         <div className="flex flex-wrap gap-2">
           <select
@@ -569,7 +759,7 @@ function CycleExplorer() {
 
       <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 7 · Зачем мы это считали — и что теперь можно сказать о цикле
+          Шаг 8 · Зачем мы это считали — и что теперь можно сказать о цикле
         </div>
         <h3 className="text-lg font-bold text-gray-900 dark:text-white">
           Цифры — не ответ, а способ задать литературоведческий вопрос точнее
