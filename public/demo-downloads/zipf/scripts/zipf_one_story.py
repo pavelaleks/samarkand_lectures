@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Учебный скрипт: закон Ципфа для ОДНОГО рассказа Бунина.
+Закон Ципфа для ОДНОГО рассказа.
 
-Пример в PyCharm (Run Configuration → Parameters):
-  ../sample_texts/holodnaya-osen.txt
+Как запускать новичкам в PyCharm:
+  1) Откройте этот файл
+  2) Нажмите зелёный треугольник Run
+  3) Смотрите числа в консоли и график в папке out/
 
-Или из терминала:
-  python zipf_one_story.py ../sample_texts/holodnaya-osen.txt
-  python zipf_one_story.py ../тексты_цикла/natali.txt --plot out/natali_zipf.png
+По умолчанию анализируется:
+  sample_texts/holodnaya-osen.txt
+и график сохраняется в:
+  out/holodnaya-osen_zipf.png
+
+Другой рассказ (Parameters в Run Configuration), примеры:
+  sample_texts/chasovnya.txt
+  sample_texts/natali.txt --plot out/natali_zipf.png
 """
 
 from __future__ import annotations
@@ -17,10 +24,12 @@ import argparse
 import sys
 from pathlib import Path
 
-# чтобы импорт работал при запуске из любой папки
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
 
 from zipf_lib import analyze_file, plot_zipf, print_report
+
+DEFAULT_TXT = ROOT / "sample_texts" / "holodnaya-osen.txt"
 
 
 def main() -> None:
@@ -29,35 +38,63 @@ def main() -> None:
     )
     parser.add_argument(
         "txt",
+        nargs="?",
         type=Path,
-        help="Путь к файлу рассказа, например ../sample_texts/holodnaya-osen.txt",
+        default=DEFAULT_TXT,
+        help="Путь к .txt (по умолчанию sample_texts/holodnaya-osen.txt)",
     )
     parser.add_argument(
         "--plot",
-        type=Path,
-        default=None,
-        help="Куда сохранить график PNG (нужны matplotlib и numpy)",
+        nargs="?",
+        const="AUTO",
+        default="AUTO",
+        help="PNG-график. Без значения — автоматически в out/<имя>_zipf.png. "
+        "Передайте --no-plot чтобы не строить график.",
+    )
+    parser.add_argument(
+        "--no-plot",
+        action="store_true",
+        help="Не сохранять график",
     )
     args = parser.parse_args()
 
-    path = args.txt.expanduser().resolve()
+    path = args.txt.expanduser()
+    if not path.is_absolute():
+        path = (ROOT / path).resolve()
+    else:
+        path = path.resolve()
+
     if not path.exists():
         print(f"Файл не найден: {path}", file=sys.stderr)
+        print("Проверьте, что папка sample_texts лежит рядом с этим скриптом.", file=sys.stderr)
         sys.exit(1)
 
     stats = analyze_file(path)
     print_report(stats)
 
-    if args.plot is not None:
-        try:
-            plot_zipf(stats, args.plot.resolve(), title=f"Закон Ципфа — {path.stem}")
-            print(f"График сохранён: {args.plot.resolve()}")
-        except ImportError:
-            print(
-                "Для графика установите: pip install -r requirements.txt",
-                file=sys.stderr,
-            )
-            sys.exit(2)
+    if args.no_plot:
+        return
+
+    if args.plot == "AUTO" or args.plot is None:
+        out_path = ROOT / "out" / f"{path.stem}_zipf.png"
+    else:
+        out_path = Path(args.plot)
+        if not out_path.is_absolute():
+            out_path = (ROOT / out_path).resolve()
+
+    try:
+        plot_zipf(stats, out_path, title=f"Закон Ципфа — {path.stem}")
+        print(f"График сохранён: {out_path}")
+    except ImportError:
+        print(
+            "Числа посчитаны, но для графика нужны пакеты.\n"
+            "В Terminal PyCharm выполните:\n"
+            "  python -m pip install -r requirements.txt\n"
+            "или на Mac:\n"
+            "  python3 -m pip install -r requirements.txt",
+            file=sys.stderr,
+        )
+        sys.exit(2)
 
 
 if __name__ == "__main__":

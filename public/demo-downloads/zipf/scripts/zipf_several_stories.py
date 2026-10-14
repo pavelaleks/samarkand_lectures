@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Учебный скрипт: закон Ципфа для НЕСКОЛЬКИХ рассказов (папка или список файлов).
+Закон Ципфа для НЕСКОЛЬКИХ рассказов.
 
-Примеры:
-  python zipf_several_stories.py ../sample_texts
-  python zipf_several_stories.py ../тексты_цикла --csv out/table.csv --plots out/plots
-  python zipf_several_stories.py a.txt b.txt c.txt
+Новичкам в PyCharm:
+  1) Откройте этот файл
+  2) Нажмите Run
+  По умолчанию анализируется вся папка sample_texts/,
+  таблица пишется в out/table.csv, графики — в out/plots/
+
+Примеры Parameters:
+  sample_texts
+  sample_texts/kavkaz.txt sample_texts/natali.txt --verbose
 """
 
 from __future__ import annotations
@@ -16,22 +21,28 @@ import csv
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
 
 from zipf_lib import analyze_file, plot_zipf, print_report
+
+DEFAULT_INPUT = ROOT / "sample_texts"
 
 
 def collect_files(inputs: list[Path]) -> list[Path]:
     files: list[Path] = []
     for item in inputs:
-        p = item.expanduser().resolve()
+        p = item.expanduser()
+        if not p.is_absolute():
+            p = (ROOT / p).resolve()
+        else:
+            p = p.resolve()
         if p.is_dir():
             files.extend(sorted(p.glob("*.txt")))
         elif p.is_file():
             files.append(p)
         else:
             print(f"Пропуск (не найдено): {p}", file=sys.stderr)
-    # не берём сводный файл цикла, если он попал в папку
     return [f for f in files if not f.name.startswith("_")]
 
 
@@ -41,30 +52,37 @@ def main() -> None:
     )
     parser.add_argument(
         "paths",
-        nargs="+",
+        nargs="*",
         type=Path,
-        help="Папка с .txt и/или отдельные файлы",
+        default=[DEFAULT_INPUT],
+        help="Папка или файлы (по умолчанию sample_texts)",
     )
-    parser.add_argument("--csv", type=Path, default=None, help="Сохранить таблицу CSV")
+    parser.add_argument(
+        "--csv",
+        type=Path,
+        default=ROOT / "out" / "table.csv",
+        help="Куда сохранить CSV",
+    )
     parser.add_argument(
         "--plots",
         type=Path,
-        default=None,
-        help="Папка для PNG-графиков (по одному на рассказ)",
+        default=ROOT / "out" / "plots",
+        help="Папка для PNG",
     )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Печатать полный отчёт по каждому тексту",
-    )
+    parser.add_argument("--no-plots", action="store_true", help="Не строить графики")
+    parser.add_argument("--verbose", action="store_true", help="Полный отчёт по каждому тексту")
     args = parser.parse_args()
 
-    files = collect_files(args.paths)
+    files = collect_files(list(args.paths) if args.paths else [DEFAULT_INPUT])
     if not files:
-        print("Не найдено ни одного .txt", file=sys.stderr)
+        print("Не найдено ни одного .txt в sample_texts/", file=sys.stderr)
         sys.exit(1)
 
     rows = []
+    plots_dir = None if args.no_plots else args.plots
+    if plots_dir is not None and not plots_dir.is_absolute():
+        plots_dir = (ROOT / plots_dir).resolve()
+
     for path in files:
         stats = analyze_file(path)
         rows.append(stats)
@@ -76,16 +94,18 @@ def main() -> None:
                 f"α={stats['alpha']:.3f}  R²={stats['r2']:.3f}  "
                 f"hapax={stats['hapax_ratio']:.1%}"
             )
-        if args.plots is not None:
-            out = args.plots / f"{path.stem}_zipf.png"
+        if plots_dir is not None:
             try:
-                plot_zipf(stats, out)
+                plot_zipf(stats, plots_dir / f"{path.stem}_zipf.png")
             except ImportError:
-                print("Для графиков: pip install -r requirements.txt", file=sys.stderr)
-                args.plots = None
+                print(
+                    "Для графиков установите пакеты:\n"
+                    "  python -m pip install -r requirements.txt",
+                    file=sys.stderr,
+                )
+                plots_dir = None
 
-    # сводка
-    alphas = [r["alpha"] for r in rows if r["alpha"] == r["alpha"]]  # not NaN
+    alphas = [r["alpha"] for r in rows if r["alpha"] == r["alpha"]]
     if alphas:
         mean_a = sum(alphas) / len(alphas)
         print("-" * 60)
@@ -96,26 +116,28 @@ def main() -> None:
             "сравнивайте тексты похожей длины."
         )
 
-    if args.csv is not None:
-        args.csv.parent.mkdir(parents=True, exist_ok=True)
-        fields = [
-            "title",
-            "path",
-            "tokens",
-            "types",
-            "ttr",
-            "guiraud",
-            "hapax",
-            "hapax_ratio",
-            "alpha",
-            "r2",
-        ]
-        with args.csv.open("w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore", delimiter=";")
-            w.writeheader()
-            for r in rows:
-                w.writerow(r)
-        print(f"CSV сохранён: {args.csv.resolve()}")
+    csv_path = args.csv if args.csv.is_absolute() else (ROOT / args.csv).resolve()
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    fields = [
+        "title",
+        "path",
+        "tokens",
+        "types",
+        "ttr",
+        "guiraud",
+        "hapax",
+        "hapax_ratio",
+        "alpha",
+        "r2",
+    ]
+    with csv_path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore", delimiter=";")
+        w.writeheader()
+        for r in rows:
+            w.writerow(r)
+    print(f"CSV сохранён: {csv_path}")
+    if plots_dir is not None:
+        print(f"Графики в папке: {plots_dir}")
 
 
 if __name__ == "__main__":

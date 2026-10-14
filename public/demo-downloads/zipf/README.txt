@@ -1,23 +1,32 @@
-Закон Ципфа · учебный набор для лекции 4
-========================================
+Закон Ципфа · учебный набор (лекция 4)
+=====================================
 
-Рекомендуемое имя вашей рабочей папки: zipf_bunin
-(назовите как угодно — главное, чтобы вы сами помнили путь)
+ОБЯЗАТЕЛЬНОЕ ИМЯ ПАПКИ У ВСЕХ СТУДЕНТОВ:
 
-Содержимое после распаковки ZIP:
-  sample_texts/   — тексты рассказов Бунина (.txt)
-  scripts/        — программы Python
-  README.txt      — этот файл
+  Documents/zipf_bunin
 
-Быстрый старт (когда Python уже установлен):
-  1) Откройте папку scripts в терминале PyCharm
-  2) Выполните:
-       pip install -r requirements.txt
-  3) Запустите один рассказ:
-       python zipf_one_story.py ../sample_texts/holodnaya-osen.txt
-  4) Несколько рассказов:
-       python zipf_several_stories.py ../sample_texts
+Windows:
+  C:\Users\<ВАШ_ЛОГИН>\Documents\zipf_bunin
 
-Подробная установка Python и PyCharm — на странице инструмента:
-  https://pavelaleks.github.io/samarkand_lectures/courses/digital-humanities/demo/zipf
-  вкладка «Python и PyCharm с нуля»
+macOS:
+  /Users/<ВАШ_ЛОГИН>/Documents/zipf_bunin
+
+Как разложить файлы после скачивания ZIP:
+  1) Создайте папку Documents/zipf_bunin
+  2) Распакуйте ZIP
+  3) Скопируйте ВНУТРЬ zipf_bunin всё содержимое архива так, чтобы получилось:
+
+zipf_bunin/
+  zipf_one_story.py
+  zipf_several_stories.py
+  zipf_lib.py
+  requirements.txt
+  README.txt
+  sample_texts/
+  out/
+
+В PyCharm: Open → папка zipf_bunin → откройте zipf_one_story.py → Run.
+График появится в out/, числа — в консоли внизу.
+
+Подробная инструкция:
+https://pavelaleks.github.io/samarkand_lectures/courses/digital-humanities/demo/zipf

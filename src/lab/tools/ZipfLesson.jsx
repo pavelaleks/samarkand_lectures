@@ -671,267 +671,391 @@ function PythonGuide() {
 
   return (
     <div className="space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-      <div className="rounded-2xl border-2 border-teal-400 dark:border-teal-600 bg-teal-50 dark:bg-teal-950/30 p-4 sm:p-5">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-          Python и PyCharm с нуля (для тех, кто только установил PyCharm)
+      <div className="rounded-2xl border-2 border-teal-500 dark:border-teal-500 bg-teal-50 dark:bg-teal-950/30 p-4 sm:p-6">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Практика в PyCharm для абсолютных новичков
         </h3>
         <p className="mb-3">
-          Ниже — точные шаги. Рабочую папку назовите, например, <code className="px-1 rounded bg-white/70 dark:bg-gray-900">zipf_bunin</code>.
-          Имя может быть любым — главное, чтобы вы сами его помнили.
+          Цель: чтобы <strong>у всей группы одинаково получилось</strong> посчитать α и R² и сохранить
+          график PNG. Делайте шаги по порядку, ничего не пропускайте.
         </p>
-        <div className="flex flex-wrap gap-2">
-          <a
-            className="inline-flex px-4 py-2 rounded-xl bg-teal-700 text-white font-semibold hover:bg-teal-800"
-            href={`${DL}/scripts_zipf_bunin.zip`}
-            download
-          >
-            Скачать ZIP со скриптами и текстами
-          </a>
-          <a
-            className="inline-flex px-4 py-2 rounded-xl border border-teal-700 text-teal-900 dark:text-teal-200 font-semibold"
-            href={`${DL}/scripts/zipf_one_story.py`}
-            download
-          >
-            zipf_one_story.py
-          </a>
-          <a
-            className="inline-flex px-4 py-2 rounded-xl border border-teal-700 text-teal-900 dark:text-teal-200 font-semibold"
-            href={`${DL}/scripts/zipf_several_stories.py`}
-            download
-          >
-            zipf_several_stories.py
-          </a>
+        <div className="rounded-xl bg-white/80 dark:bg-gray-900/60 border border-teal-200 dark:border-teal-800 p-3 mb-4 font-mono text-sm">
+          <div className="text-xs uppercase tracking-wide text-teal-800 dark:text-teal-300 font-sans font-bold mb-1">
+            Обязательная папка у всех студентов
+          </div>
+          <div>
+            Windows: <strong>C:\Users\&lt;ВАШ_ЛОГИН&gt;\Documents\zipf_bunin</strong>
+          </div>
+          <div>
+            macOS: <strong>/Users/&lt;ВАШ_ЛОГИН&gt;/Documents/zipf_bunin</strong>
+          </div>
+          <div className="font-sans text-xs text-gray-600 dark:text-gray-400 mt-2">
+            Имя папки только латиницей: <code>zipf_bunin</code>. Не «папка6», не «Ципф», не кириллица.
+          </div>
         </div>
+        <a
+          className="inline-flex px-4 py-2.5 rounded-xl bg-teal-700 text-white font-semibold hover:bg-teal-800"
+          href={`${DL}/scripts_zipf_bunin.zip`}
+          download
+        >
+          Скачать ZIP (скрипты + тексты + папка out)
+        </a>
       </div>
 
       <section className="space-y-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">Шаг 0. Нужен ли Python отдельно?</h3>
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 1. Создайте папку проекта (одинаково у всех)
+        </h3>
+        <Details title="Windows" defaultOpen>
+          <ol className="list-decimal pl-5 space-y-2">
+            <li>Откройте Проводник.</li>
+            <li>
+              Слева выберите <strong>Документы</strong> (Documents).
+            </li>
+            <li>
+              ПКМ по пустому месту → <strong>Создать → Папку</strong>.
+            </li>
+            <li>
+              Назовите папку точно так: <code>zipf_bunin</code> и нажмите Enter.
+            </li>
+            <li>
+              Полный путь должен быть:
+              <pre className={codeBox}>{`C:\\Users\\ВАШ_ЛОГИН\\Documents\\zipf_bunin`}</pre>
+              Вместо ВАШ_ЛОГИН — имя вашей учётной записи Windows.
+            </li>
+          </ol>
+        </Details>
+        <Details title="macOS">
+          <ol className="list-decimal pl-5 space-y-2">
+            <li>Откройте Finder.</li>
+            <li>
+              Меню <strong>Переход → Документы</strong> (или Go → Documents).
+            </li>
+            <li>
+              ПКМ / Control+клик → <strong>Новая папка</strong>.
+            </li>
+            <li>
+              Имя папки точно: <code>zipf_bunin</code>.
+            </li>
+            <li>
+              Полный путь:
+              <pre className={codeBox}>{`/Users/ВАШ_ЛОГИН/Documents/zipf_bunin`}</pre>
+            </li>
+          </ol>
+        </Details>
+      </section>
+
+      <section className="space-y-3">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 2. Установите Python 3 (если ещё не установлен)
+        </h3>
         <p>
-          PyCharm — это редактор. Чтобы запускать код, на компьютере должен быть установлен{' '}
-          <strong>Python 3</strong>. Если Python ещё нет — сначала поставьте его, потом вернитесь в
-          PyCharm.
+          PyCharm — это только редактор. Без Python скрипты не запустятся.
         </p>
-        <Details title="Windows: установка Python" defaultOpen>
+        <Details title="Windows: поставить Python" defaultOpen>
           <ol className="list-decimal pl-5 space-y-2">
             <li>
-              Откройте сайт{' '}
+              Сайт:{' '}
               <a className="underline" href="https://www.python.org/downloads/" target="_blank" rel="noreferrer">
                 python.org/downloads
-              </a>{' '}
-              и скачайте Python 3.
+              </a>
+              → кнопка Download Python 3.x.
             </li>
+            <li>Запустите установщик.</li>
             <li>
-              В установщике <strong>обязательно отметьте</strong> галочку{' '}
+              <strong>Самое важное:</strong> внизу окна отметьте галочку{' '}
               <code>Add python.exe to PATH</code>, затем Install Now.
             </li>
-            <li>Закройте и снова откройте PowerShell / cmd.</li>
+            <li>Дождитесь Finish. Закройте старые окна терминала.</li>
             <li>
-              Проверьте установку точной командой:
+              Откройте новое окно PowerShell или cmd и выполните:
               <pre className={codeBox}>python --version</pre>
-              Ожидаемый ответ похож на <code>Python 3.12.x</code> (номер может отличаться).
+              Должно появиться что-то вроде <code>Python 3.12.7</code>.
             </li>
             <li>
-              Если команда не найдена, попробуйте:
+              Если не сработало, попробуйте:
               <pre className={codeBox}>py --version</pre>
             </li>
           </ol>
         </Details>
-        <Details title="macOS: установка Python">
+        <Details title="macOS: поставить Python">
           <ol className="list-decimal pl-5 space-y-2">
             <li>
               Скачайте установщик с{' '}
               <a className="underline" href="https://www.python.org/downloads/" target="_blank" rel="noreferrer">
                 python.org/downloads
               </a>{' '}
-              или поставьте через Homebrew: <code>brew install python</code>.
+              и установите.
             </li>
             <li>
-              Откройте приложение <strong>Terminal</strong> и выполните:
+              Откройте Terminal и выполните:
               <pre className={codeBox}>python3 --version</pre>
             </li>
             <li>
-              На Mac чаще нужна команда <code>python3</code>, а не <code>python</code>.
+              На Mac почти всегда используйте команду <code>python3</code>, а не <code>python</code>.
             </li>
           </ol>
         </Details>
       </section>
 
       <section className="space-y-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">Шаг 1. Подготовьте папку проекта</h3>
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 3. Скачайте ZIP и разложите файлы внутрь zipf_bunin
+        </h3>
         <ol className="list-decimal pl-5 space-y-2">
+          <li>Нажмите кнопку «Скачать ZIP» вверху этой вкладки.</li>
+          <li>Распакуйте архив (ПКМ → Извлечь всё / Разархивировать).</li>
           <li>
-            Скачайте ZIP по кнопке выше.
+            Откройте получившуюся папку и <strong>скопируйте всё её содержимое</strong> в{' '}
+            <code>Documents/zipf_bunin</code>.
           </li>
           <li>
-            Распакуйте архив, например, на Рабочий стол. Получится набор файлов; соберите их в папку
-            с понятным именем, например:
-            <pre className={codeBox}>Рабочий стол/zipf_bunin/
+            Внутри <code>zipf_bunin</code> должно получиться ровно так (проверьте имена):
+            <pre className={codeBox}>{`zipf_bunin/
+  zipf_one_story.py
+  zipf_several_stories.py
+  zipf_lib.py
+  requirements.txt
+  README.txt
   sample_texts/
-  scripts/
-  README.txt</pre>
+  out/`}</pre>
           </li>
           <li>
-            Внутри <code>scripts/</code> должны быть файлы:
-            <code>zipf_lib.py</code>, <code>zipf_one_story.py</code>,{' '}
-            <code>zipf_several_stories.py</code>, <code>requirements.txt</code>.
+            В <code>sample_texts/</code> лежат рассказы (<code>holodnaya-osen.txt</code>,{' '}
+            <code>chasovnya.txt</code>, <code>natali.txt</code> и др.). Папка <code>out/</code> пока
+            почти пустая — туда программа сохранит графики.
           </li>
         </ol>
+        <div className="rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 p-3 text-sm">
+          Частая ошибка: оставить лишнюю вложенность вроде{' '}
+          <code>zipf_bunin/scripts_zipf_bunin/zipf_one_story.py</code>. Файлы{' '}
+          <code>.py</code> должны лежать <strong>сразу внутри</strong> <code>zipf_bunin</code>.
+        </div>
       </section>
 
       <section className="space-y-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">Шаг 2. Откройте папку в PyCharm</h3>
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 4. Откройте папку в PyCharm
+        </h3>
         <ol className="list-decimal pl-5 space-y-2">
           <li>Запустите PyCharm.</li>
           <li>
-            Выберите <strong>Open</strong> (не New Project).
+            На стартовом экране нажмите <strong>Open</strong> (не New Project).
           </li>
           <li>
-            Укажите папку <code>zipf_bunin</code> (вашу рабочую папку) и откройте её.
+            Найдите и выберите папку <code>Documents/zipf_bunin</code> → OK / Open.
           </li>
           <li>
-            Слева в дереве проекта вы должны видеть <code>scripts</code> и <code>sample_texts</code>.
+            Слева в Project должно быть видно: <code>zipf_one_story.py</code>,{' '}
+            <code>sample_texts</code>, <code>out</code>.
+          </li>
+          <li>
+            Если PyCharm спросит «Trust Project» — нажмите Trust.
           </li>
         </ol>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 3. Подключите интерпретатор Python в PyCharm
+          Шаг 5. Подключите интерпретатор Python к проекту
         </h3>
         <ol className="list-decimal pl-5 space-y-2">
           <li>
-            Меню: <strong>PyCharm → Settings</strong> (на Windows часто{' '}
-            <strong>File → Settings</strong>).
+            macOS: <strong>PyCharm → Settings…</strong>
+            <br />
+            Windows: <strong>File → Settings…</strong>
           </li>
           <li>
-            Раздел: <strong>Project: … → Python Interpreter</strong>.
+            Слева: <strong>Project: zipf_bunin → Python Interpreter</strong>.
           </li>
           <li>
-            Нажмите шестерёнку / Add Interpreter → <strong>Add Local Interpreter</strong> →{' '}
-            <strong>Virtualenv Environment</strong> → New.
+            Справа вверху шестерёнка / Add Interpreter → <strong>Add Local Interpreter…</strong>
           </li>
           <li>
-            Base interpreter: выберите установленный Python 3 → OK.
+            Выберите <strong>Virtualenv Environment</strong> → New.
           </li>
           <li>
-            Дождитесь создания окружения. В правом нижнем углу PyCharm должно появиться что-то вроде
-            <code>Python 3.x (zipf_bunin)</code>.
+            Base interpreter: укажите установленный Python 3 → OK.
+          </li>
+          <li>
+            Дождитесь создания venv. В правом нижнем углу PyCharm появится надпись вроде{' '}
+            <code>Python 3.12 (zipf_bunin)</code>.
           </li>
         </ol>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 4. Установите библиотеки для графиков
+          Шаг 6. Установите библиотеки для графиков (один раз)
         </h3>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            Внизу PyCharm откройте вкладку <strong>Terminal</strong>.
+          </li>
+          <li>
+            Убедитесь, что вы в папке проекта. Команда{' '}
+            <code>pwd</code> (Mac) или <code>cd</code> (Windows) должна показывать путь с{' '}
+            <code>zipf_bunin</code>. Если нет:
+            <pre className={codeBox}>{`cd Documents/zipf_bunin`}</pre>
+            (при необходимости укажите полный путь к вашей папке).
+          </li>
+          <li>
+            Windows — выполните ровно:
+            <pre className={codeBox}>python -m pip install -r requirements.txt</pre>
+            Если не сработает:
+            <pre className={codeBox}>py -m pip install -r requirements.txt</pre>
+          </li>
+          <li>
+            macOS — выполните ровно:
+            <pre className={codeBox}>python3 -m pip install -r requirements.txt</pre>
+          </li>
+          <li>
+            Дождитесь конца установки без красной ошибки. Должны поставиться{' '}
+            <code>matplotlib</code> и <code>numpy</code>.
+          </li>
+        </ol>
+      </section>
+
+      <section className="space-y-3">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 7. Первый запуск: один рассказ + график (кнопка Run)
+        </h3>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            В дереве проекта дважды кликните <code>zipf_one_story.py</code>.
+          </li>
+          <li>
+            Справа вверху нажмите зелёный треугольник <strong>Run</strong> (или ПКМ по файлу → Run
+            &apos;zipf_one_story&apos;).
+          </li>
+          <li>
+            <strong>Параметры указывать не нужно</strong>: скрипт сам возьмёт{' '}
+            <code>sample_texts/holodnaya-osen.txt</code> и сохранит график.
+          </li>
+          <li>
+            Внизу в панели Run / Console должны появиться строки с{' '}
+            <code>α Ципфа</code> и <code>R²</code>, а также сообщение{' '}
+            <code>График сохранён: …</code>.
+          </li>
+          <li>
+            Откройте папку <code>out/</code> в проекте: там появится файл{' '}
+            <code>holodnaya-osen_zipf.png</code>. Откройте его двойным кликом — это ваш график Ципфа.
+          </li>
+        </ol>
+        <div className="rounded-xl border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/20 p-3 text-sm">
+          Если дошли до PNG в <code>out/</code> — установка прошла успешно. Дальше можно менять
+          рассказ.
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          Шаг 8. Другой рассказ через Parameters (тоже просто)
+        </h3>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            Меню <strong>Run → Edit Configurations…</strong>
+          </li>
+          <li>
+            Слева выберите конфигурацию <code>zipf_one_story</code>.
+          </li>
+          <li>
+            Поле <strong>Parameters</strong> очистите и вставьте <em>ровно одну</em> из строк:
+            <pre className={codeBox}>{`sample_texts/chasovnya.txt
+sample_texts/chistyj-ponedelnik.txt
+sample_texts/natali.txt
+sample_texts/kavkaz.txt`}</pre>
+          </li>
+          <li>
+            <strong>Working directory</strong> должен быть папка <code>zipf_bunin</code> (не
+            вложенная).
+          </li>
+          <li>Apply → OK → снова Run.</li>
+          <li>
+            Новый график появится в <code>out/</code>, например{' '}
+            <code>chasovnya_zipf.png</code>.
+          </li>
+        </ol>
         <p>
-          Откройте внизу вкладку <strong>Terminal</strong> в PyCharm и выполните команды{' '}
-          <em>точно</em> так (сначала зайдите в папку scripts):
-        </p>
-        <p className="font-semibold text-gray-900 dark:text-white">Windows (PowerShell / cmd в PyCharm):</p>
-        <pre className={codeBox}>{`cd scripts
-python -m pip install -r requirements.txt`}</pre>
-        <p className="font-semibold text-gray-900 dark:text-white">macOS / Linux:</p>
-        <pre className={codeBox}>{`cd scripts
-python3 -m pip install -r requirements.txt`}</pre>
-        <p>
-          Если <code>python</code> не находится на Windows, замените на <code>py -m pip install -r requirements.txt</code>.
-        </p>
-        <p>
-          Успех: в конце не должно быть красной ошибки. Пакеты <code>matplotlib</code> и{' '}
-          <code>numpy</code> нужны для PNG-графиков; сами числа скрипт посчитает и без них.
+          Сравните для отчёта: короткий (<em>Часовня</em> / <em>Камарг</em> нет в ZIP, есть{' '}
+          <em>Часовня</em>) и длинный (<em>Чистый понедельник</em> или <em>Натали</em>) — запишите α и
+          R².
         </p>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 5. Запуск одного рассказа — точные примеры
+          Шаг 9. Несколько рассказов сразу
         </h3>
-        <p>
-          Откройте файл <code>scripts/zipf_one_story.py</code>. Есть два способа запуска.
-        </p>
-        <Details title="Способ A (проще): через Terminal PyCharm" defaultOpen>
-          <p>Убедитесь, что вы в папке <code>scripts</code>, затем:</p>
-          <p className="font-semibold">Windows:</p>
-          <pre className={codeBox}>{`python zipf_one_story.py ../sample_texts/holodnaya-osen.txt`}</pre>
-          <p className="font-semibold">macOS:</p>
-          <pre className={codeBox}>{`python3 zipf_one_story.py ../sample_texts/holodnaya-osen.txt`}</pre>
-          <p>С сохранением графика:</p>
-          <pre className={codeBox}>{`python zipf_one_story.py ../sample_texts/chistyj-ponedelnik.txt --plot ../out_chistyj.png`}</pre>
-          <p className="text-xs text-gray-500">
-            На macOS снова используйте <code>python3</code> вместо <code>python</code>.
-          </p>
-        </Details>
-        <Details title="Способ B: зелёная кнопка Run в PyCharm">
-          <ol className="list-decimal pl-5 space-y-2">
-            <li>Откройте <code>zipf_one_story.py</code>.</li>
-            <li>
-              Меню <strong>Run → Edit Configurations…</strong> → + → Python.
-            </li>
-            <li>
-              <strong>Script path</strong>: укажите файл <code>zipf_one_story.py</code>.
-            </li>
-            <li>
-              <strong>Parameters</strong> (важно!): вставьте ровно
-              <pre className={codeBox}>../sample_texts/holodnaya-osen.txt</pre>
-            </li>
-            <li>
-              <strong>Working directory</strong>: папка <code>scripts</code> внутри вашего проекта.
-            </li>
-            <li>Apply → OK → нажмите зелёный треугольник Run.</li>
-          </ol>
-          <p>Для графика в Parameters:</p>
-          <pre className={codeBox}>../sample_texts/chasovnya.txt --plot ../out_chasovnya.png</pre>
-        </Details>
-        <p>
-          В выводе ищите строки <code>α Ципфа</code> и <code>R²</code>. Сравните короткий текст
-          (<em>Часовня</em>) и длинный (<em>Чистый понедельник</em>).
-        </p>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            Откройте <code>zipf_several_stories.py</code>.
+          </li>
+          <li>
+            Нажмите Run <strong>без Parameters</strong>.
+          </li>
+          <li>
+            Скрипт обойдёт всю папку <code>sample_texts/</code>, напечатает таблицу α/R², сохранит:
+            <ul className="list-disc pl-5 mt-2">
+              <li>
+                <code>out/table.csv</code> — таблица для Excel / Numbers
+              </li>
+              <li>
+                <code>out/plots/*.png</code> — график на каждый рассказ
+              </li>
+            </ul>
+          </li>
+        </ol>
+        <p>Только два файла (Parameters):</p>
+        <pre className={codeBox}>sample_texts/kavkaz.txt sample_texts/natali.txt --verbose</pre>
       </section>
 
       <section className="space-y-3">
         <h3 className="text-base font-bold text-gray-900 dark:text-white">
-          Шаг 6. Несколько рассказов — точные примеры
+          Шаг 10. Что сдавать / что должно получиться
         </h3>
-        <p>Из папки <code>scripts</code>:</p>
-        <pre className={codeBox}>{`python zipf_several_stories.py ../sample_texts`}</pre>
-        <p>С таблицей и графиками:</p>
-        <pre className={codeBox}>{`python zipf_several_stories.py ../sample_texts --csv ../table.csv --plots ../plots`}</pre>
-        <p>Только выбранные файлы:</p>
-        <pre className={codeBox}>{`python zipf_several_stories.py ../sample_texts/kavkaz.txt ../sample_texts/natali.txt --verbose`}</pre>
-        <p className="text-xs text-gray-500">На macOS заменяйте <code>python</code> на <code>python3</code>.</p>
-      </section>
-
-      <section className="space-y-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">Шаг 7. Если что-то сломалось</h3>
         <ul className="list-disc pl-5 space-y-2">
           <li>
-            <strong>No module named zipf_lib</strong> — запускайте команды из папки{' '}
-            <code>scripts</code>, где лежит <code>zipf_lib.py</code>.
+            Скрин или файл <code>out/holodnaya-osen_zipf.png</code>
           </li>
           <li>
-            <strong>File not found</strong> — проверьте путь: от <code>scripts</code> файл
-            «Холодная осень» это <code>../sample_texts/holodnaya-osen.txt</code>.
+            Две строки чисел: α и R² для короткого и длинного рассказа
           </li>
           <li>
-            <strong>python не является командой</strong> — Windows: поставьте Python с галочкой PATH
-            или используйте <code>py</code>; macOS: используйте <code>python3</code>.
+            Одна фраза: почему у миниатюры α часто ниже (длина выборки, не «другой автор»)
           </li>
           <li>
-            <strong>Ошибка matplotlib</strong> — повторите{' '}
-            <code>python -m pip install -r requirements.txt</code>. Числа всё равно появятся без
-            графика, если не передавать <code>--plot</code>.
+            Одна фраза: чего Ципф <em>не</em> доказывает про авторство
           </li>
         </ul>
       </section>
 
-      <section className="rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4">
-        <h3 className="font-bold text-gray-900 dark:text-white mb-2">Мини-отчёт для практики</h3>
-        <ol className="list-decimal pl-5 space-y-1">
-          <li>Запустите короткий и длинный рассказ, запишите α и R².</li>
-          <li>Одной фразой объясните, почему у миниатюры α может быть ниже.</li>
-          <li>Напишите, чего закон Ципфа <em>не</em> доказывает про авторство.</li>
-        </ol>
+      <section className="space-y-3">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white">Если не запускается</h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>No module named zipf_lib</strong> — файлы лежат не в одной папке.{' '}
+            <code>zipf_lib.py</code> должен быть рядом с <code>zipf_one_story.py</code> внутри{' '}
+            <code>zipf_bunin</code>.
+          </li>
+          <li>
+            <strong>File not found … holodnaya-osen.txt</strong> — нет папки{' '}
+            <code>sample_texts</code> или Working directory не <code>zipf_bunin</code>.
+          </li>
+          <li>
+            <strong>python не является внутренней или внешней командой</strong> — Python не в PATH;
+            переустановите с галочкой Add to PATH или используйте <code>py</code> / на Mac{' '}
+            <code>python3</code>.
+          </li>
+          <li>
+            <strong>No module named matplotlib</strong> — снова выполните шаг 6 (
+            <code>pip install -r requirements.txt</code>) именно в Terminal этого проекта PyCharm.
+          </li>
+          <li>
+            <strong>Run ничего не делает / другой файл</strong> — откройте именно{' '}
+            <code>zipf_one_story.py</code> и запускайте его, а не пустой Untitled.
+          </li>
+        </ul>
       </section>
     </div>
   )
