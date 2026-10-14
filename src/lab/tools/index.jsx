@@ -9,6 +9,7 @@ import {
   VerifyLab,
 } from './guided'
 import { ZipfBuild } from './ZipfBuild'
+import { ZipfLesson } from './ZipfLesson'
 
 const TOOLS = {
   CloseDistant,
@@ -16,6 +17,7 @@ const TOOLS = {
   CorpusPassport,
   Frequencies,
   ZipfBuild,
+  ZipfLesson,
   StylometryLite,
   NerLite,
   NetworkLab,

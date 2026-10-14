@@ -44,26 +44,45 @@ export default function LabHub() {
 
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Инструменты</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {demos.works.map((work, index) => (
+        {demos.works.map((work, index) => {
+          const featured = Boolean(work.featured)
+          return (
           <motion.div
             key={work.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.03 }}
+            className={featured ? 'md:col-span-2' : undefined}
           >
             <Link
               to={`/courses/digital-humanities/demo/${work.slug}`}
-              className="block h-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 hover:shadow-xl hover:border-teal-300 dark:hover:border-teal-600 transition-all"
+              className={`block h-full rounded-2xl p-5 sm:p-6 hover:shadow-xl transition-all ${
+                featured
+                  ? 'border-2 border-teal-500 dark:border-teal-400 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20'
+                  : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-teal-300 dark:hover:border-teal-600'
+              }`}
             >
+              {featured && (
+                <div className="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200">
+                  <span className="px-2 py-0.5 rounded-full bg-teal-600 text-white">Пример лекции 4</span>
+                  Закон Ципфа · цикл Бунина
+                </div>
+              )}
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-snug">
                 {work.title}
               </h3>
               {work.question && (
                 <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{work.question}</p>
               )}
+              {featured && (
+                <p className="mt-3 text-sm font-semibold text-teal-800 dark:text-teal-200">
+                  Открыть разбор α / R² + скрипты для PyCharm →
+                </p>
+              )}
             </Link>
           </motion.div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
