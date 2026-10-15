@@ -81,26 +81,6 @@ export default function LectureCard({ lecture, courseSlug, index }) {
             className="overflow-hidden"
           >
             <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-              {courseSlug === 'imagology' && String(lecture.number) === '3' && (
-                <Link
-                  to="/courses/imagology/demo/lecture-3"
-                  className="mb-6 flex items-center gap-3 p-4 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30 hover:shadow-md transition-all group"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center flex-shrink-0">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-blue-950 dark:text-blue-100">Иллюстрация вместо презентации</p>
-                    <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">Лейрсен, 2016 · этнотип, имагема, картины</p>
-                  </div>
-                  <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              )}
-
               {demoWork && (
                 <Link
                   to={`/courses/digital-humanities/demo/${demoWork.slug}`}
@@ -149,6 +129,40 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
+                </div>
+              )}
+
+              {courseSlug === 'imagology' && String(lecture.number) === '3' && (
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <svg className="w-5 h-5 text-blue-700 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      Интерактивный материал
+                    </h3>
+                  </div>
+                  <Link
+                    to="/courses/imagology/demo/lecture-3"
+                    className="flex items-center gap-3 p-4 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30 hover:shadow-md transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-blue-950 dark:text-blue-100">
+                        Этнотипы и образы наций
+                      </p>
+                      <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">
+                        Дополнение к PDF · по handbook Ethnotypology (Leerssen)
+                      </p>
+                    </div>
+                    <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
                 </div>
               )}
 

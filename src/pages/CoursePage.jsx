@@ -76,33 +76,6 @@ export default function CoursePage() {
           {course.descriptionEn}
         </p>
 
-        {slug === 'imagology' && (
-          <Link
-            to="/courses/imagology/demo/lecture-3"
-            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-blue-300 dark:border-blue-700 bg-gradient-to-r from-blue-50 to-amber-50 dark:from-blue-950/40 dark:to-amber-950/30 hover:shadow-xl transition-all group mb-2"
-          >
-            <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-blue-800 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 6h16M4 12h16M4 18h7" />
-              </svg>
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-blue-950 dark:text-blue-100 mb-1">
-                Иллюстрация к лекции 3
-              </h2>
-              <p className="text-sm sm:text-base text-blue-950/80 dark:text-blue-100/80 leading-relaxed">
-                Нация, этничность и стереотип по статье Юпа Лейрсена. Вместо презентации: определения, картины, разборы.
-              </p>
-            </div>
-            <span className="text-blue-800 dark:text-blue-200 font-semibold inline-flex items-center gap-1">
-              Открыть
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-          </Link>
-        )}
-
         {slug === 'digital-humanities' && (
           <Link
             to="/courses/digital-humanities/demo"
