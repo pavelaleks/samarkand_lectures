@@ -37,3 +37,4 @@ Thumbs.db
 .cursor/
 
 __pycache__/
+.tmp_imagologica/

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Имагология · показ 1 · Рождение дисциплины</title>
+<style>
+:root {
+  --ink: #1a1714;
+  --muted: #5a534a;
+  --line: #d4cdc2;
+  --paper: #f6f1e8;
+  --panel: #fffdf9;
+  --accent: #7a3428;
+  --link: #2c4a68;
+  --ok: #2f5d3a;
+  --bad: #8a3030;
+  --soft: #ebe4d8;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  background:
+    radial-gradient(ellipse 70% 35% at 8% 0%, #ebe3d6 0%, transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+}
+.shell {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: .7rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,253,249,.94);
+  position: sticky; top: 0; z-index: 5;
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: .88rem;
+}
+.top a { color: var(--link); text-decoration: none; }
+.top a:hover { text-decoration: underline; }
+.progress {
+  flex: 1;
+  max-width: 16rem;
+  height: .35rem;
+  background: var(--soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress > i {
+  display: block; height: 100%; width: 0;
+  background: var(--accent);
+}
+.stage {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.4rem 1.2rem 2rem;
+  width: 100%;
+}
+.slide { display: none; }
+.slide.on { display: block; animation: in .18s ease; }
+@keyframes in { from { opacity: .35; transform: translateY(4px);} to { opacity: 1; transform: none; } }
+.kicker {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .72rem;
+  color: var(--accent);
+  margin: 0 0 .35rem;
+}
+h1 {
+  font-size: clamp(1.7rem, 3.6vw, 2.35rem);
+  line-height: 1.15;
+  margin: 0 0 .6rem;
+  letter-spacing: -.02em;
+}
+h2 {
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  margin: 0 0 .8rem;
+  line-height: 1.2;
+}
+p, li { font-size: 1.08rem; }
+.muted { color: var(--muted); }
+.lead { font-size: 1.18rem; color: var(--muted); margin-top: 0; }
+ul { padding-left: 1.15rem; }
+li { margin: .35rem 0; }
+.grid {
+  display: grid;
+  gap: .7rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  margin: 1rem 0;
+}
+.card, details.term {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  padding: .85rem 1rem;
+}
+.card strong, details.term summary {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: .95rem;
+}
+details.term summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--link);
+}
+details.term summary::-webkit-details-marker { display: none; }
+details.term summary::before { content: "+ "; color: var(--accent); font-weight: 700; }
+details.term[open] summary::before { content: "− "; }
+details.term p { margin: .55rem 0 0; font-size: 1rem; }
+.quote {
+  border-left: 3px solid var(--accent);
+  margin: 1rem 0;
+  padding: .2rem 0 .2rem 1rem;
+  color: var(--muted);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .98rem;
+  margin: .8rem 0 1rem;
+}
+.table th, .table td {
+  border: 1px solid var(--line);
+  padding: .45rem .55rem;
+  vertical-align: top;
+  background: var(--panel);
+}
+.table th {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  text-align: left;
+  background: var(--soft);
+  font-size: .86rem;
+}
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+button {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: .45rem;
+  padding: .55rem .85rem;
+  cursor: pointer;
+  font-size: .95rem;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+button.ghost { background: transparent; }
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1.1rem 1rem;
+  border-top: 1px solid var(--line);
+  background: rgba(255,253,249,.94);
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+.nav .hint { color: var(--muted); font-size: .82rem; }
+.quiz label {
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: .45rem;
+  padding: .7rem .85rem;
+  margin: .45rem 0;
+  cursor: pointer;
+}
+.quiz label:hover { border-color: var(--accent); }
+.quiz .feedback {
+  margin-top: .7rem;
+  padding: .7rem .85rem;
+  border-radius: .45rem;
+  display: none;
+}
+.quiz .feedback.show { display: block; }
+.quiz .feedback.ok { background: #e7f1ea; color: var(--ok); }
+.quiz .feedback.bad { background: #f7e8e7; color: var(--bad); }
+.sources { font-size: .95rem; color: var(--muted); }
+.sources a { color: var(--link); }
+@media (max-width: 640px) {
+  p, li { font-size: 1rem; }
+  .nav .hint { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <a href="/samarkand_lectures/courses/imagology">← Курс «Имагология»</a>
+    <div class="progress" aria-hidden="true"><i></i></div>
+    <a href="https://imagologica.eu/keytexts" target="_blank" rel="noopener">imagologica.eu/keytexts</a>
+  </header>
+  <main class="stage">
+    <section class="slide">
+<p class="kicker">Имагология · показ 1</p>
+<h1>Рождение имагологии</h1>
+<p class="lead">Гийар (1951), Дизеринк (1966), теоретическое резюме Лерссена. 90 минут: полный текст лекции — отдельным файлом; здесь — каркас для аудитории.</p>
+<div class="grid">
+  <div class="card"><strong>Цель занятия</strong><p>Отличить образ/мираж от «национального характера» и от истории влияний.</p></div>
+  <div class="card"><strong>Материалы</strong><p>PDF на imagologica.eu/keytexts; резюме на /theoreticalsummary.</p></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Определение</p>
+<h2>Что изучает имагология</h2>
+<p>Этнические и национальные стереотипы как <em>дискурсивный</em> факт, а не как антропологическую данность.</p>
+<details class="term"><summary>Image / образ</summary><p>Упрощённая репутация другого народа (или своего), циркулирующая в текстах и сознании. Не «Германия», а «Германия Мишле / философов / французов» (Гийар).</p></details>
+<details class="term" style="margin-top:.55rem"><summary>Mirage / мираж</summary><p>Образ, уводящий от предмета и при этом реально направляющий чувства и политику. Термин закреплён книгой Ж.-М. Карре <em>Les écrivains français et le mirage allemand</em> (1947).</p></details>
+<details class="term" style="margin-top:.55rem"><summary>Научная гигиена</summary><p>Не спрашивать «верно ли, что британцы индивидуалисты?». Спрашивать: кто говорит, кому, зачем, в какой политической обстановке, каким жанром, как образ сидит в целом текста (Лерссен, theoretical summary).</p></details>
+</section>
+<section class="slide">
+<p class="kicker">Аналогия</p>
+<h2>Историк ведовства</h2>
+<p class="quote">Неважно, «работала» ли магия. Важна вера и её исторические последствия.</p>
+<p>То же со стереотипом: вера иррациональна, удар реален (антисемитизм; колониальное обращение с людьми, объявленными «низшими»). Имаголог изучает узнаваемость формулы, а не её «истинность».</p>
+</section>
+<section class="slide">
+<p class="kicker">Гийар, 1951</p>
+<h2>«L’étranger tel qu’on le voit»</h2>
+<p>Последняя глава <em>La littérature comparée</em> (PUF, «Que sais-je?», № 499). Карре поддержал программу в аванпропосе.</p>
+<ul>
+<li>Исследования <em>влияний страны на страну</em> тонут в абстракции: нация не единство (Германия 1815 = Гёте? Уланд? Пруссия? Бавария?).</li>
+<li>Новый предмет: как складываются и живут национальные мифы в сознании.</li>
+<li>«Область будущего» (<em>domaine d’avenir</em>): база — тексты, которые можно найти и сопоставить; почва твёрже, чем у влияний.</li>
+</ul>
+</section>
+<section class="slide">
+<p class="kicker">Граница дисциплины</p>
+<h2>История мнений ≠ компаративистика</h2>
+<p>Жорж Асколи о Британии перед французским «мнением» (1927/1930): много фактов, мало литературной транспозиции. Гийар: слово «мнение» — поле историка; компаративист входит там, где информация даёт <em>литературные</em> переложения (романы, театр).</p>
+<p>Контрольный пример чистого историка у Гийара — Рене Ремон об образе США во Франции (1815–1852).</p>
+</section>
+<section class="slide">
+<p class="kicker">Инвентарь</p>
+<h2>Английский миф (Ребуль / Гийар)</h2>
+<p>Темы, сложившиеся во Франции примерно в 1815–1830 и живущие дальше:</p>
+<div class="grid">
+  <div class="card">лицемерие</div>
+  <div class="card">реализм</div>
+  <div class="card">респектабельность</div>
+  <div class="card">home</div>
+  <div class="card">свободы</div>
+  <div class="card">империализм</div>
+</div>
+<p class="muted">Корпус XX в. у самого Гийара: Бурже, Эрман, Бланш, Моруа, Ларбо, Моран, Селин.</p>
+</section>
+<section class="slide">
+<p class="kicker">Инвентарь</p>
+<h2>Немецкий мираж</h2>
+<table class="table">
+<thead><tr><th>Опора</th><th>Содержание</th></tr></thead>
+<tbody>
+<tr><td>Сталь, <em>De l’Allemagne</em></td><td>Анахроничная «республика словесности» вокруг Веймара; романтизм 1813 французами почти не усвоен</td></tr>
+<tr><td>1840 / 1870</td><td>Тревога «немецкого Рейна»; затем жёсткое пробуждение</td></tr>
+<tr><td>«Две Германии»</td><td>Наука и Вагнер vs бисмарковская организация; Ницше vs капральство</td></tr>
+<tr><td>Маски</td><td>Добродетельный доктор · «бош» · NS-герой · музыкант · европеец</td></tr>
+</tbody>
+</table>
+<p>«Все были немцами; никто не был Немцем» — каждый был Немцем Ренана, Роллана или Ж. Ромена.</p>
+</section>
+<section class="slide">
+<p class="kicker">Спор</p>
+<h2>Веллек против Карре и Гийара</h2>
+<ul>
+<li>R. Wellek, 1953 (<em>Yearbook of Comparative and General Literature</em>) и доклад в Chapel Hill, 1958.</li>
+<li>Риски: вырождение в Stoffgeschichte; превращение компаративистики во вспомогательную науку международных отношений.</li>
+<li>Итог: вопрос «образа другой страны» замяли; «французская» и «американская» линии разошлись.</li>
+</ul>
+<p>Дизеринк (1966) переформулирует вопрос: есть ли <em>литературоведческий</em> смысл у исследования images/mirages, не сводимый к социологии и Völkerpsychologie?</p>
+</section>
+<section class="slide">
+<p class="kicker">Дизеринк</p>
+<h2>Три пути</h2>
+<ol>
+<li><strong>Внутри произведения</strong> — образ необходим для имманентного разбора (пример: фламандский мираж у Бернаноса).</li>
+<li><strong>Распространение литературы</strong> — какие переводы и авторы «проходят» под действующим миражом (Тиммерманс vs ван Остайен в немецкой рецепции Фландрии).</li>
+<li><strong>В самой критике и науке</strong> — «типично немецкое / французское» в учебниках; völkische Literaturbetrachtung; деидеологизация методов.</li>
+</ol>
+</section>
+<section class="slide">
+<p class="kicker">Разбор</p>
+<h2>Бернанос, <em>Journal d’un curé de campagne</em></h2>
+<p>Кюре де Торси объясняет почти всё тем, что он фламандец: густая кровь, мистики-не-чахоточные, бунт «в крови», русские = «фламандцы Крайнего Севера», молитва за Горького и Лютера, Рёйсбрук «как я».</p>
+<button type="button" data-reveal="bern-more" data-label-show="Показать связи" data-label-hide="Скрыть связи">Показать связи</button>
+<div id="bern-more" hidden>
+<ul>
+<li>Клише: sensualité — mysticisme.</li>
+<li>Источники клише: живопись XV–XVII вв.; регионализм XIX–XX вв.</li>
+<li>Свобода с границей Франция/Бельгия — типичный приём миража.</li>
+<li>Параллель Фландрия–Россия/бунт/протестантизм близка схеме Action française (Моррас, Массис, Доде), но у Бернаноса знак часто положительный.</li>
+</ul>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Лерссен · резюме</p>
+<h2>Структурные константы</h2>
+<table class="table">
+<thead><tr><th>Правило</th><th>Схема</th></tr></thead>
+<tbody>
+<tr><td>Север / юг</td><td>деловитость, проза, индивидуализм vs идиллия, лёгкость, «ненадёжность»</td></tr>
+<tr><td>Центр / периферия</td><td>космополитизм, прогресс vs традиция, «природа», отсталость</td></tr>
+<tr><td>Нация контрастов</td><td>характерный атрибут включает противоположность (Жискар / де Фюнес; Марпл / Джон Булль)</td></tr>
+<tr><td>Знак</td><td>угроза → ксенофобия; отсутствие угрозы → экзотизм / «милость»</td></tr>
+</tbody>
+</table>
+<p class="muted">Пример сдвига: Испания от Альбы и Инквизиции к «Кармен»; Германия от Шуберта к прусскому офицеру.</p>
+</section>
+<section class="slide">
+<p class="kicker">Термины</p>
+<h2>Автообраз и гетерообраз</h2>
+<div class="grid">
+  <div class="card"><strong>Auto-image</strong><p>Установка к собственным культурным ценностям.</p></div>
+  <div class="card"><strong>Hetero-image</strong><p>Установка к другому; всегда несёт долю автообраза.</p></div>
+</div>
+<p>Никто не описывает «культурную идентичность» как таковую. Описывается различие: нация «наиболее она сама» там, где наиболее непохожа. Это ограничивает идентичность партикуляризмом и экзотизмом.</p>
+</section>
+<section class="slide">
+<p class="kicker">Самопроверка</p>
+<h2>Вопрос 1</h2>
+<div class="quiz" data-quiz data-correct="b"
+  data-ok="Верно. Имаголог спрашивает о контексте и узнаваемости, не о антропологической истине."
+  data-bad="Нет. Вопрос об истинности — как раз то, от чего метод отказывается.">
+<p>В тексте сказано: «британцы — индивидуалисты». Первый вопрос имаголога?</p>
+<label><input type="radio" name="q1" value="a"> Насколько это подтверждается статистикой?</label>
+<label><input type="radio" name="q1" value="b"> Кто говорит, кому и зачем это нужно в данном тексте?</label>
+<label><input type="radio" name="q1" value="c"> Как исправить этот стереотип у читателя?</label>
+<div class="feedback"></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Самопроверка</p>
+<h2>Вопрос 2</h2>
+<div class="quiz" data-quiz data-correct="c"
+  data-ok="Верно. Три пути Дизеринка — произведение, распространение/перевод, критика и наука."
+  data-bad="Перечитайте итог статьи 1966 года: нумерация трёх путей.">
+<p>Какой из путей Дизеринк называет способом деидеологизации литературоведения?</p>
+<label><input type="radio" name="q2" value="a"> Сбор всех упоминаний страны в хронологическом порядке</label>
+<label><input type="radio" name="q2" value="b"> Сравнение «образа» с «реальной» страной по путеводителю</label>
+<label><input type="radio" name="q2" value="c"> Выявление миражей внутри самой критики и учёных руководств</label>
+<div class="feedback"></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">К следующей лекции</p>
+<h2>Что унести</h2>
+<ul>
+<li>Образ — чья-то репутация между текстами, не сущность нации.</li>
+<li>Мираж — та же репутация с политической и рецептивной силой.</li>
+<li>Метод начинается с вопросов о говорящем, аудитории, жанре, интертексте.</li>
+<li>Дизеринк сохраняет образы внутри литературоведения после критики Веллека.</li>
+</ul>
+<p class="sources">Полный текст: <code>src/data/imagology/ключевые-тексты/лекция-1-рождение-имагологии.html</code><br>
+Источники: <a href="https://imagologica.eu/CMS/upload/guyard.pdf">guyard.pdf</a> · <a href="https://imagologica.eu/CMS/upload/dyser.pdf">dyser.pdf</a> · <a href="https://imagologica.eu/theoreticalsummary">theoretical summary</a></p>
+</section>
+  </main>
+  <footer class="nav">
+    <button type="button" id="prev" class="ghost">← Назад</button>
+    <div class="hint">← → · пробел · Home/End</div>
+    <div id="counter" class="hint">1 / 1</div>
+    <button type="button" id="next" class="primary">Далее →</button>
+  </footer>
+</div>
+<script>
+(function () {
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.querySelector('.progress > i');
+  const counter = document.getElementById('counter');
+  let i = 0;
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('on', idx === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); show(i + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); show(i - 1);
+    } else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+  });
+
+  document.querySelectorAll('[data-quiz]').forEach((box) => {
+    const correct = box.dataset.correct;
+    const feedback = box.querySelector('.feedback');
+    box.querySelectorAll('input[type=radio]').forEach((input) => {
+      input.addEventListener('change', () => {
+        const ok = input.value === correct;
+        feedback.className = 'feedback show ' + (ok ? 'ok' : 'bad');
+        feedback.textContent = ok ? box.dataset.ok : box.dataset.bad;
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-reveal]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-reveal');
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = !el.hidden;
+      btn.textContent = el.hidden ? btn.dataset.labelShow : btn.dataset.labelHide;
+    });
+  });
+
+  const start = parseInt((location.hash || '#1').slice(1), 10);
+  show(Number.isFinite(start) ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>

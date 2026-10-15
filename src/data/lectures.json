@@ -12,22 +12,26 @@
         {
           "fileName": "1_Fowler_Genre and the Literary Canon_1979.pdf",
           "displayName": "Fowler_Genre and the Literary Canon_1979",
-          "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf"
+          "path": "src/data/alternative/материалы/1_Fowler_Genre and the Literary Canon_1979.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_Zhang Longxi_Canon_and_World_Literature.pdf",
           "displayName": "Zhang Longxi_Canon_and_World_Literature",
-          "path": "src/data/alternative/материалы/1_Zhang Longxi_Canon_and_World_Literature.pdf"
+          "path": "src/data/alternative/материалы/1_Zhang Longxi_Canon_and_World_Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_Иванов_Канон vs андеграунд.pdf",
           "displayName": "Иванов_Канон vs андеграунд",
-          "path": "src/data/alternative/материалы/1_Иванов_Канон vs андеграунд.pdf"
+          "path": "src/data/alternative/материалы/1_Иванов_Канон vs андеграунд.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_Энгстрем_Ресайклинг подзнесоветской контркультуры.pdf",
           "displayName": "Энгстрем_Ресайклинг подзнесоветской контркультуры",
-          "path": "src/data/alternative/материалы/1_Энгстрем_Ресайклинг подзнесоветской контркультуры.pdf"
+          "path": "src/data/alternative/материалы/1_Энгстрем_Ресайклинг подзнесоветской контркультуры.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -42,17 +46,20 @@
         {
           "fileName": "10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
           "displayName": "Real_Punks_and_PretendersThe_Social_Orga",
-          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf"
+          "path": "src/data/alternative/материалы/10_Real_Punks_and_PretendersThe_Social_Orga.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "10_moore-punkauthenticity.pdf",
           "displayName": "moore-punkauthenticity",
-          "path": "src/data/alternative/материалы/10_moore-punkauthenticity.pdf"
+          "path": "src/data/alternative/материалы/10_moore-punkauthenticity.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "10_muzykalnye-fenziny-i-pank-grafika.pdf",
           "displayName": "muzykalnye-fenziny-i-pank-grafika",
-          "path": "src/data/alternative/материалы/10_muzykalnye-fenziny-i-pank-grafika.pdf"
+          "path": "src/data/alternative/материалы/10_muzykalnye-fenziny-i-pank-grafika.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -67,42 +74,50 @@
         {
           "fileName": "11_Feminism and literary translation.pdf",
           "displayName": "Feminism and literary translation",
-          "path": "src/data/alternative/материалы/11_Feminism and literary translation.pdf"
+          "path": "src/data/alternative/материалы/11_Feminism and literary translation.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_Feminism and the Study of Literature.pdf",
           "displayName": "Feminism and the Study of Literature",
-          "path": "src/data/alternative/материалы/11_Feminism and the Study of Literature.pdf"
+          "path": "src/data/alternative/материалы/11_Feminism and the Study of Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_Feminism on Fantasy Literature.pdf",
           "displayName": "Feminism on Fantasy Literature",
-          "path": "src/data/alternative/материалы/11_Feminism on Fantasy Literature.pdf"
+          "path": "src/data/alternative/материалы/11_Feminism on Fantasy Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_Frankenstein_Feminism and Literary Theory.pdf",
           "displayName": "Frankenstein_Feminism and Literary Theory",
-          "path": "src/data/alternative/материалы/11_Frankenstein_Feminism and Literary Theory.pdf"
+          "path": "src/data/alternative/материалы/11_Frankenstein_Feminism and Literary Theory.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_Waves_of_Feminism_in_Literature_and_thei.pdf",
           "displayName": "Waves_of_Feminism_in_Literature_and_thei",
-          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf"
+          "path": "src/data/alternative/материалы/11_Waves_of_Feminism_in_Literature_and_thei.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf",
           "displayName": "izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu",
-          "path": "src/data/alternative/материалы/11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf"
+          "path": "src/data/alternative/материалы/11_izvivy-feministskogo-literaturovedeniya-materialy-k-spetskursu.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf",
           "displayName": "novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv",
-          "path": "src/data/alternative/материалы/11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf"
+          "path": "src/data/alternative/материалы/11_novaya-zhenschina-hudozhestvennyy-vymysel-i-fakt-liki-feminizma-na-rubezhe-xix-hh-vv.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf",
           "displayName": "vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature",
-          "path": "src/data/alternative/материалы/11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf"
+          "path": "src/data/alternative/материалы/11_vtoroy-pol-simony-de-bovuar-i-sudby-feminizma-v-sovremennoy-frantsuzskoy-literature.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -117,77 +132,92 @@
         {
           "fileName": "12_A Companion to Postcolonial Studies.pdf",
           "displayName": "A Companion to Postcolonial Studies",
-          "path": "src/data/alternative/материалы/12_A Companion to Postcolonial Studies.pdf"
+          "path": "src/data/alternative/материалы/12_A Companion to Postcolonial Studies.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Domesticating the subaltern in the global novel in English.pdf",
           "displayName": "Domesticating the subaltern in the global novel in English",
-          "path": "src/data/alternative/материалы/12_Domesticating the subaltern in the global novel in English.pdf"
+          "path": "src/data/alternative/материалы/12_Domesticating the subaltern in the global novel in English.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf",
           "displayName": "Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia",
-          "path": "src/data/alternative/материалы/12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf"
+          "path": "src/data/alternative/материалы/12_Nationalism, Orientalism, and the Establishment of Alterity in late Eighteenth to mid Nineteenth-Century Russia.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Orientalism_Reversed_Russian_Literature.pdf",
           "displayName": "Orientalism_Reversed_Russian_Literature",
-          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf"
+          "path": "src/data/alternative/материалы/12_Orientalism_Reversed_Russian_Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Orientalism_on_the_Margins_The_Ottoman_E.pdf",
           "displayName": "Orientalism_on_the_Margins_The_Ottoman_E",
-          "path": "src/data/alternative/материалы/12_Orientalism_on_the_Margins_The_Ottoman_E.pdf"
+          "path": "src/data/alternative/материалы/12_Orientalism_on_the_Margins_The_Ottoman_E.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Review_of_Alexander_Etkind_Internal_Colo.pdf",
           "displayName": "Review_of_Alexander_Etkind_Internal_Colo",
-          "path": "src/data/alternative/материалы/12_Review_of_Alexander_Etkind_Internal_Colo.pdf"
+          "path": "src/data/alternative/материалы/12_Review_of_Alexander_Etkind_Internal_Colo.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Spivak-Can the Subaltern Speak.pdf",
           "displayName": "Spivak-Can the Subaltern Speak",
-          "path": "src/data/alternative/материалы/12_Spivak-Can the Subaltern Speak.pdf"
+          "path": "src/data/alternative/материалы/12_Spivak-Can the Subaltern Speak.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Subaltern Studies as Postcolonial Criticism.pdf",
           "displayName": "Subaltern Studies as Postcolonial Criticism",
-          "path": "src/data/alternative/материалы/12_Subaltern Studies as Postcolonial Criticism.pdf"
+          "path": "src/data/alternative/материалы/12_Subaltern Studies as Postcolonial Criticism.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Subaltern and Marginal Figures in Literature.pdf",
           "displayName": "Subaltern and Marginal Figures in Literature",
-          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf"
+          "path": "src/data/alternative/материалы/12_Subaltern and Marginal Figures in Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Subaltern_Classics_in_Anti_and_Post_Col.pdf",
           "displayName": "Subaltern_Classics_in_Anti_and_Post_Col",
-          "path": "src/data/alternative/материалы/12_Subaltern_Classics_in_Anti_and_Post_Col.pdf"
+          "path": "src/data/alternative/материалы/12_Subaltern_Classics_in_Anti_and_Post_Col.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_The Subaltern Writings in India An Overview of Dalit Literature.pdf",
           "displayName": "The Subaltern Writings in India An Overview of Dalit Literature",
-          "path": "src/data/alternative/материалы/12_The Subaltern Writings in India An Overview of Dalit Literature.pdf"
+          "path": "src/data/alternative/материалы/12_The Subaltern Writings in India An Overview of Dalit Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_The_Janus_faced_Empire_Distorting_Orient.pdf",
           "displayName": "The_Janus_faced_Empire_Distorting_Orient",
-          "path": "src/data/alternative/материалы/12_The_Janus_faced_Empire_Distorting_Orient.pdf"
+          "path": "src/data/alternative/материалы/12_The_Janus_faced_Empire_Distorting_Orient.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Thomas_RefiguringtheSubaltern_Published.pdf",
           "displayName": "Thomas_RefiguringtheSubaltern_Published",
-          "path": "src/data/alternative/материалы/12_Thomas_RefiguringtheSubaltern_Published.pdf"
+          "path": "src/data/alternative/материалы/12_Thomas_RefiguringtheSubaltern_Published.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf",
           "displayName": "Vera_Tolz_The_Formation_of_Academic_Orie",
-          "path": "src/data/alternative/материалы/12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf"
+          "path": "src/data/alternative/материалы/12_Vera_Tolz_The_Formation_of_Academic_Orie.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
           "displayName": "notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers",
-          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf"
+          "path": "src/data/alternative/материалы/12_notes-on-russian-orientalism-as-a-phenomenon-of-cultural-transfers.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -202,62 +232,74 @@
         {
           "fileName": "13_Comics as verba-visual texts.pdf",
           "displayName": "Comics as verba-visual texts",
-          "path": "src/data/alternative/материалы/13_Comics as verba-visual texts.pdf"
+          "path": "src/data/alternative/материалы/13_Comics as verba-visual texts.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_ComicsLinguistics.pdf",
           "displayName": "ComicsLinguistics",
-          "path": "src/data/alternative/материалы/13_ComicsLinguistics.pdf"
+          "path": "src/data/alternative/материалы/13_ComicsLinguistics.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Defining Comics.pdf",
           "displayName": "Defining Comics",
-          "path": "src/data/alternative/материалы/13_Defining Comics.pdf"
+          "path": "src/data/alternative/материалы/13_Defining Comics.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Getting_Graphic_with_the_Past_Graphic_No.pdf",
           "displayName": "Getting_Graphic_with_the_Past_Graphic_No",
-          "path": "src/data/alternative/материалы/13_Getting_Graphic_with_the_Past_Graphic_No.pdf"
+          "path": "src/data/alternative/материалы/13_Getting_Graphic_with_the_Past_Graphic_No.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Meskin_Comics as Literature.pdf",
           "displayName": "Meskin_Comics as Literature",
-          "path": "src/data/alternative/материалы/13_Meskin_Comics as Literature.pdf"
+          "path": "src/data/alternative/материалы/13_Meskin_Comics as Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Narrative_in_Comics.pdf",
           "displayName": "Narrative_in_Comics",
-          "path": "src/data/alternative/материалы/13_Narrative_in_Comics.pdf"
+          "path": "src/data/alternative/материалы/13_Narrative_in_Comics.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_What_is_Graphic_about_Graphic_Novels.pdf",
           "displayName": "What_is_Graphic_about_Graphic_Novels",
-          "path": "src/data/alternative/материалы/13_What_is_Graphic_about_Graphic_Novels.pdf"
+          "path": "src/data/alternative/материалы/13_What_is_Graphic_about_Graphic_Novels.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА».pdf",
           "displayName": "К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА»",
-          "path": "src/data/alternative/материалы/13_К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА».pdf"
+          "path": "src/data/alternative/материалы/13_К ВОПРОСУ ОБ ИСТОКАХ СОВРЕМЕННОЙ ТРАДИЦИИ «МАНГА».pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Нарратология комикса.pdf",
           "displayName": "Нарратология комикса",
-          "path": "src/data/alternative/материалы/13_Нарратология комикса.pdf"
+          "path": "src/data/alternative/материалы/13_Нарратология комикса.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Нужна ли комиксу теория.pdf",
           "displayName": "Нужна ли комиксу теория",
-          "path": "src/data/alternative/материалы/13_Нужна ли комиксу теория.pdf"
+          "path": "src/data/alternative/материалы/13_Нужна ли комиксу теория.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ.pdf",
           "displayName": "Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ",
-          "path": "src/data/alternative/материалы/13_Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ.pdf"
+          "path": "src/data/alternative/материалы/13_Ф.М. ДОСТОЕВСКИЙ В ЯПОНСКИХ КОМИКСАХ.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_Японские комиксы манга в России_ введение в проблематику чтения.pdf",
           "displayName": "Японские комиксы манга в России_ введение в проблематику чтения",
-          "path": "src/data/alternative/материалы/13_Японские комиксы манга в России_ введение в проблематику чтения.pdf"
+          "path": "src/data/alternative/материалы/13_Японские комиксы манга в России_ введение в проблематику чтения.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -272,47 +314,56 @@
         {
           "fileName": "14_A Simple Approach to Classify Fictional and Non-Fictional Genres.pdf",
           "displayName": "A Simple Approach to Classify Fictional and Non-Fictional Genres",
-          "path": "src/data/alternative/материалы/14_A Simple Approach to Classify Fictional and Non-Fictional Genres.pdf"
+          "path": "src/data/alternative/материалы/14_A Simple Approach to Classify Fictional and Non-Fictional Genres.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_Bridging the gap between fiction and nonfiction in the literature.pdf",
           "displayName": "Bridging the gap between fiction and nonfiction in the literature",
-          "path": "src/data/alternative/материалы/14_Bridging the gap between fiction and nonfiction in the literature.pdf"
+          "path": "src/data/alternative/материалы/14_Bridging the gap between fiction and nonfiction in the literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_Mapping Nonfiction Narrative.pdf",
           "displayName": "Mapping Nonfiction Narrative",
-          "path": "src/data/alternative/материалы/14_Mapping Nonfiction Narrative.pdf"
+          "path": "src/data/alternative/материалы/14_Mapping Nonfiction Narrative.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_Notes toward a Supreme Nonfiction.pdf",
           "displayName": "Notes toward a Supreme Nonfiction",
-          "path": "src/data/alternative/материалы/14_Notes toward a Supreme Nonfiction.pdf"
+          "path": "src/data/alternative/материалы/14_Notes toward a Supreme Nonfiction.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_The Non-fiction Novel.pdf",
           "displayName": "The Non-fiction Novel",
-          "path": "src/data/alternative/материалы/14_The Non-fiction Novel.pdf"
+          "path": "src/data/alternative/материалы/14_The Non-fiction Novel.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf",
           "displayName": "chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra",
-          "path": "src/data/alternative/материалы/14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf"
+          "path": "src/data/alternative/материалы/14_chernobylskaya-molitva-hronika-buduschego-s-aleksievich-problema-zhanra.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf",
           "displayName": "dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov",
-          "path": "src/data/alternative/материалы/14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf"
+          "path": "src/data/alternative/материалы/14_dokumentalnaya-proza-v-kitayskoy-literature-1980-1990-h-godov.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki.pdf",
           "displayName": "tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki",
-          "path": "src/data/alternative/материалы/14_tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki.pdf"
+          "path": "src/data/alternative/материалы/14_tvorchestvo-svetlany-aleksievich-v-kontekste-razvitiya-hudozhestvenno-dokumentalnoy-prozy-povest-tsinkovye-malchiki.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_Сборник англ. статей про нон-фикшн.pdf",
           "displayName": "Сборник англ. статей про нон-фикшн",
-          "path": "src/data/alternative/материалы/14_Сборник англ. статей про нон-фикшн.pdf"
+          "path": "src/data/alternative/материалы/14_Сборник англ. статей про нон-фикшн.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -327,72 +378,86 @@
         {
           "fileName": "15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf",
           "displayName": "Directing narrative in gameplay player interaction in shaping narrative in the",
-          "path": "src/data/alternative/материалы/15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf"
+          "path": "src/data/alternative/материалы/15_Directing narrative in gameplay player interaction in shaping narrative in the.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Elements of Anti-World.pdf",
           "displayName": "Elements of Anti-World",
-          "path": "src/data/alternative/материалы/15_Elements of Anti-World.pdf"
+          "path": "src/data/alternative/материалы/15_Elements of Anti-World.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Interactivity A review of the concept.pdf",
           "displayName": "Interactivity A review of the concept",
-          "path": "src/data/alternative/материалы/15_Interactivity A review of the concept.pdf"
+          "path": "src/data/alternative/материалы/15_Interactivity A review of the concept.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf",
           "displayName": "Ludonarrative_Hermeneutics_A_Way_Out_and",
-          "path": "src/data/alternative/материалы/15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf"
+          "path": "src/data/alternative/материалы/15_Ludonarrative_Hermeneutics_A_Way_Out_and.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Narrative Guidance of Interactivity.pdf",
           "displayName": "Narrative Guidance of Interactivity",
-          "path": "src/data/alternative/материалы/15_Narrative Guidance of Interactivity.pdf"
+          "path": "src/data/alternative/материалы/15_Narrative Guidance of Interactivity.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Narrative...pdf",
           "displayName": "Narrative..",
-          "path": "src/data/alternative/материалы/15_Narrative...pdf"
+          "path": "src/data/alternative/материалы/15_Narrative...pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf",
           "displayName": "Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt",
-          "path": "src/data/alternative/материалы/15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf"
+          "path": "src/data/alternative/материалы/15_Playing or Being Played Choice and Agency in Videogames Reflecting on The Witcher III Wild Hunt.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Playing the Text, Performing the Future.pdf",
           "displayName": "Playing the Text, Performing the Future",
-          "path": "src/data/alternative/материалы/15_Playing the Text, Performing the Future.pdf"
+          "path": "src/data/alternative/материалы/15_Playing the Text, Performing the Future.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Remodelling narrative spaces.pdf",
           "displayName": "Remodelling narrative spaces",
-          "path": "src/data/alternative/материалы/15_Remodelling narrative spaces.pdf"
+          "path": "src/data/alternative/материалы/15_Remodelling narrative spaces.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_Study on the Interactive Storytelling Structure and Flow of Games.pdf",
           "displayName": "Study on the Interactive Storytelling Structure and Flow of Games",
-          "path": "src/data/alternative/материалы/15_Study on the Interactive Storytelling Structure and Flow of Games.pdf"
+          "path": "src/data/alternative/материалы/15_Study on the Interactive Storytelling Structure and Flow of Games.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_The Influence of Interactivity on Immersion.pdf",
           "displayName": "The Influence of Interactivity on Immersion",
-          "path": "src/data/alternative/материалы/15_The Influence of Interactivity on Immersion.pdf"
+          "path": "src/data/alternative/материалы/15_The Influence of Interactivity on Immersion.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_The Semiotics of Time Structure in Ludic Space.pdf",
           "displayName": "The Semiotics of Time Structure in Ludic Space",
-          "path": "src/data/alternative/материалы/15_The Semiotics of Time Structure in Ludic Space.pdf"
+          "path": "src/data/alternative/материалы/15_The Semiotics of Time Structure in Ludic Space.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_The future of interactive literature.pdf",
           "displayName": "The future of interactive literature",
-          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf"
+          "path": "src/data/alternative/материалы/15_The future of interactive literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_gamevironments_article_Deshbandhu.pdf",
           "displayName": "gamevironments_article_Deshbandhu",
-          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf"
+          "path": "src/data/alternative/материалы/15_gamevironments_article_Deshbandhu.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -407,52 +472,62 @@
         {
           "fileName": "16_Bourdieu_the_media_and_cultural_producti.pdf",
           "displayName": "Bourdieu_the_media_and_cultural_producti",
-          "path": "src/data/alternative/материалы/16_Bourdieu_the_media_and_cultural_producti.pdf"
+          "path": "src/data/alternative/материалы/16_Bourdieu_the_media_and_cultural_producti.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_Digital age.pdf",
           "displayName": "Digital age",
-          "path": "src/data/alternative/материалы/16_Digital age.pdf"
+          "path": "src/data/alternative/материалы/16_Digital age.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_How_Useful_is_Bourdieus_Notion_of_Cultur.pdf",
           "displayName": "How_Useful_is_Bourdieus_Notion_of_Cultur",
-          "path": "src/data/alternative/материалы/16_How_Useful_is_Bourdieus_Notion_of_Cultur.pdf"
+          "path": "src/data/alternative/материалы/16_How_Useful_is_Bourdieus_Notion_of_Cultur.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_Markets_as_Networks_ed_by_Tanya_Chavdaro.pdf",
           "displayName": "Markets_as_Networks_ed_by_Tanya_Chavdaro",
-          "path": "src/data/alternative/материалы/16_Markets_as_Networks_ed_by_Tanya_Chavdaro.pdf"
+          "path": "src/data/alternative/материалы/16_Markets_as_Networks_ed_by_Tanya_Chavdaro.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_Rethinking_the_Center_Periphery_Model_Di.pdf",
           "displayName": "Rethinking_the_Center_Periphery_Model_Di",
-          "path": "src/data/alternative/материалы/16_Rethinking_the_Center_Periphery_Model_Di.pdf"
+          "path": "src/data/alternative/материалы/16_Rethinking_the_Center_Periphery_Model_Di.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_Winning_the_culture_game_Priz.pdf",
           "displayName": "Winning_the_culture_game_Priz",
-          "path": "src/data/alternative/материалы/16_Winning_the_culture_game_Priz.pdf"
+          "path": "src/data/alternative/материалы/16_Winning_the_culture_game_Priz.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_WrightCulturalTrends.pdf",
           "displayName": "WrightCulturalTrends",
-          "path": "src/data/alternative/материалы/16_WrightCulturalTrends.pdf"
+          "path": "src/data/alternative/материалы/16_WrightCulturalTrends.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_literaturnye-premii-v-kontekste-sovremennoy-massovoy-kultury-realizatsiya-priema-apellyatsii-k-avtoritetu.pdf",
           "displayName": "literaturnye-premii-v-kontekste-sovremennoy-massovoy-kultury-realizatsiya-priema-apellyatsii-k-avtoritetu",
-          "path": "src/data/alternative/материалы/16_literaturnye-premii-v-kontekste-sovremennoy-massovoy-kultury-realizatsiya-priema-apellyatsii-k-avtoritetu.pdf"
+          "path": "src/data/alternative/материалы/16_literaturnye-premii-v-kontekste-sovremennoy-massovoy-kultury-realizatsiya-priema-apellyatsii-k-avtoritetu.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_rossiyskie-literaturnye-premii-izdatelskiy-rakurs.pdf",
           "displayName": "rossiyskie-literaturnye-premii-izdatelskiy-rakurs",
-          "path": "src/data/alternative/материалы/16_rossiyskie-literaturnye-premii-izdatelskiy-rakurs.pdf"
+          "path": "src/data/alternative/материалы/16_rossiyskie-literaturnye-premii-izdatelskiy-rakurs.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_Независимое книгоиздательство сегодня.pdf",
           "displayName": "Независимое книгоиздательство сегодня",
-          "path": "src/data/alternative/материалы/16_Независимое книгоиздательство сегодня.pdf"
+          "path": "src/data/alternative/материалы/16_Независимое книгоиздательство сегодня.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -467,52 +542,62 @@
         {
           "fileName": "17_Artificial Intelligence in Education.pdf",
           "displayName": "Artificial Intelligence in Education",
-          "path": "src/data/alternative/материалы/17_Artificial Intelligence in Education.pdf"
+          "path": "src/data/alternative/материалы/17_Artificial Intelligence in Education.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Artificial and Post-Artificial Texts.pdf",
           "displayName": "Artificial and Post-Artificial Texts",
-          "path": "src/data/alternative/материалы/17_Artificial and Post-Artificial Texts.pdf"
+          "path": "src/data/alternative/материалы/17_Artificial and Post-Artificial Texts.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Exploring the boundaries of.pdf",
           "displayName": "Exploring the boundaries of",
-          "path": "src/data/alternative/материалы/17_Exploring the boundaries of.pdf"
+          "path": "src/data/alternative/материалы/17_Exploring the boundaries of.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_From Fiction to Reality.pdf",
           "displayName": "From Fiction to Reality",
-          "path": "src/data/alternative/материалы/17_From Fiction to Reality.pdf"
+          "path": "src/data/alternative/материалы/17_From Fiction to Reality.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Innovative Integration of Poetry and Visual Arts.pdf",
           "displayName": "Innovative Integration of Poetry and Visual Arts",
-          "path": "src/data/alternative/материалы/17_Innovative Integration of Poetry and Visual Arts.pdf"
+          "path": "src/data/alternative/материалы/17_Innovative Integration of Poetry and Visual Arts.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Literary Criticism in the Postdigital Age.pdf",
           "displayName": "Literary Criticism in the Postdigital Age",
-          "path": "src/data/alternative/материалы/17_Literary Criticism in the Postdigital Age.pdf"
+          "path": "src/data/alternative/материалы/17_Literary Criticism in the Postdigital Age.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Literature, Narrativity and Composition.pdf",
           "displayName": "Literature, Narrativity and Composition",
-          "path": "src/data/alternative/материалы/17_Literature, Narrativity and Composition.pdf"
+          "path": "src/data/alternative/материалы/17_Literature, Narrativity and Composition.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Phantasmagorical simulation theory.pdf",
           "displayName": "Phantasmagorical simulation theory",
-          "path": "src/data/alternative/материалы/17_Phantasmagorical simulation theory.pdf"
+          "path": "src/data/alternative/материалы/17_Phantasmagorical simulation theory.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_What is novel about the Metaverse.pdf",
           "displayName": "What is novel about the Metaverse",
-          "path": "src/data/alternative/материалы/17_What is novel about the Metaverse.pdf"
+          "path": "src/data/alternative/материалы/17_What is novel about the Metaverse.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_ayiter_further-dimensions-typography.pdf",
           "displayName": "ayiter_further-dimensions-typography",
-          "path": "src/data/alternative/материалы/17_ayiter_further-dimensions-typography.pdf"
+          "path": "src/data/alternative/материалы/17_ayiter_further-dimensions-typography.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -527,17 +612,20 @@
         {
           "fileName": "2_Canon Anti-Canon and Judicial Dissent.pdf",
           "displayName": "Canon Anti-Canon and Judicial Dissent",
-          "path": "src/data/alternative/материалы/2_Canon Anti-Canon and Judicial Dissent.pdf"
+          "path": "src/data/alternative/материалы/2_Canon Anti-Canon and Judicial Dissent.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "2_Canon_Formation_Revisited_Canon_and_Cult.pdf",
           "displayName": "Canon_Formation_Revisited_Canon_and_Cult",
-          "path": "src/data/alternative/материалы/2_Canon_Formation_Revisited_Canon_and_Cult.pdf"
+          "path": "src/data/alternative/материалы/2_Canon_Formation_Revisited_Canon_and_Cult.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "2_Романенко_Трансформация канона.pdf",
           "displayName": "Романенко_Трансформация канона",
-          "path": "src/data/alternative/материалы/2_Романенко_Трансформация канона.pdf"
+          "path": "src/data/alternative/материалы/2_Романенко_Трансформация канона.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -552,22 +640,26 @@
         {
           "fileName": "3_Авангард в контексте революции.pdf",
           "displayName": "Авангард в контексте революции",
-          "path": "src/data/alternative/материалы/3_Авангард в контексте революции.pdf"
+          "path": "src/data/alternative/материалы/3_Авангард в контексте революции.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "3_Авангард в художественной картине мира.pdf",
           "displayName": "Авангард в художественной картине мира",
-          "path": "src/data/alternative/материалы/3_Авангард в художественной картине мира.pdf"
+          "path": "src/data/alternative/материалы/3_Авангард в художественной картине мира.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "3_Авангард и проблема традиции.pdf",
           "displayName": "Авангард и проблема традиции",
-          "path": "src/data/alternative/материалы/3_Авангард и проблема традиции.pdf"
+          "path": "src/data/alternative/материалы/3_Авангард и проблема традиции.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "3_Русский авангард.pdf",
           "displayName": "Русский авангард",
-          "path": "src/data/alternative/материалы/3_Русский авангард.pdf"
+          "path": "src/data/alternative/материалы/3_Русский авангард.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -582,27 +674,32 @@
         {
           "fileName": "4_Пенская_Самиздат.pdf",
           "displayName": "Пенская_Самиздат",
-          "path": "src/data/alternative/материалы/4_Пенская_Самиздат.pdf"
+          "path": "src/data/alternative/материалы/4_Пенская_Самиздат.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "4_Поженин_Андеграунд.pdf",
           "displayName": "Поженин_Андеграунд",
-          "path": "src/data/alternative/материалы/4_Поженин_Андеграунд.pdf"
+          "path": "src/data/alternative/материалы/4_Поженин_Андеграунд.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "4_Поженин_Самиздат Ленинграда.pdf",
           "displayName": "Поженин_Самиздат Ленинграда",
-          "path": "src/data/alternative/материалы/4_Поженин_Самиздат Ленинграда.pdf"
+          "path": "src/data/alternative/материалы/4_Поженин_Самиздат Ленинграда.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "4_Полторацкий_Новосибирский самиздат.pdf",
           "displayName": "Полторацкий_Новосибирский самиздат",
-          "path": "src/data/alternative/материалы/4_Полторацкий_Новосибирский самиздат.pdf"
+          "path": "src/data/alternative/материалы/4_Полторацкий_Новосибирский самиздат.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "4_Федулов_Самиздат_1970-1980.pdf",
           "displayName": "Федулов_Самиздат_1970-1980",
-          "path": "src/data/alternative/материалы/4_Федулов_Самиздат_1970-1980.pdf"
+          "path": "src/data/alternative/материалы/4_Федулов_Самиздат_1970-1980.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -617,32 +714,38 @@
         {
           "fileName": "5_Comparative Stylistic Fanfiction Analysis.pdf",
           "displayName": "Comparative Stylistic Fanfiction Analysis",
-          "path": "src/data/alternative/материалы/5_Comparative Stylistic Fanfiction Analysis.pdf"
+          "path": "src/data/alternative/материалы/5_Comparative Stylistic Fanfiction Analysis.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Fandom, fan fiction and the creative mind.pdf",
           "displayName": "Fandom, fan fiction and the creative mind",
-          "path": "src/data/alternative/материалы/5_Fandom, fan fiction and the creative mind.pdf"
+          "path": "src/data/alternative/материалы/5_Fandom, fan fiction and the creative mind.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Денисова_Фанфикшн.pdf",
           "displayName": "Денисова_Фанфикшн",
-          "path": "src/data/alternative/материалы/5_Денисова_Фанфикшн.pdf"
+          "path": "src/data/alternative/материалы/5_Денисова_Фанфикшн.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Московкина_Фанфикшн.pdf",
           "displayName": "Московкина_Фанфикшн",
-          "path": "src/data/alternative/материалы/5_Московкина_Фанфикшн.pdf"
+          "path": "src/data/alternative/материалы/5_Московкина_Фанфикшн.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Самутина_Великие читательницы.pdf",
           "displayName": "Самутина_Великие читательницы",
-          "path": "src/data/alternative/материалы/5_Самутина_Великие читательницы.pdf"
+          "path": "src/data/alternative/материалы/5_Самутина_Великие читательницы.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Шатрова_жанры фанфиков.pdf",
           "displayName": "Шатрова_жанры фанфиков",
-          "path": "src/data/alternative/материалы/5_Шатрова_жанры фанфиков.pdf"
+          "path": "src/data/alternative/материалы/5_Шатрова_жанры фанфиков.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -657,37 +760,44 @@
         {
           "fileName": "6_Evolutionary Horror Study.pdf",
           "displayName": "Evolutionary Horror Study",
-          "path": "src/data/alternative/материалы/6_Evolutionary Horror Study.pdf"
+          "path": "src/data/alternative/материалы/6_Evolutionary Horror Study.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_Supernatural Horror in Literature.pdf",
           "displayName": "Supernatural Horror in Literature",
-          "path": "src/data/alternative/материалы/6_Supernatural Horror in Literature.pdf"
+          "path": "src/data/alternative/материалы/6_Supernatural Horror in Literature.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_THE ROLE OF HORROR IN MODERN.pdf",
           "displayName": "THE ROLE OF HORROR IN MODERN",
-          "path": "src/data/alternative/материалы/6_THE ROLE OF HORROR IN MODERN.pdf"
+          "path": "src/data/alternative/материалы/6_THE ROLE OF HORROR IN MODERN.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_The True Crime Genre.pdf",
           "displayName": "The True Crime Genre",
-          "path": "src/data/alternative/материалы/6_The True Crime Genre.pdf"
+          "path": "src/data/alternative/материалы/6_The True Crime Genre.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_Trash or Treasure.pdf",
           "displayName": "Trash or Treasure",
-          "path": "src/data/alternative/материалы/6_Trash or Treasure.pdf"
+          "path": "src/data/alternative/материалы/6_Trash or Treasure.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_Детектив в критике и науке.pdf",
           "displayName": "Детектив в критике и науке",
-          "path": "src/data/alternative/материалы/6_Детектив в критике и науке.pdf"
+          "path": "src/data/alternative/материалы/6_Детектив в критике и науке.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_Рецензия на книгу Лахманн_дискурсы фантастического.pdf",
           "displayName": "Рецензия на книгу Лахманн_дискурсы фантастического",
-          "path": "src/data/alternative/материалы/6_Рецензия на книгу Лахманн_дискурсы фантастического.pdf"
+          "path": "src/data/alternative/материалы/6_Рецензия на книгу Лахманн_дискурсы фантастического.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -702,22 +812,26 @@
         {
           "fileName": "7_Fenici_Gamebooks and branching narratives.pdf",
           "displayName": "Fenici_Gamebooks and branching narratives",
-          "path": "src/data/alternative/материалы/7_Fenici_Gamebooks and branching narratives.pdf"
+          "path": "src/data/alternative/материалы/7_Fenici_Gamebooks and branching narratives.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "7_Зейналова_Гипертекстовая литература.pdf",
           "displayName": "Зейналова_Гипертекстовая литература",
-          "path": "src/data/alternative/материалы/7_Зейналова_Гипертекстовая литература.pdf"
+          "path": "src/data/alternative/материалы/7_Зейналова_Гипертекстовая литература.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "7_Исакова_роман-игра.pdf",
           "displayName": "Исакова_роман-игра",
-          "path": "src/data/alternative/материалы/7_Исакова_роман-игра.pdf"
+          "path": "src/data/alternative/материалы/7_Исакова_роман-игра.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "7_Шулятьева_К теории разветвленного повествования.pdf",
           "displayName": "Шулятьева_К теории разветвленного повествования",
-          "path": "src/data/alternative/материалы/7_Шулятьева_К теории разветвленного повествования.pdf"
+          "path": "src/data/alternative/материалы/7_Шулятьева_К теории разветвленного повествования.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -732,22 +846,26 @@
         {
           "fileName": "8_Digital Storytelling in Research_ A Systematic Review.pdf",
           "displayName": "Digital Storytelling in Research_ A Systematic Review",
-          "path": "src/data/alternative/материалы/8_Digital Storytelling in Research_ A Systematic Review.pdf"
+          "path": "src/data/alternative/материалы/8_Digital Storytelling in Research_ A Systematic Review.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "8_russkaya-literatura-v-tsifrovuyu-epohu.pdf",
           "displayName": "russkaya-literatura-v-tsifrovuyu-epohu",
-          "path": "src/data/alternative/материалы/8_russkaya-literatura-v-tsifrovuyu-epohu.pdf"
+          "path": "src/data/alternative/материалы/8_russkaya-literatura-v-tsifrovuyu-epohu.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "8_tsifrovizatsiya-v-obla_sti-literatury.pdf",
           "displayName": "tsifrovizatsiya-v-obla_sti-literatury",
-          "path": "src/data/alternative/материалы/8_tsifrovizatsiya-v-obla_sti-literatury.pdf"
+          "path": "src/data/alternative/материалы/8_tsifrovizatsiya-v-obla_sti-literatury.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "8_yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty.pdf",
           "displayName": "yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty",
-          "path": "src/data/alternative/материалы/8_yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty.pdf"
+          "path": "src/data/alternative/материалы/8_yazyk-opisaniya-tsifrovoy-poezii-semioticheskiy-i-literaturovedcheskiy-aspekty.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -762,46 +880,53 @@
         {
           "fileName": "9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf",
           "displayName": "Aztlan_ Martinez_With_ Imperious Eye_Spr98",
-          "path": "src/data/alternative/материалы/9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf"
+          "path": "src/data/alternative/материалы/9_Aztlan_ Martinez_With_ Imperious Eye_Spr98.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_aleksey-kozlov-britanskiy-bit.pdf",
           "displayName": "aleksey-kozlov-britanskiy-bit",
-          "path": "src/data/alternative/материалы/9_aleksey-kozlov-britanskiy-bit.pdf"
+          "path": "src/data/alternative/материалы/9_aleksey-kozlov-britanskiy-bit.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya.pdf",
           "displayName": "rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya",
-          "path": "src/data/alternative/материалы/9_rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya.pdf"
+          "path": "src/data/alternative/материалы/9_rok-poeziya-v-russkoy-kulture-vozniknovenie-bytovanie-evolyutsiya.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov.pdf",
           "displayName": "rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov",
-          "path": "src/data/alternative/материалы/9_rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov.pdf"
+          "path": "src/data/alternative/материалы/9_rol-hippi-v-stanovlenii-nezavisimogo-patsifistskogo-dvizheniya-v-sssr-v-1970-h-pervoy-polovine-1980-h-godov.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka.pdf",
           "displayName": "subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka",
-          "path": "src/data/alternative/материалы/9_subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka.pdf"
+          "path": "src/data/alternative/материалы/9_subkultura-bitnikov-i-ih-retseptsiya-dzen-buddizma-v-ssha-vtoraya-polovina-50-h-seredina-60-h-godov-hh-veka.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_Керуак и культура битников.pdf",
           "displayName": "Керуак и культура битников",
-          "path": "src/data/alternative/материалы/9_Керуак и культура битников.pdf"
+          "path": "src/data/alternative/материалы/9_Керуак и культура битников.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_Мотив пути в поэме Гинзберга Вопль.pdf",
           "displayName": "Мотив пути в поэме Гинзберга Вопль",
-          "path": "src/data/alternative/материалы/9_Мотив пути в поэме Гинзберга Вопль.pdf"
+          "path": "src/data/alternative/материалы/9_Мотив пути в поэме Гинзберга Вопль.pdf",
+          "kind": "pdf"
         }
       ]
     },
     {
       "courseSlug": "imagology",
       "number": "1",
-      "title": "Введение в имагологию: история дисциплины, основные понятия (auto-/hetero-image, meta-image).",
+      "title": "Рождение имагологии: Гийар, Дизеринк, образ и мираж.",
       "id": "imagology-1",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/1.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/1.pdf",
       "materials": []
     },
@@ -880,9 +1005,9 @@
     {
       "courseSlug": "imagology",
       "number": "2",
-      "title": "Классическая имагология: школа Дизеринка, работы Беллера и Лирссена.",
+      "title": "Метод имагологии и транскультурный поворот: Лерссен, Чжоу Нин.",
       "id": "imagology-2",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/2.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/2.pdf",
       "materials": []
     },
@@ -960,27 +1085,32 @@
         {
           "fileName": "1_Hack-DoctrineLiteraryForms-1916.pdf",
           "displayName": "Hack-DoctrineLiteraryForms-1916",
-          "path": "src/data/modern-literature/материалы/1_Hack-DoctrineLiteraryForms-1916.pdf"
+          "path": "src/data/modern-literature/материалы/1_Hack-DoctrineLiteraryForms-1916.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_Jane_Meet_Charles_Literature_Evolution_a.pdf",
           "displayName": "Jane_Meet_Charles_Literature_Evolution_a",
-          "path": "src/data/modern-literature/материалы/1_Jane_Meet_Charles_Literature_Evolution_a.pdf"
+          "path": "src/data/modern-literature/материалы/1_Jane_Meet_Charles_Literature_Evolution_a.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_kuskin.pdf",
           "displayName": "kuskin",
-          "path": "src/data/modern-literature/материалы/1_kuskin.pdf"
+          "path": "src/data/modern-literature/материалы/1_kuskin.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_literary_history_as_a_challenge_to_liter.pdf",
           "displayName": "literary_history_as_a_challenge_to_liter",
-          "path": "src/data/modern-literature/материалы/1_literary_history_as_a_challenge_to_liter.pdf"
+          "path": "src/data/modern-literature/материалы/1_literary_history_as_a_challenge_to_liter.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "1_sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_.pdf",
           "displayName": "sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_",
-          "path": "src/data/modern-literature/материалы/1_sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_.pdf"
+          "path": "src/data/modern-literature/материалы/1_sravnitel_no_o_sravnitel_nom_literaturovedenii_transnatsiona_1_.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -995,17 +1125,20 @@
         {
           "fileName": "10_blog-literatura-kak-fenomen-opyty-evgeniya-grishkovtsa.pdf",
           "displayName": "blog-literatura-kak-fenomen-opyty-evgeniya-grishkovtsa",
-          "path": "src/data/modern-literature/материалы/10_blog-literatura-kak-fenomen-opyty-evgeniya-grishkovtsa.pdf"
+          "path": "src/data/modern-literature/материалы/10_blog-literatura-kak-fenomen-opyty-evgeniya-grishkovtsa.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "10_russkaya-literatura-v-tsifrovuyu-epohu.pdf",
           "displayName": "russkaya-literatura-v-tsifrovuyu-epohu",
-          "path": "src/data/modern-literature/материалы/10_russkaya-literatura-v-tsifrovuyu-epohu.pdf"
+          "path": "src/data/modern-literature/материалы/10_russkaya-literatura-v-tsifrovuyu-epohu.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "10_seteratura-kak-hudozhestvennoe-yavlenie-mezhdu-postmodernizmom-i-massovoy-kulturoy.pdf",
           "displayName": "seteratura-kak-hudozhestvennoe-yavlenie-mezhdu-postmodernizmom-i-massovoy-kulturoy",
-          "path": "src/data/modern-literature/материалы/10_seteratura-kak-hudozhestvennoe-yavlenie-mezhdu-postmodernizmom-i-massovoy-kulturoy.pdf"
+          "path": "src/data/modern-literature/материалы/10_seteratura-kak-hudozhestvennoe-yavlenie-mezhdu-postmodernizmom-i-massovoy-kulturoy.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1020,17 +1153,20 @@
         {
           "fileName": "11_intermedialnost-v-literature-problemy-metodologii.pdf",
           "displayName": "intermedialnost-v-literature-problemy-metodologii",
-          "path": "src/data/modern-literature/материалы/11_intermedialnost-v-literature-problemy-metodologii.pdf"
+          "path": "src/data/modern-literature/материалы/11_intermedialnost-v-literature-problemy-metodologii.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_kniga-stihov-v-internet-prostranstve-intermedialnyy-aspekt.pdf",
           "displayName": "kniga-stihov-v-internet-prostranstve-intermedialnyy-aspekt",
-          "path": "src/data/modern-literature/материалы/11_kniga-stihov-v-internet-prostranstve-intermedialnyy-aspekt.pdf"
+          "path": "src/data/modern-literature/материалы/11_kniga-stihov-v-internet-prostranstve-intermedialnyy-aspekt.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "11_vizualnaya-poeziya-intermedialnogo-istochnika.pdf",
           "displayName": "vizualnaya-poeziya-intermedialnogo-istochnika",
-          "path": "src/data/modern-literature/материалы/11_vizualnaya-poeziya-intermedialnogo-istochnika.pdf"
+          "path": "src/data/modern-literature/материалы/11_vizualnaya-poeziya-intermedialnogo-istochnika.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1045,17 +1181,20 @@
         {
           "fileName": "12_k-probleme-reprezentatsii-zhenskogo-subekta-i-gendernoy-identichnosti-na-materiale-yakutskoy-i-severnoy-literatury.pdf",
           "displayName": "k-probleme-reprezentatsii-zhenskogo-subekta-i-gendernoy-identichnosti-na-materiale-yakutskoy-i-severnoy-literatury",
-          "path": "src/data/modern-literature/материалы/12_k-probleme-reprezentatsii-zhenskogo-subekta-i-gendernoy-identichnosti-na-materiale-yakutskoy-i-severnoy-literatury.pdf"
+          "path": "src/data/modern-literature/материалы/12_k-probleme-reprezentatsii-zhenskogo-subekta-i-gendernoy-identichnosti-na-materiale-yakutskoy-i-severnoy-literatury.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_ot-femina-incognita-k-gendernoy-identichnosti-obraz-goryanki-v-proizvedeniyah-russkih-pisateley-hih-v.pdf",
           "displayName": "ot-femina-incognita-k-gendernoy-identichnosti-obraz-goryanki-v-proizvedeniyah-russkih-pisateley-hih-v",
-          "path": "src/data/modern-literature/материалы/12_ot-femina-incognita-k-gendernoy-identichnosti-obraz-goryanki-v-proizvedeniyah-russkih-pisateley-hih-v.pdf"
+          "path": "src/data/modern-literature/материалы/12_ot-femina-incognita-k-gendernoy-identichnosti-obraz-goryanki-v-proizvedeniyah-russkih-pisateley-hih-v.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "12_rasa-gender-identichnost-v-sovremennom-afroamerikanskom-romane.pdf",
           "displayName": "rasa-gender-identichnost-v-sovremennom-afroamerikanskom-romane",
-          "path": "src/data/modern-literature/материалы/12_rasa-gender-identichnost-v-sovremennom-afroamerikanskom-romane.pdf"
+          "path": "src/data/modern-literature/материалы/12_rasa-gender-identichnost-v-sovremennom-afroamerikanskom-romane.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1070,12 +1209,14 @@
         {
           "fileName": "13_Куделин_мировая литература.pdf",
           "displayName": "Куделин_мировая литература",
-          "path": "src/data/modern-literature/материалы/13_Куделин_мировая литература.pdf"
+          "path": "src/data/modern-literature/материалы/13_Куделин_мировая литература.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "13_диаспоральные идентичности.pdf",
           "displayName": "диаспоральные идентичности",
-          "path": "src/data/modern-literature/материалы/13_диаспоральные идентичности.pdf"
+          "path": "src/data/modern-literature/материалы/13_диаспоральные идентичности.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1090,12 +1231,14 @@
         {
           "fileName": "14_Nzl_2011_2(2)__24.pdf",
           "displayName": "Nzl_2011_2(2)__24",
-          "path": "src/data/modern-literature/материалы/14_Nzl_2011_2(2)__24.pdf"
+          "path": "src/data/modern-literature/материалы/14_Nzl_2011_2(2)__24.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "14_chitatel-kak-kategoriya-literaturovedeniya.pdf",
           "displayName": "chitatel-kak-kategoriya-literaturovedeniya",
-          "path": "src/data/modern-literature/материалы/14_chitatel-kak-kategoriya-literaturovedeniya.pdf"
+          "path": "src/data/modern-literature/материалы/14_chitatel-kak-kategoriya-literaturovedeniya.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1110,12 +1253,14 @@
         {
           "fileName": "15_elibrary_44951435_51254708.pdf",
           "displayName": "elibrary_44951435_51254708",
-          "path": "src/data/modern-literature/материалы/15_elibrary_44951435_51254708.pdf"
+          "path": "src/data/modern-literature/материалы/15_elibrary_44951435_51254708.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "15_kategoriya-avtora-v-metaproze.pdf",
           "displayName": "kategoriya-avtora-v-metaproze",
-          "path": "src/data/modern-literature/материалы/15_kategoriya-avtora-v-metaproze.pdf"
+          "path": "src/data/modern-literature/материалы/15_kategoriya-avtora-v-metaproze.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1130,22 +1275,26 @@
         {
           "fileName": "16_literaturnaya-premiya-kak-sotsiokulturnyy-fenomen-noveyshey-russkoy-literatury-nekotorye-nablyudeniya.pdf",
           "displayName": "literaturnaya-premiya-kak-sotsiokulturnyy-fenomen-noveyshey-russkoy-literatury-nekotorye-nablyudeniya",
-          "path": "src/data/modern-literature/материалы/16_literaturnaya-premiya-kak-sotsiokulturnyy-fenomen-noveyshey-russkoy-literatury-nekotorye-nablyudeniya.pdf"
+          "path": "src/data/modern-literature/материалы/16_literaturnaya-premiya-kak-sotsiokulturnyy-fenomen-noveyshey-russkoy-literatury-nekotorye-nablyudeniya.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_rossiyskie-literaturnye-premii-izdatelskiy-rakurs.pdf",
           "displayName": "rossiyskie-literaturnye-premii-izdatelskiy-rakurs",
-          "path": "src/data/modern-literature/материалы/16_rossiyskie-literaturnye-premii-izdatelskiy-rakurs.pdf"
+          "path": "src/data/modern-literature/материалы/16_rossiyskie-literaturnye-premii-izdatelskiy-rakurs.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_tolstye-literaturnye-zhurnaly-o-sovremennyh-literaturnyh-premiyah.pdf",
           "displayName": "tolstye-literaturnye-zhurnaly-o-sovremennyh-literaturnyh-premiyah",
-          "path": "src/data/modern-literature/материалы/16_tolstye-literaturnye-zhurnaly-o-sovremennyh-literaturnyh-premiyah.pdf"
+          "path": "src/data/modern-literature/материалы/16_tolstye-literaturnye-zhurnaly-o-sovremennyh-literaturnyh-premiyah.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "16_zhenschiny-laureaty-zapadnyh-literaturnyh-premiy-v-xxi-veke.pdf",
           "displayName": "zhenschiny-laureaty-zapadnyh-literaturnyh-premiy-v-xxi-veke",
-          "path": "src/data/modern-literature/материалы/16_zhenschiny-laureaty-zapadnyh-literaturnyh-premiy-v-xxi-veke.pdf"
+          "path": "src/data/modern-literature/материалы/16_zhenschiny-laureaty-zapadnyh-literaturnyh-premiy-v-xxi-veke.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1160,12 +1309,14 @@
         {
           "fileName": "17_literatura-epohi-web-2-0.pdf",
           "displayName": "literatura-epohi-web-2-0",
-          "path": "src/data/modern-literature/материалы/17_literatura-epohi-web-2-0.pdf"
+          "path": "src/data/modern-literature/материалы/17_literatura-epohi-web-2-0.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "17_Русская теория и интеллектуальная история.pdf",
           "displayName": "Русская теория и интеллектуальная история",
-          "path": "src/data/modern-literature/материалы/17_Русская теория и интеллектуальная история.pdf"
+          "path": "src/data/modern-literature/материалы/17_Русская теория и интеллектуальная история.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1180,22 +1331,26 @@
         {
           "fileName": "2_Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011.pdf",
           "displayName": "Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011",
-          "path": "src/data/modern-literature/материалы/2_Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011.pdf"
+          "path": "src/data/modern-literature/материалы/2_Aleksandr_Veselovskij._Aktualnye_aspekty_naslediya._Issledovaniya_i_materialy_2011.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "2_Istorich_poetika.pdf",
           "displayName": "Istorich_poetika",
-          "path": "src/data/modern-literature/материалы/2_Istorich_poetika.pdf"
+          "path": "src/data/modern-literature/материалы/2_Istorich_poetika.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "2_Veselovskij_A._N._Istoricheskaya_poetika._1989.pdf",
           "displayName": "Veselovskij_A._N._Istoricheskaya_poetika._1989",
-          "path": "src/data/modern-literature/материалы/2_Veselovskij_A._N._Istoricheskaya_poetika._1989.pdf"
+          "path": "src/data/modern-literature/материалы/2_Veselovskij_A._N._Istoricheskaya_poetika._1989.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "2_istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta.pdf",
           "displayName": "istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta",
-          "path": "src/data/modern-literature/материалы/2_istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta.pdf"
+          "path": "src/data/modern-literature/материалы/2_istoricheskaya-poetika-i-poetika-istorii-ot-aleksandra-veselovskogo-do-heydena-uayta.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1210,22 +1365,26 @@
         {
           "fileName": "3_Literaturnaya_entciklopediya_terminov_i_ponyatij._2001.pdf",
           "displayName": "Literaturnaya_entciklopediya_terminov_i_ponyatij._2001",
-          "path": "src/data/modern-literature/материалы/3_Literaturnaya_entciklopediya_terminov_i_ponyatij._2001.pdf"
+          "path": "src/data/modern-literature/материалы/3_Literaturnaya_entciklopediya_terminov_i_ponyatij._2001.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "3_Teoriya_literatury._T._4._2001_ocr.pdf",
           "displayName": "Teoriya_literatury._T._4._2001_ocr",
-          "path": "src/data/modern-literature/материалы/3_Teoriya_literatury._T._4._2001_ocr.pdf"
+          "path": "src/data/modern-literature/материалы/3_Teoriya_literatury._T._4._2001_ocr.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "3_kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed.pdf",
           "displayName": "kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed",
-          "path": "src/data/modern-literature/материалы/3_kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed.pdf"
+          "path": "src/data/modern-literature/материалы/3_kul_t_kak_fenomen_literaturnogo_protsessa_2011.compressed.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "3_razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo.pdf",
           "displayName": "razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo",
-          "path": "src/data/modern-literature/материалы/3_razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo.pdf"
+          "path": "src/data/modern-literature/материалы/3_razvitie-russkogo-sravnitelnogo-literaturovedeniya-idei-a-n-veselovskogo-i-v-m-zhirmunskogo.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1240,17 +1399,20 @@
         {
           "fileName": "4_Meletinskij_E.M._Poetika_mifa._1976.pdf",
           "displayName": "Meletinskij_E.M._Poetika_mifa._1976",
-          "path": "src/data/modern-literature/материалы/4_Meletinskij_E.M._Poetika_mifa._1976.pdf"
+          "path": "src/data/modern-literature/материалы/4_Meletinskij_E.M._Poetika_mifa._1976.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "4_Rejtblat_A._Ot_Bovy_k_Balmontu._2009.pdf",
           "displayName": "Rejtblat_A._Ot_Bovy_k_Balmontu._2009",
-          "path": "src/data/modern-literature/материалы/4_Rejtblat_A._Ot_Bovy_k_Balmontu._2009.pdf"
+          "path": "src/data/modern-literature/материалы/4_Rejtblat_A._Ot_Bovy_k_Balmontu._2009.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "4_Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi.pdf",
           "displayName": "Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi",
-          "path": "src/data/modern-literature/материалы/4_Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi.pdf"
+          "path": "src/data/modern-literature/материалы/4_Reytblat_A_I_Kak_Pushkin_vyshel_v_genii_Istoriko-sotsiologicheskie_ocherki_o_knizhnoy_kulture_Pushkinskoy_epokhi.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1265,22 +1427,26 @@
         {
           "fileName": "5_Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka.pdf",
           "displayName": "Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka",
-          "path": "src/data/modern-literature/материалы/5_Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka.pdf"
+          "path": "src/data/modern-literature/материалы/5_Burdye_P_-_O_proizvodstve_i_vosproizvodstve_legitimnogo_yazyka.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Burdye_P_-_Pole_literatury.pdf",
           "displayName": "Burdye_P_-_Pole_literatury",
-          "path": "src/data/modern-literature/материалы/5_Burdye_P_-_Pole_literatury.pdf"
+          "path": "src/data/modern-literature/материалы/5_Burdye_P_-_Pole_literatury.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast.pdf",
           "displayName": "Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast",
-          "path": "src/data/modern-literature/материалы/5_Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast.pdf"
+          "path": "src/data/modern-literature/материалы/5_Burdyo_P_-_Sotsialnoe_prostranstvo_i_simvolicheskaya_vlast.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "5_Struktura_gabitus_praktika.pdf",
           "displayName": "Struktura_gabitus_praktika",
-          "path": "src/data/modern-literature/материалы/5_Struktura_gabitus_praktika.pdf"
+          "path": "src/data/modern-literature/материалы/5_Struktura_gabitus_praktika.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1295,27 +1461,32 @@
         {
           "fileName": "6_Eagleton_Terry_Ideology_Fiction_Narrativ.pdf",
           "displayName": "Eagleton_Terry_Ideology_Fiction_Narrativ",
-          "path": "src/data/modern-literature/материалы/6_Eagleton_Terry_Ideology_Fiction_Narrativ.pdf"
+          "path": "src/data/modern-literature/материалы/6_Eagleton_Terry_Ideology_Fiction_Narrativ.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_IDEOLOGY_AND_LITERATURE.pdf",
           "displayName": "IDEOLOGY_AND_LITERATURE",
-          "path": "src/data/modern-literature/материалы/6_IDEOLOGY_AND_LITERATURE.pdf"
+          "path": "src/data/modern-literature/материалы/6_IDEOLOGY_AND_LITERATURE.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_Negritude-Literature and Ideology.pdf",
           "displayName": "Negritude-Literature and Ideology",
-          "path": "src/data/modern-literature/материалы/6_Negritude-Literature and Ideology.pdf"
+          "path": "src/data/modern-literature/материалы/6_Negritude-Literature and Ideology.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_Ramon-Saldivar--Narrative-and-Ideology.pdf",
           "displayName": "Ramon-Saldivar--Narrative-and-Ideology",
-          "path": "src/data/modern-literature/материалы/6_Ramon-Saldivar--Narrative-and-Ideology.pdf"
+          "path": "src/data/modern-literature/материалы/6_Ramon-Saldivar--Narrative-and-Ideology.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "6_The_Concept_of_Ideology_in_Marxist_Liter.pdf",
           "displayName": "The_Concept_of_Ideology_in_Marxist_Liter",
-          "path": "src/data/modern-literature/материалы/6_The_Concept_of_Ideology_in_Marxist_Liter.pdf"
+          "path": "src/data/modern-literature/материалы/6_The_Concept_of_Ideology_in_Marxist_Liter.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1330,17 +1501,20 @@
         {
           "fileName": "7_aleksandr-genis-modernizm-kak-stil-hh-veka.pdf",
           "displayName": "aleksandr-genis-modernizm-kak-stil-hh-veka",
-          "path": "src/data/modern-literature/материалы/7_aleksandr-genis-modernizm-kak-stil-hh-veka.pdf"
+          "path": "src/data/modern-literature/материалы/7_aleksandr-genis-modernizm-kak-stil-hh-veka.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "7_modernizm-i-avangard-rodstvo-i-razlichie.pdf",
           "displayName": "modernizm-i-avangard-rodstvo-i-razlichie",
-          "path": "src/data/modern-literature/материалы/7_modernizm-i-avangard-rodstvo-i-razlichie.pdf"
+          "path": "src/data/modern-literature/материалы/7_modernizm-i-avangard-rodstvo-i-razlichie.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "7_Теория авангарда.pdf",
           "displayName": "Теория авангарда",
-          "path": "src/data/modern-literature/материалы/7_Теория авангарда.pdf"
+          "path": "src/data/modern-literature/материалы/7_Теория авангарда.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1355,12 +1529,14 @@
         {
           "fileName": "8_postmodernizm-istoki-stanovlenie-suschnost.pdf",
           "displayName": "postmodernizm-istoki-stanovlenie-suschnost",
-          "path": "src/data/modern-literature/материалы/8_postmodernizm-istoki-stanovlenie-suschnost.pdf"
+          "path": "src/data/modern-literature/материалы/8_postmodernizm-istoki-stanovlenie-suschnost.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "8_Ревякина А.А._ЧОС_1(17)_2006_231-246.pdf",
           "displayName": "Ревякина А.А._ЧОС_1(17)_2006_231-246",
-          "path": "src/data/modern-literature/материалы/8_Ревякина А.А._ЧОС_1(17)_2006_231-246.pdf"
+          "path": "src/data/modern-literature/материалы/8_Ревякина А.А._ЧОС_1(17)_2006_231-246.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1375,17 +1551,20 @@
         {
           "fileName": "9_mezhdistsiplinarnyy-podhod-k-issledovaniyu-zhanra-avtofikshn-kak-fenomena-sovremennoy-literatury.pdf",
           "displayName": "mezhdistsiplinarnyy-podhod-k-issledovaniyu-zhanra-avtofikshn-kak-fenomena-sovremennoy-literatury",
-          "path": "src/data/modern-literature/материалы/9_mezhdistsiplinarnyy-podhod-k-issledovaniyu-zhanra-avtofikshn-kak-fenomena-sovremennoy-literatury.pdf"
+          "path": "src/data/modern-literature/материалы/9_mezhdistsiplinarnyy-podhod-k-issledovaniyu-zhanra-avtofikshn-kak-fenomena-sovremennoy-literatury.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_zhanr-graficheskogo-romana-k-postanovke-problemy-na-materiale-sovremennyh-frankoi-angloyazychnyh-tekstov.pdf",
           "displayName": "zhanr-graficheskogo-romana-k-postanovke-problemy-na-materiale-sovremennyh-frankoi-angloyazychnyh-tekstov",
-          "path": "src/data/modern-literature/материалы/9_zhanr-graficheskogo-romana-k-postanovke-problemy-na-materiale-sovremennyh-frankoi-angloyazychnyh-tekstov.pdf"
+          "path": "src/data/modern-literature/материалы/9_zhanr-graficheskogo-romana-k-postanovke-problemy-na-materiale-sovremennyh-frankoi-angloyazychnyh-tekstov.pdf",
+          "kind": "pdf"
         },
         {
           "fileName": "9_Жанр в современном литературоведении.pdf",
           "displayName": "Жанр в современном литературоведении",
-          "path": "src/data/modern-literature/материалы/9_Жанр в современном литературоведении.pdf"
+          "path": "src/data/modern-literature/материалы/9_Жанр в современном литературоведении.pdf",
+          "kind": "pdf"
         }
       ]
     },
@@ -1417,6 +1596,115 @@
         },
         {
           "displayName": "Moretti F. Conjectures on World Literature // New Left Review (полный текст)",
+          "url": "https://newleftreview.org/issues/ii1/articles/franco-moretti-conjectures-on-world-literature",
+          "kind": "link"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "10",
+      "title": "Большие языковые модели (LLM) и Prompt Engineering",
+      "id": "digital-humanities-10",
+      "htmlFile": "src/data/digital-humanities/лекции/10.html",
+      "presentationPdf": "src/data/digital-humanities/presentations/10.pdf",
+      "materials": [
+        {
+          "displayName": "Prompt Engineering Guide (русская версия)",
+          "url": "https://www.promptingguide.ai/ru",
+          "kind": "link"
+        },
+        {
+          "displayName": "Vaswani et al. Attention Is All You Need (arXiv PDF)",
+          "url": "https://arxiv.org/pdf/1706.03762",
+          "kind": "link"
+        },
+        {
+          "displayName": "OpenAI: Prompt Engineering guide",
+          "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+          "kind": "link"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "11",
+      "title": "Интеграция LLM в программные скрипты через API",
+      "id": "digital-humanities-11",
+      "htmlFile": "src/data/digital-humanities/лекции/11.html",
+      "presentationPdf": "src/data/digital-humanities/presentations/11.pdf",
+      "materials": [
+        {
+          "displayName": "Prompt Engineering Guide (русская версия)",
+          "url": "https://www.promptingguide.ai/ru",
+          "kind": "link"
+        },
+        {
+          "displayName": "OpenAI API Reference",
+          "url": "https://platform.openai.com/docs/api-reference",
+          "kind": "link"
+        },
+        {
+          "displayName": "NLTK Book — online",
+          "url": "https://www.nltk.org/book/",
+          "kind": "link"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "12",
+      "title": "Визуализация результатов и веб-панели для филологов",
+      "id": "digital-humanities-12",
+      "htmlFile": "src/data/digital-humanities/лекции/12.html",
+      "presentationPdf": "src/data/digital-humanities/presentations/12.pdf",
+      "materials": [
+        {
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022) — репрезентация знания",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
+        },
+        {
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH — визуализация (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
+        },
+        {
+          "displayName": "Streamlit documentation",
+          "url": "https://docs.streamlit.io/",
+          "kind": "link"
+        }
+      ]
+    },
+    {
+      "courseSlug": "digital-humanities",
+      "number": "13",
+      "title": "Верификация данных и цифровая этика исследований",
+      "id": "digital-humanities-13",
+      "htmlFile": "src/data/digital-humanities/лекции/13.html",
+      "presentationPdf": "src/data/digital-humanities/presentations/13.pdf",
+      "materials": [
+        {
+          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
+          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
+          "kind": "pdf"
+        },
+        {
+          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "displayName": "Пучковская и др. Введение в DH (ИТМО, 2021)",
+          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
+          "kind": "pdf"
+        },
+        {
+          "displayName": "ALLEA. Living Guidelines on the Responsible Use of Generative AI in Research",
+          "url": "https://allea.org/portfolio-item/living-guidelines-on-the-responsible-use-of-generative-ai-in-research/",
+          "kind": "link"
+        },
+        {
+          "displayName": "Moretti F. Conjectures on World Literature // New Left Review",
           "url": "https://newleftreview.org/issues/ii1/articles/franco-moretti-conjectures-on-world-literature",
           "kind": "link"
         }
@@ -1644,115 +1932,6 @@
         {
           "displayName": "Gensim: LDA tutorial",
           "url": "https://radimrehurek.com/gensim/auto_examples/tutorials/run_lda.html",
-          "kind": "link"
-        }
-      ]
-    },
-    {
-      "courseSlug": "digital-humanities",
-      "number": "10",
-      "title": "Большие языковые модели (LLM) и Prompt Engineering",
-      "id": "digital-humanities-10",
-      "htmlFile": "src/data/digital-humanities/лекции/10.html",
-      "presentationPdf": "src/data/digital-humanities/presentations/10.pdf",
-      "materials": [
-        {
-          "displayName": "Prompt Engineering Guide (русская версия)",
-          "url": "https://www.promptingguide.ai/ru",
-          "kind": "link"
-        },
-        {
-          "displayName": "Vaswani et al. Attention Is All You Need (arXiv PDF)",
-          "url": "https://arxiv.org/pdf/1706.03762",
-          "kind": "link"
-        },
-        {
-          "displayName": "OpenAI: Prompt Engineering guide",
-          "url": "https://platform.openai.com/docs/guides/prompt-engineering",
-          "kind": "link"
-        }
-      ]
-    },
-    {
-      "courseSlug": "digital-humanities",
-      "number": "11",
-      "title": "Интеграция LLM в программные скрипты через API",
-      "id": "digital-humanities-11",
-      "htmlFile": "src/data/digital-humanities/лекции/11.html",
-      "presentationPdf": "src/data/digital-humanities/presentations/11.pdf",
-      "materials": [
-        {
-          "displayName": "Prompt Engineering Guide (русская версия)",
-          "url": "https://www.promptingguide.ai/ru",
-          "kind": "link"
-        },
-        {
-          "displayName": "OpenAI API Reference",
-          "url": "https://platform.openai.com/docs/api-reference",
-          "kind": "link"
-        },
-        {
-          "displayName": "NLTK Book — online",
-          "url": "https://www.nltk.org/book/",
-          "kind": "link"
-        }
-      ]
-    },
-    {
-      "courseSlug": "digital-humanities",
-      "number": "12",
-      "title": "Визуализация результатов и веб-панели для филологов",
-      "id": "digital-humanities-12",
-      "htmlFile": "src/data/digital-humanities/лекции/12.html",
-      "presentationPdf": "src/data/digital-humanities/presentations/12.pdf",
-      "materials": [
-        {
-          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
-          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022) — репрезентация знания",
-          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
-          "kind": "pdf"
-        },
-        {
-          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
-          "displayName": "Пучковская и др. Введение в DH — визуализация (ИТМО, 2021)",
-          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
-          "kind": "pdf"
-        },
-        {
-          "displayName": "Streamlit documentation",
-          "url": "https://docs.streamlit.io/",
-          "kind": "link"
-        }
-      ]
-    },
-    {
-      "courseSlug": "digital-humanities",
-      "number": "13",
-      "title": "Верификация данных и цифровая этика исследований",
-      "id": "digital-humanities-13",
-      "htmlFile": "src/data/digital-humanities/лекции/13.html",
-      "presentationPdf": "src/data/digital-humanities/presentations/13.pdf",
-      "materials": [
-        {
-          "fileName": "Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
-          "displayName": "Eve M. P. The Digital Humanities and Literary Studies (2022)",
-          "path": "src/data/digital-humanities/материалы/Eve_Digital_Humanities_and_Literary_Studies_2022.pdf",
-          "kind": "pdf"
-        },
-        {
-          "fileName": "Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
-          "displayName": "Пучковская и др. Введение в DH (ИТМО, 2021)",
-          "path": "src/data/digital-humanities/материалы/Puchkovskaya_Vvedenie_v_DH_ITMO_2021.pdf",
-          "kind": "pdf"
-        },
-        {
-          "displayName": "ALLEA. Living Guidelines on the Responsible Use of Generative AI in Research",
-          "url": "https://allea.org/portfolio-item/living-guidelines-on-the-responsible-use-of-generative-ai-in-research/",
-          "kind": "link"
-        },
-        {
-          "displayName": "Moretti F. Conjectures on World Literature // New Left Review",
-          "url": "https://newleftreview.org/issues/ii1/articles/franco-moretti-conjectures-on-world-literature",
           "kind": "link"
         }
       ]

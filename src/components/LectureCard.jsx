@@ -132,7 +132,7 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                 </div>
               )}
 
-              {courseSlug === 'imagology' && String(lecture.number) === '3' && (
+              {courseSlug === 'imagology' && ['1', '2', '3'].includes(String(lecture.number)) && (
                 <div className="mb-6">
                   <div className="flex items-center gap-2 mb-3">
                     <svg className="w-5 h-5 text-blue-700 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,27 +142,79 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                       Интерактивный материал
                     </h3>
                   </div>
-                  <Link
-                    to="/courses/imagology/demo/lecture-3"
-                    className="flex items-center gap-3 p-4 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30 hover:shadow-md transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center flex-shrink-0">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                  {String(lecture.number) === '1' && (
+                    <a
+                      href={`${import.meta.env.BASE_URL}imagology/keytexts/lecture-1.html`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-4 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30 hover:shadow-md transition-all group"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-blue-950 dark:text-blue-100">
+                          Рождение имагологии
+                        </p>
+                        <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">
+                          Гийар · Дизеринк · показ для аудитории
+                        </p>
+                      </div>
+                      <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-blue-950 dark:text-blue-100">
-                        Этнотипы и образы наций
-                      </p>
-                      <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">
-                        Ethnotypology · Völkertafel · словарь
-                      </p>
-                    </div>
-                    <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
+                    </a>
+                  )}
+                  {String(lecture.number) === '2' && (
+                    <a
+                      href={`${import.meta.env.BASE_URL}imagology/keytexts/lecture-2.html`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-4 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30 hover:shadow-md transition-all group"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-blue-950 dark:text-blue-100">
+                          Метод и транскультурная имагология
+                        </p>
+                        <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">
+                          Лерссен 2016 · Чжоу Нин · показ для аудитории
+                        </p>
+                      </div>
+                      <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                  )}
+                  {String(lecture.number) === '3' && (
+                    <Link
+                      to="/courses/imagology/demo/lecture-3"
+                      className="flex items-center gap-3 p-4 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30 hover:shadow-md transition-all group"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-blue-800 text-white flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-blue-950 dark:text-blue-100">
+                          Этнотипы и образы наций
+                        </p>
+                        <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">
+                          Ethnotypology · Völkertafel · словарь
+                        </p>
+                      </div>
+                      <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  )}
                 </div>
               )}
 

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Имагология · показ 2 · Метод и транскультурная имагология</title>
+<style>
+:root {
+  --ink: #1a1714;
+  --muted: #5a534a;
+  --line: #d4cdc2;
+  --paper: #f6f1e8;
+  --panel: #fffdf9;
+  --accent: #7a3428;
+  --link: #2c4a68;
+  --ok: #2f5d3a;
+  --bad: #8a3030;
+  --soft: #ebe4d8;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  background:
+    radial-gradient(ellipse 70% 35% at 8% 0%, #ebe3d6 0%, transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+}
+.shell {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: .7rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,253,249,.94);
+  position: sticky; top: 0; z-index: 5;
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: .88rem;
+}
+.top a { color: var(--link); text-decoration: none; }
+.top a:hover { text-decoration: underline; }
+.progress {
+  flex: 1;
+  max-width: 16rem;
+  height: .35rem;
+  background: var(--soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress > i {
+  display: block; height: 100%; width: 0;
+  background: var(--accent);
+}
+.stage {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.4rem 1.2rem 2rem;
+  width: 100%;
+}
+.slide { display: none; }
+.slide.on { display: block; animation: in .18s ease; }
+@keyframes in { from { opacity: .35; transform: translateY(4px);} to { opacity: 1; transform: none; } }
+.kicker {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .72rem;
+  color: var(--accent);
+  margin: 0 0 .35rem;
+}
+h1 {
+  font-size: clamp(1.7rem, 3.6vw, 2.35rem);
+  line-height: 1.15;
+  margin: 0 0 .6rem;
+  letter-spacing: -.02em;
+}
+h2 {
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  margin: 0 0 .8rem;
+  line-height: 1.2;
+}
+p, li { font-size: 1.08rem; }
+.muted { color: var(--muted); }
+.lead { font-size: 1.18rem; color: var(--muted); margin-top: 0; }
+ul { padding-left: 1.15rem; }
+li { margin: .35rem 0; }
+.grid {
+  display: grid;
+  gap: .7rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  margin: 1rem 0;
+}
+.card, details.term {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  padding: .85rem 1rem;
+}
+.card strong, details.term summary {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: .95rem;
+}
+details.term summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--link);
+}
+details.term summary::-webkit-details-marker { display: none; }
+details.term summary::before { content: "+ "; color: var(--accent); font-weight: 700; }
+details.term[open] summary::before { content: "− "; }
+details.term p { margin: .55rem 0 0; font-size: 1rem; }
+.quote {
+  border-left: 3px solid var(--accent);
+  margin: 1rem 0;
+  padding: .2rem 0 .2rem 1rem;
+  color: var(--muted);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .98rem;
+  margin: .8rem 0 1rem;
+}
+.table th, .table td {
+  border: 1px solid var(--line);
+  padding: .45rem .55rem;
+  vertical-align: top;
+  background: var(--panel);
+}
+.table th {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  text-align: left;
+  background: var(--soft);
+  font-size: .86rem;
+}
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+button {
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: .45rem;
+  padding: .55rem .85rem;
+  cursor: pointer;
+  font-size: .95rem;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+button.ghost { background: transparent; }
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1.1rem 1rem;
+  border-top: 1px solid var(--line);
+  background: rgba(255,253,249,.94);
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+.nav .hint { color: var(--muted); font-size: .82rem; }
+.quiz label {
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: .45rem;
+  padding: .7rem .85rem;
+  margin: .45rem 0;
+  cursor: pointer;
+}
+.quiz label:hover { border-color: var(--accent); }
+.quiz .feedback {
+  margin-top: .7rem;
+  padding: .7rem .85rem;
+  border-radius: .45rem;
+  display: none;
+}
+.quiz .feedback.show { display: block; }
+.quiz .feedback.ok { background: #e7f1ea; color: var(--ok); }
+.quiz .feedback.bad { background: #f7e8e7; color: var(--bad); }
+.sources { font-size: .95rem; color: var(--muted); }
+.sources a { color: var(--link); }
+@media (max-width: 640px) {
+  p, li { font-size: 1rem; }
+  .nav .hint { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <a href="/samarkand_lectures/courses/imagology">← Курс «Имагология»</a>
+    <div class="progress" aria-hidden="true"><i></i></div>
+    <a href="https://imagologica.eu/keytexts" target="_blank" rel="noopener">imagologica.eu/keytexts</a>
+  </header>
+  <main class="stage">
+    <section class="slide">
+<p class="kicker">Имагология · показ 2</p>
+<h1>Метод и транскультурная имагология</h1>
+<p class="lead">Лерссен (2016); Чжоу Нин (2011 / пер. 2026). Каркас для 90-минутного занятия.</p>
+<div class="grid">
+  <div class="card"><strong>Часть A</strong><p>Этнотип, имагема, метод, метаобраз, фреймы.</p></div>
+  <div class="card"><strong>Часть B</strong><p>Образ / тип / прототип; западные образы Китая; два ориентализма.</p></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Лерссен 2016</p>
+<h2>Этнотип</h2>
+<p>Стереотипное приписывание национального характера. Это нарративный троп и риторическая формула, а не измеримое означаемое.</p>
+<details class="term"><summary>Характерологическая ошибка</summary><p>Объяснять «типичное» поведение тем, что «такие уж они»: круг (культура объясняется культурой). Поведение — выбор, не необходимость.</p></details>
+<details class="term" style="margin-top:.55rem"><summary>Что не этнотип</summary><p>«Швеция — монархия с холодным климатом и сильным welfare state» — описание без характера-мотивации.</p></details>
+<details class="term" style="margin-top:.55rem"><summary>Recognition value</summary><p>Сила стереотипа — в узнавании (Aha!-Effekt), не в истине. Ср. vérité / vraisemblance у Аристотеля.</p></details>
+</section>
+<section class="slide">
+<p class="kicker">Допущения</p>
+<h2>Оппозиция и effet de typique</h2>
+<p>Этнотип всегда (явно или нет) ставит Я/Другого или отличие от других наций. Незаметное общее опускается.</p>
+<p class="quote">Нация «наиболее она сама» подаётся через то, чем она наиболее непохожа.</p>
+<p>Предел — карикатура: коррида, lederhosen, «oh là là».</p>
+</section>
+<section class="slide">
+<p class="kicker">Допущения</p>
+<h2>Имагема</h2>
+<p>Исторический резервуар противоречивых вариантов одного этнотипа («сдержанный англичанин» / «футбольный хулиган»). Контрпример не опровергает клише — он переключается на другой вариант. Отсюда формула «нация контрастов».</p>
+<p>Переломы (tipping points) нужно датировать: Испания ок. 1810–1840; Германия после ок. 1865.</p>
+</section>
+<section class="slide">
+<p class="kicker">Метод</p>
+<h2>Три хода сразу</h2>
+<table class="table">
+<thead><tr><th>Ход</th><th>Вопрос</th><th>Пример</th></tr></thead>
+<tbody>
+<tr><td>Интертекст</td><td>Откуда знакомость?</td><td>Ребекка ← Джессика / Шейлок</td></tr>
+<tr><td>Контекст</td><td>Где и когда сказано? Как читали потом?</td><td><em>Ivanhoe</em> · Эдинбург ок. 1820; двойная историчность Шейлока после Auschwitz</td></tr>
+<tr><td>Текст</td><td>Жанр, место этнотипа, ирония, фокализация</td><td>Что изменится, если национальность персонажа заменить?</td></tr>
+</tbody>
+</table>
+</section>
+<section class="slide">
+<p class="kicker">Термины</p>
+<h2>Метаобраз (Millas)</h2>
+<p>Не «как мы видим их» и не «как они видят себя», а <em>как нам кажется, они видят нас</em>.</p>
+<p>Антагонизм часто сгущается на этом уровне: мы приписываем Другому недоброжелательность самим актом подозрения. Примеры у Millas — греко-турецкий конфликт; у Лерссена — фламандско-валлонский.</p>
+</section>
+<section class="slide">
+<p class="kicker">Поэтика</p>
+<h2>Ирония, фрейм, латентность</h2>
+<ul>
+<li>В «серьёзной» литературе этнотип часто ироничен (Forster, Mann) или уходит во второстепенных лиц.</li>
+<li>Улыбка в комедии продлевает узнаваемость клише.</li>
+<li>Frame / trigger: активный фрейм («де Фюнес») вытесняет альтернативу («Жискар») в латентность.</li>
+<li>Латентность — обычное состояние; постоянная активность — скорее у фанатика.</li>
+</ul>
+</section>
+<section class="slide">
+<p class="kicker">Интерсекция</p>
+<h2>Этнотип + гендер + социотип</h2>
+<p>Pageaux: смешение атрибута и сущности. Этничность «срабатывает» неравномерно (вандализм «марокканца» vs «голландца»).</p>
+<p>Шейлок/Исаак — не только «евреи», но старые отцы-ростовщики; Ребекка/Джессика — брачный возраст. «Француз» без уточнения социотипа почти пуст (Пруст / богема / Паньоль).</p>
+<p class="muted">Опасность курсовой: каталог «всех итальянцев в викторианском романе», где каждый поступок сведён к национальности.</p>
+</section>
+<section class="slide">
+<p class="kicker">Чжоу Нин</p>
+<h2>Транскультурная имагология</h2>
+<p>Объект — западные образы Китая как знание/воображение/власть в модерности; далее — глобальная сеть образов и воздействие на китайский самообраз.</p>
+<details class="term"><summary>Не синология</summary><p>Синология предполагает знание о Китае. Изучение образа — репрезентацию и власть. Подмена даёт «Sinoism».</p></details>
+<details class="term" style="margin-top:.55rem"><summary>Не только литература</summary><p>Травелоги, миссионерские отчёты, дипломатия, наука, кино: общее социальное воображение.</p></details>
+<details class="term" style="margin-top:.55rem"><summary>Эпистемология</summary><p>Критическая позиция: не «истинно/ложно», а как произведено и какой властью наделено.</p></details>
+</section>
+<section class="slide">
+<p class="kicker">Три уровня</p>
+<h2>Образ → тип → прототип</h2>
+<table class="table">
+<thead><tr><th>Уровень</th><th>Единица</th><th>Функция</th></tr></thead>
+<tbody>
+<tr><td>Образ</td><td>конкретная репрезентация</td><td>знание + воображение + самоидентификация Запада</td></tr>
+<tr><td>Тип</td><td>повторяющаяся формула эпохи</td><td>словарь и дисциплина высказываний</td></tr>
+<tr><td>Прототип</td><td>утопизация / идеологизация</td><td>долгая матрица в коллективном бессознательном</td></tr>
+</tbody>
+</table>
+</section>
+<section class="slide">
+<p class="kicker">Типы Китая</p>
+<h2>Шесть типов, перелом ≈ 1750</h2>
+<div class="grid">
+  <div class="card"><strong>До</strong>
+    <ul>
+      <li>континент Великого хана</li>
+      <li>великая империя</li>
+      <li>Китай Конфуция</li>
+    </ul>
+    <p>утопизация</p>
+  </div>
+  <div class="card"><strong>После</strong>
+    <ul>
+      <li>застойная империя</li>
+      <li>деспотическая империя</li>
+      <li>варварская / полуварварская</li>
+    </ul>
+    <p>идеологизация</p>
+  </div>
+</div>
+<p class="muted">Около 1750: Voltaire и Montesquieu одновременно; затем преобладает негатив.</p>
+</section>
+<section class="slide">
+<p class="kicker">Прототипы</p>
+<h2>Утопия и идеология</h2>
+<p>По Mannheim / Ricœur: утопия отрицает существующий порядок; идеология его поддерживает.</p>
+<ul>
+<li>Утопизированный Китай — критика Запада, «конфуцианская утопия».</li>
+<li>Идеологизированный Китай — Другой прогресса, свободы, цивилизации; опора колониального дискурса.</li>
+</ul>
+<p>Современные «угроза Китая» и «подъём Китая» читаются как пара этих полюсов (разбор Jacques 2009 у Anderson / Gang Le).</p>
+</section>
+<section class="slide">
+<p class="kicker">Ориентализм</p>
+<h2>Две формы (Чжоу)</h2>
+<div class="grid">
+  <div class="card"><strong>Негативный / идеологический</strong><p>Пассивный, вырожденный Восток; шовинизм; координация с экспансией (линия, разоблачённая Said).</p></div>
+  <div class="card"><strong>Позитивный / утопический</strong><p>Восхищение, самокритика, релятивизм; Восток как зеркало для сомнения в себе.</p></div>
+</div>
+<p>Напряжение между полюсами, по Чжоу, задаёт динамику западной культуры. В китайском контексте однобокий импорт постколониальной критики легко питает узкий национализм — на это он отдельно предупреждает.</p>
+</section>
+<section class="slide">
+<p class="kicker">Самопроверка</p>
+<h2>Вопрос 1</h2>
+<div class="quiz" data-quiz data-correct="a"
+  data-ok="Верно. Имагема — резервуар противоречивых вариантов; поэтому этнотип трудно «опровергнуть» одним примером."
+  data-bad="Нет. Имеется в виду исторически накопленный набор образов и контр-образов.">
+<p>Что такое imageme у Лерссена?</p>
+<label><input type="radio" name="q1" value="a"> Совокупность накопленных, часто противоречивых вариантов этнотипа</label>
+<label><input type="radio" name="q1" value="b"> Единственно верный национальный характер</label>
+<label><input type="radio" name="q1" value="c"> Статистический портрет населения</label>
+<div class="feedback"></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Самопроверка</p>
+<h2>Вопрос 2</h2>
+<div class="quiz" data-quiz data-correct="b"
+  data-ok="Верно. Метаобраз — приписываемый взгляд Другого на нас."
+  data-bad="Перечитайте определение Millas / Leerssen.">
+<p>Метаобраз — это:</p>
+<label><input type="radio" name="q2" value="a"> Автопортрет нации в школьном учебнике</label>
+<label><input type="radio" name="q2" value="b"> То, как, по нашему мнению, Другие видят нас</label>
+<label><input type="radio" name="q2" value="c"> Фотография этнографического типа</label>
+<div class="feedback"></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Самопроверка</p>
+<h2>Вопрос 3</h2>
+<div class="quiz" data-quiz data-correct="c"
+  data-ok="Верно. Тип — повторяющаяся формула эпохи; прототип — долгая матрица утопизации/идеологизации."
+  data-bad="Сверьте таблицу уровней у Чжоу.">
+<p>В схеме Чжоу «застойная империя» — это прежде всего:</p>
+<label><input type="radio" name="q3" value="a"> Прототип утопизации</label>
+<label><input type="radio" name="q3" value="b"> Случайный образ одного романа</label>
+<label><input type="radio" name="q3" value="c"> Тип пост-просвещенческой идеологизации</label>
+<div class="feedback"></div>
+</div>
+</section>
+<section class="slide">
+<p class="kicker">Задание к семинару</p>
+<h2>Один текст — два протокола</h2>
+<ol>
+<li>Взять короткий фрагмент (травелог, передовица, сцена романа).</li>
+<li><strong>Протокол Лерссена:</strong> интертекст → контекст → текст; auto / hetero / meta; есть ли imageme и смена знака.</li>
+<li><strong>Протокол Чжоу:</strong> образ → к какому типу тяготеет → утопизация или идеологизация.</li>
+<li>Сформулировать в 10–12 предложениях, что добавляет второй протокол к первому.</li>
+</ol>
+<p class="sources">Полный текст: <code>src/data/imagology/ключевые-тексты/лекция-2-метод-и-транскультурная-имагология.html</code><br>
+PDF: <a href="https://imagologica.eu/CMS/upload/Imagology2016.pdf">Imagology2016.pdf</a> · <a href="https://imagologica.eu/CMS/upload/ZhouLin2.pdf">ZhouLin2.pdf</a></p>
+</section>
+  </main>
+  <footer class="nav">
+    <button type="button" id="prev" class="ghost">← Назад</button>
+    <div class="hint">← → · пробел · Home/End</div>
+    <div id="counter" class="hint">1 / 1</div>
+    <button type="button" id="next" class="primary">Далее →</button>
+  </footer>
+</div>
+<script>
+(function () {
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.querySelector('.progress > i');
+  const counter = document.getElementById('counter');
+  let i = 0;
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('on', idx === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); show(i + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); show(i - 1);
+    } else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+  });
+
+  document.querySelectorAll('[data-quiz]').forEach((box) => {
+    const correct = box.dataset.correct;
+    const feedback = box.querySelector('.feedback');
+    box.querySelectorAll('input[type=radio]').forEach((input) => {
+      input.addEventListener('change', () => {
+        const ok = input.value === correct;
+        feedback.className = 'feedback show ' + (ok ? 'ok' : 'bad');
+        feedback.textContent = ok ? box.dataset.ok : box.dataset.bad;
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-reveal]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-reveal');
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = !el.hidden;
+      btn.textContent = el.hidden ? btn.dataset.labelShow : btn.dataset.labelHide;
+    });
+  });
+
+  const start = parseInt((location.hash || '#1').slice(1), 10);
+  show(Number.isFinite(start) ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>
