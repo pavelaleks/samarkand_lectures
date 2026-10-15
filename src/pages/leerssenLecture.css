@@ -106,31 +106,6 @@
   color: var(--et-accent);
 }
 
-.et-intro-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  margin-bottom: 2rem;
-}
-
-.et-intro-card {
-  background: var(--et-panel);
-  border: 1px solid var(--et-line);
-  padding: 1rem 1.1rem;
-}
-
-.et-intro-card h2 {
-  font-size: 1rem;
-  margin: 0 0 0.4rem;
-  color: var(--et-accent);
-}
-
-.et-intro-card p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--et-muted);
-}
-
 .et-portrait {
   display: flex;
   gap: 1rem;

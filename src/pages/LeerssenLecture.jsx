@@ -5,7 +5,6 @@ import {
   axes,
   conceptById,
   concepts,
-  introBlocks,
   meta,
   spectation,
   toc,
@@ -58,7 +57,7 @@ function ConceptCard({ c, forceOpen }) {
       <button type="button" className="et-concept-head" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
         <span className="et-concept-term">{c.term}</span>
         <span className="et-concept-meta">{c.author}</span>
-        <span className="et-concept-toggle">{open ? 'свернуть' : 'раскрыть'}</span>
+        <span className="et-concept-toggle">{open ? '−' : '+'}</span>
       </button>
       <p className="et-concept-sum">{c.summary}</p>
       {open && (
@@ -70,17 +69,16 @@ function ConceptCard({ c, forceOpen }) {
           </ul>
           {c.seeAlso?.length > 0 && (
             <p className="et-see">
-              См. также:{' '}
               {c.seeAlso.map((sid, i) => (
                 <span key={sid}>
-                  {i > 0 && ', '}
+                  {i > 0 && ' · '}
                   <Jump to={`concept-${sid}`}>{conceptById[sid]?.term || sid}</Jump>
                 </span>
               ))}
             </p>
           )}
           <a className="et-ext" href={c.nodegoat} target="_blank" rel="noopener noreferrer">
-            Оригинал в Ethnotypology ↗
+            Ethnotypology ↗
           </a>
         </div>
       )}
@@ -117,7 +115,7 @@ export default function LeerssenLecture() {
   return (
     <div className="et">
       <header className="et-top">
-        <Link className="et-back" to="/courses/imagology">← К курсу «Имагология»</Link>
+        <Link className="et-back" to="/courses/imagology">← Имагология</Link>
         <a className="et-ext-top" href={meta.sourceUrl} target="_blank" rel="noopener noreferrer">
           imagologica.eu/ethnotypology ↗
         </a>
@@ -128,7 +126,6 @@ export default function LeerssenLecture() {
           <p className="et-kicker">{meta.course} · лекция 3</p>
           <h1>{meta.title}</h1>
           <p className="et-sub">{meta.subtitle}</p>
-          <p className="et-lead">{meta.handbookNote}</p>
 
           <nav className="et-toc" aria-label="Содержание">
             {toc.map((item) => (
@@ -136,31 +133,18 @@ export default function LeerssenLecture() {
             ))}
           </nav>
 
-          <div className="et-intro-grid">
-            {introBlocks.map((b) => (
-              <div key={b.title} className="et-intro-card">
-                <h2>{b.title}</h2>
-                <p>{b.text}</p>
-              </div>
-            ))}
-          </div>
-
           <figure className="et-portrait">
             <img src={asset('leerssen.jpg')} alt="Joep Leerssen" />
-            <figcaption>
-              Joep Leerssen — редактор Ethnotypology и соредактор Imagology (2007).
-              Фото: Wikimedia Commons.
-            </figcaption>
+            <figcaption>Joep Leerssen. Ethnotypology; Imagology (2007).</figcaption>
           </figure>
         </section>
 
         <section className="et-section" id="volkertafel">
-          <h2>Völkertafel: этнотип как таблица</h2>
+          <h2>Völkertafel</h2>
           <p className="et-prose">
-            Штирийская «таблица народов» — хрестоматийный пример того, что handbook называет
-            национальной типизацией: одна сетка признаков, десять колонок «наций».
-            Это не этнография, а <Jump to="concept-image">образ</Jump> и{' '}
-            <Jump to="concept-stereotype">стереотип</Jump> в табличной форме.
+            Штирийская таблица народов: одна сетка признаков, десять колонок «наций».
+            Форма <Jump to="concept-image">образа</Jump> и{' '}
+            <Jump to="concept-stereotype">стереотипа</Jump>, не этнография.
           </p>
 
           <figure className="et-fig et-fig-wide">
@@ -169,21 +153,19 @@ export default function LeerssenLecture() {
               className="et-fig-btn"
               onClick={() => setLight({ file: 'volkertafel.jpg', title: 'Völkertafel' })}
             >
-              <img src={asset('volkertafel.jpg')} alt="Völkertafel — таблица народов" />
+              <img src={asset('volkertafel.jpg')} alt="Völkertafel" />
             </button>
-            <figcaption>
-              Völkertafel (ок. 1720–1730). Нажмите, чтобы увеличить. Источник: Wikimedia Commons.
-            </figcaption>
+            <figcaption>Völkertafel, ок. 1720–1730. Wikimedia Commons.</figcaption>
           </figure>
 
-          <Disclosure id="volkertafel-rows" title="Открыть: упрощённые черты по колонкам таблицы">
+          <Disclosure id="volkertafel-rows" title="Черты по колонкам">
             <div className="et-table-wrap">
               <table className="et-table">
                 <thead>
                   <tr>
-                    <th>Нация (колонка)</th>
-                    <th>Типичные черты в таблице</th>
-                    <th>Комментарий</th>
+                    <th>Нация</th>
+                    <th>Черты</th>
+                    <th>Контекст</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -197,10 +179,6 @@ export default function LeerssenLecture() {
                 </tbody>
               </table>
             </div>
-            <p className="et-hint">
-              Сравните с осями <Jump to="axes">Север/Юг</Jump> и <Jump to="concept-orientalism">ориентализма</Jump>:
-              турок и грек уже встроены в восточную периферию взгляда.
-            </p>
           </Disclosure>
         </section>
 
@@ -215,18 +193,14 @@ export default function LeerssenLecture() {
             ))}
           </div>
           <p className="et-prose">
-            В handbook статьи Auto-image и Hetero-image отсылают к связке{' '}
-            <Jump to="concept-image">Image</Jump> + <Jump to="concept-stereotype">Stereotype</Jump>.
-            Мета-образ — следующий слой: «как мы думаем, что нас видят».
+            Auto- / hetero-image → <Jump to="concept-image">Image</Jump>,{' '}
+            <Jump to="concept-stereotype">Stereotype</Jump>.
+            Meta-image: «как мы думаем, что нас видят».
           </p>
         </section>
 
         <section className="et-section" id="concepts">
-          <h2>Словарь имагологии</h2>
-          <p className="et-prose">
-            Нажмите заголовок термина, чтобы раскрыть детали и перейти к связанным понятиям.
-            Полные английские статьи — по ссылке «Оригинал в Ethnotypology».
-          </p>
+          <h2>Словарь</h2>
           <div className="et-concepts">
             {concepts.map((c) => (
               <ConceptCard key={c.id} c={c} forceOpen={hashConcept === c.id} />
@@ -236,10 +210,6 @@ export default function LeerssenLecture() {
 
         <section className="et-section" id="axes">
           <h2>Оси сравнения</h2>
-          <p className="et-prose">
-            Этнотипы редко живут поодиночке: они выстраиваются на координатах пространства власти
-            и климата. Три оси ниже — сквозные статьи handbook.
-          </p>
           <div className="et-axes">
             {axes.map((ax) => (
               <Disclosure key={ax.id} id={`axis-${ax.id}`} title={ax.title}>
@@ -249,7 +219,6 @@ export default function LeerssenLecture() {
                   ))}
                 </ul>
                 <p className="et-see">
-                  Статья словаря:{' '}
                   <Jump to={`concept-${ax.conceptId}`}>{conceptById[ax.conceptId]?.term}</Jump>
                 </p>
               </Disclosure>
@@ -260,34 +229,28 @@ export default function LeerssenLecture() {
         <section className="et-section" id="nation">
           <h2>Нация, характер, тип</h2>
           <p className="et-prose">
-            Лекция 3 опирается на различение: <Jump to="concept-nation">нация / ethnie</Jump> —
-            объект политической и культурной речи; <Jump to="concept-character">характер</Jump> —
-            старое имя репутации, выданное за сущность; <Jump to="concept-type">тип</Jump> —
-            идеализация, при которой индивид растворяется в «типичном» представителе.
+            <Jump to="concept-nation">Нация / ethnie</Jump> — объект политической и культурной речи;{' '}
+            <Jump to="concept-character">характер</Jump> — репутация, выданная за сущность;{' '}
+            <Jump to="concept-type">тип</Jump> — идеализация, при которой индивид растворяется в «типичном» представителе.
           </p>
-          <Disclosure id="nation-deep" title="Открыть: как читать статью Leerssen о nation/ethnie">
+          <Disclosure id="nation-deep" title="Nation, ethnie, people">
             <p>
-              В Ethnotypology статья «Nation, ethnie, people» прослеживает сдвиг от gens / natio
-              (происхождение) к модерной политической нации. Имагология не решает спор примордиалистов
-              и модернистов о «реальности» нации — она смотрит, как нации воображаются через
-              стереотипы и клише. Национализм подключает эти образы к политике.
+              Сдвиг от gens / natio (происхождение) к модерной политической нации.
+              Имагология смотрит, как нации воображаются через стереотипы и клише;
+              национализм подключает эти образы к политике.
             </p>
             <p className="et-see">
-              Дальше:{' '}
-              <Jump to="concept-nationalism">Nationalism</Jump>,{' '}
-              <Jump to="concept-identity">Identity / alterity</Jump>,{' '}
-              <Jump to="concept-representation">Representation</Jump>.
+              <Jump to="concept-nationalism">Nationalism</Jump>
+              {' · '}
+              <Jump to="concept-identity">Identity / alterity</Jump>
+              {' · '}
+              <Jump to="concept-representation">Representation</Jump>
             </p>
           </Disclosure>
         </section>
 
         <section className="et-section" id="visual">
           <h2>Визуальные стереотипы</h2>
-          <p className="et-prose">
-            Handbook отдельно подчёркивает: image в имагологии — не синоним картины, но картины
-            и карикатуры — мощный канал стереотипа. Ниже — три разбора (таблица + два английских
-            взгляда на Францию / на себя).
-          </p>
           <div className="et-visuals">
             {visualCases.map((v) => (
               <article key={v.id} className="et-case" id={`case-${v.id}`}>
@@ -302,13 +265,8 @@ export default function LeerssenLecture() {
                   <h3>{v.title}</h3>
                   <p className="et-circa">{v.circa}</p>
                   <p>{v.caption}</p>
-                  <Disclosure id={`read-${v.id}`} title="Как читать (имагологический ключ)">
+                  <Disclosure id={`read-${v.id}`} title="Разбор">
                     <p>{v.reading}</p>
-                    <p className="et-see">
-                      Связь: <Jump to="spectation">spectant/spected</Jump>,{' '}
-                      <Jump to="concept-stereotype">stereotype</Jump>,{' '}
-                      <Jump to="concept-representation">representation</Jump>
-                    </p>
                   </Disclosure>
                 </div>
               </article>
@@ -317,30 +275,20 @@ export default function LeerssenLecture() {
         </section>
 
         <section className="et-section" id="sources">
-          <h2>Источники и ссылки</h2>
+          <h2>Источники</h2>
           <ul className="et-sources">
             <li>
               <a href={meta.sourceUrl} target="_blank" rel="noopener noreferrer">
-                Ethnotypology handbook
-              </a>{' '}
-              — Imagologica / Nodegoat (CC BY-NC-ND)
+                Ethnotypology
+              </a>
+              {' '}(Imagologica / Nodegoat, CC BY-NC-ND)
             </li>
             <li>{meta.article2016}</li>
             <li>
-              Beller, Manfred; Leerssen, Joep (eds.). <em>Imagology</em>. Amsterdam: Rodopi, 2007.
+              Beller, M.; Leerssen, J. (eds.). <em>Imagology</em>. Amsterdam: Rodopi, 2007.
             </li>
-            <li>
-              Изображения: Wikimedia Commons (Völkertafel; Hogarth; Gillray; портрет Leerssen).
-            </li>
+            <li>Изображения: Wikimedia Commons.</li>
           </ul>
-          <Disclosure id="license" title="О лицензии и пересказе">
-            <p>
-              Оригинальные статьи handbook защищены CC BY-NC-ND: нельзя создавать производные
-              произведения от полного текста. Здесь — учебные краткие пересказы на русском для
-              курса, с обязательной отсылкой к оригиналу. Для цитирования и точных формулировок
-              открывайте статьи на Nodegoat.
-            </p>
-          </Disclosure>
         </section>
       </main>
 

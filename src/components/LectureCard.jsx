@@ -156,7 +156,7 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                         Этнотипы и образы наций
                       </p>
                       <p className="text-xs text-blue-900/80 dark:text-blue-200/80 mt-0.5">
-                        Дополнение к PDF · по handbook Ethnotypology (Leerssen)
+                        Ethnotypology · Völkertafel · словарь
                       </p>
                     </div>
                     <svg className="w-5 h-5 text-blue-700 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
