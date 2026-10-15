@@ -38,3 +38,6 @@ Thumbs.db
 
 __pycache__/
 .tmp_imagologica/
+
+# Full lecture Word drafts (local only)
+src/data/imagology/полные-лекции/
