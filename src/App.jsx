@@ -8,6 +8,7 @@ import CoursePage from './pages/CoursePage'
 import LabHub from './pages/LabHub'
 import LabWork from './pages/LabWork'
 import BuninReader from './pages/BuninReader'
+import LeerssenLecture from './pages/LeerssenLecture'
 
 function LabWorkRedirect() {
   const { workSlug } = useParams()
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/courses/digital-humanities/demo/:workSlug" element={<LabWork />} />
                 <Route path="/courses/digital-humanities/lab" element={<Navigate to="/courses/digital-humanities/demo" replace />} />
                 <Route path="/courses/digital-humanities/lab/:workSlug" element={<LabWorkRedirect />} />
+                <Route path="/courses/imagology/demo/lecture-3" element={<LeerssenLecture />} />
                 <Route path="/courses/:slug" element={<CoursePage />} />
               </Routes>
             </main>
