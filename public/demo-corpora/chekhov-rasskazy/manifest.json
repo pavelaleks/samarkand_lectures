@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "dama-s-sobachkoj",
+    "title": "Дама с собачкой",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/d.txt",
+    "words": 5174,
+    "order": 1
+  },
+  {
+    "slug": "ionyich",
+    "title": "Ионыч",
+    "author": "Чехов",
+    "source": "wikisource:Ионыч (Чехов)",
+    "words": 5543,
+    "order": 2
+  },
+  {
+    "slug": "kryzhovnik",
+    "title": "Крыжовник",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/rasskazy.txt",
+    "words": 3268,
+    "order": 3
+  },
+  {
+    "slug": "chelovek-v-futlyare",
+    "title": "Человек в футляре",
+    "author": "Чехов",
+    "source": "wikisource:Человек в футляре (Чехов)",
+    "words": 4048,
+    "order": 4
+  },
+  {
+    "slug": "o-lyubvi",
+    "title": "О любви",
+    "author": "Чехов",
+    "source": "wikisource:О_любви_(Чехов)",
+    "words": 3127,
+    "order": 5
+  },
+  {
+    "slug": "dushechka",
+    "title": "Душечка",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/dushechka.txt",
+    "words": 3871,
+    "order": 6
+  },
+  {
+    "slug": "anna-na-shee",
+    "title": "Анна на шее",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/r_anna.txt",
+    "words": 3991,
+    "order": 7
+  },
+  {
+    "slug": "dom-s-mezoninom",
+    "title": "Дом с мезонином",
+    "author": "Чехов",
+    "source": "wikisource:Дом с мезонином (Чехов)",
+    "words": 5684,
+    "order": 8
+  },
+  {
+    "slug": "toska",
+    "title": "Тоска",
+    "author": "Чехов",
+    "source": "wikisource:Тоска_(Чехов)",
+    "words": 1484,
+    "order": 9
+  },
+  {
+    "slug": "student",
+    "title": "Студент",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/r_student.txt",
+    "words": 1147,
+    "order": 10
+  },
+  {
+    "slug": "krasavitsy",
+    "title": "Красавицы",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/krasavitsy.txt",
+    "words": 2543,
+    "order": 11
+  },
+  {
+    "slug": "poceluj",
+    "title": "Поцелуй",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/r_poceluj.txt",
+    "words": 5569,
+    "order": 12
+  },
+  {
+    "slug": "palata-6",
+    "title": "Палата № 6",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/6.txt",
+    "words": 16210,
+    "order": 13
+  },
+  {
+    "slug": "skuchnaya-istoriya",
+    "title": "Скучная история",
+    "author": "Чехов",
+    "source": "http://www.lib.ru/win/LITRA/CHEHOW/skuka.txt",
+    "words": 18248,
+    "order": 14
+  }
+]

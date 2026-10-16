@@ -77,8 +77,30 @@ function DualBarPanel({ rows, titleA, titleB }) {
   )
 }
 
-function MdsMap({ highlight = [] }) {
-  const stories = STYLO_CYCLE.stories.filter((s) => typeof s.x === 'number')
+function MeanBar({ label, value, max, tone }) {
+  const pct = Math.min(100, (value / max) * 100)
+  const colors = {
+    teal: 'bg-teal-500',
+    indigo: 'bg-indigo-500',
+    rose: 'bg-rose-500',
+  }
+  return (
+    <div className="space-y-1">
+      <div className="flex justify-between text-sm">
+        <span className="font-medium text-gray-800 dark:text-gray-200">{label}</span>
+        <span className="font-mono font-bold">{value.toFixed(2)}</span>
+      </div>
+      <div className="h-3 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+        <div className={`h-full rounded-full ${colors[tone] || colors.teal}`} style={{ width: `${pct}%` }} />
+      </div>
+    </div>
+  )
+}
+
+function MdsMap({ highlight = [], filterAuthor = 'all' }) {
+  let stories = STYLO_CYCLE.stories.filter((s) => typeof s.x === 'number')
+  if (filterAuthor === 'bunin') stories = stories.filter((s) => s.author === 'bunin')
+  if (filterAuthor === 'chekhov') stories = stories.filter((s) => s.author === 'chekhov')
   const xs = stories.map((s) => s.x)
   const ys = stories.map((s) => s.y)
   const pad = 0.08
@@ -86,48 +108,61 @@ function MdsMap({ highlight = [] }) {
   const maxX = Math.max(...xs) + pad
   const minY = Math.min(...ys) - pad
   const maxY = Math.max(...ys) + pad
-  const W = 520
-  const H = 360
+  const W = 560
+  const H = 380
   const sx = (x) => ((x - minX) / (maxX - minX || 1)) * (W - 40) + 20
   const sy = (y) => H - 20 - ((y - minY) / (maxY - minY || 1)) * (H - 40)
+  const labelSlugs = new Set([
+    ...highlight,
+    'holodnaya-osen',
+    'dama-s-sobachkoj',
+    'ionyich',
+    'kryzhovnik',
+    'natali',
+    'temnye-allei',
+  ])
 
   return (
     <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-xl mx-auto">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-2xl mx-auto">
         <rect x={0} y={0} width={W} height={H} fill="transparent" />
         {stories.map((s) => {
           const hi = highlight.includes(s.slug)
-          const ext = s.external
+          const chekhov = s.author === 'chekhov'
           return (
             <g key={s.slug}>
               <circle
                 cx={sx(s.x)}
                 cy={sy(s.y)}
-                r={hi ? 7 : ext ? 6 : 4}
-                fill={ext ? '#f43f5e' : hi ? '#0d9488' : '#94a3b8'}
-                opacity={hi || ext ? 1 : 0.65}
+                r={hi ? 7 : 4.5}
+                fill={chekhov ? '#f43f5e' : hi ? '#0d9488' : '#94a3b8'}
+                opacity={hi || chekhov ? 1 : 0.55}
               />
-              {(hi || ext || s.slug === 'holodnaya-osen') && (
-                <text x={sx(s.x) + 6} y={sy(s.y) + 3} fontSize={9} fill="currentColor">
-                  {s.title.length > 18 ? s.title.slice(0, 16) + '…' : s.title}
+              {labelSlugs.has(s.slug) && (
+                <text x={sx(s.x) + 7} y={sy(s.y) + 3} fontSize={9} fill="currentColor">
+                  {s.title.length > 16 ? `${s.title.slice(0, 14)}…` : s.title}
                 </text>
               )}
             </g>
           )
         })}
       </svg>
-      <p className="text-xs text-gray-500 mt-2 text-center">
-        MDS по матрице учебной Delta · красная точка — контраст (Ахматова) · не «карта жанра», а геометрия
-        расстояний
+      <div className="flex flex-wrap justify-center gap-4 text-xs mt-2 text-gray-600 dark:text-gray-400">
+        <span>■ серый / бирюзовый — Бунин</span>
+        <span className="text-rose-600">■ красный — Чехов</span>
+      </div>
+      <p className="text-xs text-gray-500 mt-1 text-center">
+        MDS по матрице учебной Delta · не «карта сюжетов», а геометрия служебных профилей
       </p>
     </div>
   )
 }
 
 function CycleExplorer() {
-  const [slugA, setSlugA] = useState('holodnaya-osen')
-  const [slugB, setSlugB] = useState('kavkaz')
-  const [hoverPair, setHoverPair] = useState(null)
+  const S = STYLO_CYCLE.summary
+  const [slugA, setSlugA] = useState('dama-s-sobachkoj')
+  const [slugB, setSlugB] = useState('ionyich')
+  const [mapFilter, setMapFilter] = useState('all')
 
   const storyA = STYLO_CYCLE.stories.find((s) => s.slug === slugA)
   const storyB = STYLO_CYCLE.stories.find((s) => s.slug === slugB)
@@ -146,87 +181,160 @@ function CycleExplorer() {
   const diffKey = `${slugA}__${slugB}`
   const diffRev = `${slugB}__${slugA}`
   const barRows =
-    STYLO_CYCLE.demoDiffs[diffKey] ||
-    STYLO_CYCLE.demoDiffs[diffRev] ||
-    fwDiffBars(slugA, slugB)
+    STYLO_CYCLE.demoDiffs[diffKey] || STYLO_CYCLE.demoDiffs[diffRev] || fwDiffBars(slugA, slugB)
 
-  const buninStories = STYLO_CYCLE.stories.filter((s) => !s.external)
+  const buninStories = STYLO_CYCLE.stories.filter((s) => s.author === 'bunin')
+  const chekhovStories = STYLO_CYCLE.stories.filter((s) => s.author === 'chekhov')
+  const barMax = Math.max(
+    S.meanDeltaWithinBunin,
+    S.meanDeltaWithinChekhov,
+    S.meanDeltaBuninVsChekhov,
+    S.meanDeltaCrossMatched,
+    1.2
+  )
+
+  const pairKind =
+    storyA && storyB
+      ? storyA.author === storyB.author
+        ? storyA.author === 'chekhov'
+          ? 'внутри Чехова'
+          : 'внутри Бунина'
+        : 'Чехов ↔ Бунин'
+      : ''
 
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border-2 border-teal-400 dark:border-teal-600 bg-teal-50/70 dark:bg-teal-950/25 p-4 sm:p-6 space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 1 · Что такое стилиометрия и Delta
+          Зачем эта лекция
         </div>
         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white leading-snug">
-          «Стиль» как профиль частот служебных слов — и дистанция между текстами
+          Можно ли «увидеть» сходство авторов по служебным словам — на Чехове и Бунине?
         </h3>
         <p className="text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed">
-          Стилиометрия сравнивает не «любовь vs смерть», а <strong>грамматический каркас</strong>:{' '}
-          <em>и, в, не, она, что, но…</em> У Джона Burrows идея простая: у автора эти доли стабильны;{' '}
-          <strong>Burrows&apos; Delta</strong> — среднее расхождение z-оценок по списку служебных слов.
-          Чем <strong>меньше</strong> Delta, тем ближе профили — но это{' '}
-          <strong>не судебная атрибуция</strong>.
+          Сравнивать Бунина с лирикой Ахматовой бессмысленно: разные жанры. Здесь контраст —{' '}
+          <strong>аналогичные рассказы</strong> Чехова («Дама с собачкой», «Ионыч», «Крыжовник»…). Сначала
+          доказываем, что <em>внутри</em> Чехова профили близки, <em>внутри</em> Бунина — тоже; потом смотрим,
+          насколько дальше типичная пара Чехов–Бунин.
         </p>
         <div className="rounded-xl bg-gray-900 text-teal-100 font-mono text-sm px-4 py-3">
-          Delta(A,B) = среднее |z<sub>w</sub>(A) − z<sub>w</sub>(B)| &nbsp;·&nbsp; z = (доля − μ<sub>корпус</sub>) /
-          σ
+          Delta(A,B) = среднее |z<sub>w</sub>(A) − z<sub>w</sub>(B)| &nbsp;·&nbsp; z = (доля − μ) / σ &nbsp;·&nbsp;
+          служебные слова: и, в, не, она…
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          На лекции 4 мы смотрели Ципфа (частотный хвост). Здесь — другой слой:{' '}
-          <strong>межтекстовое сравнение</strong>. Natasha (NER) — только в лекции 6.
+          Меньше Delta → ближе грамматический каркас. Это <strong>не судебная атрибуция</strong> и не замена
+          чтения. Лекция 4 — Ципф (частотный хвост); лекция 6 — Natasha (имена и места).
         </p>
       </section>
 
-      <section className="space-y-3">
+      <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 2 · Зачем это «Тёмным аллеям»
+          Шаг 1 · Три средних Delta (главный результат)
+        </div>
+        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+          На объединённом корпусе ({S.nBunin} рассказов Бунина + {S.nChekhov} рассказов Чехова) считаем все пары и
+          берём среднее. Чем ниже столбик — тем ближе тексты друг к другу.
+        </p>
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 sm:p-5 space-y-4">
+          <MeanBar
+            label={`Внутри Чехова (${S.nPairsChekhov} пар)`}
+            value={S.meanDeltaWithinChekhov}
+            max={barMax}
+            tone="indigo"
+          />
+          <MeanBar
+            label={`Внутри Бунина (${S.nPairsBunin} пар)`}
+            value={S.meanDeltaWithinBunin}
+            max={barMax}
+            tone="teal"
+          />
+          <MeanBar
+            label={`Чехов ↔ Бунин (${S.nPairsCross} пар)`}
+            value={S.meanDeltaBuninVsChekhov}
+            max={barMax}
+            tone="rose"
+          />
         </div>
         <div className="grid md:grid-cols-3 gap-3 text-sm leading-relaxed">
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900">
-            <p className="font-semibold mb-1">Единство цикла</p>
-            <p className="text-gray-700 dark:text-gray-300">
-              Средняя Delta внутри Бунина ≈ {STYLO_CYCLE.summary.meanDeltaWithinBunin.toFixed(2)} — рассказы
-              близки по служебному профилю, хотя сюжеты разные.
+          <div className="rounded-xl border border-indigo-200 dark:border-indigo-900 p-4 bg-indigo-50/70 dark:bg-indigo-950/20">
+            <p className="font-semibold mb-1">1. Чехов похож на Чехова</p>
+            <p>
+              Средняя Δ ≈ <strong>{S.meanDeltaWithinChekhov.toFixed(2)}</strong>. «Дама с собачкой» и «Ионыч»
+              близки по служебному профилю — хотя сюжеты разные. Так мы проверяем: метрика вообще чувствует
+              единство автора.
             </p>
           </div>
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900">
-            <p className="font-semibold mb-1">Контраст с «чужим» текстом</p>
-            <p className="text-gray-700 dark:text-gray-300">
-              Бунин vs фрагмент Ахматовой: ≈ {STYLO_CYCLE.summary.meanDeltaBuninVsAkhmatova.toFixed(2)} — дальше,
-              но одного числа мало для вывода об авторстве.
+          <div className="rounded-xl border border-teal-200 dark:border-teal-900 p-4 bg-teal-50/70 dark:bg-teal-950/20">
+            <p className="font-semibold mb-1">2. Бунин похож на Бунина</p>
+            <p>
+              Средняя Δ ≈ <strong>{S.meanDeltaWithinBunin.toFixed(2)}</strong>. Цикл «Тёмные аллеи» держится на
+              сходном каркасе <em>и / в / не / она…</em> — это и есть «стилистическое единство» в смысле Delta.
             </p>
           </div>
-          <div className="rounded-xl border border-rose-200 dark:border-rose-900 p-4 bg-rose-50/80 dark:bg-rose-950/20">
-            <p className="font-semibold mb-1">Чего Delta не делает</p>
-            <p className="text-gray-700 dark:text-gray-300">
-              Не заменяет чтение, не доказывает подлинность, не видит сюжет. Короткие миниатюры дают шум.
+          <div className="rounded-xl border border-rose-200 dark:border-rose-900 p-4 bg-rose-50/70 dark:bg-rose-950/20">
+            <p className="font-semibold mb-1">3. Между авторами — чуть дальше</p>
+            <p>
+              Средняя Δ ≈ <strong>{S.meanDeltaBuninVsChekhov.toFixed(2)}</strong>. На одинаковой длине (1200–8000
+              токенов) контраст яснее: внутри ≈{S.meanDeltaWithinChekhovMatched.toFixed(2)} /{' '}
+              {S.meanDeltaWithinBuninMatched.toFixed(2)}, между ≈{S.meanDeltaCrossMatched.toFixed(2)}. Но
+              отдельные пары могут «пересекаться» — смотрите пресеты ниже.
             </p>
           </div>
         </div>
-        <p className="text-sm">
-          Корпус:{' '}
-          <Link className="underline font-semibold" to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei">
-            37 рассказов «Тёмных аллей»
-          </Link>
-          · признаков служебных слов: {STYLO_CYCLE.functionWords.length}
-        </p>
+        <Details title="Почему сравниваем именно с Чеховым, а не с Ахматовой?">
+          <p>
+            Стилиометрия чувствительна к <strong>жанру и длине</strong>. Стих vs проза — это почти всегда «далеко»,
+            и такой контраст ничего не говорит о Бунине. Чехов — сосед по истории русской новеллы: короткая проза о
+            любви, провинции, случайной встрече. Если Delta различает двух прозаиков-рассказчиков, это уже
+            осмысленный эксперимент.
+          </p>
+        </Details>
       </section>
 
       <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 3 · Карта цикла (MDS)
+          Шаг 2 · Карта MDS: Бунин и Чехов на одной плоскости
         </div>
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          Каждая точка — рассказ. Расстояния на плоскости приближают матрицу Delta (учебная MDS). Кластеры
-          «скученности» — не жанры, а близость служебных профилей.
+          Каждая точка — рассказ. Расстояния приближают матрицу Delta. Красные точки — Чехов; серые/бирюзовые —
+          Бунин. Полного «разделения облаков» ждать не нужно: оба автора — реалистическая проза начала XX в.
         </p>
-        <MdsMap highlight={[slugA, slugB]} />
+        <div className="flex flex-wrap gap-2">
+          {[
+            ['all', 'Все'],
+            ['bunin', 'Только Бунин'],
+            ['chekhov', 'Только Чехов'],
+          ].map(([k, lab]) => (
+            <button
+              key={k}
+              type="button"
+              className={`px-3 py-1.5 rounded-lg text-sm ${
+                mapFilter === k ? 'bg-teal-600 text-white' : 'bg-gray-100 dark:bg-gray-800'
+              }`}
+              onClick={() => setMapFilter(k)}
+            >
+              {lab}
+            </button>
+          ))}
+        </div>
+        <MdsMap highlight={[slugA, slugB]} filterAuthor={mapFilter} />
+        <p className="text-sm">
+          Корпуса:{' '}
+          <Link className="underline font-semibold" to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei">
+            «Тёмные аллеи» ({S.nBunin})
+          </Link>
+          {' · '}
+          <Link className="underline font-semibold" to="/courses/digital-humanities/demo/corpus/chekhov-rasskazy">
+            рассказы Чехова ({S.nChekhov})
+          </Link>
+          {' · '}
+          признаков: {STYLO_CYCLE.functionWords.length}
+        </p>
       </section>
 
       <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 4 · Сравните два рассказа A / B
+          Шаг 3 · Пресеты: сначала Чехов–Чехов, потом Чехов–Бунин
         </div>
         <div className="flex flex-wrap gap-2">
           {STYLO_CYCLE.pairs.map((p) => (
@@ -237,8 +345,6 @@ function CycleExplorer() {
                 setSlugA(p.a)
                 setSlugB(p.b)
               }}
-              onMouseEnter={() => setHoverPair(p)}
-              onMouseLeave={() => setHoverPair(null)}
               className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium ${
                 slugA === p.a && slugB === p.b
                   ? 'bg-teal-600 text-white'
@@ -257,11 +363,20 @@ function CycleExplorer() {
               value={slugA}
               onChange={(e) => setSlugA(e.target.value)}
             >
-              {STYLO_CYCLE.stories.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.title} {s.external ? '(конtrast)' : ''}
-                </option>
-              ))}
+              <optgroup label="Чехов">
+                {chekhovStories.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.title} (N={s.tokens})
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Бунин">
+                {buninStories.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.title} (N={s.tokens})
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </label>
           <label className="block text-sm">
@@ -271,79 +386,70 @@ function CycleExplorer() {
               value={slugB}
               onChange={(e) => setSlugB(e.target.value)}
             >
-              {STYLO_CYCLE.stories.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.title}
-                </option>
-              ))}
+              <optgroup label="Чехов">
+                {chekhovStories.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.title} (N={s.tokens})
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Бунин">
+                {buninStories.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.title} (N={s.tokens})
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </label>
         </div>
         <div className="rounded-xl bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 p-4">
           <p className="text-lg font-bold text-gray-900 dark:text-white">
             Учебная Delta = {delta != null ? delta.toFixed(4) : '—'}
+            <span className="ml-2 text-sm font-semibold text-teal-800 dark:text-teal-200">({pairKind})</span>
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-            {storyA?.title} (N={storyA?.tokens}) vs {storyB?.title} (N={storyB?.tokens}). Меньше — ближе
-            служебные профили.
+            {storyA?.title} (N={storyA?.tokens}) vs {storyB?.title} (N={storyB?.tokens}). Ориентир: внутри автора
+            часто ≈0.5–0.9; между авторами чаще ближе к 1.0 — но не всегда.
           </p>
-          {hoverPair && (
-            <p className="text-xs mt-2 text-teal-800 dark:text-teal-200">Пресет: {hoverPair.label}</p>
-          )}
         </div>
         <DualBarPanel rows={barRows} titleA={storyA?.title} titleB={storyB?.title} />
         <p className="text-sm text-gray-700 dark:text-gray-300">
-          Большие столбики |Δ| по <em>в, она, не</em> часто отражают местоименную сцену («я/она» vs «мы/они»), а
-          не «другой автор».
+          Большие |Δ| по <em>она / он / в / не</em> часто отражают местоименную сцену (кто в фокусе повествования),
+          а не «чужой стиль». Читайте bar chart как подсказку для close reading.
         </p>
       </section>
 
       <section className="space-y-3">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 5 · Сводка по циклу
+          Шаг 4 · Ближайшие соседи (кто к кому ближе по Delta)
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <div className="rounded-xl bg-teal-50 dark:bg-teal-950/30 border border-teal-200 p-3 text-center">
-            <div className="text-2xl font-bold text-teal-800">{STYLO_CYCLE.summary.nStories}</div>
-            <div className="text-xs text-gray-600">рассказов Бунина</div>
-          </div>
-          <div className="rounded-xl bg-teal-50 dark:bg-teal-950/30 border border-teal-200 p-3 text-center">
-            <div className="text-2xl font-bold text-teal-800">
-              {STYLO_CYCLE.summary.meanDeltaWithinBunin.toFixed(2)}
-            </div>
-            <div className="text-xs text-gray-600">средняя Δ внутри цикла</div>
-          </div>
-          <div className="rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 p-3 text-center">
-            <div className="text-2xl font-bold text-rose-800">
-              {STYLO_CYCLE.summary.meanDeltaBuninVsAkhmatova.toFixed(2)}
-            </div>
-            <div className="text-xs text-gray-600">средняя Δ Бунин vs Ахматова</div>
-          </div>
-          <div className="rounded-xl bg-gray-50 dark:bg-gray-900 border p-3 text-center">
-            <div className="text-2xl font-bold">{STYLO_CYCLE.functionWords.length}</div>
-            <div className="text-xs text-gray-600">служебных признаков</div>
-          </div>
-        </div>
-        <div className="overflow-auto max-h-64 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div className="overflow-auto max-h-72 rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead className="sticky top-0 bg-gray-100 dark:bg-gray-900">
               <tr className="text-left">
-                <th className="p-2">Рассказ</th>
+                <th className="p-2">Текст</th>
+                <th className="p-2">автор</th>
                 <th className="p-2">N</th>
-                <th className="p-2">доля служебн.</th>
                 <th className="p-2">ближайший сосед</th>
               </tr>
             </thead>
             <tbody>
-              {buninStories.slice(0, 15).map((s) => {
+              {[...chekhovStories, ...buninStories.slice(0, 12)].map((s) => {
                 const nb = STYLO_CYCLE.neighbors.find((n) => n.slug === s.slug)?.nearest?.[0]
                 return (
                   <tr key={s.slug} className="border-t border-gray-100 dark:border-gray-800">
                     <td className="p-2">{s.title}</td>
+                    <td className="p-2">
+                      <span className={s.author === 'chekhov' ? 'text-rose-600 font-semibold' : 'text-teal-700'}>
+                        {s.authorLabel}
+                      </span>
+                    </td>
                     <td className="p-2">{s.tokens}</td>
-                    <td className="p-2">{(s.fw_share * 100).toFixed(1)}%</td>
                     <td className="p-2 text-xs">
-                      {nb ? `${nb.title} (Δ=${nb.delta.toFixed(2)})` : '—'}
+                      {nb
+                        ? `${nb.title} (${nb.author === 'chekhov' ? 'Чехов' : 'Бунин'}, Δ=${nb.delta.toFixed(2)})`
+                        : '—'}
                     </td>
                   </tr>
                 )
@@ -351,36 +457,52 @@ function CycleExplorer() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-gray-500">Полная таблица — в Excel после Run stylometry_lab.py</p>
+        <p className="text-xs text-gray-500">
+          Если у рассказа Чехова ближайший сосед — тоже Чехов, это хороший знак для «внутриавторского» сходства.
+          Полная матрица — в Excel после Run в PyCharm.
+        </p>
       </section>
 
       <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 6 · Выводы и границы
+          Шаг 5 · Что можно и нельзя сказать на семинаре
         </div>
         <div className="grid md:grid-cols-2 gap-3 text-sm">
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/80 dark:bg-emerald-950/20 p-4">
-            <p className="font-semibold mb-2">Можно сказать осторожно</p>
+            <p className="font-semibold mb-2">Можно осторожно</p>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Цикл держится на сходных профилях служебной лексики.</li>
-              <li>Конtrast с Ахматовой дальше, чем «Бунин–Бунин» — гипотеза различия регистров.</li>
-              <li>Отдельные слова в bar chart — подсказка, куда смотреть в медленном чтении.</li>
+              <li>
+                Рассказы Чехова в нашем наборе сходны по служебной лексике (средняя Δ≈
+                {S.meanDeltaWithinChekhov.toFixed(2)}).
+              </li>
+              <li>
+                Цикл Бунина тоже согласован (Δ≈{S.meanDeltaWithinBunin.toFixed(2)}); на сопоставимой длине —
+                ещё заметнее.
+              </li>
+              <li>
+                Средняя пара Чехов–Бунин дальше внутриавторских средних — гипотеза различия профилей, не
+                «доказательство».
+              </li>
             </ul>
           </div>
           <div className="rounded-xl border border-amber-200 bg-amber-50/80 dark:bg-amber-950/20 p-4">
             <p className="font-semibold mb-2">Нельзя</p>
             <ul className="list-disc pl-5 space-y-2">
-              <li>«Delta=0.8 → точно один автор» / «→ точно Бунин».</li>
-              <li>Игнорировать длину: миниатюры vs новеллы.</li>
+              <li>«Delta=0.7 → точно один автор» / «→ точно Чехов написал Бунина».</li>
+              <li>Сравнивать миниатюру на 400 слов с повестью на 18 000 без оговорки о длине.</li>
               <li>Путать служебный профиль с темой любви или с NER-именами (лекция 6).</li>
             </ul>
           </div>
         </div>
-        <div className="rounded-xl border border-teal-200 bg-teal-50/70 dark:bg-teal-950/25 p-4 text-sm">
-          <strong>Формула для семинара:</strong> «По учебной Delta цикл „Тёмные аллеи“ выглядит стилистически
-          согласованным по служебной лексике (средняя Δ≈{STYLO_CYCLE.summary.meanDeltaWithinBunin.toFixed(2)}).
-          Конtrast с внешним фрагментом сильнее, но метрика не заменяет philological reading и не является
-          экспертизой авторства.»
+        <div className="rounded-xl border border-teal-200 bg-teal-50/70 dark:bg-teal-950/25 p-4 text-sm student-action">
+          <strong>Формула для сдачи:</strong> «По учебной Burrows&apos; Delta рассказы Чехова сходны между собой
+          (средняя Δ≈{S.meanDeltaWithinChekhov.toFixed(2)}), рассказы Бунина — тоже (≈
+          {S.meanDeltaWithinBunin.toFixed(2)}). Средняя Δ между Чеховым и Буниным ≈
+          {S.meanDeltaBuninVsChekhov.toFixed(2)}
+          {S.meanDeltaBuninVsChekhov > S.meanDeltaWithinChekhov
+            ? ' — выше внутричеховской'
+            : ''}
+          . Метрика не заменяет philological reading и не является экспертизой авторства.»
         </div>
       </section>
     </div>
@@ -395,11 +517,11 @@ function PythonGuide() {
     <div className="space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
       <div className="rounded-2xl border-2 border-teal-500 bg-teal-50 dark:bg-teal-950/30 p-4 sm:p-6">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-          Практика в PyCharm · стилиометрия с нуля
+          Практика в PyCharm · Delta на Бунине и Чехове
         </h3>
         <p className="mb-3">
-          Цель: у всей группы одинаково получить матрицу Delta, HTML/Excel и графики по 37 рассказам.
-          Natasha здесь <strong>не нужна</strong> (она — лекция 6).
+          Цель: получить матрицу Delta, HTML/Excel и графики. В ZIP — 37 рассказов Бунина и 14 рассказов Чехова.
+          Natasha здесь <strong>не нужна</strong> (лекция 6).
         </p>
         <div className="rounded-xl bg-white/80 dark:bg-gray-900/60 border border-teal-200 p-3 mb-4 font-mono text-sm">
           <div className="text-xs uppercase font-sans font-bold text-teal-800 mb-1">Папка проекта</div>
@@ -411,81 +533,81 @@ function PythonGuide() {
           href={`${DL}/scripts_stylometry_bunin.zip`}
           download
         >
-          Скачать ZIP (37 текстов + stylometry_lab.py)
+          Скачать ZIP (Бунин + Чехов + stylometry_lab.py)
         </a>
       </div>
 
-      <section className="space-y-3">
-        <h3 className="text-base font-bold text-gray-900 dark:text-white">Шаг 1–3 · Папка, Python, ZIP</h3>
-        <Details title="Создать stylometry_bunin и распаковать ZIP" defaultOpen>
-          <ol className="list-decimal pl-5 space-y-2">
-            <li>Создайте <code>Documents/stylometry_bunin</code> (латиница).</li>
-            <li>Скачайте ZIP выше → распакуйте → скопируйте содержимое в папку проекта.</li>
-            <li>
-              Должно быть:
-              <pre className={codeBox}>{`stylometry_bunin/
+      <Details title="Шаг 1 · Папка и содержимое ZIP" defaultOpen>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>Создайте <code>Documents/stylometry_bunin</code> (латиница).</li>
+          <li>Распакуйте ZIP → скопируйте содержимое в папку проекта.</li>
+          <li>
+            Должно быть:
+            <pre className={codeBox}>{`stylometry_bunin/
   stylometry_lab.py       ← Run
   stylometry_one_pair.py
   stylometry_lib.py
-  sample_texts/           ← 37 txt
+  sample_texts/           ← 37 txt Бунина
+  sample_texts_chekhov/   ← 14 txt Чехова
   stories_meta.json
+  chekhov_meta.json
   requirements.txt
   out/`}</pre>
-            </li>
-          </ol>
-        </Details>
-        <Details title="Python 3">
-          <p>
-            Как в лекции 4:{' '}
+          </li>
+        </ol>
+      </Details>
+
+      <Details title="Шаг 2 · Python + PyCharm + venv">
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            Python 3:{' '}
             <a className="underline" href="https://www.python.org/downloads/" target="_blank" rel="noreferrer">
               python.org/downloads
             </a>
-            , на Windows — галочка Add to PATH.
-          </p>
-        </Details>
-      </section>
-
-      <section className="space-y-3">
-        <h3 className="text-base font-bold">Шаг 4–5 · PyCharm + venv</h3>
-        <ol className="list-decimal pl-5 space-y-2">
-          <li>Open → папка <code>stylometry_bunin</code>.</li>
-          <li>Settings → Python Interpreter → Add Local → Virtualenv → New.</li>
+            , Windows — Add to PATH.
+          </li>
+          <li>PyCharm → Open → папка <code>stylometry_bunin</code>.</li>
+          <li>Settings → Python Interpreter → Add → Virtualenv → New.</li>
+          <li>
+            <pre className={codeBox}>python -m pip install -r requirements.txt</pre>
+            Mac: <code>python3 -m pip …</code>
+          </li>
         </ol>
-      </section>
+      </Details>
 
-      <section className="space-y-3">
-        <h3 className="text-base font-bold">Шаг 6 · pip install</h3>
-        <pre className={codeBox}>python -m pip install -r requirements.txt</pre>
-        <p className="text-xs">Mac: <code>python3 -m pip …</code> · нужны matplotlib, openpyxl.</p>
-      </section>
-
-      <section className="space-y-3">
-        <h3 className="text-base font-bold">Шаг 7 · Run stylometry_lab.py</h3>
-        <p>Зелёный Run без параметров. Смотрите консоль и папку <code>out/</code>.</p>
-        <ul className="list-disc pl-5 space-y-1 text-sm">
-          <li><code>stylometry_bunin.xlsx</code>, <code>report.html</code></li>
-          <li><code>delta_matrix.csv</code>, <code>metrics.csv</code></li>
-          <li><code>plots/</code> — bar charts пар и <code>mds_bunin.png</code></li>
+      <Details title="Шаг 3 · Run и что смотреть в out/">
+        <p>Зелёный Run на <code>stylometry_lab.py</code> без параметров.</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>
+            <code>report.html</code> — средние Δ внутри Чехова / внутри Бунина / между ними
+          </li>
+          <li>
+            <code>delta_matrix.csv</code>, <code>stylometry_bunin.xlsx</code>
+          </li>
+          <li>
+            <code>plots/</code> — bar charts пар и <code>mds_authors.png</code>
+          </li>
         </ul>
-      </section>
+      </Details>
 
-      <section className="space-y-3">
-        <h3 className="text-base font-bold">Шаг 8 · Что сдавать</h3>
+      <Details title="Шаг 4 · Что сдавать">
         <ul className="list-disc pl-5 space-y-2">
-          <li>report.html или скрин витринной пары «Бунин vs Ахматова»</li>
-          <li>Один PNG bar chart + 3–5 предложений: почему Delta ≠ атрибуция</li>
-          <li>Сравните цифры с вкладкой «Разбор цикла» на сайте</li>
+          <li>Скрин или цитата из report.html: три средних Delta</li>
+          <li>Один PNG: пресет «Чехов ↔ Чехов» и один «Чехов ↔ Бунин»</li>
+          <li>3–5 предложений по формуле с вкладки «Разбор» (можно / нельзя)</li>
         </ul>
-      </section>
+      </Details>
 
-      <section className="space-y-3">
-        <h3 className="text-base font-bold">Если не запускается</h3>
-        <ul className="list-disc pl-5 space-y-2 text-sm">
-          <li><strong>No module named stylometry_lib</strong> — .py не в корне stylometry_bunin.</li>
-          <li><strong>No module named matplotlib</strong> — повторите pip install.</li>
-          <li><strong>sample_texts пуст</strong> — перераспакуйте ZIP без лишней вложенности.</li>
+      <Details title="Если не запускается">
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>No module named stylometry_lib</strong> — .py не в корне папки проекта.
+          </li>
+          <li>
+            <strong>sample_texts_chekhov пуст</strong> — перераспакуйте ZIP без лишней вложенности.
+          </li>
         </ul>
-      </section>
+      </Details>
     </div>
   )
 }
@@ -496,10 +618,10 @@ export function StylometryLesson() {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         <button type="button" className={tabBtn(tab === 'cycle')} onClick={() => setTab('cycle')}>
-          1 · Разбор цикла
+          1 · Чехов и Бунин
         </button>
         <button type="button" className={tabBtn(tab === 'python')} onClick={() => setTab('python')}>
-          2 · Python и PyCharm с нуля
+          2 · Python и PyCharm
         </button>
       </div>
       {tab === 'cycle' && <CycleExplorer />}

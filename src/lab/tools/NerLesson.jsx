@@ -66,59 +66,141 @@ function HighlightedText({ text, spans }) {
   )
 }
 
-function CycleExplorer() {
+/** Pipeline diagram: text → tokens → NER tags → list */
+function PipelineViz() {
+  const steps = [
+    { t: 'Текст', d: '«Холодная осень»…' },
+    { t: 'Сегментация', d: 'предложения, токены (Razdel)' },
+    { t: 'NER-модель', d: 'Slovnet + Navec' },
+    { t: 'Сущности', d: 'PER / LOC / ORG' },
+    { t: 'Аудит', d: 'вы черкаете FP глазами' },
+  ]
+  return (
+    <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 overflow-x-auto">
+      <div className="flex flex-wrap items-stretch gap-2 min-w-[640px]">
+        {steps.map((s, i) => (
+          <div key={s.t} className="flex items-center gap-2">
+            <div className="rounded-xl border border-teal-200 dark:border-teal-800 bg-teal-50/80 dark:bg-teal-950/30 px-3 py-2 w-36">
+              <div className="text-xs font-bold text-teal-800 dark:text-teal-300">
+                {i + 1}. {s.t}
+              </div>
+              <div className="text-[11px] text-gray-600 dark:text-gray-400 mt-1 leading-snug">{s.d}</div>
+            </div>
+            {i < steps.length - 1 && <span className="text-teal-600 font-bold">→</span>}
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-gray-500 mt-3">
+        Natasha = удобный API над проектами{' '}
+        <a className="underline" href="https://natasha.github.io" target="_blank" rel="noreferrer">
+          natasha.github.io
+        </a>
+        : Razdel, Navec, Slovnet, Yargy, Ipymarkup.
+      </p>
+    </div>
+  )
+}
+
+function TypeCards() {
+  const cards = [
+    {
+      type: 'PER',
+      color: NER_CYCLE.typeColors.PER,
+      ex: 'Надежда, Николай Алексеевич',
+      tip: 'Имя человека. Не путать с обращением «Хозяйка».',
+    },
+    {
+      type: 'LOC',
+      color: NER_CYCLE.typeColors.LOC,
+      ex: 'Москва, Сараево, Галиция',
+      tip: 'Место. В военных рассказах часто важнее PER.',
+    },
+    {
+      type: 'ORG',
+      color: NER_CYCLE.typeColors.ORG,
+      ex: 'редко в «Тёмных аллеях»',
+      tip: 'Организация. В художественной прозе почти нет.',
+    },
+    {
+      type: 'UNK',
+      color: NER_CYCLE.typeColors.UNK || '#94a3b8',
+      ex: 'Как, Приезжий, Уходи',
+      tip: 'На сайте: «слово с заглавной» ≠ сущность. Проверяйте.',
+    },
+  ]
+  return (
+    <div className="grid sm:grid-cols-2 gap-3">
+      {cards.map((c) => (
+        <div
+          key={c.type}
+          className="rounded-xl border p-4"
+          style={{ borderColor: `${c.color}66`, background: `${c.color}14` }}
+        >
+          <div className="font-mono font-bold text-lg" style={{ color: c.color }}>
+            {c.type}
+          </div>
+          <div className="text-sm font-medium mt-1">{NER_CYCLE.typeLabels[c.type] || c.type}</div>
+          <div className="text-xs font-mono text-gray-600 dark:text-gray-400 mt-2">{c.ex}</div>
+          <p className="text-sm mt-2 text-gray-700 dark:text-gray-300">{c.tip}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ConceptsAndResults() {
   const demoSlugs = Object.keys(NER_CYCLE.demoTexts)
   const [demoSlug, setDemoSlug] = useState(demoSlugs.includes('holodnaya-osen') ? 'holodnaya-osen' : demoSlugs[0])
   const [storySlug, setStorySlug] = useState('temnye-allei')
   const [removed, setRemoved] = useState(() => new Set())
-  const [audit, setAudit] = useState('')
 
   const demo = NER_CYCLE.demoTexts[demoSlug]
   const story = NER_CYCLE.stories.find((s) => s.slug === storySlug) || NER_CYCLE.stories[0]
-
-  const visibleCandidates = useMemo(
+  const visible = useMemo(
     () => story.candidates.filter((c) => !removed.has(c.label.toLowerCase())),
     [story, removed]
   )
 
-  const toggleRemove = (label) => {
-    const k = label.toLowerCase()
-    setRemoved((prev) => {
-      const n = new Set(prev)
-      if (n.has(k)) n.delete(k)
-      else n.add(k)
-      return n
-    })
-  }
+  const maxCount = Math.max(...Object.values(story.counts), 1)
 
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border-2 border-teal-400 dark:border-teal-600 bg-teal-50/70 dark:bg-teal-950/25 p-4 sm:p-6 space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 1 · Что такое NER
+          Лекция 6 · зачем NER
         </div>
         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-          Named Entity Recognition — найти в тексте имена, места, организации
+          Кто и где в тексте — и как поставить Natasha у себя на ноутбуке
         </h3>
         <p className="text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed">
-          Для цифрового чтения Бунина NER отвечает на вопрос: <strong>кто и где</strong> в потоке слов?
-          Типы (схема OntoNotes / Natasha): <strong>PER</strong> — персона, <strong>LOC</strong> — место,{' '}
-          <strong>ORG</strong> — организация. На сайте — учебная подсветка; в PyCharm — библиотека{' '}
-          <strong>Natasha</strong> (лекция 6). Стилиометрия (Delta) — лекция 5, другой инструмент.
+          Стилиометрия (лекция 5) сравнивает <em>как</em> написано (служебные слова). NER отвечает на другой
+          вопрос: <strong>какие имена и места</strong> модель выделяет в потоке. Главное умение занятия — не
+          «поверить Natasha», а <strong>установить библиотеку и проверить ложные срабатывания</strong>.
         </p>
-        <div className="flex flex-wrap gap-3 text-xs font-semibold">
-          {Object.entries(NER_CYCLE.typeLabels).map(([k, lab]) => (
-            <span key={k} className="px-2 py-1 rounded-lg border" style={{ borderColor: NER_CYCLE.typeColors[k] }}>
-              {k}: {lab}
-            </span>
-          ))}
+      </section>
+
+      <section className="space-y-3">
+        <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
+          Понятие 1 · Конвейер Natasha
         </div>
+        <PipelineViz />
+      </section>
+
+      <section className="space-y-3">
+        <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
+          Понятие 2 · Типы сущностей
+        </div>
+        <TypeCards />
       </section>
 
       <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 2 · Интерактивная подсветка (фрагменты)
+          Визуализация · подсветка фрагмента (учебная)
         </div>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          На сайте — заранее размеченный пример, чтобы понять идею. «Настоящая» Natasha — во вкладке «Установка»
+          и в ZIP.
+        </p>
         <div className="flex flex-wrap gap-2">
           {demoSlugs.map((slug) => (
             <button
@@ -135,18 +217,15 @@ function CycleExplorer() {
         </div>
         <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 sm:p-5">
           <HighlightedText text={demo?.text} spans={demo?.spans} />
-          <p className="text-xs text-gray-500 mt-3">
-            UNK (серый) — «проверить глазами»: заглавная буква ≠ имя. PER/LOC — гипотеза модели/разметки.
-          </p>
         </div>
       </section>
 
       <section className="space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 3 · Кандидаты по рассказам цикла
+          Визуализация · счётчики по рассказу + аудит FP
         </div>
         <label className="block text-sm">
-          Рассказ
+          Рассказ цикла
           <select
             className="mt-1 w-full max-w-md rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-2"
             value={storySlug}
@@ -158,32 +237,37 @@ function CycleExplorer() {
             {NER_CYCLE.stories.map((s) => (
               <option key={s.slug} value={s.slug}>
                 {s.part ? `Ч.${s.part} · ` : ''}
-                {s.title} (PER={s.counts.PER}, LOC={s.counts.LOC}, UNK={s.counts.UNK})
+                {s.title}
               </option>
             ))}
           </select>
         </label>
-        <div className="grid sm:grid-cols-3 gap-2 text-center text-sm">
-          <div className="rounded-xl bg-teal-50 dark:bg-teal-950/30 p-3">
-            <div className="text-xl font-bold">{story.counts.PER}</div>
-            <div className="text-xs">PER</div>
-          </div>
-          <div className="rounded-xl bg-amber-50 dark:bg-amber-950/30 p-3">
-            <div className="text-xl font-bold">{story.counts.LOC}</div>
-            <div className="text-xs">LOC</div>
-          </div>
-          <div className="rounded-xl bg-gray-100 dark:bg-gray-800 p-3">
-            <div className="text-xl font-bold">{story.counts.UNK}</div>
-            <div className="text-xs">проверить</div>
-          </div>
+        <div className="space-y-2 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+          {['PER', 'LOC', 'UNK'].map((k) => (
+            <div key={k} className="flex items-center gap-3 text-sm">
+              <span className="w-12 font-mono font-bold" style={{ color: NER_CYCLE.typeColors[k] }}>
+                {k}
+              </span>
+              <div className="flex-1 h-3 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${(story.counts[k] / maxCount) * 100}%`,
+                    background: NER_CYCLE.typeColors[k],
+                  }}
+                />
+              </div>
+              <span className="w-8 text-right font-bold tabular-nums">{story.counts[k]}</span>
+            </div>
+          ))}
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Клик по строке — «вычеркнуть» ложный кандидат (учебный аудит). Корпус:{' '}
+          Клик «вычеркнуть» — учебный аудит ложных кандидатов (часто слова с заглавной). Корпус:{' '}
           <Link className="underline" to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei">
             «Тёмные аллеи»
           </Link>
         </p>
-        <div className="overflow-auto max-h-80 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div className="overflow-auto max-h-72 rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead className="sticky top-0 bg-gray-100 dark:bg-gray-900">
               <tr className="text-left">
@@ -194,7 +278,7 @@ function CycleExplorer() {
               </tr>
             </thead>
             <tbody>
-              {story.candidates.slice(0, 25).map((c) => {
+              {story.candidates.slice(0, 20).map((c) => {
                 const out = removed.has(c.label.toLowerCase())
                 return (
                   <tr
@@ -203,19 +287,22 @@ function CycleExplorer() {
                   >
                     <td className="p-2 font-medium">{c.label}</td>
                     <td className="p-2">{c.count}</td>
-                    <td className="p-2">
-                      <span
-                        className="text-xs font-bold px-1.5 py-0.5 rounded"
-                        style={{ color: NER_CYCLE.typeColors[c.type] }}
-                      >
-                        {c.type}
-                      </span>
+                    <td className="p-2 font-mono text-xs" style={{ color: NER_CYCLE.typeColors[c.type] }}>
+                      {c.type}
                     </td>
                     <td className="p-2">
                       <button
                         type="button"
                         className="text-xs underline text-teal-700 dark:text-teal-400"
-                        onClick={() => toggleRemove(c.label)}
+                        onClick={() => {
+                          const k = c.label.toLowerCase()
+                          setRemoved((prev) => {
+                            const n = new Set(prev)
+                            if (n.has(k)) n.delete(k)
+                            else n.add(k)
+                            return n
+                          })
+                        }}
                       >
                         {out ? 'вернуть' : 'вычеркнуть'}
                       </button>
@@ -226,12 +313,12 @@ function CycleExplorer() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs">Осталось после аудита: {visibleCandidates.length} кандидатов</p>
+        <p className="text-xs">После аудита осталось: {visible.length} из {Math.min(20, story.candidates.length)}</p>
       </section>
 
       <section className="space-y-3">
         <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 4 · Ловушки (false positive)
+          Ловушки · false positive / false negative
         </div>
         <ul className="space-y-2 text-sm">
           {NER_CYCLE.traps.map((t) => (
@@ -240,43 +327,21 @@ function CycleExplorer() {
             </li>
           ))}
         </ul>
-      </section>
-
-      <section className="space-y-3">
-        <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 5 · Упражнение: аудит одной фразой
-        </div>
-        <label className="block student-action rounded-xl border border-amber-300 bg-amber-50/80 dark:bg-amber-950/20 p-4 text-sm font-semibold">
-          Запишите: 2 ложных кандидата, 1 пропущенное имя, 1 правило («не считать PER, если…»)
-          <textarea
-            value={audit}
-            onChange={(e) => setAudit(e.target.value)}
-            rows={4}
-            className="mt-2 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-2 font-normal"
-          />
-        </label>
-        <p className="text-sm text-gray-600 dark:text-gray-400">{NER_CYCLE.natashaNote}</p>
-      </section>
-
-      <section className="space-y-3">
-        <div className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-300">
-          Шаг 6 · Границы вывода
-        </div>
         <div className="grid md:grid-cols-2 gap-3 text-sm">
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/80 dark:bg-emerald-950/20 p-4">
             <p className="font-semibold mb-2">Можно</p>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Строить список персонажей/мест как гипотезу для чтения.</li>
-              <li>Сравнивать эвристику сайта и Natasha в PyCharm.</li>
-              <li>Документировать правки словаря — часть метода.</li>
+              <li>Ставить Natasha локально и строить список PER/LOC как гипотезу.</li>
+              <li>Сравнивать Natasha и «слова с заглавной» (эвристика).</li>
+              <li>Документировать FP/FN — это и есть метод DH.</li>
             </ul>
           </div>
           <div className="rounded-xl border border-rose-200 bg-rose-50/80 dark:bg-rose-950/20 p-4">
             <p className="font-semibold mb-2">Нельзя</p>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Печатать «Natasha нашла всех героев» без ручной проверки.</li>
+              <li>«Natasha нашла всех героев» без проверки.</li>
               <li>Путать LOC (Сараево) с PER.</li>
-              <li>Использовать NER вместо стилиометрии для авторства.</li>
+              <li>Использовать NER вместо Delta для авторства (лекция 5).</li>
             </ul>
           </div>
         </div>
@@ -285,78 +350,168 @@ function CycleExplorer() {
   )
 }
 
-function PythonGuide() {
+function InstallGuide() {
   const codeBox =
     'mt-2 mb-4 overflow-x-auto rounded-xl bg-gray-900 text-gray-100 p-4 text-[13px] leading-relaxed font-mono'
 
   return (
     <div className="space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
       <div className="rounded-2xl border-2 border-teal-500 bg-teal-50 dark:bg-teal-950/30 p-4 sm:p-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Natasha в PyCharm</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Natasha на своём компьютере
+        </h3>
         <p className="mb-3">
-          Папка <code>ner_bunin</code>, главный файл <code>ner_natasha_lab.py</code>. Первый запуск скачает
-          модели — 1–5 минут. Сравните с <code>ner_heuristic_lab.py</code> и подсветкой на сайте.
+          Официальный сайт проекта:{' '}
+          <a className="underline font-semibold" href="https://natasha.github.io" target="_blank" rel="noreferrer">
+            natasha.github.io
+          </a>
+          . Код:{' '}
+          <a
+            className="underline font-semibold"
+            href="https://github.com/natasha/natasha"
+            target="_blank"
+            rel="noreferrer"
+          >
+            github.com/natasha/natasha
+          </a>
+          . Для занятия достаточно <code>pip install natasha</code>; ниже — и pip, и клон репозитория для
+          любознательных.
         </p>
         <a
           className="inline-flex px-4 py-2.5 rounded-xl bg-teal-700 text-white font-semibold hover:bg-teal-800"
           href={`${DL}/scripts_ner_natasha_bunin.zip`}
           download
         >
-          Скачать ZIP (4 рассказа + Natasha lab)
+          Скачать учебный ZIP (скрипты + 4 рассказа)
         </a>
       </div>
 
-      <Details title="Шаг 1 · Папка ner_bunin и ZIP" defaultOpen>
+      <Details title="Вариант A · быстрее всего: pip install (рекомендуется)" defaultOpen>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            Создайте папку <code>Documents/ner_bunin</code> (латиница).
+          </li>
+          <li>Распакуйте ZIP выше внутрь папки.</li>
+          <li>
+            PyCharm → Open → эта папка → New Virtualenv.
+          </li>
+          <li>
+            Terminal:
+            <pre className={codeBox}>{`python -m pip install -r requirements.txt
+# Mac:
+python3 -m pip install -r requirements.txt`}</pre>
+          </li>
+          <li>
+            Run <code>ner_natasha_lab.py</code> → откройте <code>out/ner_report.html</code>.
+          </li>
+        </ol>
+        <p className="text-xs text-gray-500">
+          Первый запуск скачивает модели Navec/Slovnet (десятки–сотни МБ) — подождите 1–5 минут.
+        </p>
+      </Details>
+
+      <Details title="Вариант B · клон с GitHub (как на natasha.github.io)">
+        <p>
+          Если хотите «потрогать» исходники проекта (не обязательно для сдачи):
+        </p>
+        <pre className={codeBox}>{`# в Documents/
+git clone https://github.com/natasha/natasha.git
+cd natasha
+python -m pip install -e .
+
+# документация и примеры — в README репозитория
+# сайт: https://natasha.github.io`}</pre>
+        <p>
+          Учебные скрипты курса всё равно держите в <code>ner_bunin/</code> из ZIP — они заточены под «Тёмные
+          аллеи». Клон Natasha — справочник API, не замена лабораторной.
+        </p>
+        <p>
+          В ZIP также есть файл <code>clone_natasha.sh</code> / <code>clone_natasha.bat</code> — он клонирует
+          репозиторий рядом с вашей папкой.
+        </p>
+      </Details>
+
+      <Details title="Структура папки ner_bunin" defaultOpen>
         <pre className={codeBox}>{`ner_bunin/
-  ner_natasha_lab.py      ← Run (все sample_texts)
-  ner_heuristic_lab.py    ← без Natasha
+  ner_natasha_lab.py       ← главный Run (Natasha)
+  ner_heuristic_lab.py     ← без Natasha: «слова с заглавной»
   sample_texts/
-    temnye-allei.txt      ← начните с этого
+    temnye-allei.txt       ← начните с этого
     holodnaya-osen.txt
     natali.txt
     chistyj-ponedelnik.txt
-  requirements.txt
-  out/`}</pre>
+  requirements.txt         ← natasha, openpyxl
+  SETUP.md                 ← эта инструкция текстом
+  clone_natasha.sh / .bat
+  out/                     ← HTML, CSV, Excel после Run`}</pre>
       </Details>
 
-      <Details title="Шаг 2 · venv + pip install natasha">
-        <pre className={codeBox}>python -m pip install -r requirements.txt</pre>
-        <p>Mac: <code>python3</code>. При ошибке сети — повторите; модели крупные.</p>
+      <Details title="Минимальный код Natasha (что происходит внутри)">
+        <pre className={codeBox}>{`from natasha import (
+    Segmenter, MorphVocab, NewsEmbedding,
+    NewsNERTagger, Doc
+)
+
+segmenter = Segmenter()
+morph = MorphVocab()
+emb = NewsEmbedding()
+ner = NewsNERTagger(emb)
+
+doc = Doc(open("sample_texts/temnye-allei.txt", encoding="utf-8").read())
+doc.segment(segmenter)
+doc.tag_ner(ner)
+for span in doc.spans:
+    span.normalize(morph)
+    print(span.type, span.normal or span.text)`}</pre>
+        <p>
+          Модели заточены под <strong>новости</strong>; на художественной прозе качество ниже — поэтому аудит
+          обязателен.
+        </p>
       </Details>
 
-      <Details title="Шаг 3 · Run и out/">
+      <Details title="Что сдавать">
         <ol className="list-decimal pl-5 space-y-2">
-          <li>Run <code>ner_natasha_lab.py</code> без параметров.</li>
-          <li>Откройте <code>out/ner_report.html</code> и <code>ner_entities.csv</code>.</li>
-          <li>Run <code>ner_heuristic_lab.py sample_texts/holodnaya-osen.txt</code> — сравните ложные PER.</li>
-          <li>Сдайте: 2 FP + 1 FN + одно правило, как на вкладке «Разбор цикла».</li>
+          <li>
+            Скрин <code>out/ner_report.html</code> или CSV с PER/LOC по одному рассказу.
+          </li>
+          <li>
+            2 false positive + 1 false negative + одно правило («не считать PER, если…»).
+          </li>
+          <li>
+            Опционально: сравнение с <code>ner_heuristic_lab.py</code> — сколько лишних «имён» дала заглавная
+            буква.
+          </li>
         </ol>
       </Details>
 
       <Details title="Если Natasha не ставится">
-        <p>
-          На занятии достаточно <code>ner_heuristic_lab.py</code>, но в отчёте укажите: «Natasha не
-          установлена — эвристика». Для полной лаборатории Natasha обязательна.
-        </p>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Проверьте Python 3.8+ и что pip идёт в venv PyCharm.</li>
+          <li>Повторите pip при обрыве сети (модели крупные).</li>
+          <li>
+            На занятии можно сдать эвристику + запись «Natasha не установилась», но для полного зачёта нужен
+            вариант A.
+          </li>
+        </ul>
       </Details>
     </div>
   )
 }
 
 export function NerLesson() {
-  const [tab, setTab] = useState('cycle')
+  const [tab, setTab] = useState('install')
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
-        <button type="button" className={tabBtn(tab === 'cycle')} onClick={() => setTab('cycle')}>
-          1 · Разбор цикла
+        <button type="button" className={tabBtn(tab === 'install')} onClick={() => setTab('install')}>
+          1 · Установка Natasha
         </button>
-        <button type="button" className={tabBtn(tab === 'python')} onClick={() => setTab('python')}>
-          2 · Python и Natasha
+        <button type="button" className={tabBtn(tab === 'concepts')} onClick={() => setTab('concepts')}>
+          2 · Понятия и результаты
         </button>
       </div>
-      {tab === 'cycle' && <CycleExplorer />}
-      {tab === 'python' && <PythonGuide />}
+      {tab === 'install' && <InstallGuide />}
+      {tab === 'concepts' && <ConceptsAndResults />}
     </div>
   )
 }

@@ -8,6 +8,7 @@ import CoursePage from './pages/CoursePage'
 import LabHub from './pages/LabHub'
 import LabWork from './pages/LabWork'
 import BuninReader from './pages/BuninReader'
+import ChekhovReader from './pages/ChekhovReader'
 import LeerssenLecture from './pages/LeerssenLecture'
 
 function LabWorkRedirect() {
@@ -52,6 +53,14 @@ function App() {
                 <Route
                   path="/courses/digital-humanities/demo/corpus/bunin-temnye-allei/:storySlug"
                   element={<BuninReader />}
+                />
+                <Route
+                  path="/courses/digital-humanities/demo/corpus/chekhov-rasskazy"
+                  element={<ChekhovReader />}
+                />
+                <Route
+                  path="/courses/digital-humanities/demo/corpus/chekhov-rasskazy/:storySlug"
+                  element={<ChekhovReader />}
                 />
                 <Route path="/courses/digital-humanities/demo/:workSlug" element={<LabWork />} />
                 <Route path="/courses/digital-humanities/lab" element={<Navigate to="/courses/digital-humanities/demo" replace />} />

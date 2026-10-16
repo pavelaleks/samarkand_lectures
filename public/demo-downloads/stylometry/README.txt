@@ -1,32 +1,36 @@
-Стилиометрия (Burrows' Delta) · полная лаборатория (лекция 5)
-=============================================================
+Стилиометрия (Burrows' Delta) · Бунин + Чехов (лекция 5)
+=======================================================
 
-ОБЯЗАТЕЛЬНАЯ ПАПКА У ВСЕХ:
+ОБЯЗАТЕЛЬНАЯ ПАПКА:
   Documents/stylometry_bunin
 
 ГЛАВНЫЙ ФАЙЛ (Run один раз):
   stylometry_lab.py
 
 После Run смотрите out/:
-  stylometry_bunin.xlsx — метрики, матрица Delta, витринные пары
-  report.html           — отчёт для браузера / Word
-  delta_matrix.csv      — все попарные Delta
-  metrics.csv           — токены, доля служебных слов, MDS-координаты
-  plots/                — bar charts |Δ| служебных слов + карта MDS
-
-Быстрый старт:
-  stylometry_one_pair.py — только «Холодная осень» vs «Кавказ»
+  stylometry_bunin.xlsx — summary + матрица Delta + витринные пары
+  report.html           — три средних: внутри Чехова / Бунина / между
+  delta_matrix.csv
+  metrics.csv
+  plots/mds_authors.png — красный Чехов, бирюзовый Бунин
 
 Файлы:
-  stylometry_lib.py     — библиотека (не Run)
-  sample_texts/         — 37 рассказов цикла
-  stories_meta.json     — названия и части
+  sample_texts/           — 37 рассказов Бунина
+  sample_texts_chekhov/   — 14 рассказов Чехова
+  stories_meta.json
+  chekhov_meta.json
+  stylometry_lib.py
+  stylometry_one_pair.py
 
-Установка один раз в Terminal PyCharm:
+Установка:
   python -m pip install -r requirements.txt
-  (Mac: python3 -m pip install -r requirements.txt)
 
-Natasha (NER) — лекция 6, здесь не нужна.
+Логика занятия:
+  1) средняя Delta внутри Чехова — авторы похожи на себя
+  2) средняя Delta внутри Бунина — единство цикла
+  3) средняя Delta Чехов↔Бунин — обычно дальше
 
-Подробная инструкция на сайте:
+Natasha (NER) — лекция 6.
+
+Сайт:
 https://pavelaleks.github.io/samarkand_lectures/courses/digital-humanities/demo/delta

@@ -3205,11 +3205,13 @@ export const NER_CYCLE = {
   "typeColors": {
     "PER": "#0d9488",
     "LOC": "#d97706",
+    "ORG": "#7c3aed",
     "UNK": "#94a3b8"
   },
   "typeLabels": {
     "PER": "Персона / имя",
     "LOC": "Место",
+    "ORG": "Организация",
     "UNK": "Неясно / проверить"
   },
   "natashaNote": "Natasha — промышленный русский NLP-стек (сегментация, морфология, NER). На сайте — учебная эвристика; «настоящая» Natasha — в PyCharm."
