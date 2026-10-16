@@ -10,6 +10,8 @@ import {
 } from './guided'
 import { ZipfBuild } from './ZipfBuild'
 import { ZipfLesson } from './ZipfLesson'
+import { StylometryLesson } from './StylometryLesson'
+import { NerLesson } from './NerLesson'
 
 const TOOLS = {
   CloseDistant,
@@ -18,7 +20,9 @@ const TOOLS = {
   Frequencies,
   ZipfBuild,
   ZipfLesson,
+  StylometryLesson,
   StylometryLite,
+  NerLesson,
   NerLite,
   NetworkLab,
   SentimentLab,
