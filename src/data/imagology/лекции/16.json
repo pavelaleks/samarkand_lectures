@@ -1,6 +1,31 @@
 {
   "number": "16",
   "title": "Лермонтов и Восток: «Восточный текст» в поэтике романтизма.",
-  "id": "imagology-16"
+  "id": "imagology-16",
+  "readings": [
+    {
+      "displayName": "Ходанен. Культурный концепт «Кавказ»",
+      "url": "https://cyberleninka.ru/article/n/kulturnyy-kontsept-kavkaz-i-ego-tekstoobrazuyuschaya-rol-v-tvorchestve-a-s-pushkina-i-m-yu-lermontova"
+    },
+    {
+      "displayName": "Лермонтов. Мцыри",
+      "url": "https://ru.wikisource.org/wiki/%D0%9C%D1%86%D1%8B%D1%80%D0%B8_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    },
+    {
+      "displayName": "Лермонтов. Валерик",
+      "url": "https://ru.wikisource.org/wiki/%D0%92%D0%B0%D0%BB%D0%B5%D1%80%D0%B8%D0%BA_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    },
+    {
+      "displayName": "Лермонтов. Измаил-Бей",
+      "url": "https://ru.wikisource.org/wiki/%D0%98%D0%B7%D0%BC%D0%B0%D0%B8%D0%BB-%D0%91%D0%B5%D0%B9_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    },
+    {
+      "displayName": "Лермонтов. Дары Терека",
+      "url": "https://ru.wikisource.org/wiki/%D0%94%D0%B0%D1%80%D1%8B_%D0%A2%D0%B5%D1%80%D0%B5%D0%BA%D0%B0_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    },
+    {
+      "displayName": "Лермонтов. Тамара",
+      "url": "https://ru.wikisource.org/wiki/%D0%A2%D0%B0%D0%BC%D0%B0%D1%80%D0%B0_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    }
+  ]
 }
-

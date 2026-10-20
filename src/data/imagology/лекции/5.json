@@ -1,6 +1,31 @@
 {
   "number": "5",
   "title": "Имагология и ориентализм: С. Саид и его критики.",
-  "id": "imagology-5"
+  "id": "imagology-5",
+  "readings": [
+    {
+      "displayName": "Словарь имагологии: Orientalism",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100687"
+    },
+    {
+      "displayName": "Словарь имагологии: East / West",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099697"
+    },
+    {
+      "displayName": "Словарь имагологии: Exoticism",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099702"
+    },
+    {
+      "displayName": "Цибенко. Между ориентализмом и ориентологией",
+      "url": "https://cyberleninka.ru/article/n/mezhdu-orientalizmom-i-orientologiey-nauchnye-podhody-k-izucheniyu-kavkaza"
+    },
+    {
+      "displayName": "Лермонтов. Спор",
+      "url": "https://ru.wikisource.org/wiki/%D0%A1%D0%BF%D0%BE%D1%80_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    },
+    {
+      "displayName": "Пушкин. Делибаш",
+      "url": "https://ru.wikisource.org/wiki/%D0%94%D0%B5%D0%BB%D0%B8%D0%B1%D0%B0%D1%88_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)"
+    }
+  ]
 }
-

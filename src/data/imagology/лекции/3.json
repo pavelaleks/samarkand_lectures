@@ -1,6 +1,31 @@
 {
   "number": "3",
   "title": "Нация, этничность и стереотип. Этнотип по статье Юпа Лейрсена.",
-  "id": "imagology-3"
+  "id": "imagology-3",
+  "readings": [
+    {
+      "displayName": "Справочник этнотипов Беллера и Лерссена",
+      "url": "https://imagologica.eu/ethnotypology"
+    },
+    {
+      "displayName": "Словарь имагологии: Stereotype",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100794"
+    },
+    {
+      "displayName": "Словарь имагологии: Character",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8085252"
+    },
+    {
+      "displayName": "Словарь имагологии: Cliché",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099687"
+    },
+    {
+      "displayName": "Словарь имагологии: North / South",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100685"
+    },
+    {
+      "displayName": "Словарь имагологии: Prejudice",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100776"
+    }
+  ]
 }
-

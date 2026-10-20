@@ -1,6 +1,31 @@
 {
   "number": "17",
   "title": "ХХ век: постколониальный поворот в имагологии.",
-  "id": "imagology-17"
+  "id": "imagology-17",
+  "readings": [
+    {
+      "displayName": "Edtstadler, Folie, Zocco. New Perspectives on Imagology (2022)",
+      "url": "https://archive.org/details/oapen-20.500.12657-61181"
+    },
+    {
+      "displayName": "Словарь имагологии: Identity / hybridity",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099720"
+    },
+    {
+      "displayName": "Словарь имагологии: Ethnocentrism",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099701"
+    },
+    {
+      "displayName": "Гафарова. Постколониальный подход в исследованиях медиа",
+      "url": "https://cyberleninka.ru/article/n/postkolonialnyy-podhod-v-issledovaniyah-media-i-povedeniya-polzovateley"
+    },
+    {
+      "displayName": "Имагология как метод исследования медиаобразов",
+      "url": "https://cyberleninka.ru/article/n/imagologiya-kak-novyy-metod-issledovaniya-mediaobrazov-stran-v-inokulture"
+    },
+    {
+      "displayName": "Образ Сахеля как «Другого»: постколониальный анализ",
+      "url": "https://cyberleninka.ru/article/n/konstruirovanie-obraza-sahelya-kak-drugogo-v-amerikanskom-i-afrikanskom-mediadiskurse-postkolonialnyy-analiz"
+    }
+  ]
 }
-

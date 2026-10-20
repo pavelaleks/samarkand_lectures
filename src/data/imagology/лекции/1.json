@@ -1,5 +1,31 @@
 {
   "number": "1",
   "title": "Рождение имагологии: Гийар, Дизеринк, образ и мираж.",
-  "id": "imagology-1"
+  "id": "imagology-1",
+  "readings": [
+    {
+      "displayName": "Гийар. L’étranger tel qu’on le voit (1951)",
+      "url": "https://imagologica.eu/CMS/upload/guyard.pdf"
+    },
+    {
+      "displayName": "Дизеринк. Zum Problem der images und mirages (1966)",
+      "url": "https://imagologica.eu/CMS/upload/dyser.pdf"
+    },
+    {
+      "displayName": "Лерссен. Краткое изложение теории имагологии",
+      "url": "https://imagologica.eu/theoreticalsummary"
+    },
+    {
+      "displayName": "Поляков. Имагология. Учебное пособие (ВятГУ, 2015)",
+      "url": "http://iweb.vyatsu.ru/document/material/10/%D0%9F%D0%BE%D0%BB%D1%8F%D0%BA%D0%BE%D0%B2%20%D0%98%D0%BC%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F.pdf"
+    },
+    {
+      "displayName": "Поляков. Становление категориального аппарата имагологии",
+      "url": "https://cyberleninka.ru/article/n/stanovlenie-i-razvitie-kategorialnogo-apparata-imagologii"
+    },
+    {
+      "displayName": "Аминева. Теоретические основы сравнительного литературоведения",
+      "url": "https://dspace.kpfu.ru/xmlui/bitstream/handle/net/21473/10_153_A5-000526.pdf"
+    }
+  ]
 }

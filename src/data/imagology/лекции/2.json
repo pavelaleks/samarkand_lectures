@@ -1,5 +1,31 @@
 {
   "number": "2",
   "title": "Метод имагологии и транскультурный поворот: Лерссен, Чжоу Нин.",
-  "id": "imagology-2"
+  "id": "imagology-2",
+  "readings": [
+    {
+      "displayName": "Лерссен. Imagology: On using ethnicity to make sense of the world (2016)",
+      "url": "https://imagologica.eu/CMS/upload/Imagology2016.pdf"
+    },
+    {
+      "displayName": "Чжоу Нин. Concepts and Methods of Transcultural Imagology",
+      "url": "https://imagologica.eu/CMS/upload/ZhouLin2.pdf"
+    },
+    {
+      "displayName": "Словарь имагологии: Image",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099725"
+    },
+    {
+      "displayName": "Словарь имагологии: Type / typicality",
+      "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100907"
+    },
+    {
+      "displayName": "Imagologica. On Imagology",
+      "url": "https://imagologica.eu/aboutimagology"
+    },
+    {
+      "displayName": "Imagologica. Bibliography",
+      "url": "https://imagologica.eu/bibliography"
+    }
+  ]
 }

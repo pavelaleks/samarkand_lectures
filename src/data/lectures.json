@@ -928,79 +928,358 @@
       "id": "imagology-1",
       "htmlFile": "src/data/imagology/лекции/1.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/1.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Гийар. L’étranger tel qu’on le voit (1951)",
+          "url": "https://imagologica.eu/CMS/upload/guyard.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Дизеринк. Zum Problem der images und mirages (1966)",
+          "url": "https://imagologica.eu/CMS/upload/dyser.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лерссен. Краткое изложение теории имагологии",
+          "url": "https://imagologica.eu/theoreticalsummary",
+          "kind": "link"
+        },
+        {
+          "displayName": "Поляков. Имагология. Учебное пособие (ВятГУ, 2015)",
+          "url": "http://iweb.vyatsu.ru/document/material/10/%D0%9F%D0%BE%D0%BB%D1%8F%D0%BA%D0%BE%D0%B2%20%D0%98%D0%BC%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Поляков. Становление категориального аппарата имагологии",
+          "url": "https://cyberleninka.ru/article/n/stanovlenie-i-razvitie-kategorialnogo-apparata-imagologii",
+          "kind": "link"
+        },
+        {
+          "displayName": "Аминева. Теоретические основы сравнительного литературоведения",
+          "url": "https://dspace.kpfu.ru/xmlui/bitstream/handle/net/21473/10_153_A5-000526.pdf",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "10",
       "title": "Имагология и перевод: посредничество и трансфер.",
       "id": "imagology-10",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/10.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/10.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Эвен-Зохар. Polysystem Theory (1979)",
+          "url": "https://www.tau.ac.il/~itamarez/works/papers/papers/EvenZohar_1979--Polysystem%20Theory%20%5bPoetics%20Today%20I%5d.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Эвен-Зохар. The Position of Translated Literature",
+          "url": "https://www.tau.ac.il/~itamarez/works/papers/papers/Even-Zohar_1987--The%20Position%20of%20Translated%20Literature%20%5Bin%20Toury%201987%5D.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Эвен-Зохар. Polysystem Studies (1990)",
+          "url": "https://www.tau.ac.il/~itamarez/works/books/Even-Zohar_1990--Polysystem%20studies.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Никонова, Даниелян. Переводы в газете «Кавказ»",
+          "url": "https://cyberleninka.ru/article/n/perevodnaya-hudozhestvennaya-literatura-kak-imagologicheskiy-i-ideologicheskiy-instrument-po-materialam-periodicheskogo-izdaniya",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Подражание арабскому",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%BE%D0%B4%D1%80%D0%B0%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%BE%D0%BC%D1%83_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Эвен-Зохар. Polysystem Theory, revised",
+          "url": "https://www.tau.ac.il/~itamarez/papers/ps-th-r.htm",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "11",
       "title": "Имагология и религиозный дискурс: образ ислама и мусульманина.",
       "id": "imagology-11",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/11.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/11.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Пушкин. Подражания Корану",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%BE%D0%B4%D1%80%D0%B0%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F_%D0%9A%D0%BE%D1%80%D0%B0%D0%BD%D1%83_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Гоголь. Ал-Мамун",
+          "url": "https://ru.wikisource.org/wiki/%D0%90%D0%BB-%D0%9C%D0%B0%D0%BC%D1%83%D0%BD_(%D0%93%D0%BE%D0%B3%D0%BE%D0%BB%D1%8C)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Пророк",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D1%80%D0%BE%D1%80%D0%BE%D0%BA_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Пророк",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D1%80%D0%BE%D1%80%D0%BE%D0%BA_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Ашик-Кериб",
+          "url": "https://ru.wikisource.org/wiki/%D0%90%D1%88%D0%B8%D0%BA-%D0%9A%D0%B5%D1%80%D0%B8%D0%B1_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Алексеев. Мусульманский Восток в поэтике Достоевского",
+          "url": "https://cyberleninka.ru/article/n/musulmanskiy-vostok-v-poetike-f-m-dostoevskogo",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "12",
       "title": "Россия и Восток: конструкция «внутреннего Востока».",
       "id": "imagology-12",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/12.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/12.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Эткинд. How Russia Colonized Itself",
+          "url": "https://brill.com/view/journals/hcm/3/2/article-p159_2.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Плиев. Ориенталистское восприятие Северного Кавказа",
+          "url": "https://cyberleninka.ru/article/n/osnovnye-osobennosti-orientalistkogo-vospriyatiya-severnogo-kavkaza-v-russkoy-literature-pervoy-poloviny-xix-veka",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Кавказ",
+          "url": "https://ru.wikisource.org/wiki/%D0%9A%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Сон",
+          "url": "https://ru.wikisource.org/wiki/%D0%A1%D0%BE%D0%BD_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Завещание",
+          "url": "https://ru.wikisource.org/wiki/%D0%97%D0%B0%D0%B2%D0%B5%D1%89%D0%B0%D0%BD%D0%B8%D0%B5_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Родина",
+          "url": "https://ru.wikisource.org/wiki/%D0%A0%D0%BE%D0%B4%D0%B8%D0%BD%D0%B0_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "13",
       "title": "Образ мусульманского Востока в поэтике русских романтиков.",
       "id": "imagology-13",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/13.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/13.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Алексеев. Русский романтический ориентализм",
+          "url": "https://cyberleninka.ru/article/n/russkiy-romanticheskiy-orientalizm-printsipy-i-problemy-issledovaniya",
+          "kind": "link"
+        },
+        {
+          "displayName": "Бестужев-Марлинский. Аммалат-бек",
+          "url": "https://ru.wikisource.org/wiki/%D0%90%D0%BC%D0%BC%D0%B0%D0%BB%D0%B0%D1%82-%D0%B1%D0%B5%D0%BA_(%D0%91%D0%B5%D1%81%D1%82%D1%83%D0%B6%D0%B5%D0%B2-%D0%9C%D0%B0%D1%80%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Ознобишин на Викитеке",
+          "url": "https://ru.wikisource.org/wiki/%D0%9E%D0%B7%D0%BD%D0%BE%D0%B1%D0%B8%D1%88%D0%B8%D0%BD,_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9_%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%B8%D1%87",
+          "kind": "link"
+        },
+        {
+          "displayName": "Бестужев-Марлинский. Мулла-Нур",
+          "url": "https://ru.wikisource.org/wiki/%D0%9C%D1%83%D0%BB%D0%BB%D0%B0-%D0%BD%D1%83%D1%80_(%D0%91%D0%B5%D1%81%D1%82%D1%83%D0%B6%D0%B5%D0%B2-%D0%9C%D0%B0%D1%80%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Чёрная шаль",
+          "url": "https://ru.wikisource.org/wiki/%D0%A7%D1%91%D1%80%D0%BD%D0%B0%D1%8F_%D1%88%D0%B0%D0%BB%D1%8C_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Нереида",
+          "url": "https://ru.wikisource.org/wiki/%D0%9D%D0%B5%D1%80%D0%B5%D0%B8%D0%B4%D0%B0_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "14",
       "title": "Достоевский и Восток: имагологическая перспектива.",
       "id": "imagology-14",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/14.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/14.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Алексеев. Восток в сознании Достоевского периода Крымской войны",
+          "url": "https://cyberleninka.ru/article/n/vostok-v-tvorcheskom-soznanii-f-m-dostoevskogo-perioda-krymskoy-voyny",
+          "kind": "link"
+        },
+        {
+          "displayName": "Достоевский. Записки из Мёртвого дома",
+          "url": "https://ru.wikisource.org/wiki/%D0%97%D0%B0%D0%BF%D0%B8%D1%81%D0%BA%D0%B8_%D0%B8%D0%B7_%D0%9C%D1%91%D1%80%D1%82%D0%B2%D0%BE%D0%B3%D0%BE_%D0%B4%D0%BE%D0%BC%D0%B0_(%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Достоевский. Преступление и наказание",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D1%80%D0%B5%D1%81%D1%82%D1%83%D0%BF%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B8_%D0%BD%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5_(%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Достоевский. Дневник писателя",
+          "url": "https://ru.wikisource.org/wiki/%D0%94%D0%BD%D0%B5%D0%B2%D0%BD%D0%B8%D0%BA_%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D0%B5%D0%BB%D1%8F_(%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Достоевский. Зимние заметки о летних впечатлениях",
+          "url": "https://ru.wikisource.org/wiki/%D0%97%D0%B8%D0%BC%D0%BD%D0%B8%D0%B5_%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8_%D0%BE_%D0%BB%D0%B5%D1%82%D0%BD%D0%B8%D1%85_%D0%B2%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%D1%85_(%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Достоевский. Пушкинская речь",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D1%80%D0%B5%D1%87%D1%8C_(%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "15",
       "title": "Пушкин и Восток: ориентализация пространства и текста.",
       "id": "imagology-15",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/15.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/15.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Алексеев. Ориентализация пространства в «Путешествии в Арзрум»",
+          "url": "https://cyberleninka.ru/article/n/orientalizatsiya-prostranstva-v-puteshestvii-v-arzrum-a-s-pushkina",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Путешествие в Арзрум",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D1%83%D1%82%D0%B5%D1%88%D0%B5%D1%81%D1%82%D0%B2%D0%B8%D0%B5_%D0%B2_%D0%90%D1%80%D0%B7%D1%80%D1%83%D0%BC_%D0%B2%D0%BE_%D0%B2%D1%80%D0%B5%D0%BC%D1%8F_%D0%BF%D0%BE%D1%85%D0%BE%D0%B4%D0%B0_1829_%D0%B3%D0%BE%D0%B4%D0%B0_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Кавказ",
+          "url": "https://ru.wikisource.org/wiki/%D0%9A%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Монастырь на Казбеке",
+          "url": "https://ru.wikisource.org/wiki/%D0%9C%D0%BE%D0%BD%D0%B0%D1%81%D1%82%D1%8B%D1%80%D1%8C_%D0%BD%D0%B0_%D0%9A%D0%B0%D0%B7%D0%B1%D0%B5%D0%BA%D0%B5_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. На холмах Грузии лежит ночная мгла",
+          "url": "https://ru.wikisource.org/wiki/%D0%9D%D0%B0_%D1%85%D0%BE%D0%BB%D0%BC%D0%B0%D1%85_%D0%93%D1%80%D1%83%D0%B7%D0%B8%D0%B8_%D0%BB%D0%B5%D0%B6%D0%B8%D1%82_%D0%BD%D0%BE%D1%87%D0%BD%D0%B0%D1%8F_%D0%BC%D0%B3%D0%BB%D0%B0_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Ночной зефир",
+          "url": "https://ru.wikisource.org/wiki/%D0%9D%D0%BE%D1%87%D0%BD%D0%BE%D0%B9_%D0%B7%D0%B5%D1%84%D0%B8%D1%80_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "16",
       "title": "Лермонтов и Восток: «Восточный текст» в поэтике романтизма.",
       "id": "imagology-16",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/16.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/16.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Ходанен. Культурный концепт «Кавказ»",
+          "url": "https://cyberleninka.ru/article/n/kulturnyy-kontsept-kavkaz-i-ego-tekstoobrazuyuschaya-rol-v-tvorchestve-a-s-pushkina-i-m-yu-lermontova",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Мцыри",
+          "url": "https://ru.wikisource.org/wiki/%D0%9C%D1%86%D1%8B%D1%80%D0%B8_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Валерик",
+          "url": "https://ru.wikisource.org/wiki/%D0%92%D0%B0%D0%BB%D0%B5%D1%80%D0%B8%D0%BA_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Измаил-Бей",
+          "url": "https://ru.wikisource.org/wiki/%D0%98%D0%B7%D0%BC%D0%B0%D0%B8%D0%BB-%D0%91%D0%B5%D0%B9_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Дары Терека",
+          "url": "https://ru.wikisource.org/wiki/%D0%94%D0%B0%D1%80%D1%8B_%D0%A2%D0%B5%D1%80%D0%B5%D0%BA%D0%B0_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Тамара",
+          "url": "https://ru.wikisource.org/wiki/%D0%A2%D0%B0%D0%BC%D0%B0%D1%80%D0%B0_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "17",
       "title": "ХХ век: постколониальный поворот в имагологии.",
       "id": "imagology-17",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/17.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/17.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Edtstadler, Folie, Zocco. New Perspectives on Imagology (2022)",
+          "url": "https://archive.org/details/oapen-20.500.12657-61181",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Identity / hybridity",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099720",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Ethnocentrism",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099701",
+          "kind": "link"
+        },
+        {
+          "displayName": "Гафарова. Постколониальный подход в исследованиях медиа",
+          "url": "https://cyberleninka.ru/article/n/postkolonialnyy-podhod-v-issledovaniyah-media-i-povedeniya-polzovateley",
+          "kind": "link"
+        },
+        {
+          "displayName": "Имагология как метод исследования медиаобразов",
+          "url": "https://cyberleninka.ru/article/n/imagologiya-kak-novyy-metod-issledovaniya-mediaobrazov-stran-v-inokulture",
+          "kind": "link"
+        },
+        {
+          "displayName": "Образ Сахеля как «Другого»: постколониальный анализ",
+          "url": "https://cyberleninka.ru/article/n/konstruirovanie-obraza-sahelya-kak-drugogo-v-amerikanskom-i-afrikanskom-mediadiskurse-postkolonialnyy-analiz",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
@@ -1009,70 +1288,318 @@
       "id": "imagology-2",
       "htmlFile": "src/data/imagology/лекции/2.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/2.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Лерссен. Imagology: On using ethnicity to make sense of the world (2016)",
+          "url": "https://imagologica.eu/CMS/upload/Imagology2016.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Чжоу Нин. Concepts and Methods of Transcultural Imagology",
+          "url": "https://imagologica.eu/CMS/upload/ZhouLin2.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Image",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099725",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Type / typicality",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100907",
+          "kind": "link"
+        },
+        {
+          "displayName": "Imagologica. On Imagology",
+          "url": "https://imagologica.eu/aboutimagology",
+          "kind": "link"
+        },
+        {
+          "displayName": "Imagologica. Bibliography",
+          "url": "https://imagologica.eu/bibliography",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "3",
       "title": "Нация, этничность и стереотип. Этнотип по статье Юпа Лейрсена.",
       "id": "imagology-3",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/3.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/3.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Справочник этнотипов Беллера и Лерссена",
+          "url": "https://imagologica.eu/ethnotypology",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Stereotype",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100794",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Character",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8085252",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Cliché",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099687",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: North / South",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100685",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Prejudice",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100776",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "4",
       "title": "Нация, этничность, стереотип: категории анализа.",
       "id": "imagology-4",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/4.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/4.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Словарь имагологии: Nation / ethnie",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100678",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Nationalism",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100683",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Topos",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100800",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Climate theory",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099688",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Клеветникам России",
+          "url": "https://ru.wikisource.org/wiki/%D0%9A%D0%BB%D0%B5%D0%B2%D0%B5%D1%82%D0%BD%D0%B8%D0%BA%D0%B0%D0%BC_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Бородино",
+          "url": "https://ru.wikisource.org/wiki/%D0%91%D0%BE%D1%80%D0%BE%D0%B4%D0%B8%D0%BD%D0%BE_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "5",
       "title": "Имагология и ориентализм: С. Саид и его критики.",
       "id": "imagology-5",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/5.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/5.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Словарь имагологии: Orientalism",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100687",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: East / West",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099697",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Exoticism",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8099702",
+          "kind": "link"
+        },
+        {
+          "displayName": "Цибенко. Между ориентализмом и ориентологией",
+          "url": "https://cyberleninka.ru/article/n/mezhdu-orientalizmom-i-orientologiey-nauchnye-podhody-k-izucheniyu-kavkaza",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Спор",
+          "url": "https://ru.wikisource.org/wiki/%D0%A1%D0%BF%D0%BE%D1%80_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Делибаш",
+          "url": "https://ru.wikisource.org/wiki/%D0%94%D0%B5%D0%BB%D0%B8%D0%B1%D0%B0%D1%88_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "6",
       "title": "Восточный текст в русской литературе: постановка проблемы.",
       "id": "imagology-6",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/6.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/6.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Алексеев. Концептосфера ориентального дискурса (2015)",
+          "url": "https://palekseev.ru/wp-content/uploads/2024/03/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B5%D0%B2-%D0%9F%D0%92_%D0%B2%D0%B5%D1%80%D1%81%D1%82%D0%BA%D0%B0_%D0%9A%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%82%D0%BE%D1%81%D1%84%D0%B5%D1%80%D0%B0-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B4%D0%B8%D1%81%D0%BA%D1%83%D1%80%D1%81%D0%B0.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Ходанен. Рецензия на монографию",
+          "url": "https://cyberleninka.ru/article/n/kontsepty-zapad-i-vostok-v-identifikatsionnyh-protsessah-russkoy-literatury-retsenziya-na-knigu-alekseev-p-v-kontseptosfera-orientalnogo",
+          "kind": "link"
+        },
+        {
+          "displayName": "Сравнительное литературоведение. V Поспеловские чтения",
+          "url": "https://libra.philol.msu.ru/pub/pdf117.pdf",
+          "kind": "link"
+        },
+        {
+          "displayName": "Никитин. Хождение за три моря",
+          "url": "https://ru.wikisource.org/wiki/%D0%A5%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B7%D0%B0_%D1%82%D1%80%D0%B8_%D0%BC%D0%BE%D1%80%D1%8F_%D0%90%D1%84%D0%B0%D0%BD%D0%B0%D1%81%D0%B8%D1%8F_%D0%9D%D0%B8%D0%BA%D0%B8%D1%82%D0%B8%D0%BD%D0%B0",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Тазит",
+          "url": "https://ru.wikisource.org/wiki/%D0%A2%D0%B0%D0%B7%D0%B8%D1%82_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Цыганы",
+          "url": "https://ru.wikisource.org/wiki/%D0%A6%D1%8B%D0%B3%D0%B0%D0%BD%D1%8B_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "7",
       "title": "Травелог как имагологический источник: жанр и специфика анализа.",
       "id": "imagology-7",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/7.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/7.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Никольский, Папилова. Травелоги сентименталистов",
+          "url": "https://cyberleninka.ru/article/n/imagologicheskie-aspekty-travelogov-russkih-sentimentalistov-vtorogo-ryada",
+          "kind": "link"
+        },
+        {
+          "displayName": "Карамзин. Письма русского путешественника",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%B8%D1%81%D1%8C%D0%BC%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BF%D1%83%D1%82%D0%B5%D1%88%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA%D0%B0_(%D0%9A%D0%B0%D1%80%D0%B0%D0%BC%D0%B7%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Янушкевич. Русская романтическая монтанистика",
+          "url": "https://cyberleninka.ru/article/n/russkaya-romanticheskaya-montanistika-18101830-h-gg-kak-imagologicheskiy-i-komparativistskiy-tekst",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Representation",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8100783",
+          "kind": "link"
+        },
+        {
+          "displayName": "Словарь имагологии: Centre / periphery",
+          "url": "https://nodegoat.net/viewer.p/50/549/object/6521-8085249",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Обвал",
+          "url": "https://ru.wikisource.org/wiki/%D0%9E%D0%B1%D0%B2%D0%B0%D0%BB_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "8",
       "title": "Имагология и геопоэтика: воображаемая география.",
       "id": "imagology-8",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/8.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/8.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Александрова-Осокина. Вопросы геопоэтики",
+          "url": "https://cyberleninka.ru/article/n/voprosy-geopoetiki-v-sovremennom-literaturovedenii",
+          "kind": "link"
+        },
+        {
+          "displayName": "Замятин. Пространство и гетеротопия",
+          "url": "https://cyberleninka.ru/article/n/prostranstvo-i-geterotopiya-k-semiotike-metageograficheskogo-voobrazheniya",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Три пальмы",
+          "url": "https://ru.wikisource.org/wiki/%D0%A2%D1%80%D0%B8_%D0%BF%D0%B0%D0%BB%D1%8C%D0%BC%D1%8B_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Анчар",
+          "url": "https://ru.wikisource.org/wiki/%D0%90%D0%BD%D1%87%D0%B0%D1%80_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Погасло дневное светило",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%BE%D0%B3%D0%B0%D1%81%D0%BB%D0%BE_%D0%B4%D0%BD%D0%B5%D0%B2%D0%BD%D0%BE%D0%B5_%D1%81%D0%B2%D0%B5%D1%82%D0%B8%D0%BB%D0%BE_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Фонтану Бахчисарайского дворца",
+          "url": "https://ru.wikisource.org/wiki/%D0%A4%D0%BE%D0%BD%D1%82%D0%B0%D0%BD%D1%83_%D0%91%D0%B0%D1%85%D1%87%D0%B8%D1%81%D0%B0%D1%80%D0%B0%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B2%D0%BE%D1%80%D1%86%D0%B0_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "imagology",
       "number": "9",
       "title": "Gender imagology: образы женщины и мужчины «Другого».",
       "id": "imagology-9",
-      "htmlFile": null,
+      "htmlFile": "src/data/imagology/лекции/9.html",
       "presentationPdf": "src/data/imagology/Р»РµРєС†РёРё/9.pdf",
-      "materials": []
+      "materials": [
+        {
+          "displayName": "Жигунова. Черкешенки в русской романтической литературе",
+          "url": "https://cyberleninka.ru/article/n/empire-s-erotic-conquests-circassian-women-in-russian-romantic-literature",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Кавказский пленник",
+          "url": "https://ru.wikisource.org/wiki/%D0%9A%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%BB%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Бахчисарайский фонтан",
+          "url": "https://ru.wikisource.org/wiki/%D0%91%D0%B0%D1%85%D1%87%D0%B8%D1%81%D0%B0%D1%80%D0%B0%D0%B9%D1%81%D0%BA%D0%B8%D0%B9_%D1%84%D0%BE%D0%BD%D1%82%D0%B0%D0%BD_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Герой нашего времени",
+          "url": "https://ru.wikisource.org/wiki/%D0%93%D0%B5%D1%80%D0%BE%D0%B9_%D0%BD%D0%B0%D1%88%D0%B5%D0%B3%D0%BE_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Лермонтов. Демон",
+          "url": "https://ru.wikisource.org/wiki/%D0%94%D0%B5%D0%BC%D0%BE%D0%BD_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)",
+          "kind": "link"
+        },
+        {
+          "displayName": "Пушкин. Калмычке",
+          "url": "https://ru.wikisource.org/wiki/%D0%9A%D0%B0%D0%BB%D0%BC%D1%8B%D1%87%D0%BA%D0%B5_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)",
+          "kind": "link"
+        }
+      ]
     },
     {
       "courseSlug": "modern-literature",

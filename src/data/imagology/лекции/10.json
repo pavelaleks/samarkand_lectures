@@ -1,6 +1,31 @@
 {
   "number": "10",
   "title": "Имагология и перевод: посредничество и трансфер.",
-  "id": "imagology-10"
+  "id": "imagology-10",
+  "readings": [
+    {
+      "displayName": "Эвен-Зохар. Polysystem Theory (1979)",
+      "url": "https://www.tau.ac.il/~itamarez/works/papers/papers/EvenZohar_1979--Polysystem%20Theory%20%5bPoetics%20Today%20I%5d.pdf"
+    },
+    {
+      "displayName": "Эвен-Зохар. The Position of Translated Literature",
+      "url": "https://www.tau.ac.il/~itamarez/works/papers/papers/Even-Zohar_1987--The%20Position%20of%20Translated%20Literature%20%5Bin%20Toury%201987%5D.pdf"
+    },
+    {
+      "displayName": "Эвен-Зохар. Polysystem Studies (1990)",
+      "url": "https://www.tau.ac.il/~itamarez/works/books/Even-Zohar_1990--Polysystem%20studies.pdf"
+    },
+    {
+      "displayName": "Никонова, Даниелян. Переводы в газете «Кавказ»",
+      "url": "https://cyberleninka.ru/article/n/perevodnaya-hudozhestvennaya-literatura-kak-imagologicheskiy-i-ideologicheskiy-instrument-po-materialam-periodicheskogo-izdaniya"
+    },
+    {
+      "displayName": "Пушкин. Подражание арабскому",
+      "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%BE%D0%B4%D1%80%D0%B0%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%BE%D0%BC%D1%83_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)"
+    },
+    {
+      "displayName": "Эвен-Зохар. Polysystem Theory, revised",
+      "url": "https://www.tau.ac.il/~itamarez/papers/ps-th-r.htm"
+    }
+  ]
 }
-
