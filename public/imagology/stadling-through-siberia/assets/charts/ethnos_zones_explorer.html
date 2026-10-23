@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Этнонимы по зонам маршрута · Through Siberia</title>
+<style>
+:root{
+  --ink:#1a1a1a; --muted:#5a5a5a; --paper:#f4f1ea; --panel:#faf8f4;
+  --line:#c8c4bc; --accent:#6b3a2a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body.embed header p{display:none}
+body.embed header{padding:.55rem 1.1rem .45rem}
+body.embed header h1{font-size:1.1rem}
+body.embed .tabs{padding-top:.35rem}
+body{
+  font-family:"IBM Plex Sans",Helvetica,Arial,sans-serif;
+  background:var(--paper); color:var(--ink);
+  display:grid; grid-template-rows:auto auto 1fr;
+}
+header{
+  padding:.9rem 1.25rem .7rem;
+  border-bottom:1px solid var(--line);
+  background:var(--panel);
+}
+header h1{
+  font-family:Georgia,"Source Serif 4",serif;
+  font-size:1.3rem; margin:0 0 .3rem; font-weight:700;
+}
+header p{margin:0; font-size:.8rem; color:var(--muted); max-width:72ch; line-height:1.4}
+.tabs{
+  display:flex; gap:.15rem; padding:.55rem 1.25rem 0;
+  border-bottom:1px solid var(--line); background:var(--panel);
+}
+.tabs button{
+  font:inherit; font-size:.82rem; font-weight:600;
+  padding:.55rem .95rem; border:0; background:transparent;
+  color:var(--muted); cursor:pointer;
+  border-bottom:2px solid transparent; margin-bottom:-1px;
+}
+.tabs button.on{color:var(--ink); border-bottom-color:var(--accent)}
+.view{display:none; min-height:0; overflow:auto; padding:1rem 1.25rem 1.4rem}
+.view.on{display:block}
+.stepper{
+  display:grid; grid-template-columns:repeat(7,1fr); gap:.4rem;
+  margin-bottom:1rem;
+}
+@media(max-width:900px){.stepper{grid-template-columns:repeat(2,1fr)}}
+.step{
+  border:1px solid var(--line); background:#fff; padding:.55rem .6rem;
+  cursor:pointer; text-align:left; min-height:4.2rem;
+}
+.step:hover{border-color:#9a7a6a}
+.step.on{border-color:var(--accent); background:#fff8f3; box-shadow:inset 0 0 0 1px var(--accent)}
+.step .n{font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); font-weight:700}
+.step .t{font-family:Georgia,serif; font-size:.88rem; margin-top:.2rem; line-height:1.25}
+.step .p{font-size:.68rem; color:var(--muted); margin-top:.2rem}
+.panel{
+  display:grid; grid-template-columns:1.15fr .85fr; gap:1.1rem; align-items:start;
+}
+@media(max-width:960px){.panel{grid-template-columns:1fr}}
+.card{
+  background:var(--panel); border:1px solid var(--line); padding:1rem 1.05rem;
+}
+.card h2{font-family:Georgia,serif; font-size:1.15rem; margin:0 0 .35rem}
+.lead{font-size:.86rem; color:var(--muted); margin:0 0 .9rem; line-height:1.4}
+.bars{display:grid; gap:.45rem}
+.bar-row{display:grid; grid-template-columns:7.5rem 1fr 2.6rem; gap:.55rem; align-items:center}
+.bar-row .name{font-size:.82rem}
+.track{height:18px; background:#e8e2d8; position:relative}
+.fill{height:100%; min-width:0}
+.bar-row .val{font-variant-numeric:tabular-nums; font-size:.82rem; font-weight:600; text-align:right}
+.dominant{
+  margin-top:.9rem; padding:.7rem .8rem; border-left:3px solid var(--accent);
+  background:#fff; font-size:.88rem; line-height:1.4
+}
+.chips{display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.85rem}
+.chip{
+  font-size:.75rem; font-weight:600; padding:.28rem .55rem;
+  border:1px solid var(--line); background:#fff; cursor:pointer; color:var(--muted);
+}
+.chip.on{color:#fff; border-color:transparent}
+.chart-wrap{background:#fff; border:1px solid var(--line); padding:.6rem .4rem .3rem}
+svg.lines{width:100%; height:auto; display:block}
+.tip{
+  position:fixed; pointer-events:none; z-index:20;
+  background:#1a1a1a; color:#faf8f4; font-size:.75rem;
+  padding:.35rem .55rem; display:none; max-width:220px;
+}
+.heatmap img{width:100%; max-width:1100px; display:block; border:1px solid var(--line); background:#fff}
+.note{font-size:.72rem; color:var(--muted); margin-top:.8rem; max-width:80ch; line-height:1.4}
+.toggle{font-size:.78rem; color:var(--muted); display:flex; align-items:center; gap:.4rem; margin-bottom:.7rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Этнонимы вдоль маршрута <em>Through Siberia</em></h1>
+  <p>Три способа смотреть одни данные: шаги маршрута (столбцы), траектории по зонам (линии) и тепловая карта. Единица — плотность на 10&nbsp;000 знаков OCR-текста.</p>
+</header>
+<nav class="tabs" role="tablist">
+  <button type="button" class="on" data-tab="route">По маршруту</button>
+  <button type="button" data-tab="traj">Траектории</button>
+  <button type="button" data-tab="heat">Тепловая карта</button>
+</nav>
+
+<section class="view on" id="tab-route">
+  <div class="stepper" id="stepper"></div>
+  <div class="panel">
+    <div class="card">
+      <h2 id="zoneTitle">—</h2>
+      <p class="lead" id="zoneLead">Плотность этнонимов в выбранной зоне (удобнее тепловой карты: длина полосы = величина).</p>
+      <label class="toggle"><input type="checkbox" id="hideSib" /> скрыть «сибиряков» (сквозная категория)</label>
+      <div class="bars" id="bars"></div>
+      <div class="dominant" id="dominant"></div>
+    </div>
+    <div class="card">
+      <h2>Как читать</h2>
+      <p class="lead">Выберите участок пути сверху. Полосы показывают, <em>кого</em> текст «держит» в фокусе на этом отрезке. Сравните со степью → тайгой → Леной: пики должны смещаться.</p>
+      <p class="note" id="zoneAbs"></p>
+      <p class="note">Это не демография Сибири, а внимание нарратива. OCR + regex — эвристика.</p>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="tab-traj">
+  <p class="lead" style="margin-top:0">Включите этнонимы — линии покажут, где плотность растёт и падает вдоль книги. Наведите на точку.</p>
+  <div class="chips" id="chips"></div>
+  <div class="chart-wrap"><svg class="lines" id="lineSvg" viewBox="0 0 960 420" role="img"></svg></div>
+  <p class="note">Ось X — зоны маршрута (не географическое расстояние). Ось Y — плотность на 10k знаков.</p>
+</section>
+
+<section class="view" id="tab-heat">
+  <p class="lead" style="margin-top:0">Та же матрица «этноним × зона». Темнее ячейка — выше плотность. Удобно для обзора; для устной подачи лучше вкладка «По маршруту».</p>
+  <div class="heatmap"><img src="ethnonym_zones.png" alt="Тепловая карта плотности этнонимов по зонам"/></div>
+  <p class="note">Файл: assets/charts/ethnonym_zones.png · пересчёт: ./scripts/run_all.sh</p>
+</section>
+
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"meta": {"unit": "упоминаний на 10 000 знаков OCR-текста", "source": "Stadling, Through Siberia (1901)", "note": "Эвристический regex; зоны нарезаны по нарративу статьи."}, "zones": [{"id": "steppe", "label": "I. Степь / Транссиб", "short": "Степь / Транссиб", "pages": "1–33"}, {"id": "taiga_buryat", "label": "II. Тайга · буряты", "short": "Тайга · буряты", "pages": "34–56"}, {"id": "lena_yakut", "label": "III. Лена · якуты", "short": "Лена · якуты", "pages": "57–133"}, {"id": "tungus", "label": "IV. Тунгусы · низовья", "short": "Тунгусы · низовья", "pages": "134–200"}, {"id": "tundra", "label": "V. Тундра · Таймыр", "short": "Тундра · Таймыр", "pages": "201–247"}, {"id": "yenisei", "label": "VI. Енисей · Туруханск", "short": "Енисей · Туруханск", "pages": "248–275"}, {"id": "closing", "label": "VII. Заключительные главы", "short": "Заключительные главы", "pages": "276–315"}], "ethnonyms": [{"id": "Kirgises", "label": "казахи (Kirgises)", "color": "#c4842a"}, {"id": "Buriats", "label": "буряты", "color": "#2a7a9b"}, {"id": "Yakuts", "label": "якуты", "color": "#3d8f4a"}, {"id": "Tunguses", "label": "тунгусы", "color": "#b43d3d"}, {"id": "Dolgans", "label": "долгане", "color": "#5c5eb0"}, {"id": "Samoyedes", "label": "самоеды", "color": "#c96b35"}, {"id": "Ostiaks", "label": "остяки", "color": "#3d6aa8"}, {"id": "Siberians", "label": "сибиряки", "color": "#3f3a36"}, {"id": "Skoptsi", "label": "скопцы", "color": "#9a4578"}], "density": {"steppe": {"Kirgises": 2.81, "Buriats": 0.0, "Yakuts": 0.0, "Tunguses": 0.0, "Dolgans": 0.0, "Samoyedes": 0.0, "Ostiaks": 0.0, "Siberians": 6.38, "Skoptsi": 0.0}, "taiga_buryat": {"Kirgises": 0.0, "Buriats": 12.61, "Yakuts": 1.4, "Tunguses": 0.7, "Dolgans": 0.0, "Samoyedes": 0.0, "Ostiaks": 0.35, "Siberians": 6.3, "Skoptsi": 0.0}, "lena_yakut": {"Kirgises": 0.0, "Buriats": 0.23, "Yakuts": 6.36, "Tunguses": 1.02, "Dolgans": 0.11, "Samoyedes": 0.0, "Ostiaks": 0.0, "Siberians": 1.82, "Skoptsi": 2.73}, "tungus": {"Kirgises": 0.0, "Buriats": 0.15, "Yakuts": 1.51, "Tunguses": 3.62, "Dolgans": 0.45, "Samoyedes": 0.3, "Ostiaks": 0.15, "Siberians": 0.45, "Skoptsi": 0.0}, "tundra": {"Kirgises": 0.0, "Buriats": 0.0, "Yakuts": 1.93, "Tunguses": 2.81, "Dolgans": 2.63, "Samoyedes": 1.76, "Ostiaks": 0.35, "Siberians": 0.18, "Skoptsi": 0.0}, "yenisei": {"Kirgises": 0.0, "Buriats": 0.0, "Yakuts": 0.3, "Tunguses": 0.3, "Dolgans": 0.3, "Samoyedes": 0.0, "Ostiaks": 4.23, "Siberians": 4.54, "Skoptsi": 0.3}, "closing": {"Kirgises": 0.19, "Buriats": 1.68, "Yakuts": 3.92, "Tunguses": 0.93, "Dolgans": 0.56, "Samoyedes": 0.37, "Ostiaks": 0.56, "Siberians": 6.53, "Skoptsi": 0.75}}, "absolute": {"steppe": {"Kirgises": 11, "Buriats": 0, "Yakuts": 0, "Tunguses": 0, "Dolgans": 0, "Samoyedes": 0, "Ostiaks": 0, "Siberians": 25, "Skoptsi": 0}, "taiga_buryat": {"Kirgises": 0, "Buriats": 36, "Yakuts": 4, "Tunguses": 2, "Dolgans": 0, "Samoyedes": 0, "Ostiaks": 1, "Siberians": 18, "Skoptsi": 0}, "lena_yakut": {"Kirgises": 0, "Buriats": 2, "Yakuts": 56, "Tunguses": 9, "Dolgans": 1, "Samoyedes": 0, "Ostiaks": 0, "Siberians": 16, "Skoptsi": 24}, "tungus": {"Kirgises": 0, "Buriats": 1, "Yakuts": 10, "Tunguses": 24, "Dolgans": 3, "Samoyedes": 2, "Ostiaks": 1, "Siberians": 3, "Skoptsi": 0}, "tundra": {"Kirgises": 0, "Buriats": 0, "Yakuts": 11, "Tunguses": 16, "Dolgans": 15, "Samoyedes": 10, "Ostiaks": 2, "Siberians": 1, "Skoptsi": 0}, "yenisei": {"Kirgises": 0, "Buriats": 0, "Yakuts": 1, "Tunguses": 1, "Dolgans": 1, "Samoyedes": 0, "Ostiaks": 14, "Siberians": 15, "Skoptsi": 1}, "closing": {"Kirgises": 1, "Buriats": 9, "Yakuts": 21, "Tunguses": 5, "Dolgans": 3, "Samoyedes": 2, "Ostiaks": 3, "Siberians": 35, "Skoptsi": 4}}, "totals": {"Kirgises": 12, "Buriats": 48, "Yakuts": 103, "Tunguses": 57, "Dolgans": 23, "Samoyedes": 14, "Ostiaks": 21, "Siberians": 113, "Skoptsi": 29}};
+let zoneIdx = 0;
+let hideSib = false;
+const active = new Set(["Kirgises","Buriats","Yakuts","Tunguses","Ostiaks","Siberians"]);
+
+const tip = document.getElementById("tip");
+function showTip(x,y,html){
+  tip.style.display="block"; tip.style.left=(x+12)+"px"; tip.style.top=(y+12)+"px"; tip.innerHTML=html;
+}
+function hideTip(){ tip.style.display="none"; }
+
+document.querySelectorAll(".tabs button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("on"));
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));
+    btn.classList.add("on");
+    document.getElementById("tab-"+btn.dataset.tab).classList.add("on");
+    if(btn.dataset.tab==="traj") drawLines();
+  });
+});
+
+function renderStepper(){
+  const el=document.getElementById("stepper");
+  el.innerHTML=DATA.zones.map((z,i)=>`
+    <button type="button" class="step${i===zoneIdx?" on":""}" data-i="${i}">
+      <div class="n">${String(i+1).padStart(2,"0")}</div>
+      <div class="t">${z.short}</div>
+      <div class="p">с. ${z.pages}</div>
+    </button>`).join("");
+  el.querySelectorAll(".step").forEach(b=>b.addEventListener("click",()=>{
+    zoneIdx=+b.dataset.i; renderStepper(); renderBars();
+  }));
+}
+
+function renderBars(){
+  const z=DATA.zones[zoneIdx];
+  const dens=DATA.density[z.id];
+  const abs=DATA.absolute[z.id];
+  document.getElementById("zoneTitle").textContent=z.label;
+  document.getElementById("zoneLead").textContent=`Страницы ${z.pages}. Единица — упоминания на 10 000 знаков текста зоны.`;
+  let rows=DATA.ethnonyms
+    .map(e=>({...e, d:dens[e.id]||0, a:abs[e.id]||0}))
+    .filter(e=>!(hideSib && e.id==="Siberians"))
+    .filter(e=>e.d>0)
+    .sort((a,b)=>b.d-a.d);
+  const max=Math.max(...rows.map(r=>r.d), 0.01);
+  document.getElementById("bars").innerHTML=rows.map(r=>`
+    <div class="bar-row">
+      <div class="name">${r.label}</div>
+      <div class="track"><div class="fill" style="width:${(100*r.d/max).toFixed(1)}%;background:${r.color}"></div></div>
+      <div class="val">${r.d.toFixed(1)}</div>
+    </div>`).join("") || `<p class="lead">В этой зоне выбранные этнонимы почти не встречаются.</p>`;
+  if(rows.length){
+    const top=rows[0];
+    document.getElementById("dominant").innerHTML=
+      `<strong>Доминанта зоны:</strong> ${top.label} — ${top.d.toFixed(1)} на 10k знаков`+
+      (top.a?` · абсолютных упоминаний: ${top.a}`:"");
+  } else document.getElementById("dominant").textContent="";
+  const absBits=DATA.ethnonyms.filter(e=>(abs[e.id]||0)>0).map(e=>`${e.label}: ${abs[e.id]}`).join(" · ");
+  document.getElementById("zoneAbs").textContent=absBits?("Абсолютные счётчики в зоне: "+absBits):"";
+}
+
+document.getElementById("hideSib").addEventListener("change",e=>{
+  hideSib=e.target.checked; renderBars();
+});
+
+function renderChips(){
+  const el=document.getElementById("chips");
+  el.innerHTML=DATA.ethnonyms.map(e=>{
+    const on=active.has(e.id);
+    return `<button type="button" class="chip${on?" on":""}" data-id="${e.id}"
+      style="${on?`background:${e.color}`:""}">${e.label}</button>`;
+  }).join("");
+  el.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{
+    const id=b.dataset.id;
+    if(active.has(id)) active.delete(id); else active.add(id);
+    renderChips(); drawLines();
+  }));
+}
+
+function drawLines(){
+  const svg=document.getElementById("lineSvg");
+  const W=960, H=420, pad={l:56,r:24,t:28,b:64};
+  const zones=DATA.zones;
+  const xs=zones.map((_,i)=>pad.l+(W-pad.l-pad.r)*i/Math.max(zones.length-1,1));
+  let maxY=0;
+  [...active].forEach(id=>{
+    zones.forEach(z=>{ maxY=Math.max(maxY, DATA.density[z.id][id]||0); });
+  });
+  maxY=Math.max(maxY, 1);
+  const yScale=v=>pad.t+(H-pad.t-pad.b)*(1-v/maxY);
+
+  let grid="";
+  for(let i=0;i<=4;i++){
+    const v=maxY*i/4;
+    const y=yScale(v);
+    grid+=`<line x1="${pad.l}" y1="${y}" x2="${W-pad.r}" y2="${y}" stroke="#e0dcd4"/>`+
+      `<text x="${pad.l-8}" y="${y+4}" text-anchor="end" font-size="11" fill="#5a5a5a">${v.toFixed(1)}</text>`;
+  }
+  let xlabels="";
+  zones.forEach((z,i)=>{
+    xlabels+=`<text x="${xs[i]}" y="${H-28}" text-anchor="middle" font-size="11" fill="#5a5a5a">${z.short.split("·")[0].trim()}</text>`;
+    xlabels+=`<line x1="${xs[i]}" y1="${pad.t}" x2="${xs[i]}" y2="${H-pad.b}" stroke="#ece7df"/>`;
+  });
+
+  let paths="";
+  DATA.ethnonyms.filter(e=>active.has(e.id)).forEach(e=>{
+    const pts=zones.map((z,i)=>[xs[i], yScale(DATA.density[z.id][e.id]||0)]);
+    const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+    paths+=`<path d="${d}" fill="none" stroke="${e.color}" stroke-width="2.5"/>`;
+    pts.forEach((p,i)=>{
+      const v=DATA.density[zones[i].id][e.id]||0;
+      paths+=`<circle class="pt" cx="${p[0]}" cy="${p[1]}" r="5" fill="${e.color}"
+        data-label="${e.label}" data-zone="${zones[i].label}" data-v="${v.toFixed(2)}"></circle>`;
+    });
+  });
+
+  svg.innerHTML=`<rect width="100%" height="100%" fill="#fff"/>${grid}${xlabels}${paths}
+    <text x="16" y="18" font-size="11" fill="#5a5a5a">плотность / 10k</text>`;
+  svg.querySelectorAll("circle.pt").forEach(c=>{
+    c.addEventListener("mousemove",ev=>showTip(ev.clientX,ev.clientY,
+      `<b>${c.dataset.label}</b><br>${c.dataset.zone}<br>${c.dataset.v} на 10k`));
+    c.addEventListener("mouseleave",hideTip);
+  });
+}
+
+renderStepper();
+renderBars();
+renderChips();
+drawLines();
+if (new URLSearchParams(location.search).get("embed") === "1") {
+  document.body.classList.add("embed");
+}
+</script>
+<script>
+(function(){
+  if (new URLSearchParams(location.search).get("embed") !== "1") return;
+  window.addEventListener("keydown", function(e){
+    var nav = ["ArrowLeft","ArrowRight","PageUp","PageDown","Home","End"," ","f","F"];
+    if (nav.indexOf(e.key) === -1) return;
+    // let space work inside inputs
+    if ((e.key === " " || e.key === "f" || e.key === "F") &&
+        /^(INPUT|TEXTAREA|SELECT|BUTTON)$/i.test((e.target||{}).tagName||"")) return;
+    e.preventDefault();
+    try { parent.postMessage({ type: "deck-key", key: e.key }, "*"); } catch (_) {}
+  }, true);
+})();
+</script>
+</body>
+</html>

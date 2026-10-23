@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Сибирские этносы и межнациональные отношения в травелоге Й. Стадлинга «Through Siberia» (1901)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/leaflet/leaflet.css" />
+<style>
+:root {
+  --ink: #1a1a1a;
+  --muted: #4a4a4a;
+  --line: #c8c4bc;
+  --paper: #f4f1ea;
+  --panel: #faf8f4;
+  --accent: #6b3a2a;
+  --rule: #2c2c2c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.45;
+  overflow: hidden;
+}
+button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+.deck { height: 100vh; height: 100dvh; position: relative; overflow: hidden; }
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: clamp(1.2rem, 2.5vw, 2.4rem) clamp(1.2rem, 3.5vw, 3.2rem) 3.8rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility .35s;
+  overflow: auto;
+  display: grid;
+  align-content: center;
+  background: var(--paper);
+}
+.slide.active { opacity: 1; visibility: visible; z-index: 2; }
+@media (min-height: 720px) and (min-width: 960px) { .slide { overflow: hidden; } }
+
+.slide.embed {
+  align-content: stretch;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: .45rem;
+  padding-top: clamp(.7rem, 1.5vw, 1.1rem);
+  overflow: hidden;
+}
+.slide.embed .embed-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .35rem 1rem;
+}
+.slide.embed .embed-head h2 {
+  margin: 0;
+  font-size: clamp(1.05rem, 2vw, 1.45rem);
+  max-width: none;
+}
+.slide.embed .embed-head .hint-inline {
+  font-size: .72rem;
+  color: var(--muted);
+  max-width: 28ch;
+  text-align: right;
+}
+.slide.embed .embed-note {
+  margin: .35rem 0 0;
+  font-size: .78rem;
+  line-height: 1.4;
+  color: var(--muted);
+  max-width: 72ch;
+}
+.slide.embed .embed-note b { color: var(--ink); font-weight: 600; }
+.slide.embed .embed-frame {
+  border: 1px solid var(--line);
+  background: #fff;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.slide.embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: var(--paper);
+}
+
+h1, h2, h3 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+h1 { font-size: clamp(1.6rem, 3.3vw, 2.6rem); max-width: 22ch; }
+h2 { font-size: clamp(1.3rem, 2.4vw, 1.95rem); margin-bottom: .55rem; max-width: 30ch; }
+h3 { font-size: 1.05rem; margin-bottom: .35rem; font-weight: 600; }
+
+.kicker {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .65rem;
+}
+.lede {
+  font-size: clamp(.96rem, 1.3vw, 1.1rem);
+  max-width: 58ch;
+  color: var(--muted);
+}
+.meta {
+  margin-top: 1.4rem;
+  font-size: .88rem;
+  color: var(--muted);
+  max-width: 50ch;
+}
+.meta b { color: var(--ink); font-weight: 600; }
+.cite {
+  margin-top: .9rem;
+  padding: .6rem 0 .6rem 1rem;
+  border-left: 2px solid var(--rule);
+  font-family: "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 1.02rem;
+  max-width: 52ch;
+}
+.cite.lg { font-size: clamp(1.08rem, 1.55vw, 1.3rem); line-height: 1.45; max-width: 46ch; }
+.cite .src {
+  display: block;
+  margin-top: .45rem;
+  font-style: normal;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: .75rem;
+  color: var(--muted);
+  letter-spacing: .02em;
+}
+.cite + .cite { margin-top: 1.1rem; }
+.points { margin-top: .85rem; max-width: 60ch; display: grid; gap: .5rem; }
+.points li {
+  list-style: none;
+  padding-left: .9rem;
+  position: relative;
+  font-size: .97rem;
+}
+.points li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .55em;
+  width: .32rem; height: .32rem;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.pg { color: var(--muted); font-size: .82em; white-space: nowrap; }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(1rem, 3vw, 2.6rem);
+  align-items: center;
+}
+.grid-2.top { align-items: start; }
+.grid-2.wide { grid-template-columns: 1.25fr .75fr; }
+@media (max-width: 900px) {
+  .grid-2, .grid-2.wide { grid-template-columns: 1fr; }
+  .slide { align-content: start; }
+}
+
+.fig { background: var(--panel); border: 1px solid var(--line); padding: .45rem; }
+.fig img {
+  width: 100%;
+  display: block;
+  max-height: min(54vh, 470px);
+  object-fit: contain;
+  background: #ece8e0;
+}
+.fig figcaption {
+  margin-top: .4rem;
+  padding: .15rem .2rem .1rem;
+  font-size: .72rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.chrome {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .55rem 1rem .65rem;
+  background: rgba(244, 241, 234, .94);
+  border-top: 1px solid var(--line);
+}
+.progress { flex: 1; height: 2px; background: rgba(0,0,0,.1); }
+.progress > i { display: block; height: 100%; width: 0; background: var(--rule); transition: width .3s ease; }
+.nav-btn {
+  width: 2.2rem; height: 2.2rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  display: grid; place-items: center;
+}
+.nav-btn:disabled { opacity: .3; cursor: default; }
+.counter {
+  font-variant-numeric: tabular-nums;
+  font-size: .8rem; font-weight: 600;
+  min-width: 3.4rem; text-align: center;
+  color: var(--muted);
+}
+.slide-name { font-size: .74rem; color: var(--muted); min-width: 9rem; }
+.hint { font-size: .7rem; color: var(--muted); opacity: .75; }
+@media (max-width: 720px) { .hint, .slide-name { display: none; } }
+
+/* map */
+.map-layout {
+  display: grid;
+  grid-template-columns: 1.4fr .8fr;
+  gap: 1rem;
+  margin-top: .4rem;
+}
+@media (max-width: 980px) { .map-layout { grid-template-columns: 1fr; } }
+#leafletMap {
+  height: min(62vh, 540px);
+  border: 1px solid var(--line);
+  background: #e4e2de;
+}
+.map-side {
+  display: flex; flex-direction: column; gap: .5rem;
+  border-left: 1px solid var(--line);
+  padding: .2rem 0 .2rem 1.1rem;
+}
+.map-side .step { font-size: .72rem; font-weight: 600; letter-spacing: .1em; color: var(--accent); font-variant-numeric: tabular-nums; }
+.map-side p { font-size: .92rem; color: var(--muted); }
+.map-side .page { font-size: .75rem; margin-top: .2rem; }
+.stop-list { display: grid; gap: .1rem; margin-top: auto; padding-top: .6rem; border-top: 1px solid var(--line); }
+.stop-list button {
+  text-align: left;
+  font-size: .78rem;
+  padding: .12rem 0;
+  color: var(--muted);
+}
+.stop-list button span { display: inline-block; width: 1.8rem; font-variant-numeric: tabular-nums; }
+.stop-list button.on { color: var(--ink); font-weight: 600; }
+.stop-list button.on span { color: var(--accent); }
+.leaflet-container { font: 12px/1.3 "IBM Plex Sans", sans-serif; }
+.leaflet-tooltip { border-radius: 0; box-shadow: none; border: 1px solid var(--line); }
+.route-marker {
+  background: var(--rule);
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+.route-marker.active { background: var(--accent); }
+
+.lb {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(10,10,10,.92);
+  display: none; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.lb.open { display: flex; }
+.lb img { max-width: min(96vw, 1400px); max-height: 92vh; object-fit: contain; }
+.zoomable { cursor: zoom-in; }
+
+.tiny { margin-top: 1.1rem; font-size: .72rem; color: var(--muted); max-width: 80ch; }
+.sep { margin-top: 1.1rem; padding-top: .8rem; border-top: 1px solid var(--line); max-width: 60ch; }
+
+/* emphasis */
+.hl {
+  color: var(--accent);
+  font-weight: 600;
+}
+.term {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  color: #3d2a22;
+}
+.callout {
+  margin-top: .95rem;
+  padding: .7rem .9rem;
+  background: #f3ebe4;
+  border-left: 3px solid var(--accent);
+  font-size: .92rem;
+  line-height: 1.4;
+  max-width: 54ch;
+  color: var(--ink);
+}
+.callout strong { color: var(--accent); font-weight: 600; }
+
+/* portrait + works */
+.rail-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .55rem;
+  align-items: start;
+}
+.fig.portrait img {
+  max-height: min(48vh, 420px);
+  object-fit: cover;
+  object-position: center top;
+  background: #ddd7ce;
+}
+.fig.portrait.sm img { max-height: min(28vh, 240px); }
+.works-panel {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+.works-panel .kicker { margin-bottom: .15rem; }
+.works {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.works li {
+  display: grid;
+  grid-template-columns: 3.1rem 1fr;
+  gap: .45rem;
+  padding: .28rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: .72rem;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.works .yr {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .02em;
+}
+.works em {
+  color: var(--ink);
+  font-style: italic;
+  font-family: "Source Serif 4", Georgia, serif;
+}
+.works .ru { display: block; margin-top: .12rem; font-style: normal; font-size: .72rem; color: var(--muted); }
+.cite { border-left-color: var(--accent); }
+.points li b { color: var(--ink); }
+.points li .hl { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide active" data-title="Титул">
+    <div class="grid-2">
+      <div>
+        <p class="kicker">Имагология · травелог · пограничная идентичность</p>
+        <h1>Сибирские этносы и межнациональные отношения в травелоге Й. Стадлинга «Through Siberia» (1901)</h1>
+        <p class="meta">
+          <b>П. В. Алексеев</b><br />
+          Горно-Алтайский государственный университет;<br />
+          Самаркандский государственный университет им. Шарофа Рашидова
+        </p>
+        <p class="tiny">Исследование выполнено за счёт гранта РНФ № 25-28-20397 «Межнациональные отношения в Сибири в рецепции европейских путешественников конца XIX – начала XX вв.»</p>
+      </div>
+      <div class="rail-2">
+        <figure class="fig portrait">
+          <img class="zoomable" src="assets/stadling_portrait.jpg" alt="Йонас Йонссон Стадлинг, около 1900" />
+          <figcaption>Jonas J. Stadling, ок. 1900. Wikimedia Commons.</figcaption>
+        </figure>
+        <figure class="fig">
+          <img class="zoomable" src="assets/book_cover.jpg" alt="Обложка Through Siberia, 1901" />
+          <figcaption>Through Siberia, 1901. Archibald Constable &amp; Co.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" data-title="Рамка: Андре">
+    <div class="grid-2">
+      <div>
+        <p class="kicker">Рамка, а не предмет</p>
+        <h2>Поиск Андре открывает книгу, но текст задерживается на другом</h2>
+        <ul class="points">
+          <li>Июль 1897 г.: аэростат «Орёл» скрылся со Шпицбергена; 1898 г. — стипендия Веги на опрос кочевников северного побережья <span class="pg">[P. 2–3]</span>.</li>
+          <li>Около 15 500 миль; следов Андре нет <span class="pg">[P. 260]</span>.</li>
+          <li>Вместо аэростата — станционный чапан, шкура голубого песца, отданная священнику, фунт чая туруханской лавочницы.</li>
+        </ul>
+        <p class="cite">Туземец «быстро приближается к своей неизбежной участи»; недоделанное казённой порчей довершают «торговец и водка».<span class="src">Ф. Х. Х. Гийемар, предисловие. Through Siberia, p. vii–x.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/andree_launch.jpg" alt="Старт аэростата Örnen, 11 июля 1897" />
+        <figcaption>Старт «Örnen», 11.07.1897. Фото G. V. E. Swedenborg.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" data-title="Лакуна">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">Историография</p>
+        <h2>Как целостный нарратив сибирский вояж почти не читали</h2>
+        <ul class="points">
+          <li>Е. И. Кочкина, А. С. Вдовин: Стадлинг в ряду иностранцев Енисейского Севера, без разбора книги.</li>
+          <li>Е. И. Майзик: путешественник «вне состава научных экспедиций».</li>
+          <li>Воркшоп о Земле Франца-Иосифа: архивы и связь с Андре, но не образы народов.</li>
+          <li>Книгу брали как справку о Севере или как документ «друга Толстого».</li>
+        </ul>
+        <p class="callout"><strong>Открытый вопрос.</strong> Как в тексте складываются образы <span class="term">туземца</span>, <span class="term">купца</span>, <span class="term">миссии</span> и <span class="term">«сибиряка»</span>?</p>
+      </div>
+      <div>
+        <p class="cite lg">«Наиболее оригинальные страницы» — о тунгусах, бурятах и якутах: «бурятизация» русских чинов и «блестящее исследование влияния среды».<span class="src">Scottish Geographical Magazine. 1901. Vol. 17, No. 9. P. 502–503.</span></p>
+        <p class="lede" style="margin-top:.8rem;font-size:.9rem">Единственный упрёк рецензента — «излишний пессимизм» относительно железной дороги.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" data-title="Оптика">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">Теоретическая рамка</p>
+        <h2>Европейский глаз и уже готовая имперская матрица</h2>
+        <ul class="points">
+          <li><b>Ю. Слёзкин:</b> образы Севера «искажали и отражали» реальность и служили зеркалами европейской культуры <span class="pg">[С. 15–16]</span>.</li>
+          <li><b>Р. Джераси:</b> империя, ощущая собственную «восточность» перед Европой, переносит её на азиатских подданных <span class="pg">[С. 19–21]</span>.</li>
+          <li><b>Н. М. Ядринцев:</b> «Сибирь как колония» (1882), нем. пер. <em>Sibirien</em> (1886) — прямой интертекст финальных глав.</li>
+        </ul>
+        <p class="callout">В <em>Shamanismen i norra Asien</em> (1912) — систематика <span class="term">infödingar</span>; в травелоге 1901 г. классификация ещё <strong>рождается из сцен</strong>.</p>
+        <p class="kicker" style="margin-top:1rem">Труды · выборка</p>
+        <ul class="works">
+          <li><span class="yr">1883</span><span><em>Genom den stora vestern</em><span class="ru">через американский Запад</span></span></li>
+          <li><span class="yr">1891</span><span><em>De religiösa rörelserna i Ryssland</em><span class="ru">религиозные движения в России</span></span></li>
+          <li><span class="yr">1893</span><span><em>Från det hungrande Ryssland</em><span class="ru">из голодающей России · с Толстым</span></span></li>
+          <li><span class="yr">1894</span><span><em>Vår irlänska fråga</em><span class="ru">«наш ирландский вопрос» · Норрланд / саамы</span></span></li>
+          <li><span class="yr">1901</span><span><em>Genom Sibirien</em> / <em>Through Siberia</em><span class="ru">в поисках Андре · предмет доклада</span></span></li>
+          <li><span class="yr">1912</span><span><em>Shamanismen i norra Asien</em><span class="ru">систематика <i>infödingar</i> после травелога</span></span></li>
+        </ul>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/book_preface_start.jpg" alt="Предисловие F. H. H. Guillemard к Through Siberia" />
+        <figcaption>Начало предисловия Ф. Х. Х. Гийемара. Through Siberia, 1901.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" data-title="Маршрут">
+    <div>
+      <p class="kicker">Маршрут 1898 г.</p>
+      <h2>Последовательность образов совпадает с маршрутом</h2>
+      <div class="map-layout">
+        <div id="leafletMap" aria-label="Маршрут Стадлинга на географической карте"></div>
+        <aside class="map-side" id="mapCard">
+          <div class="step" id="mapStep">01 / 11</div>
+          <h3 id="mapTitle"></h3>
+          <p id="mapText"></p>
+          <p class="page" id="mapPage"></p>
+          <div class="stop-list" id="mapDots"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 interactive zones (бывш. статичные частотности / плотность убраны — те же данные здесь) -->
+  <section class="slide embed" data-title="Зоны · интерактив">
+    <div class="embed-head">
+      <div>
+        <p class="kicker" style="margin-bottom:.25rem">Количественная проверка · интерактив</p>
+        <h2>Этнонимы по зонам маршрута</h2>
+        <p class="embed-note">Плотность на 10&nbsp;000 знаков OCR; пики идут по маршруту статьи. Частотность ≠ сюжетный вес: <em>Kirgises</em> редки (12), но открывают ряд «туземных» образов.</p>
+      </div>
+      <span class="hint-inline">клик по зоне · «траектории» / «тепловая карта»</span>
+    </div>
+    <div class="embed-frame">
+      <iframe title="Этнонимы по зонам" data-src="assets/charts/ethnos_zones_explorer.html?embed=1" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- 7 interactive graph -->
+  <section class="slide embed" data-title="Граф · интерактив">
+    <div class="embed-head">
+      <div>
+        <p class="kicker" style="margin-bottom:.25rem">Количественная проверка · интерактив</p>
+        <h2>Совместная встречаемость этнонимов</h2>
+        <p class="embed-note"><b>Только этносы</b> — кто с кем на одних страницах. <b>Этносы + темы</b> — те же узлы плюс мотивы книги (купец, водка, шаман, ссылка, миссия, олень…): видно, в каком лексическом окружении появляется народ. Наведите на узел — подпись; клик — соседи.</p>
+      </div>
+      <span class="hint-inline">ребро = совместные страницы · слайдер порога</span>
+    </div>
+    <div class="embed-frame">
+      <iframe title="Граф этнонимов" data-src="assets/charts/ethnos_network.html?embed=1" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" data-title="Степь">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">1 · Транссиб · степь</p>
+        <h2>Миф «пустой» степи рушится на перроне</h2>
+        <ul class="points">
+          <li>Переселенцы: «Хороним своих мёртвых… Только сегодня на станции умерли двое младенцев»; паспорт, проданный дом, долг Андреичу <span class="pg">[P. 9–10]</span>.</li>
+          <li><span class="hl">«Киргизы» (казахи)</span> в <em>schaphn</em>, «крупные бронзовые лица», «крепкий здоровый вид» — на фоне этой смертности <span class="pg">[P. 21]</span>.</li>
+          <li>Цель названа прямо: «заселить степь и русифицировать киргизов»; в Акмолинске русских с 101 910 (1869) до 258 747 (1896) <span class="pg">[P. 22]</span>.</li>
+          <li>Пресная вода нужна «киргизам как пастбище и колонистам как усадьба»; стороны «не имели голоса» <span class="pg">[P. 22–23]</span>.</li>
+        </ul>
+        <p class="cite">«Сыны степи» с любопытством смотрят на «оборванные и голодные толпы русских, стекающиеся занять их пастбища»: «Да будет воля Аллаха!»<span class="src">Through Siberia, p. 21.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/eth_kazakh19.jpg" alt="Казахская пара, фотография XIX в." />
+        <figcaption>Казахи степи. Фотография XIX в.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" data-title="Тайга и тракт">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">2 · Тайга · Сибирский тракт</p>
+        <h2>«Свой» описан языком, который травелог резервирует за «диким»</h2>
+        <ul class="points">
+          <li>Переселенец «мало-помалу подчиняется окружению»: песни смолкают, взгляд «как у дикого зверя, ищущего добычу» <span class="pg">[P. 42]</span>.</li>
+          <li>Первые поселенцы «охотились на туземцев как на диких животных»; походы «в деревни туземцев, чтобы похитить у них девушек» <span class="pg">[P. 42–43]</span>.</li>
+          <li>Деревня — «атрибут» и «дитя» этапной тюрьмы; «рыхлый конгломерат» и «звуки десяти разных языков» <span class="pg">[P. 43–45]</span>.</li>
+          <li>Прогон за 20 рублей при пятой части по таксе; бумага министра — пожатие плеч <span class="pg">[P. 45–46]</span>.</li>
+        </ul>
+        <p class="cite lg">«Вы, русские…» — <span class="hl">«Мы не русские, мы сибиряки!»</span><span class="src">Through Siberia, p. 45–46.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/plate_transsib_map_up.jpg" alt="Map of the Trans-Siberian Railway" />
+        <figcaption>Map of the Trans-Siberian Railway. Through Siberia, 1901. «Сибиряк» здесь не этноним, а отказ платить метрополии покорностью и по тарифу.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" data-title="Обратная аккультурация">
+    <div class="grid-2 top">
+      <div>
+        <p class="kicker">3 · Обратная аккультурация</p>
+        <h2>Русификация на окраине проигрывает локальной аккультурации</h2>
+        <ul class="points">
+          <li>Русские «в значительной степени <span class="hl">бурятизируются</span>» (<span class="term">Buriatised</span>), в Якутске — «<span class="hl">якутизируются</span>» (<span class="term">Yakutised</span>) <span class="pg">[P. 55]</span>.</li>
+          <li>Средняя Лена: русские «с большим или меньшим процентом якутской крови» говорят «только по-якутски» <span class="pg">[P. 77]</span>.</li>
+          <li>Приложение — якутский разговорник: «Чтобы основательно узнать народ, нужно выучить его язык» <span class="pg">[P. 299]</span>.</li>
+          <li>Русский сюжет «обынородчивания» перенесён в западный травелог.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cite lg">Забыв родной язык, говорят «только по-бурятски и по-якутски или на каком-то смешанном наречии»; многие «сильнее верят в силы шамана, чем в обряды русского священника».<span class="src">Through Siberia, p. 55.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" data-title="Буряты">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">4 · Over the Buriatic Steppe</p>
+        <h2>Буряты: община и грамотность как орудие в имперском праве</h2>
+        <ul class="points">
+          <li>«Общность имуществ»: право бедного на пищу и кров; девушка берёт украшения у кузнеца, «не платя» <span class="pg">[P. 53]</span>.</li>
+          <li>Буддийские миссионеры с 1727 г. ввели «искусство письма»; Гусиное озеро, резиденция Хамбо-ламы <span class="pg">[P. 54–55]</span>.</li>
+          <li>Грамотность «сослужила большую службу» в тяжбе за угодья: «сложный аппарат официальных документов» <span class="pg">[P. 56]</span>.</li>
+          <li><span class="hl">Буряты и якуты</span> — единственные, кто «не обнаруживает признаков вымирания»; Доржи Банзаров — учёность без отречения <span class="pg">[P. 56]</span>.</li>
+        </ul>
+        <p class="cite">При добыче «соседи прежде получают свою долю мяса, а хозяину остаётся лишь то, что осталось».<span class="src">Through Siberia, p. 53.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/eth_buryat.jpg" alt="Этнографический портрет бурят" />
+        <figcaption>Буряты. Этнографический портрет рубежа XIX–XX вв.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" data-title="Якуты">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">5 · Якутская область</p>
+        <h2>Якуты: распознаваемая полития и внутриэтническая кабала</h2>
+        <ul class="points">
+          <li>1897: 277 835 жителей, 6% русских, 244 183 якута <span class="pg">[P. 88]</span>; <em>aga-usa</em> → наслеги → улусы, титул <em>kujas</em> от Екатерины II <span class="pg">[P. 88–89]</span>.</li>
+          <li>Кузнецы и резчики, «некоторые прошли университет»; казённая школа даёт лишь <em>smattering</em> языка <span class="pg">[P. 93]</span>.</li>
+          <li>Контрапункт — скопцы Марчи: Пушкин, Некрасов, Милль и Спенсер в избе; «едва мог поверить, что жители принадлежат к одной национальности» <span class="pg">[P. 103–104]</span>.</li>
+          <li>Злаки вводят «русские, в особенности скопцы и другие сектанты» <span class="pg">[P. 91]</span>.</li>
+        </ul>
+        <p class="cite">Семьи «глубоко в долгу у немногих богачей, по большей части из своего же народа, которые держат их в состоянии рабства».<span class="src">Through Siberia, p. 90.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/eth_yakut_women.jpg" alt="Якутки, фото А. П. Курочкина" />
+        <figcaption>Якутки. Фото А. П. Курочкина.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide" data-title="Тунгусы">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">6 · Лена · Оленёк · Таймыр</p>
+        <h2>Тунгусская шкала: оленевод против рыбоеда</h2>
+        <ul class="points">
+          <li>Платят долги «мёртвых предков» — и потому «лёгкая добыча» якутов и «хищных купцов» <span class="pg">[P. 134–135]</span>.</li>
+          <li>Утратившие стада «снизились до чистой ихтиофагии»; <span class="hl">«рыбоед»</span> = пауперизм <span class="pg">[P. 134–135]</span>.</li>
+          <li>Без «радикальной перемены» — в ряду «вымерших рас человечества» <span class="pg">[P. 135–136]</span>.</li>
+          <li>Оленёк: язычники-оленеводы выше «соприкоснувшихся с так называемой <em>цивилизацией</em>» <span class="pg">[P. 205–206]</span>; помогают «никогда не торгуясь» <span class="pg">[P. 238–239]</span>.</li>
+        </ul>
+        <p class="cite">Вдова держала сыновей и стада «как можно дальше от всякого соприкосновения с „крещёными людьми“ (купцами и священниками)»: сыновья «не знают вкуса ни табака, ни водки».<span class="src">Through Siberia, p. 239.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/plate_tunguses_lena_crop.jpg" alt="Tunguses of the Lena Delta" />
+        <figcaption>Tunguses of the Lena Delta. Through Siberia, 1901. Честность — не «природа этноса», а результат изоляции от крещёного рынка.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" data-title="Купец-король">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">7 · Институты обмена · нижняя Лена</p>
+        <h2>«<span class="hl">Купец-король</span>»: склад, икона, казна и матушка</h2>
+        <ul class="points">
+          <li>«В лучших отношениях» с <em>niebesni Tsar</em>, чиновником и священником: «трение легко избегается, если делить благословения» <span class="pg">[P. 142–143]</span>.</li>
+          <li>Туземцы «вечно в глубоком долгу», «по сути его рабы»; «двойная прибыль» на мехе и товаре <span class="pg">[P. 143–144]</span>.</li>
+          <li>Подати — «за мёртвых предков», по старому цензу: моральный код тунгуса вписан в казённую арифметику <span class="pg">[P. 145]</span>.</li>
+          <li>Бочки с «таинственным именем <em>Orloff</em>» достигают «дома „матушки“ (жены священника)» <span class="pg">[P. 144]</span>.</li>
+        </ul>
+        <p class="cite">«Я даже не выучился подписывать своё имя, — но погляди-ка, не благословил ли добрый Бог моих предприятий!»<span class="src">Through Siberia, p. 142–143.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/plate_lena_delta_up.jpg" alt="In the Lena Delta" />
+        <figcaption>In the Lena Delta. Through Siberia, 1901.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide" data-title="Анабар и шар">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">7 · Анабар · долганское стойбище</p>
+        <h2>Многозвенная кабала и «Орёл» на языке культа</h2>
+        <ul class="points">
+          <li>Анабар: нищета от «якутских агентов русских купцов»; цепь «русский капитал — якутский агент — тундровый должник» <span class="pg">[P. 212]</span>.</li>
+          <li>«Невинные как дети» — сострадание, патерналистская детскость и экономическая дисквалификация в одной фразе <span class="pg">[P. 212]</span>.</li>
+          <li>Игрушечный шар Френкеля: гостей принимают за «великих шаманов», способных летать <span class="pg">[P. 215]</span>.</li>
+          <li>Таймыр: жалоба долганского старшины на Сотникова, который «выбил глаза туземцу» <span class="pg">[P. 243–244]</span>.</li>
+        </ul>
+        <p class="cite">«Что делали эти молодые люди там, на небе, куда они полетели на своём шаре? Хотели навестить великого Тангару?»<span class="src">Through Siberia, p. 215.</span></p>
+      </div>
+      <figure class="fig">
+        <img class="zoomable" src="assets/plate_dolgan_sledge_up.jpg" alt="The Dolgan Nalthanoff and his sledge" />
+        <figcaption>The Dolgan Nalthanoff and his sledge. Through Siberia, 1901.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide" data-title="Миссия и шаман">
+    <div class="grid-2 top">
+      <div>
+        <p class="kicker">8 · Among the Shamans</p>
+        <h2>Миссия как отчётность, шаманство как регулярная сделка</h2>
+        <ul class="points">
+          <li>Якуты «номинально» православны, но сильнее верят в шамана; к нему ходят и чиновники <span class="pg">[P. 96]</span>.</li>
+          <li>Камлание описано словами <em>congregation</em>, <em>Shamanistic saints</em>; трёхлетняя «конференция» шаманов — орган самоуправления <span class="pg">[P. 228–233]</span>.</li>
+          <li>Ради отчёта Синоду дают водку и табак; «многие крестятся по нескольку раз» <span class="pg">[P. 234]</span>.</li>
+          <li>В буране старый шаман спас епископа, крещёные бросили священника: «Так история доброго самаритянина сохраняет силу даже в сегодняшней тундре» <span class="pg">[P. 235]</span>.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cite lg">«Я раз в год исповедуюсь священнику и даю ему шкуру голубого песца, и тогда он доволен, и я могу спокойно шаманить ещё год».<span class="src">Through Siberia, p. 227.</span></p>
+        <p class="cite">«Крещёные люди — самые худшие негодяи (<em>worst rascals</em>) на всём Таймыре».<span class="src">Некрещёный самоед. Through Siberia, p. 234.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide" data-title="Туруханск">
+    <div class="grid-2 top">
+      <div>
+        <p class="kicker">9 · Туруханск</p>
+        <h2>«<span class="hl">Хитрый зверь</span>»: туземец честен, пока экономически выгоден</h2>
+        <ul class="points">
+          <li>«22 маленькие деревянные избы» — «столица» страны «величиной с Францию»; гостиница — «В тюрьме!» <span class="pg">[P. 253–254]</span>.</li>
+          <li>Остяк — «центральная фигура жизни в городе», и «публика» им недовольна <span class="pg">[P. 254]</span>.</li>
+          <li>Соболя «на шубу для министра» — и на исправника, миссионера и купца, «который правит тундрой как самодержец» <span class="pg">[P. 255–256]</span>.</li>
+          <li>Ночью «общество» играет в карты; автор уходит к ссыльным <span class="pg">[P. 256–257]</span>.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cite lg">«Ну, я отвешиваю ему три четверти фунта чаю и говорю: „Вот тебе фунт“; а он… идёт к моему соседу и перевешивает! В прежние годы я давала ему полфунта… — и он верил… До чего хитрый зверь он стал!»<span class="src">Мадам Копылиха. Through Siberia, p. 254–255.</span></p>
+        <p class="callout">Официальная «порча» туземца оборачивается жалобой эксплуататора на утрату <strong>удобной доверчивости</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide" data-title="Заключение">
+    <div class="grid-2 wide top">
+      <div>
+        <p class="kicker">Заключение</p>
+        <h2>Система взаимной перекодировки <span class="term">«туземца»</span> и <span class="term">«сибиряка»</span></h2>
+        <ul class="points">
+          <li>Ядринцевский словарь: «красной нитью проходит система безжалостного грабежа» <span class="pg">[P. 285–286]</span>.</li>
+          <li>Враг туземца — функция системы: чиновник, купец-король, якут-агент, священник с водкой, голодный переселенец.</li>
+          <li>Амбивалентность: толстовская эмпатия в лондонской формуле викторианской опеки; «невинны как дети» лишает должников субъектности.</li>
+          <li>«Мы сибиряки», бурятизация, Копылиха, «добрый самаритянин» тундры — одна система на рубеже открытия Транссиба.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cite lg">«Сибирь — не Северная Америка»: новые пути здесь — не начало новой цивилизации, а «подспорье уже существующей, наполовину истощённой и бесплодной культурной системе».<span class="src">Стадлинг вслед за Н. М. Ядринцевым. Through Siberia, p. 298.</span></p>
+        <p class="tiny">Изображения: Internet Archive (Through Siberia, 1901); Wikimedia Commons; Library of Congress. Грант РНФ № 25-28-20397.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<nav class="chrome" aria-label="Навигация">
+  <button class="nav-btn" id="prev" aria-label="Назад">←</button>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+  <span class="slide-name" id="slideName"></span>
+  <div class="counter" id="counter">1 / 16</div>
+  <button class="nav-btn" id="next" aria-label="Вперёд">→</button>
+  <span class="hint">← → · пробел · F</span>
+</nav>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true"><img alt="" /></div>
+
+<script src="assets/leaflet/leaflet.js"></script>
+<script>
+(function () {
+  const slides = [...document.querySelectorAll(".slide")];
+  let i = 0;
+  const bar = document.getElementById("bar");
+  const counter = document.getElementById("counter");
+  const slideName = document.getElementById("slideName");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+  const lb = document.getElementById("lb");
+  const lbImg = lb.querySelector("img");
+  let leafletMap = null;
+  let markers = [];
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + "%";
+    counter.textContent = (i + 1) + " / " + slides.length;
+    slideName.textContent = slides[i].dataset.title || "";
+    prev.disabled = i === 0;
+    next.disabled = i === slides.length - 1;
+    if (slides[i].dataset.title === "Маршрут") {
+      ensureMap();
+      setTimeout(() => leafletMap && leafletMap.invalidateSize(), 50);
+    }
+    // lazy-load interactive embeds
+    slides[i].querySelectorAll("iframe[data-src]").forEach((frame) => {
+      if (!frame.getAttribute("src")) frame.setAttribute("src", frame.dataset.src);
+    });
+    // return keyboard focus to deck when leaving an embed slide
+    if (!slides[i].classList.contains("embed")) {
+      document.activeElement && document.activeElement.blur && document.activeElement.blur();
+    }
+  }
+
+  prev.addEventListener("click", () => show(i - 1));
+  next.addEventListener("click", () => show(i + 1));
+  window.__deckShow = show;
+
+  function handleDeckKey(key) {
+    if (lb.classList.contains("open")) {
+      if (key === "Escape" || key === " ") { lb.classList.remove("open"); return true; }
+      return false;
+    }
+    if (key === "ArrowRight" || key === " " || key === "PageDown") { show(i + 1); return true; }
+    if (key === "ArrowLeft" || key === "PageUp") { show(i - 1); return true; }
+    if (key === "Home") { show(0); return true; }
+    if (key === "End") { show(slides.length - 1); return true; }
+    if (key === "f" || key === "F") {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+      return true;
+    }
+    return false;
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (handleDeckKey(e.key)) e.preventDefault();
+  });
+
+  // arrow keys from embedded interactives (iframe focus)
+  window.addEventListener("message", (e) => {
+    if (!e.data || e.data.type !== "deck-key") return;
+    handleDeckKey(e.data.key);
+  });
+
+  document.querySelectorAll(".zoomable").forEach((img) => {
+    img.addEventListener("click", () => {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.classList.add("open");
+    });
+  });
+  lb.addEventListener("click", () => lb.classList.remove("open"));
+
+  /* route stops: approximate real coordinates, page refs to Through Siberia (1901) */
+  const stops = [
+    { title: "Челябинск — «западные ворота»", text: "Апрель–май 1898 г.: из Стокгольма через Петербург; Челябинск открывает Транссиб.", page: "Through Siberia, p. 4", lat: 55.16, lng: 61.40 },
+    { title: "Транссиб: переселенцы и «киргизы»", text: "Похороны младенцев на перроне; казахи смотрят на толпы, «стекающиеся занять их пастбища».", page: "Through Siberia, p. 9–10, 21–23", lat: 54.87, lng: 69.15 },
+    { title: "Тайга: Тулун — Иркутск", text: "Давление тайги на переселенца; деревня — «дитя» тюрьмы; «Мы не русские, мы сибиряки!»", page: "Through Siberia, p. 42–46", lat: 54.56, lng: 100.58 },
+    { title: "Бурятская степь", text: "Общность имуществ, буддийская грамотность и тяжбы за угодья; «бурятизация» русских.", page: "Through Siberia, p. 52–56", lat: 53.10, lng: 105.40 },
+    { title: "Средняя Лена", text: "Прибрежные деревни: русские «якутизировались» и говорят только по-якутски.", page: "Through Siberia, p. 77", lat: 60.37, lng: 120.43 },
+    { title: "Якутск", text: "Наслеги и улусы, школа и долг «у своих»; скопцы Марчи как контрапункт.", page: "Through Siberia, p. 88–104", lat: 62.03, lng: 129.73 },
+    { title: "Нижняя Лена", text: "Тунгусская шкала честности; «купец-король» и бочки Orloff в доме «матушки».", page: "Through Siberia, p. 134–145", lat: 70.75, lng: 127.30 },
+    { title: "Оленёк · Анабар", text: "Язычники-оленеводы выше «цивилизованных»; якутские агенты купцов; игрушечный шар и Тангара.", page: "Through Siberia, p. 205–215", lat: 71.90, lng: 114.00 },
+    { title: "Таймыр · Катангское", text: "Шаман и шкура голубого песца; «добрый самаритянин» тундры; вдова и пятеро сыновей.", page: "Through Siberia, p. 226–245", lat: 71.98, lng: 102.47 },
+    { title: "Дудинка", text: "«Вплоть до Дудинского туземцы говорили по-якутски. На Енисее… говорят по-русски».", page: "Through Siberia, p. 248", lat: 69.40, lng: 86.18 },
+    { title: "Туруханск", text: "«Столица» из 22 изб; мадам Копылиха и «хитрый зверь» остяк; ссыльные.", page: "Through Siberia, p. 253–257", lat: 65.79, lng: 87.96 }
+  ];
+  const tail = [[58.45, 92.17], [56.01, 92.87]]; // Yeniseisk, Krasnoyarsk
+
+  const mapTitle = document.getElementById("mapTitle");
+  const mapText = document.getElementById("mapText");
+  const mapStep = document.getElementById("mapStep");
+  const mapPage = document.getElementById("mapPage");
+  const mapDots = document.getElementById("mapDots");
+  const pad = (n) => String(n).padStart(2, "0");
+
+  stops.forEach((s, idx) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = "<span>" + pad(idx + 1) + "</span>" + s.title;
+    b.addEventListener("click", () => selectStop(idx));
+    mapDots.appendChild(b);
+  });
+
+  function selectStop(idx, pan = true) {
+    [...mapDots.children].forEach((b, j) => b.classList.toggle("on", j === idx));
+    mapStep.textContent = pad(idx + 1) + " / " + pad(stops.length);
+    mapTitle.textContent = stops[idx].title;
+    mapText.textContent = stops[idx].text;
+    mapPage.textContent = stops[idx].page;
+    markers.forEach((m, j) => {
+      const el = m.getElement();
+      if (el) el.classList.toggle("active", j === idx);
+    });
+    if (leafletMap && pan) leafletMap.panTo([stops[idx].lat, stops[idx].lng], { animate: true });
+  }
+
+  function ensureMap() {
+    if (leafletMap || typeof L === "undefined") return;
+    leafletMap = L.map("leafletMap", { scrollWheelZoom: false, zoomControl: true }).setView([62, 100], 3);
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "Tiles &copy; Esri",
+      maxZoom: 12
+    }).addTo(leafletMap);
+    leafletMap.attributionControl.setPrefix("Leaflet");
+
+    const path = stops.map((s) => [s.lat, s.lng]).concat(tail);
+    L.polyline(path, { color: "#6b3a2a", weight: 2.5, opacity: 0.9 }).addTo(leafletMap);
+
+    markers = stops.map((s, idx) => {
+      const icon = L.divIcon({ className: "route-marker", iconSize: [12, 12] });
+      const m = L.marker([s.lat, s.lng], { icon }).addTo(leafletMap);
+      m.on("click", () => selectStop(idx));
+      m.bindTooltip(s.title, { direction: "top", offset: [0, -6] });
+      return m;
+    });
+    leafletMap.fitBounds(L.latLngBounds(path).pad(0.12));
+    const current = [...mapDots.children].findIndex((b) => b.classList.contains("on"));
+    selectStop(Math.max(0, current), false);
+  }
+
+  selectStop(0);
+  show(0);
+})();
+</script>
+</body>
+</html>

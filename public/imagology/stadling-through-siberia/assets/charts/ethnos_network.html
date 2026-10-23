@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Интерактивный граф этнонимов · Through Siberia</title>
+<script src="vendor/vis-network.min.js"></script>
+<style>
+:root {
+  --ink: #1a1a1a;
+  --muted: #5a5a5a;
+  --paper: #f4f1ea;
+  --panel: #faf8f4;
+  --line: #c8c4bc;
+  --accent: #6b3a2a;
+  --eth: #2c2c2c;
+  --theme: #6b3a2a;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1.25rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: .85rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+header .titles h1 {
+  font-family: Georgia, "Source Serif 4", serif;
+  font-size: 1.25rem;
+  margin: 0 0 .25rem;
+  font-weight: 700;
+}
+header .titles p {
+  margin: 0;
+  font-size: .78rem;
+  color: var(--muted);
+  max-width: 62ch;
+  line-height: 1.35;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem .9rem;
+  align-items: center;
+}
+.controls label {
+  font-size: .75rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.seg button {
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  padding: .35rem .7rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.seg button.on {
+  background: var(--ink);
+  color: #fff;
+}
+input[type="range"] { width: 120px; accent-color: var(--accent); }
+#minValLabel { font-variant-numeric: tabular-nums; min-width: 1.5rem; color: var(--ink); font-weight: 600; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr min(320px, 34vw);
+  min-height: 0;
+}
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+}
+#net {
+  min-height: 420px;
+  border-right: 1px solid var(--line);
+  background: #efebe3;
+}
+aside {
+  padding: 1rem 1.1rem;
+  overflow: auto;
+  background: var(--panel);
+}
+aside h2 {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  margin: 0 0 .5rem;
+}
+aside .hint {
+  font-size: .75rem;
+  color: var(--muted);
+  margin-bottom: .9rem;
+  line-height: 1.4;
+}
+.stat {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .25rem .6rem;
+  font-size: .82rem;
+  margin-bottom: .35rem;
+}
+.stat span:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
+.list {
+  margin-top: .85rem;
+  display: grid;
+  gap: .35rem;
+}
+.edge-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .5rem;
+  align-items: center;
+  padding: .45rem .55rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  font-size: .8rem;
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+.edge-row .w { font-variant-numeric: tabular-nums; font-weight: 600; }
+.edge-row:hover, .edge-row.active { border-color: var(--accent); }
+.bar {
+  height: 4px;
+  background: #e0dcd4;
+  margin-top: .35rem;
+  grid-column: 1 / -1;
+}
+.bar > i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.legend {
+  margin-top: 1.2rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--line);
+  font-size: .72rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.dot {
+  display: inline-block;
+  width: .65rem; height: .65rem;
+  border-radius: 50%;
+  margin-right: .35rem;
+  vertical-align: middle;
+}
+.empty { color: var(--muted); font-size: .85rem; font-style: italic; }
+.swatch {
+  display: inline-block; width: .65rem; height: .65rem; border-radius: 50%;
+  margin-right: .4rem; vertical-align: -1px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+}
+
+.mode-hint {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: .72rem;
+  color: var(--muted);
+  line-height: 1.35;
+  max-width: 70ch;
+}
+body.embed .mode-hint { display: none; }
+body.embed header .titles p { display:none; }
+body.embed header { padding:.55rem 1rem; }
+body.embed header h1 { font-size:1.05rem; }
+body.embed #net { height: calc(100vh - 64px); }
+</style>
+</head>
+<body>
+
+<script>
+(function(){
+  if (new URLSearchParams(location.search).get('embed') === '1') {
+    document.documentElement.classList.add('embed');
+    document.addEventListener('DOMContentLoaded', () => document.body.classList.add('embed'));
+    if (document.body) document.body.classList.add('embed');
+  }
+})();
+</script>
+
+<header>
+  <div class="titles">
+    <h1>Граф этнонимов в <em>Through Siberia</em> (1901)</h1>
+    <p>Ребро = совместное появление на одной странице OCR. Наведите на узел — подпись; клик — соседи. «+ темы» подключает мотивы книги (купец, водка, шаман, ссылка…).</p>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Режим графа">
+      <button type="button" class="on" id="modeEth" data-mode="eth" title="Только этнонимы народов">Только этносы</button>
+      <button type="button" id="modeAll" data-mode="all" title="Этнонимы плюс мотивы: купец, водка, шаман, ссылка, миссия, олень…">Этносы + темы</button>
+    </div>
+    <p class="mode-hint" id="modeHint">Режим: связи между народами на одних страницах OCR.</p>
+    <label>Мин. вес ребра
+      <input type="range" id="minW" min="2" max="15" value="2" />
+      <span id="minValLabel">2</span>
+    </label>
+    <label><input type="checkbox" id="physics" checked /> физика</label>
+  </div>
+</header>
+
+<div class="layout">
+  <div id="net" aria-label="Интерактивный граф"></div>
+  <aside>
+    <h2 id="sideTitle">Выберите узел</h2>
+    <p class="hint" id="sideHint">Клик по этнониму подсветит связи. Наведите на ребро — число совместных страниц.</p>
+    <div id="sideStats"></div>
+    <div class="list" id="sideList"></div>
+    <div class="legend">
+      <div><span class="dot" style="background:#2c2c2c"></span>этноним · размер ≈ число страниц с упоминанием</div>
+      <div><span class="dot" style="background:#6b3a2a"></span>тема (в режиме «+ темы»)</div>
+      <div style="margin-top:.45rem">Источник: Stadling, Through Siberia / Guillemard, 1901 · эвристический regex по OCR.</div>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function () {
+  const raw = {"nodes": [{"id": "Siberians", "label": "сибиряки", "group": "ethnonym", "value": 72, "x": 25.9, "y": 261.3}, {"id": "Russians", "label": "русские", "group": "ethnonym", "value": 75, "x": 27.2, "y": 195.2}, {"id": "Kirgises", "label": "казахи (Kirgises)", "group": "ethnonym", "value": 7, "x": 113.6, "y": 545.7}, {"id": "merchant", "label": "купец / торговля", "group": "theme", "value": 29, "x": -88.6, "y": 60.1}, {"id": "Tunguses", "label": "тунгусы", "group": "ethnonym", "value": 36, "x": 16.5, "y": 118.5}, {"id": "debt", "label": "долг / кабала", "group": "theme", "value": 12, "x": -69.6, "y": 421.0}, {"id": "shaman", "label": "шаман", "group": "theme", "value": 28, "x": 202.0, "y": 139.1}, {"id": "Skoptsi", "label": "скопцы", "group": "ethnonym", "value": 13, "x": -156.3, "y": 320.8}, {"id": "civilisation", "label": "civilisation", "group": "theme", "value": 13, "x": 203.6, "y": 383.8}, {"id": "priest", "label": "священник / миссия", "group": "theme", "value": 32, "x": -161.1, "y": 103.1}, {"id": "Dolgans", "label": "долгане", "group": "ethnonym", "value": 17, "x": -37.0, "y": -43.5}, {"id": "exile", "label": "ссылка / каторга", "group": "theme", "value": 56, "x": -133.7, "y": 182.2}, {"id": "Samoyedes", "label": "самоеды", "group": "ethnonym", "value": 10, "x": 56.2, "y": -54.6}, {"id": "Ostiaks", "label": "остяки", "group": "ethnonym", "value": 10, "x": -136.4, "y": -4.9}, {"id": "vodka", "label": "водка / спирт", "group": "theme", "value": 42, "x": 111.2, "y": 190.0}, {"id": "reindeer", "label": "олень", "group": "theme", "value": 61, "x": 131.1, "y": 40.1}, {"id": "Buriats", "label": "буряты", "group": "ethnonym", "value": 17, "x": 38.1, "y": 55.9}, {"id": "Yakuts", "label": "якуты", "group": "ethnonym", "value": 52, "x": -27.2, "y": 203.2}], "edges": [{"from": "Russians", "to": "Siberians", "value": 25, "title": "совместно на 25 стр."}, {"from": "Siberians", "to": "merchant", "value": 7, "title": "совместно на 7 стр."}, {"from": "Russians", "to": "merchant", "value": 11, "title": "совместно на 11 стр."}, {"from": "Kirgises", "to": "Russians", "value": 4, "title": "совместно на 4 стр."}, {"from": "Kirgises", "to": "Siberians", "value": 3, "title": "совместно на 3 стр."}, {"from": "Siberians", "to": "vodka", "value": 11, "title": "совместно на 11 стр."}, {"from": "Russians", "to": "vodka", "value": 15, "title": "совместно на 15 стр."}, {"from": "Russians", "to": "exile", "value": 22, "title": "совместно на 22 стр."}, {"from": "Ostiaks", "to": "Siberians", "value": 2, "title": "совместно на 2 стр."}, {"from": "Ostiaks", "to": "Tunguses", "value": 2, "title": "совместно на 2 стр."}, {"from": "Siberians", "to": "Tunguses", "value": 8, "title": "совместно на 8 стр."}, {"from": "Siberians", "to": "shaman", "value": 5, "title": "совместно на 5 стр."}, {"from": "Siberians", "to": "exile", "value": 21, "title": "совместно на 21 стр."}, {"from": "Buriats", "to": "shaman", "value": 6, "title": "совместно на 6 стр."}, {"from": "Buriats", "to": "priest", "value": 5, "title": "совместно на 5 стр."}, {"from": "Russians", "to": "shaman", "value": 10, "title": "совместно на 10 стр."}, {"from": "Russians", "to": "priest", "value": 16, "title": "совместно на 16 стр."}, {"from": "Buriats", "to": "Russians", "value": 11, "title": "совместно на 11 стр."}, {"from": "Buriats", "to": "Siberians", "value": 8, "title": "совместно на 8 стр."}, {"from": "Buriats", "to": "Yakuts", "value": 6, "title": "совместно на 6 стр."}, {"from": "Russians", "to": "Yakuts", "value": 22, "title": "совместно на 22 стр."}, {"from": "Tunguses", "to": "shaman", "value": 8, "title": "совместно на 8 стр."}, {"from": "Tunguses", "to": "priest", "value": 4, "title": "совместно на 4 стр."}, {"from": "Buriats", "to": "Tunguses", "value": 4, "title": "совместно на 4 стр."}, {"from": "Yakuts", "to": "shaman", "value": 7, "title": "совместно на 7 стр."}, {"from": "Yakuts", "to": "priest", "value": 6, "title": "совместно на 6 стр."}, {"from": "Siberians", "to": "priest", "value": 4, "title": "совместно на 4 стр."}, {"from": "Siberians", "to": "Yakuts", "value": 11, "title": "совместно на 11 стр."}, {"from": "Yakuts", "to": "merchant", "value": 7, "title": "совместно на 7 стр."}, {"from": "Yakuts", "to": "vodka", "value": 12, "title": "совместно на 12 стр."}, {"from": "Yakuts", "to": "exile", "value": 9, "title": "совместно на 9 стр."}, {"from": "Yakuts", "to": "civilisation", "value": 2, "title": "совместно на 2 стр."}, {"from": "Siberians", "to": "civilisation", "value": 5, "title": "совместно на 5 стр."}, {"from": "Yakuts", "to": "reindeer", "value": 17, "title": "совместно на 17 стр."}, {"from": "Siberians", "to": "reindeer", "value": 6, "title": "совместно на 6 стр."}, {"from": "Dolgans", "to": "Russians", "value": 5, "title": "совместно на 5 стр."}, {"from": "Dolgans", "to": "Tunguses", "value": 8, "title": "совместно на 8 стр."}, {"from": "Dolgans", "to": "Yakuts", "value": 4, "title": "совместно на 4 стр."}, {"from": "Russians", "to": "Tunguses", "value": 6, "title": "совместно на 6 стр."}, {"from": "Tunguses", "to": "Yakuts", "value": 8, "title": "совместно на 8 стр."}, {"from": "Russians", "to": "reindeer", "value": 11, "title": "совместно на 11 стр."}, {"from": "Yakuts", "to": "debt", "value": 5, "title": "совместно на 5 стр."}, {"from": "Skoptsi", "to": "vodka", "value": 3, "title": "совместно на 3 стр."}, {"from": "Russians", "to": "Skoptsi", "value": 7, "title": "совместно на 7 стр."}, {"from": "Skoptsi", "to": "Yakuts", "value": 5, "title": "совместно на 5 стр."}, {"from": "Skoptsi", "to": "exile", "value": 9, "title": "совместно на 9 стр."}, {"from": "Skoptsi", "to": "priest", "value": 2, "title": "совместно на 2 стр."}, {"from": "Skoptsi", "to": "debt", "value": 2, "title": "совместно на 2 стр."}, {"from": "Russians", "to": "debt", "value": 4, "title": "совместно на 4 стр."}, {"from": "Russians", "to": "civilisation", "value": 8, "title": "совместно на 8 стр."}, {"from": "Buriats", "to": "exile", "value": 5, "title": "совместно на 5 стр."}, {"from": "Tunguses", "to": "vodka", "value": 5, "title": "совместно на 5 стр."}, {"from": "Tunguses", "to": "debt", "value": 3, "title": "совместно на 3 стр."}, {"from": "Tunguses", "to": "exile", "value": 2, "title": "совместно на 2 стр."}, {"from": "Tunguses", "to": "merchant", "value": 4, "title": "совместно на 4 стр."}, {"from": "Tunguses", "to": "reindeer", "value": 20, "title": "совместно на 20 стр."}, {"from": "Buriats", "to": "reindeer", "value": 2, "title": "совместно на 2 стр."}, {"from": "Samoyedes", "to": "merchant", "value": 3, "title": "совместно на 3 стр."}, {"from": "Samoyedes", "to": "vodka", "value": 4, "title": "совместно на 4 стр."}, {"from": "Samoyedes", "to": "priest", "value": 3, "title": "совместно на 3 стр."}, {"from": "Ostiaks", "to": "merchant", "value": 4, "title": "совместно на 4 стр."}, {"from": "Ostiaks", "to": "vodka", "value": 3, "title": "совместно на 3 стр."}, {"from": "Ostiaks", "to": "priest", "value": 6, "title": "совместно на 6 стр."}, {"from": "Ostiaks", "to": "Samoyedes", "value": 3, "title": "совместно на 3 стр."}, {"from": "Dolgans", "to": "reindeer", "value": 11, "title": "совместно на 11 стр."}, {"from": "Samoyedes", "to": "reindeer", "value": 6, "title": "совместно на 6 стр."}, {"from": "Dolgans", "to": "Samoyedes", "value": 5, "title": "совместно на 5 стр."}, {"from": "Dolgans", "to": "merchant", "value": 3, "title": "совместно на 3 стр."}, {"from": "Dolgans", "to": "priest", "value": 3, "title": "совместно на 3 стр."}, {"from": "Siberians", "to": "debt", "value": 2, "title": "совместно на 2 стр."}, {"from": "Samoyedes", "to": "shaman", "value": 2, "title": "совместно на 2 стр."}, {"from": "Samoyedes", "to": "Tunguses", "value": 2, "title": "совместно на 2 стр."}, {"from": "Dolgans", "to": "Ostiaks", "value": 4, "title": "совместно на 4 стр."}, {"from": "Ostiaks", "to": "Russians", "value": 5, "title": "совместно на 5 стр."}, {"from": "Russians", "to": "Samoyedes", "value": 3, "title": "совместно на 3 стр."}, {"from": "Ostiaks", "to": "exile", "value": 5, "title": "совместно на 5 стр."}, {"from": "Dolgans", "to": "exile", "value": 3, "title": "совместно на 3 стр."}, {"from": "Buriats", "to": "Dolgans", "value": 3, "title": "совместно на 3 стр."}, {"from": "Samoyedes", "to": "exile", "value": 2, "title": "совместно на 2 стр."}, {"from": "Buriats", "to": "Ostiaks", "value": 2, "title": "совместно на 2 стр."}, {"from": "Buriats", "to": "Samoyedes", "value": 2, "title": "совместно на 2 стр."}, {"from": "Siberians", "to": "Skoptsi", "value": 3, "title": "совместно на 3 стр."}, {"from": "Buriats", "to": "vodka", "value": 2, "title": "совместно на 2 стр."}]};
+
+  const ETH_COLORS = {
+    Kirgises: "#c4842a",
+    Buriats: "#2a7a9b",
+    Yakuts: "#3d8f4a",
+    Tunguses: "#b43d3d",
+    Dolgans: "#5c5eb0",
+    Samoyedes: "#c96b35",
+    Ostiaks: "#3d6aa8",
+    Siberians: "#3f3a36",
+    Russians: "#6e7785",
+    Skoptsi: "#9a4578",
+  };
+
+  let mode = "eth";
+  let minW = 2;
+  let selected = null;
+  let network = null;
+
+  const sideTitle = document.getElementById("sideTitle");
+  const sideHint = document.getElementById("sideHint");
+  const sideStats = document.getElementById("sideStats");
+  const sideList = document.getElementById("sideList");
+  const minValLabel = document.getElementById("minValLabel");
+
+  function filtered() {
+    const nodes = raw.nodes.filter((n) => mode === "all" || n.group === "ethnonym");
+    const ids = new Set(nodes.map((n) => n.id));
+    const edges = raw.edges.filter(
+      (e) => e.value >= minW && ids.has(e.from) && ids.has(e.to)
+    );
+    // drop isolates optionally? keep them for eth overview
+    return { nodes, edges };
+  }
+
+  function edgeWidth(v, maxV) {
+    return 1 + 9 * (v / Math.max(maxV, 1));
+  }
+
+  const THEME_COLOR = "#6b3a2a";
+
+  function nodeColor(n) {
+    if (n.group === "theme") return THEME_COLOR;
+    return ETH_COLORS[n.id] || "#2c2c2c";
+  }
+
+  function darkenHex(hex, f) {
+    const h = hex.replace("#", "");
+    const r = Math.round(parseInt(h.slice(0, 2), 16) * f);
+    const g = Math.round(parseInt(h.slice(2, 4), 16) * f);
+    const b = Math.round(parseInt(h.slice(4, 6), 16) * f);
+    return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+  }
+
+  function lightenHex(hex, f) {
+    const h = hex.replace("#", "");
+    const mix = (c) => Math.round(c + (255 - c) * f);
+    const r = mix(parseInt(h.slice(0, 2), 16));
+    const g = mix(parseInt(h.slice(2, 4), 16));
+    const b = mix(parseInt(h.slice(4, 6), 16));
+    return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+  }
+
+  const LABEL_FONT_HIDDEN = {
+    color: "#1a1a1a", face: "Georgia", size: 1, strokeWidth: 0, vadjust: 0
+  };
+  const LABEL_FONT_SHOW = {
+    color: "#1a1a1a", face: "Georgia", size: 17, strokeWidth: 6,
+    strokeColor: "#f4f1ea", vadjust: -2, bold: true
+  };
+
+  function showNodeLabel(id, on) {
+    if (!nodeStore) return;
+    const n = nodeStore.get(id);
+    if (!n) return;
+    const force = on || id === selected;
+    nodeStore.update({
+      id,
+      label: force ? (n.fullLabel || "") : "",
+      font: force ? LABEL_FONT_SHOW : LABEL_FONT_HIDDEN,
+    });
+  }
+
+  function buildDatasets() {
+    const { nodes, edges } = filtered();
+    const maxV = Math.max(...edges.map((e) => e.value), 1);
+    const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+    const nodeDS = new vis.DataSet(
+      nodes.map((n) => {
+        const bg = nodeColor(n);
+        const hi = lightenHex(bg, 0.28);
+        return {
+          id: n.id,
+          label: "", // подпись только при наведении / выборе
+          fullLabel: n.label,
+          value: n.value,
+          group: n.group,
+          title: `${n.label}\nстраниц с упоминанием: ${n.value}`,
+          color: {
+            background: bg,
+            border: darkenHex(bg, 0.62),
+            highlight: { background: hi, border: darkenHex(bg, 0.5) },
+            hover: { background: hi, border: darkenHex(bg, 0.5) },
+          },
+          font: LABEL_FONT_HIDDEN,
+        };
+      })
+    );
+    const edgeDS = new vis.DataSet(
+      edges.map((e, i) => {
+        const a = byId[e.from] || raw.nodes.find((n) => n.id === e.from);
+        const stroke = a ? nodeColor(a) : "#b7a99a";
+        return {
+          id: `e${i}`,
+          from: e.from,
+          to: e.to,
+          value: e.value,
+          width: edgeWidth(e.value, maxV),
+          label: String(e.value),
+          font: { align: "middle", size: 11, color: "#5a5a5a", strokeWidth: 3, strokeColor: "#f4f1ea" },
+          title: `Совместно на ${e.value} стр.`,
+          color: { color: stroke, highlight: darkenHex(stroke, 0.75), hover: darkenHex(stroke, 0.75), opacity: 0.78 },
+        };
+      })
+    );
+    return { nodeDS, edgeDS, maxV, edges, nodes };
+  }
+
+  function renderSide(nodeId, edges, nodes) {
+    if (!nodeId) {
+      sideTitle.textContent = "Выберите узел";
+      sideHint.textContent = "Клик по этнониму подсветит связи. Наведите на ребро — число совместных страниц.";
+      sideStats.innerHTML = `<div class="stat"><span>Узлов</span><span>${nodes.length}</span></div>
+        <div class="stat"><span>Рёбер (вес ≥ ${minW})</span><span>${edges.length}</span></div>`;
+      const ethNodes = nodes.filter((n) => n.group === "ethnonym");
+      sideList.innerHTML = ethNodes.map((n) => {
+        const c = ETH_COLORS[n.id] || "#2c2c2c";
+        return `<button type="button" class="edge-row" data-id="${n.id}">
+          <span><span class="swatch" style="background:${c}"></span>${n.label}</span>
+          <span class="w">${n.value}</span>
+        </button>`;
+      }).join("");
+      sideList.querySelectorAll(".edge-row").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const prev = selected;
+          selected = btn.dataset.id;
+          if (prev && prev !== selected) showNodeLabel(prev, false);
+          if (network) network.selectNodes([selected]);
+          highlight(selected);
+          showNodeLabel(selected, true);
+          renderSide(selected, edges, nodes);
+        });
+      });
+      return;
+    }
+    const node = nodes.find((n) => n.id === nodeId) || raw.nodes.find((n) => n.id === nodeId);
+    const nbr = edges
+      .filter((e) => e.from === nodeId || e.to === nodeId)
+      .map((e) => {
+        const other = e.from === nodeId ? e.to : e.from;
+        const otherNode = raw.nodes.find((n) => n.id === other);
+        return { other, label: otherNode ? otherNode.label : other, value: e.value, group: otherNode && otherNode.group };
+      })
+      .sort((a, b) => b.value - a.value);
+
+    const degree = nbr.length;
+    const strength = nbr.reduce((s, x) => s + x.value, 0);
+    sideTitle.textContent = node ? node.label : nodeId;
+    sideHint.textContent = node && node.group === "theme"
+      ? "Тематический узел: связь с этнонимами на одних страницах."
+      : "Соседи по совместной встречаемости (плотность = число страниц).";
+    sideStats.innerHTML = `
+      <div class="stat"><span>Страниц с упоминанием</span><span>${node ? node.value : "—"}</span></div>
+      <div class="stat"><span>Степень (соседи)</span><span>${degree}</span></div>
+      <div class="stat"><span>Суммарный вес рёбер</span><span>${strength}</span></div>`;
+
+    const maxE = Math.max(...nbr.map((x) => x.value), 1);
+    sideList.innerHTML = nbr.length
+      ? nbr
+          .map((x) => {
+            const c = x.group === "theme" ? THEME_COLOR : (ETH_COLORS[x.other] || "#2c2c2c");
+            return `<div class="edge-row" data-id="${x.other}">
+          <span><span class="swatch" style="background:${c}"></span>${x.label}${x.group === "theme" ? " · тема" : ""}</span>
+          <strong>${x.value}</strong>
+          <div class="bar"><i style="width:${(100 * x.value) / maxE}%;background:${c}"></i></div>
+        </div>`;
+          })
+          .join("")
+      : `<p class="empty">Нет рёбер при пороге ≥ ${minW}. Сдвиньте слайдер вниз.</p>`;
+
+    sideList.querySelectorAll(".edge-row").forEach((row) => {
+      row.addEventListener("click", () => {
+        const id = row.getAttribute("data-id");
+        const prev = selected;
+        if (prev && prev !== id) showNodeLabel(prev, false);
+        selected = id;
+        network.selectNodes([id]);
+        highlight(id);
+        showNodeLabel(id, true);
+        renderSide(id, edges, nodes);
+      });
+    });
+  }
+
+  function highlight(nodeId) {
+    if (!network || !edgeStore || !nodeStore) return;
+    const allEdges = edgeStore.get();
+    const allNodes = nodeStore.get();
+    if (!nodeId) {
+      allEdges.forEach((e) => {
+        edgeStore.update({
+          id: e.id,
+          color: { color: "#b7a99a", highlight: "#6b3a2a", hover: "#6b3a2a", opacity: 0.85 },
+          font: { color: "#5a5a5a", size: 11, strokeWidth: 0, align: "middle" },
+        });
+      });
+      allNodes.forEach((n) => {
+        nodeStore.update({ id: n.id, opacity: 1 });
+      });
+      return;
+    }
+    const selNode = raw.nodes.find((n) => n.id === nodeId);
+    const accent = selNode ? nodeColor(selNode) : "#6b3a2a";
+    const keep = new Set();
+    allEdges.forEach((e) => {
+      const on = e.from === nodeId || e.to === nodeId;
+      if (on) keep.add(e.from), keep.add(e.to);
+      edgeStore.update({
+        id: e.id,
+        color: {
+          color: on ? accent : "#d9d2c8",
+          opacity: on ? 1 : 0.18,
+          highlight: accent,
+          hover: accent,
+        },
+        font: {
+          color: on ? "#1a1a1a" : "#c8c4bc",
+          size: on ? 13 : 10,
+          strokeWidth: on ? 3 : 0,
+          strokeColor: "#f4f1ea",
+          align: "middle",
+        },
+      });
+    });
+    keep.add(nodeId);
+    allNodes.forEach((n) => {
+      nodeStore.update({ id: n.id, opacity: keep.has(n.id) ? 1 : 0.18 });
+    });
+  }
+
+  let nodeStore, edgeStore;
+
+  function redraw() {
+    const built = buildDatasets();
+    nodeStore = built.nodeDS;
+    edgeStore = built.edgeDS;
+    const container = document.getElementById("net");
+    if (network) network.destroy();
+    network = new vis.Network(
+      container,
+      { nodes: nodeStore, edges: edgeStore },
+      {
+        physics: {
+          enabled: document.getElementById("physics").checked,
+          stabilization: { iterations: 120 },
+          barnesHut: { gravitationalConstant: -14000, springLength: 140, springConstant: 0.03 },
+        },
+        interaction: {
+          hover: true,
+          dragNodes: true,
+          dragView: true,
+          zoomView: true,
+          tooltipDelay: 80,
+        },
+        nodes: {
+          shape: "dot",
+          scaling: { min: 14, max: 48, label: { enabled: true, min: 12, max: 18 } },
+          borderWidth: 1.5,
+        },
+        edges: {
+          smooth: { type: "continuous", roundness: 0.25 },
+          selectionWidth: 2,
+        },
+      }
+    );
+
+    let hovered = null;
+    network.on("hoverNode", (params) => {
+      if (hovered && hovered !== selected) showNodeLabel(hovered, false);
+      hovered = params.node;
+      showNodeLabel(hovered, true);
+    });
+    network.on("blurNode", (params) => {
+      if (params.node === hovered) hovered = null;
+      if (params.node !== selected) showNodeLabel(params.node, false);
+    });
+
+    network.on("click", (params) => {
+      const prev = selected;
+      if (params.nodes.length) {
+        selected = params.nodes[0];
+        if (prev && prev !== selected) showNodeLabel(prev, false);
+        highlight(selected);
+        showNodeLabel(selected, true);
+        renderSide(selected, built.edges, built.nodes);
+      } else {
+        if (prev) showNodeLabel(prev, false);
+        selected = null;
+        highlight(null);
+        renderSide(null, built.edges, built.nodes);
+      }
+    });
+
+    if (selected && built.nodes.some((n) => n.id === selected)) {
+      network.selectNodes([selected]);
+      highlight(selected);
+      showNodeLabel(selected, true);
+      renderSide(selected, built.edges, built.nodes);
+    } else {
+      selected = null;
+      renderSide(null, built.edges, built.nodes);
+    }
+  }
+
+  const modeHint = document.getElementById("modeHint");
+  function setModeHint() {
+    if (!modeHint) return;
+    modeHint.textContent = mode === "eth"
+      ? "Режим: только этнонимы — кто из народов встречается на одних страницах."
+      : "Режим: этносы + темы — мотивы книги (купец, водка, шаман, ссылка, миссия, олень) в лексическом окружении народов.";
+  }
+  document.getElementById("modeEth").addEventListener("click", () => {
+    mode = "eth";
+    document.getElementById("modeEth").classList.add("on");
+    document.getElementById("modeAll").classList.remove("on");
+    setModeHint();
+    redraw();
+  });
+  document.getElementById("modeAll").addEventListener("click", () => {
+    mode = "all";
+    document.getElementById("modeAll").classList.add("on");
+    document.getElementById("modeEth").classList.remove("on");
+    setModeHint();
+    redraw();
+  });
+  document.getElementById("minW").addEventListener("input", (e) => {
+    minW = +e.target.value;
+    minValLabel.textContent = String(minW);
+    redraw();
+  });
+  document.getElementById("physics").addEventListener("change", (e) => {
+    if (network) network.setOptions({ physics: { enabled: e.target.checked } });
+  });
+
+  redraw();
+})();
+</script>
+
+<script>
+(function(){
+  if (new URLSearchParams(location.search).get("embed") !== "1") return;
+  window.addEventListener("keydown", function(e){
+    var nav = ["ArrowLeft","ArrowRight","PageUp","PageDown","Home","End"," ","f","F"];
+    if (nav.indexOf(e.key) === -1) return;
+    // let space work inside inputs
+    if ((e.key === " " || e.key === "f" || e.key === "F") &&
+        /^(INPUT|TEXTAREA|SELECT|BUTTON)$/i.test((e.target||{}).tagName||"")) return;
+    e.preventDefault();
+    try { parent.postMessage({ type: "deck-key", key: e.key }, "*"); } catch (_) {}
+  }, true);
+})();
+</script>
+
+</body>
+</html>
