@@ -47,10 +47,10 @@ export default function LabHub() {
           >
             <div className="flex-1">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                Wikidata SPARQL · места «Тёмных аллей»
+                Wikidata · геопоэтика «Тёмных аллей»
               </h2>
               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                Живые запросы без ключа: один рассказ или набор топосов → таблица, карта, CSV.
+                Живая карта OSM: топосы рассказов, цитаты, зачем каждый пункт, SPARQL → CSV.
               </p>
             </div>
             <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-teal-700 text-white text-sm font-semibold">
