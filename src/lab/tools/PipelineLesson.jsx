@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useLabReport } from '../LabReportContext'
 import { downloadText } from '../textUtils'
+import { COST_BADGE, DH_API_CATALOG } from './dhApisCatalog'
 import {
   BASE_FIELDS,
   BUNIN_PLACES,
@@ -1108,6 +1110,7 @@ function OpenApisTab() {
   const [wiki, setWiki] = useState(null)
   const [lib, setLib] = useState(null)
   const [err, setErr] = useState('')
+  const [catalogFilter, setCatalogFilter] = useState('all')
 
   const layer = OPEN_API_LAYERS.find((l) => l.id === layerId) || OPEN_API_LAYERS[0]
   const selectedPlaces = BUNIN_PLACES.filter((p) => picked.has(p.id))
@@ -1202,10 +1205,93 @@ function OpenApisTab() {
   return (
     <div className="space-y-5">
       <Caption
-        say="DeepSeek — не единственный API. Для «Тёмных аллей» полезны открытые сервисы без ключа: геокодер, Wikidata, каталог изданий."
-        doing="Идём по шагам 1→5: слой → места → живой вызов → таблица → стыковка с LLM."
+        say="DeepSeek — один из API. Рядом — полнотексты, Wikidata, DOI, геокодеры: бесплатные и платные. Сначала карта инструментов, потом живой геослой."
+        doing="Листаем каталог → открываем страницу Wikidata по циклу → при желании гоняем Photon на этой вкладке."
       />
 
+      <div className="rounded-2xl border-2 border-teal-500/80 bg-gradient-to-br from-teal-50 to-white dark:from-teal-950/40 dark:to-gray-900 p-4 sm:p-5 space-y-3">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h3 className="text-lg font-bold">Каталог API для цифровой филологии</h3>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+              Полнотексты · базы знаний · академические метаданные · ещё free/freemium · платные «тяжёлые» системы.
+            </p>
+          </div>
+          <Link
+            to="/courses/digital-humanities/demo/wikidata-bunin"
+            className="shrink-0 px-4 py-2.5 rounded-xl bg-teal-700 text-white text-sm font-semibold hover:bg-teal-800"
+          >
+            Wikidata по «Тёмным аллеям» →
+          </Link>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            className={`text-xs font-semibold px-3 py-1.5 rounded-full border ${catalogFilter === 'all' ? 'bg-teal-600 text-white border-teal-600' : 'border-gray-300 dark:border-gray-600'}`}
+            onClick={() => setCatalogFilter('all')}
+          >
+            Все разделы
+          </button>
+          {DH_API_CATALOG.map((sec) => (
+            <button
+              key={sec.id}
+              type="button"
+              className={`text-xs font-semibold px-3 py-1.5 rounded-full border ${catalogFilter === sec.id ? 'bg-teal-600 text-white border-teal-600' : 'border-gray-300 dark:border-gray-600'}`}
+              onClick={() => setCatalogFilter(sec.id)}
+            >
+              {sec.title}
+            </button>
+          ))}
+        </div>
+        <div className="space-y-5 max-h-[32rem] overflow-y-auto pr-1">
+          {DH_API_CATALOG.filter((s) => catalogFilter === 'all' || s.id === catalogFilter).map((sec) => (
+            <div key={sec.id}>
+              <h4 className="font-bold text-base text-gray-900 dark:text-white">{sec.title}</h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{sec.blurb}</p>
+              <div className="grid md:grid-cols-2 gap-2">
+                {sec.items.map((it) => {
+                  const badge = COST_BADGE[it.cost] || COST_BADGE.free
+                  return (
+                    <div
+                      key={it.name}
+                      className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 space-y-1.5"
+                    >
+                      <div className="flex flex-wrap items-center gap-2 justify-between">
+                        <a href={it.url} target="_blank" rel="noreferrer" className="font-semibold text-sm hover:underline">
+                          {it.name}
+                        </a>
+                        <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${badge.className}`}>
+                          {badge.label}
+                          {it.key ? ' · ключ' : ' · без ключа'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-500">{it.org}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-snug">{it.why}</p>
+                      <p className="text-xs">
+                        <span className="font-semibold text-teal-800 dark:text-teal-300">Для Бунина: </span>
+                        {it.bunin}
+                      </p>
+                      <pre className="text-[10px] rounded-lg bg-gray-950 text-teal-100 p-2 overflow-x-auto whitespace-pre-wrap">{it.try}</pre>
+                      <div className="flex flex-wrap gap-2 text-xs">
+                        <a className="underline" href={it.docs} target="_blank" rel="noreferrer">
+                          Документация
+                        </a>
+                        {it.featuredPage && (
+                          <Link className="underline font-semibold text-teal-700 dark:text-teal-300" to={it.featuredPage}>
+                            Учебная страница →
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <h3 className="text-lg font-bold pt-2">Живой мини-прогон (гео / Wikidata-quick / Open Library)</h3>
       <div className="flex flex-wrap gap-2">
         {OPEN_API_STEPS.map((s) => (
           <button

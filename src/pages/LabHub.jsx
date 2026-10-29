@@ -24,22 +24,40 @@ export default function LabHub() {
           {demos.subtitle}
         </p>
 
-        <Link
-          to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
-          className="flex flex-col sm:flex-row sm:items-center gap-3 max-w-3xl rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-5 hover:shadow-lg transition-shadow"
-        >
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-              Бунин · «Тёмные аллеи» — все 37 рассказов
-            </h2>
-            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-              Читайте тексты прямо здесь: оглавление, поиск, листание.
-            </p>
-          </div>
-          <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-amber-600 text-white text-sm font-semibold">
-            Читать →
-          </span>
-        </Link>
+        <div className="flex flex-col gap-3 max-w-3xl">
+          <Link
+            to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
+            className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-5 hover:shadow-lg transition-shadow"
+          >
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                Бунин · «Тёмные аллеи» — все 37 рассказов
+              </h2>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                Читайте тексты прямо здесь: оглавление, поиск, листание.
+              </p>
+            </div>
+            <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-amber-600 text-white text-sm font-semibold">
+              Читать →
+            </span>
+          </Link>
+          <Link
+            to="/courses/digital-humanities/demo/wikidata-bunin"
+            className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl border-2 border-teal-400 dark:border-teal-600 bg-teal-50 dark:bg-teal-950/30 p-5 hover:shadow-lg transition-shadow"
+          >
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                Wikidata SPARQL · места «Тёмных аллей»
+              </h2>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                Живые запросы без ключа: один рассказ или набор топосов → таблица, карта, CSV.
+              </p>
+            </div>
+            <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-teal-700 text-white text-sm font-semibold">
+              Открыть →
+            </span>
+          </Link>
+        </div>
       </motion.div>
 
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Инструменты</h2>
