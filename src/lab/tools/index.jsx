@@ -12,6 +12,7 @@ import { ZipfBuild } from './ZipfBuild'
 import { ZipfLesson } from './ZipfLesson'
 import { StylometryLesson } from './StylometryLesson'
 import { NerLesson } from './NerLesson'
+import { PipelineLesson } from './PipelineLesson'
 
 const TOOLS = {
   CloseDistant,
@@ -29,6 +30,7 @@ const TOOLS = {
   TopicLite,
   PromptLab,
   PipelineLab,
+  PipelineLesson,
   MiniPanel,
   VerifyLab,
 }
