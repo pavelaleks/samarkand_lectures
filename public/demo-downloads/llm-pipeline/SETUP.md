@@ -4,23 +4,33 @@
 
 ```
 llm_bunin/
-  run_pipeline.py        # главный скрипт: тексты → промпт → DeepSeek → CSV
+  run_pipeline.py        # тексты → промпт → DeepSeek → CSV
+  geocode_places.py      # топонимы → Photon/OSM → places.csv (без ключа)
+  wikidata_place.py      # Wikidata SPARQL: Q-id / координаты / страна
   json_to_csv.py         # пересобрать CSV из output/raw без новых запросов
   requirements.txt       # openai>=1.0.0 (DeepSeek совместим с OpenAI SDK)
   .env.example           # шаблон ключа → скопировать в .env
   prompts/               # контракты измерения, по одному на гипотезу
-    irony_v1.md          # ирония: оценка ↔ опровержение
-    memory_v1.md         # память и формула «всё проходит»
-    space_v1.md          # топосы: сад, дорога, станция, Париж…
-    voice_v1.md          # ненадёжность и чужая речь
-    time_v1.md           # время и «единственный вечер»
-    irony_leading_v0.md  # АНТИПРИМЕР: наводящий промпт — сравните таблицы
+    irony_v1.md · memory_v1.md · space_v1.md · voice_v1.md · time_v1.md
+    irony_leading_v0.md  # АНТИПРИМЕР: наводящий промпт
   sample_texts/          # 8 рассказов цикла (UTF-8)
-  stories_meta.json      # slug → название
+  stories_meta.json
   notes/audit_template.md
-  output/                # создаётся при запуске: raw/, tables/, errors/
-  CLAUDE_PROMPT_PACK.md  # готовые промпты для Claude / Cursor
+  output/                # raw/, tables/, errors/ (+ raw/geo/ для геокодера)
+  CLAUDE_PROMPT_PACK.md
 ```
+
+## Открытые API (дополнение к DeepSeek)
+
+На сайте: вкладка **«Другие API»** — пошаговое демо без ключа.
+
+```bash
+python geocode_places.py                 # учебный список топонимов цикла
+python geocode_places.py --query "Nice"
+python wikidata_place.py Paris
+```
+
+Стыковка: LLM даёт `place_mentions` / тезисы о пространстве → геокодер даёт lat/lon → аудит обеих таблиц. Карта не доказывает поэтику места.
 
 ## 1. Окружение
 

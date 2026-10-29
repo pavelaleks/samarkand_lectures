@@ -32,6 +32,13 @@ LLM-конвейер по «Тёмным аллеям» · лаборатори�
 
 7. Аудит: notes/audit_template.md — 10% случайных строк + все подозрительные.
 
+8. Открытые API (без ключа) — дополнительно к DeepSeek:
+     python geocode_places.py
+       → output/tables/places.csv   (Photon / OSM: топонимам — координаты)
+     python wikidata_place.py Paris
+       → Q-id, координаты, страна
+   На сайте: вкладка «Другие API» — пошаговое живое демо.
+
 Помощь Claude / Cursor: CLAUDE_PROMPT_PACK.md
 Подробно: SETUP.md
 

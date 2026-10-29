@@ -3,6 +3,7 @@ import { useLabReport } from '../LabReportContext'
 import { downloadText } from '../textUtils'
 import {
   BASE_FIELDS,
+  BUNIN_PLACES,
   CHAT_DEMO,
   CHAT_VS_API,
   DARK_ALLEYS,
@@ -10,6 +11,8 @@ import {
   DEFAULT_STORIES,
   HYPOTHESES,
   KEY_STORAGE,
+  OPEN_API_LAYERS,
+  OPEN_API_STEPS,
   TRIANGLE,
   buildBadSystemPrompt,
   buildPythonScript,
@@ -20,6 +23,7 @@ import {
   normalizeStory,
   parseExtraFields,
   parseFlags,
+  placesToCsv,
   promptVersion,
   rowsToCsv,
   validateAnswer,
@@ -993,7 +997,475 @@ function AuditTab({ rows, runSpec, setAudit, runMeta }) {
   )
 }
 
-/* ——— 6. Домой ——— */
+/* ——— 6. Другие API (геоданные и открытые сервисы) ——— */
+
+async function geocodePhoton(query) {
+  const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=3&lang=en`
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Photon HTTP ${res.status}`)
+  const data = await res.json()
+  const feat = data?.features?.[0]
+  if (!feat) return null
+  const [lon, lat] = feat.geometry?.coordinates || []
+  const p = feat.properties || {}
+  const display = [p.name, p.city, p.state, p.country].filter(Boolean).join(', ')
+  return {
+    lat,
+    lon,
+    display_name: display || query,
+    osm_link: Number.isFinite(lat) && Number.isFinite(lon) ? `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=6/${lat}/${lon}` : '',
+    raw: feat,
+  }
+}
+
+async function wikidataPlace(label) {
+  const sparql = `SELECT ?item ?itemLabel ?coord ?countryLabel WHERE {
+  ?item rdfs:label "${label.replace(/"/g, '')}"@en.
+  OPTIONAL { ?item wdt:P625 ?coord. }
+  OPTIONAL { ?item wdt:P17 ?country. }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru,en". }
+} LIMIT 3`
+  const url = `https://query.wikidata.org/sparql?query=${encodeURIComponent(sparql)}&format=json`
+  const res = await fetch(url, { headers: { Accept: 'application/sparql-results+json' } })
+  if (!res.ok) throw new Error(`Wikidata HTTP ${res.status}`)
+  const data = await res.json()
+  return (data?.results?.bindings || []).map((b) => ({
+    id: b.item?.value,
+    label: b.itemLabel?.value,
+    coord: b.coord?.value,
+    country: b.countryLabel?.value,
+  }))
+}
+
+async function openLibraryBunin() {
+  const url =
+    'https://openlibrary.org/search.json?q=Bunin+Dark+Alleys&title=Dark+Alleys&author=Bunin&limit=5'
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Open Library HTTP ${res.status}`)
+  const data = await res.json()
+  return (data?.docs || []).slice(0, 5).map((d) => ({
+    title: d.title,
+    year: d.first_publish_year,
+    lang: (d.language || []).slice(0, 3).join(', '),
+    editions: d.edition_count,
+    key: d.key,
+  }))
+}
+
+function GeoMap({ points }) {
+  const pts = points.filter((p) => Number.isFinite(+p.lat) && Number.isFinite(+p.lon))
+  if (!pts.length) {
+    return (
+      <div className="rounded-xl border border-dashed border-gray-300 dark:border-gray-600 p-6 text-sm text-gray-500 text-center">
+        После геокодирования здесь появится схематическая карта точек цикла.
+      </div>
+    )
+  }
+  // Simple equirectangular scatter (Europe-focused crop)
+  const lon0 = -10
+  const lon1 = 60
+  const lat0 = 25
+  const lat1 = 65
+  const W = 560
+  const H = 280
+  const xy = (lat, lon) => {
+    const x = ((lon - lon0) / (lon1 - lon0)) * W
+    const y = ((lat1 - lat) / (lat1 - lat0)) * H
+    return [Math.max(8, Math.min(W - 8, x)), Math.max(8, Math.min(H - 8, y))]
+  }
+  return (
+    <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-slate-50 dark:bg-slate-900/40 p-3 overflow-x-auto">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-2xl mx-auto" role="img" aria-label="Карта топонимов">
+        <rect width={W} height={H} fill="transparent" />
+        <text x={12} y={20} className="fill-gray-400" fontSize="11">
+          схематично: Европа / зап. Азия (не точная проекция)
+        </text>
+        {pts.map((p) => {
+          const [x, y] = xy(+p.lat, +p.lon)
+          return (
+            <g key={p.id}>
+              <circle cx={x} cy={y} r={7} fill="#0d9488" opacity={0.9} />
+              <text x={x + 10} y={y + 4} fontSize="11" className="fill-gray-800 dark:fill-gray-100">
+                {p.label}
+              </text>
+            </g>
+          )
+        })}
+      </svg>
+      <p className="text-[11px] text-gray-500 mt-1">Клик по строке таблицы ниже откроет точку в OpenStreetMap.</p>
+    </div>
+  )
+}
+
+function OpenApisTab() {
+  const [step, setStep] = useState(1)
+  const [layerId, setLayerId] = useState('geo')
+  const [picked, setPicked] = useState(() => new Set(BUNIN_PLACES.slice(0, 5).map((p) => p.id)))
+  const [customQuery, setCustomQuery] = useState('')
+  const [rows, setRows] = useState([])
+  const [busy, setBusy] = useState(false)
+  const [log, setLog] = useState('')
+  const [wiki, setWiki] = useState(null)
+  const [lib, setLib] = useState(null)
+  const [err, setErr] = useState('')
+
+  const layer = OPEN_API_LAYERS.find((l) => l.id === layerId) || OPEN_API_LAYERS[0]
+  const selectedPlaces = BUNIN_PLACES.filter((p) => picked.has(p.id))
+
+  const togglePlace = (id) =>
+    setPicked((prev) => {
+      const n = new Set(prev)
+      if (n.has(id)) n.delete(id)
+      else n.add(id)
+      return n
+    })
+
+  const runGeocode = async () => {
+    setBusy(true)
+    setErr('')
+    setLog('Геокодирование…')
+    const out = []
+    const list = [...selectedPlaces]
+    if (customQuery.trim()) {
+      list.push({
+        id: 'custom',
+        label: customQuery.trim(),
+        query: customQuery.trim(),
+        story: 'свой запрос',
+        tip: '',
+      })
+    }
+    try {
+      for (const place of list) {
+        setLog(`→ ${place.label} (${place.query})`)
+        const hit = await geocodePhoton(place.query)
+        await new Promise((r) => setTimeout(r, 350)) // вежливо к Photon
+        if (!hit) {
+          out.push({
+            ...place,
+            lat: '',
+            lon: '',
+            display_name: 'не найдено',
+            osm_link: '',
+            source_api: 'photon',
+          })
+        } else {
+          out.push({ ...place, ...hit, source_api: 'photon' })
+        }
+        setRows([...out])
+      }
+      setLog(`Готово: ${out.length} мест. Скачайте places.csv или откройте OSM.`)
+      setStep(5)
+    } catch (e) {
+      setErr(
+        `${e.message || e}. Если сеть блокирует Photon — скачайте geocode_places.py из ZIP и запустите в PyCharm.`
+      )
+      setLog('')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const runWiki = async () => {
+    setBusy(true)
+    setErr('')
+    setWiki(null)
+    try {
+      const label = selectedPlaces[0]?.query.split(' ')[0] || 'Paris'
+      setLog(`Wikidata SPARQL: label=${label}`)
+      const rowsW = await wikidataPlace(label === 'Caucasus' ? 'Caucasus' : label)
+      setWiki({ label, rows: rowsW })
+      setLog(`Wikidata: ${rowsW.length} строк`)
+    } catch (e) {
+      setErr(`${e.message || e}. Wikidata иногда режет браузерные запросы — тогда скрипт wikidata_place.py.`)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const runLib = async () => {
+    setBusy(true)
+    setErr('')
+    setLib(null)
+    try {
+      setLog('Open Library: Bunin / Dark Alleys…')
+      const docs = await openLibraryBunin()
+      setLib(docs)
+      setLog(`Open Library: ${docs.length} изданий`)
+    } catch (e) {
+      setErr(String(e.message || e))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="space-y-5">
+      <Caption
+        say="DeepSeek — не единственный API. Для «Тёмных аллей» полезны открытые сервисы без ключа: геокодер, Wikidata, каталог изданий."
+        doing="Идём по шагам 1→5: слой → места → живой вызов → таблица → стыковка с LLM."
+      />
+
+      <div className="flex flex-wrap gap-2">
+        {OPEN_API_STEPS.map((s) => (
+          <button
+            key={s.n}
+            type="button"
+            onClick={() => setStep(s.n)}
+            className={`rounded-xl px-3 py-2 text-sm font-semibold border ${
+              step === s.n
+                ? 'bg-teal-600 text-white border-teal-600'
+                : 'border-gray-200 dark:border-gray-700 hover:border-teal-400'
+            }`}
+          >
+            {s.n}. {s.title}
+          </button>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/30 px-4 py-3 text-sm">
+        <strong>Шаг {step}:</strong> {OPEN_API_STEPS[step - 1]?.say}
+      </div>
+
+      {(step === 1 || step === 2) && (
+        <div className="grid md:grid-cols-3 gap-3">
+          {OPEN_API_LAYERS.map((l) => (
+            <button
+              key={l.id}
+              type="button"
+              onClick={() => {
+                setLayerId(l.id)
+                setStep(2)
+              }}
+              className={`text-left rounded-2xl border p-4 transition-all ${
+                layerId === l.id
+                  ? 'border-teal-500 ring-2 ring-teal-400/50 bg-teal-50/60 dark:bg-teal-950/30'
+                  : 'border-gray-200 dark:border-gray-700'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-bold">{l.title}</span>
+                <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                  {l.key ? 'нужен ключ' : 'без ключа'}
+                </span>
+              </div>
+              <p className="text-sm mt-2 text-gray-700 dark:text-gray-300">{l.why}</p>
+              <p className="text-xs mt-2 text-gray-500">
+                <span className="font-semibold">Применение: </span>
+                {l.apply}
+              </p>
+              <code className="block mt-2 text-[10px] text-teal-700 dark:text-teal-300 break-all">{l.endpoint}</code>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {step >= 3 && layerId === 'geo' && (
+        <div className="space-y-4">
+          <p className="text-sm font-semibold">Шаг 3. Отметьте топонимы цикла (кураторский список)</p>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {BUNIN_PLACES.map((p) => (
+              <label
+                key={p.id}
+                className={`flex gap-3 rounded-xl border p-3 cursor-pointer text-sm ${
+                  picked.has(p.id) ? 'border-teal-500 bg-teal-50/50 dark:bg-teal-950/20' : 'border-gray-200 dark:border-gray-700'
+                }`}
+              >
+                <input type="checkbox" checked={picked.has(p.id)} onChange={() => togglePlace(p.id)} className="mt-1" />
+                <span>
+                  <span className="font-semibold">{p.label}</span>
+                  <span className="block text-xs text-gray-500">{p.story}</span>
+                  <span className="block text-xs mt-1 text-gray-600 dark:text-gray-400">{p.tip}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+          <label className="block text-sm font-semibold">
+            Свой запрос (опционально)
+            <input className={field} value={customQuery} onChange={(e) => setCustomQuery(e.target.value)} placeholder="например: Nice France" />
+          </label>
+        </div>
+      )}
+
+      {step >= 4 && (
+        <div className="space-y-3">
+          <p className="text-sm font-semibold">Шаг 4. Живой вызов выбранного слоя</p>
+          <div className="flex flex-wrap gap-2">
+            {layerId === 'geo' && (
+              <button type="button" className={btnPrimary} disabled={busy || selectedPlaces.length === 0} onClick={runGeocode}>
+                {busy ? 'Геокодируем…' : `▶ Геокодировать ${selectedPlaces.length + (customQuery.trim() ? 1 : 0)} мест (Photon)`}
+              </button>
+            )}
+            {layerId === 'wikidata' && (
+              <button type="button" className={btnPrimary} disabled={busy} onClick={runWiki}>
+                {busy ? 'Запрос…' : '▶ Wikidata SPARQL (первое выбранное место)'}
+              </button>
+            )}
+            {layerId === 'openlibrary' && (
+              <button type="button" className={btnPrimary} disabled={busy} onClick={runLib}>
+                {busy ? 'Запрос…' : '▶ Open Library: издания Bunin / Dark Alleys'}
+              </button>
+            )}
+            <button type="button" className={btnSecondary} onClick={() => setStep(Math.min(5, step + 1))}>
+              Дальше →
+            </button>
+          </div>
+          {log && <p className="text-xs font-mono text-teal-700 dark:text-teal-300">{log}</p>}
+          {err && (
+            <div className="rounded-xl border border-rose-300 bg-rose-50 dark:bg-rose-950/30 px-4 py-3 text-sm text-rose-800 dark:text-rose-200">
+              {err}
+            </div>
+          )}
+          <Details title={`Что уходит в сеть (${layer.title})`} defaultOpen>
+            {layerId === 'geo' && (
+              <pre className={codeBox}>{`GET ${layer.endpoint}?q=<query>&limit=3&lang=en
+# без ключа; пауза ~0.3 с между запросами
+# User-Agent задаёт браузер; в скрипте PyCharm укажите свой контакт`}</pre>
+            )}
+            {layerId === 'wikidata' && (
+              <pre className={codeBox}>{`GET ${layer.endpoint}?format=json&query=
+SELECT ?item ?itemLabel ?coord WHERE { … }`}</pre>
+            )}
+            {layerId === 'openlibrary' && (
+              <pre className={codeBox}>{`GET ${layer.endpoint}?q=Bunin+Dark+Alleys&limit=5`}</pre>
+            )}
+          </Details>
+        </div>
+      )}
+
+      {layerId === 'geo' && (
+        <>
+          <GeoMap points={rows} />
+          {rows.length > 0 && (
+            <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+              <table className="min-w-full text-sm">
+                <thead className="bg-gray-50 dark:bg-gray-900 text-left text-xs uppercase text-gray-500">
+                  <tr>
+                    <th className="p-2">Место</th>
+                    <th className="p-2">Рассказ</th>
+                    <th className="p-2">lat</th>
+                    <th className="p-2">lon</th>
+                    <th className="p-2">Ответ API</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr key={r.id} className="border-t border-gray-100 dark:border-gray-800">
+                      <td className="p-2 font-semibold">
+                        {r.osm_link ? (
+                          <a className="underline text-teal-700 dark:text-teal-300" href={r.osm_link} target="_blank" rel="noreferrer">
+                            {r.label}
+                          </a>
+                        ) : (
+                          r.label
+                        )}
+                      </td>
+                      <td className="p-2 text-xs">{r.story}</td>
+                      <td className="p-2 font-mono text-xs">{r.lat !== '' ? Number(r.lat).toFixed(3) : '—'}</td>
+                      <td className="p-2 font-mono text-xs">{r.lon !== '' ? Number(r.lon).toFixed(3) : '—'}</td>
+                      <td className="p-2 text-xs">{r.display_name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {rows.length > 0 && (
+            <button
+              type="button"
+              className={btnPrimary}
+              onClick={() => downloadText('places_temnye_allei.csv', placesToCsv(rows), 'text/csv;charset=utf-8')}
+            >
+              Скачать places.csv
+            </button>
+          )}
+        </>
+      )}
+
+      {wiki && (
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-2 text-sm">
+          <p className="font-semibold">Wikidata · «{wiki.label}»</p>
+          {wiki.rows.length === 0 ? (
+            <p className="text-gray-500">Пусто — уточните английский label или откройте сущность вручную на wikidata.org.</p>
+          ) : (
+            <ul className="space-y-2">
+              {wiki.rows.map((r) => (
+                <li key={r.id} className="rounded-lg bg-gray-50 dark:bg-gray-900 px-3 py-2">
+                  <a className="underline font-medium" href={r.id} target="_blank" rel="noreferrer">
+                    {r.label || r.id}
+                  </a>
+                  {r.country && <span className="text-xs text-gray-500 ml-2">{r.country}</span>}
+                  {r.coord && <div className="font-mono text-xs mt-1">{r.coord}</div>}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {lib && (
+        <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-2 text-sm">
+          <p className="font-semibold">Open Library · издания</p>
+          <ul className="space-y-2">
+            {lib.map((d) => (
+              <li key={d.key} className="rounded-lg bg-gray-50 dark:bg-gray-900 px-3 py-2">
+                <a className="underline font-medium" href={`https://openlibrary.org${d.key}`} target="_blank" rel="noreferrer">
+                  {d.title}
+                </a>
+                <span className="text-xs text-gray-500 ml-2">
+                  {d.year || '?'} · изд. {d.editions || '?'} · {d.lang || '—'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {step === 5 && (
+        <div className="rounded-2xl border border-teal-200 dark:border-teal-800 bg-teal-50/50 dark:bg-teal-950/20 p-4 space-y-3 text-sm">
+          <h3 className="font-bold text-lg">Шаг 5. Как стыковать с DeepSeek-конвейером</h3>
+          <ol className="list-decimal pl-5 space-y-2">
+            <li>
+              В гипотезе «Топосы» (вкладка Гипотезы) добавьте поле <code>place_mentions</code> — кандидаты мест из фрагмента.
+            </li>
+            <li>
+              После LLM-прогона прогоните те же имена через геокодер → <code>places.csv</code> (этот стенд или{' '}
+              <code>geocode_places.py</code>).
+            </li>
+            <li>
+              Аудит двух таблиц: цитата есть в тексте? координата соответствует смыслу (Кавказ ≠ Сочи автоматически)?
+            </li>
+            <li>
+              В выводе пишите: «карта показывает распределение кандидатов; поэтика места — после close reading пиков».
+            </li>
+          </ol>
+          <div className="flex flex-wrap gap-2 pt-1">
+            <a className="underline text-teal-800 dark:text-teal-300" href={`${DL}/geocode_places.py`} target="_blank" rel="noreferrer">
+              geocode_places.py
+            </a>
+            <a className="underline text-teal-800 dark:text-teal-300" href={`${DL}/wikidata_place.py`} target="_blank" rel="noreferrer">
+              wikidata_place.py
+            </a>
+            <a className="underline text-teal-800 dark:text-teal-300" href={`${DL}/SETUP.md`} target="_blank" rel="noreferrer">
+              SETUP.md
+            </a>
+          </div>
+        </div>
+      )}
+
+      <Details title="Правила вежливости к открытым API">
+        <ul className="list-disc pl-5 space-y-1 text-sm">
+          <li>Пауза между запросами; не долбите сервис циклом по 37 рассказам без кэша.</li>
+          <li>В скриптах укажите понятный User-Agent с контактом (требование OSM/Nominatim-политики).</li>
+          <li>Кэшируйте ответы в <code>output/raw/geo/</code> — повторный прогон не должен жечь квоту.</li>
+          <li>Геокодер ошибается на омонимах (Галиция, Иудея). Это норма: фиксируйте ambiguity в flags.</li>
+        </ul>
+      </Details>
+    </div>
+  )
+}
+
+/* ——— 7. Домой ——— */
 const HOME_STEPS = [
   'Скачать ZIP и распаковать в папку латиницей, например Documents/llm_bunin',
   'PyCharm → Open → папка → создать Virtualenv (Python 3.10+)',
@@ -1001,6 +1473,7 @@ const HOME_STEPS = [
   'Скопировать .env.example → .env и вставить свой ключ DeepSeek (файл не коммитить!)',
   'Открыть prompts/ и выбрать гипотезу (или написать свою с CLAUDE_PROMPT_PACK.md)',
   'Run run_pipeline.py → output/tables/results.csv',
+  'Опционально: python geocode_places.py → output/tables/places.csv (открытый геокодер, без ключа)',
   'Аудит: 10% случайных строк + все пики, протокол — в notes/audit.md',
   'Сдать: CSV + лог + протокол аудита + одна страница выводов',
 ]
@@ -1018,9 +1491,9 @@ function HomeTab({ spec, onDownloadScript, designMd }) {
         <div className="rounded-2xl border-2 border-teal-500 bg-teal-50 dark:bg-teal-950/30 p-4 sm:p-5 space-y-3">
           <h3 className="text-lg font-bold">① PyCharm: готовый проект</h3>
           <p className="text-sm">
-            <code>run_pipeline.py</code> + промпты для 5 гипотез + 8 рассказов «Тёмных аллей» + <code>.env.example</code>.
-            Ответы складываются в <code>output/raw</code>, таблица — в <code>output/tables/results.csv</code>, сбои — в{' '}
-            <code>output/errors</code>.
+            <code>run_pipeline.py</code> (DeepSeek) + <code>geocode_places.py</code> / <code>wikidata_place.py</code>{' '}
+            (открытые API без ключа) + промпты + 8 рассказов + <code>.env.example</code>. Таблицы — в{' '}
+            <code>output/tables/</code>, сырые ответы — в <code>output/raw/</code>.
           </p>
           <a className="inline-flex px-4 py-2.5 rounded-xl bg-teal-700 text-white font-semibold hover:bg-teal-800" href={`${DL}/scripts_llm_pipeline_bunin.zip`} download>
             Скачать scripts_llm_pipeline_bunin.zip
@@ -1387,6 +1860,7 @@ ${fragments.map((f) => `- ${f.slug} — «${f.title}»`).join('\n')}
     { id: 'corpus', label: 'Корпус' },
     { id: 'live', label: 'Живой DeepSeek' },
     { id: 'audit', label: 'Таблица + аудит' },
+    { id: 'open', label: 'Другие API' },
     { id: 'home', label: 'Домой: PyCharm + Claude' },
   ]
   const tabIdx = tabs.findIndex((t) => t.id === tab)
@@ -1441,6 +1915,7 @@ ${fragments.map((f) => `- ${f.slug} — «${f.title}»`).join('\n')}
         />
       )}
       {tab === 'audit' && <AuditTab rows={rows} runSpec={runSpec} setAudit={setAudit} runMeta={runMeta} />}
+      {tab === 'open' && <OpenApisTab />}
       {tab === 'home' && <HomeTab spec={spec} onDownloadScript={downloadScript} designMd={designMd} />}
 
       <div className="flex flex-wrap items-center justify-between gap-3">

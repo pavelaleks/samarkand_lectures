@@ -731,3 +731,153 @@ if __name__ == "__main__":
     main()
 `
 }
+
+/* ——— Открытые API (не LLM): геоданные, Wikidata, каталог ——— */
+
+/** Слои API, которые филолог стыкует с LLM-конвейером. */
+export const OPEN_API_LAYERS = [
+  {
+    id: 'geo',
+    title: 'Геокодер (Photon / OSM)',
+    free: true,
+    key: false,
+    why: 'Топонимы цикла → координаты → карта. Distant reading пространства без «угадывания» Парижа глазами.',
+    endpoint: 'https://photon.komoot.io/api/',
+    apply: 'places.csv → тепловая карта / сравнение частей цикла; сверка с LLM-полем place_mentions.',
+  },
+  {
+    id: 'wikidata',
+    title: 'Wikidata SPARQL',
+    free: true,
+    key: false,
+    why: 'Место/событие как сущность: координаты, страна, тип. Отличает «Кавказ»-регион от курорта.',
+    endpoint: 'https://query.wikidata.org/sparql',
+    apply: 'Обогащение строки таблицы: wikidata_id, country, instance_of — до интерпретации.',
+  },
+  {
+    id: 'openlibrary',
+    title: 'Open Library',
+    free: true,
+    key: false,
+    why: 'Библиографическая гигиена: издания «Тёмных аллей», год, язык — в паспорт корпуса (Л2–Л3).',
+    endpoint: 'https://openlibrary.org/search.json',
+    apply: 'Не анализ поэтики, а метаданные источника рядом с LLM-разметкой.',
+  },
+]
+
+/**
+ * Кураторские топонимы «Тёмных аллей» для живого демо.
+ * query — строка для геокодера; story — откуда в цикле; tip — что сказать залу.
+ */
+export const BUNIN_PLACES = [
+  {
+    id: 'tula_road',
+    label: 'Тульская дорога',
+    query: 'Tula Oblast Russia',
+    story: 'Тёмные аллеи',
+    tip: 'Станция у тульской дороги — не «вся Россия», а конкретный край.',
+  },
+  {
+    id: 'moscow',
+    label: 'Москва',
+    query: 'Moscow Russia',
+    story: 'Чистый понедельник / Поздний час',
+    tip: 'Городской хронотоп vs усадебный — разные геометрии цикла.',
+  },
+  {
+    id: 'paris',
+    label: 'Париж',
+    query: 'Paris France',
+    story: 'В Париже',
+    tip: 'Эмигрантский Париж Бунина — проверяемый топос, не метафора.',
+  },
+  {
+    id: 'caucasus',
+    label: 'Кавказ',
+    query: 'Caucasus Mountains',
+    story: 'Кавказ',
+    tip: 'Геокодер даст хребет/регион; филолог решает, что считать «местом» рассказа.',
+  },
+  {
+    id: 'sochi',
+    label: 'Сочи',
+    query: 'Sochi Russia',
+    story: 'Кавказ (побережье)',
+    tip: 'Уточнение «Кавказа» до курортного берега — уже интерпретация единицы.',
+  },
+  {
+    id: 'sarajevo',
+    label: 'Сараево',
+    query: 'Sarajevo',
+    story: 'Холодная осень',
+    tip: 'Историческая точка 1914 — мост между сюжетом и большой историей.',
+  },
+  {
+    id: 'madrid',
+    label: 'Мадрид',
+    query: 'Madrid Spain',
+    story: 'Мадрид',
+    tip: 'Европейская карта цикла шире «русской усадьбы».',
+  },
+  {
+    id: 'camargue',
+    label: 'Камарг',
+    query: 'Camargue France',
+    story: 'Камарг',
+    tip: 'Редкий топоним: геокодер полезен именно когда место «не на слуху».',
+  },
+  {
+    id: 'judea',
+    label: 'Иудея',
+    query: 'Judea',
+    story: 'Весной, в Иудее',
+    tip: 'Библейская география ≠ GPS-точка; API вернёт кандидата — решение за вами.',
+  },
+  {
+    id: 'galicia',
+    label: 'Галиция',
+    query: 'Galicia Eastern Europe',
+    story: 'Холодная осень (фронт)',
+    tip: 'Военный топоним: неоднозначность запроса — урок критичности к геокодеру.',
+  },
+]
+
+export const OPEN_API_STEPS = [
+  {
+    n: 1,
+    title: 'Зачем второй API',
+    say: 'LLM размечает смысл; открытый API даёт внешний проверяемый слой — координаты, каталог, сущность Wikidata.',
+  },
+  {
+    n: 2,
+    title: 'Выбрать слой',
+    say: 'На лекции покажем геокодер: топонимам цикла нужны координаты, а не только «атмосфера юга».',
+  },
+  {
+    n: 3,
+    title: 'Собрать вход',
+    say: 'Список мест — из close reading или из NER (Л6). Не из галлюцинации модели.',
+  },
+  {
+    n: 4,
+    title: 'Вызвать API',
+    say: 'Один запрос = одно место. Смотрим lat/lon и имя, которое вернул сервис — не всегда то, что вы имели в виду.',
+  },
+  {
+    n: 5,
+    title: 'Стыковка с LLM',
+    say: 'Таблица мест + таблица тезисов. График «где?» не доказывает «что значит» — только после аудита обеих таблиц.',
+  },
+]
+
+export function placesToCsv(rows) {
+  const header = 'id,label,query,story,lat,lon,display_name,osm_link,source_api'
+  const body = rows
+    .map((r) =>
+      [r.id, r.label, r.query, r.story, r.lat, r.lon, r.display_name, r.osm_link, r.source_api]
+        .map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`)
+        .join(',')
+    )
+    .join('\n')
+  return `\uFEFF${header}\n${body}\n`
+}
