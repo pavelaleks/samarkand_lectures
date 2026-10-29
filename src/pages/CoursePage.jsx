@@ -136,6 +136,23 @@ export default function CoursePage() {
             <span className="text-indigo-800 dark:text-indigo-200 font-semibold">Открыть →</span>
           </Link>
         )}
+
+        {slug === 'digital-humanities' && (
+          <Link
+            to="/courses/digital-humanities/demo/intertext"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/90 dark:bg-violet-950/30 hover:shadow-xl transition-all group mb-2"
+          >
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-violet-950 dark:text-violet-100 mb-1">
+                Ресурсы: интертекстуальный анализ
+              </h2>
+              <p className="text-sm sm:text-base text-violet-950/80 dark:text-violet-100/80 leading-relaxed">
+                Фрагмент + DeepSeek → цитаты, аллюзии, уверенность, чеклист проверки.
+              </p>
+            </div>
+            <span className="text-violet-800 dark:text-violet-200 font-semibold">Открыть →</span>
+          </Link>
+        )}
       </motion.div>
 
       <div className="space-y-4 sm:space-y-6">

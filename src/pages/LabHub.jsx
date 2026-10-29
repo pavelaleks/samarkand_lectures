@@ -76,8 +76,23 @@ export default function LabHub() {
           <p className="mt-3 text-sm font-semibold text-indigo-800 dark:text-indigo-200">Открыть форму →</p>
         </Link>
         <Link
+          to="/courses/digital-humanities/demo/intertext"
+          className="block rounded-2xl border-2 border-violet-400 dark:border-violet-600 bg-violet-50/80 dark:bg-violet-950/30 p-5 sm:p-6 hover:shadow-xl transition-all"
+        >
+          <div className="text-xs font-bold uppercase tracking-wide text-violet-700 dark:text-violet-300 mb-1">
+            Close reading + LLM
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Интертекстуальный анализ
+          </h3>
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Фрагмент + ключ DeepSeek → цитаты, аллюзии, уровни уверенности и чеклист проверки.
+          </p>
+          <p className="mt-3 text-sm font-semibold text-violet-800 dark:text-violet-200">Открыть форму →</p>
+        </Link>
+        <Link
           to="/courses/digital-humanities/demo/pipeline"
-          className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 hover:border-teal-400 transition-all"
+          className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 hover:border-teal-400 transition-all md:col-span-2"
         >
           <div className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-1">
             Каталог API
