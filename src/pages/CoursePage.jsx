@@ -119,6 +119,23 @@ export default function CoursePage() {
             <span className="text-amber-800 dark:text-amber-200 font-semibold">Читать →</span>
           </Link>
         )}
+
+        {slug === 'digital-humanities' && (
+          <Link
+            to="/courses/digital-humanities/demo/lit-search"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-indigo-300 dark:border-indigo-700 bg-indigo-50/90 dark:bg-indigo-950/30 hover:shadow-xl transition-all group mb-2"
+          >
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-indigo-950 dark:text-indigo-100 mb-1">
+                Ресурсы: поиск статей по теме
+              </h2>
+              <p className="text-sm sm:text-base text-indigo-950/80 dark:text-indigo-100/80 leading-relaxed">
+                Перефраз запроса → OpenAlex / Crossref / Semantic Scholar → CSV.
+              </p>
+            </div>
+            <span className="text-indigo-800 dark:text-indigo-200 font-semibold">Открыть →</span>
+          </Link>
+        )}
       </motion.div>
 
       <div className="space-y-4 sm:space-y-6">

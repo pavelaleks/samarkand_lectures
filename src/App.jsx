@@ -11,6 +11,7 @@ import BuninReader from './pages/BuninReader'
 import ChekhovReader from './pages/ChekhovReader'
 import LeerssenLecture from './pages/LeerssenLecture'
 import WikidataBunin from './pages/WikidataBunin'
+import LitSearch from './pages/LitSearch'
 
 function LabWorkRedirect() {
   const { workSlug } = useParams()
@@ -64,6 +65,8 @@ function App() {
                   element={<ChekhovReader />}
                 />
                 <Route path="/courses/digital-humanities/demo/wikidata-bunin" element={<WikidataBunin />} />
+                <Route path="/courses/digital-humanities/demo/lit-search" element={<LitSearch />} />
+                <Route path="/courses/digital-humanities/resources/lit-search" element={<LitSearch />} />
                 <Route path="/courses/digital-humanities/demo/:workSlug" element={<LabWork />} />
                 <Route path="/courses/digital-humanities/lab" element={<Navigate to="/courses/digital-humanities/demo" replace />} />
                 <Route path="/courses/digital-humanities/lab/:workSlug" element={<LabWorkRedirect />} />

@@ -60,6 +60,35 @@ export default function LabHub() {
         </div>
       </motion.div>
 
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ресурсы</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-10">
+        <Link
+          to="/courses/digital-humanities/demo/lit-search"
+          className="block rounded-2xl border-2 border-indigo-400 dark:border-indigo-600 bg-indigo-50/80 dark:bg-indigo-950/30 p-5 sm:p-6 hover:shadow-xl transition-all"
+        >
+          <div className="text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300 mb-1">
+            Обзор литературы
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">Поиск статей по теме</h3>
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Тема → ключевые слова / перефраз → OpenAlex, Crossref, Semantic Scholar. CSV для курсовой.
+          </p>
+          <p className="mt-3 text-sm font-semibold text-indigo-800 dark:text-indigo-200">Открыть форму →</p>
+        </Link>
+        <Link
+          to="/courses/digital-humanities/demo/pipeline"
+          className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 hover:border-teal-400 transition-all"
+        >
+          <div className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-1">
+            Каталог API
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">Gutendex, Gallica, Wikidata…</h3>
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Список бесплатных и платных API для DH — вкладка «Другие API» на стенде Л11.
+          </p>
+        </Link>
+      </div>
+
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Инструменты</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {demos.works.map((work, index) => {
