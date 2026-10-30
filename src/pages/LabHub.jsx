@@ -129,7 +129,7 @@ export default function LabHub() {
                   <span className="px-2 py-0.5 rounded-full bg-teal-600 text-white">
                     {work.slug === 'colab-bunin' ? 'Практика Colab' : 'Пример лекции'}
                   </span>
-                  {work.slug === 'colab-bunin' ? 'Бунин · API · графы' : work.title.includes('Ципф') ? 'Закон Ципфа · цикл Бунина' : 'Разбор на занятии'}
+                  {work.slug === 'colab-bunin' ? '12 пар · Бунин + диссертация' : work.title.includes('Ципф') ? 'Закон Ципфа · цикл Бунина' : 'Разбор на занятии'}
                 </div>
               )}
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-snug">
@@ -141,7 +141,7 @@ export default function LabHub() {
               {featured && (
                 <p className="mt-3 text-sm font-semibold text-teal-800 dark:text-teal-200">
                   {work.slug === 'colab-bunin'
-                    ? 'Открыть лаборатории Colab + скачать .ipynb →'
+                    ? '12 пар Colab: открыть / скачать .ipynb / копировать код →'
                     : 'Открыть разбор и материалы занятия →'}
                 </p>
               )}

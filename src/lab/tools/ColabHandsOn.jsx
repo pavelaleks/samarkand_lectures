@@ -10,13 +10,14 @@ const COLAB_GH =
 
 const LABS = [
   {
-    id: 'p1',
+    id: 'p01',
     pair: 'Пара 1',
+    track: 'Бунин · демо',
     title: 'Частоты и графики',
     minutes: '80–90 мин',
-    file: 'Para1_Bunin_Colab_chastoty_grafiki.ipynb',
-    goal: 'Загрузить три рассказа Бунина, посчитать поля любовь / память / время на 1000 слов, построить столбцы и Zipf.',
-    skills: ['requests + URL корпуса', 'частоты', 'matplotlib', 'паспорт графика'],
+    file: 'Para01_Bunin_chastoty_grafiki.ipynb',
+    goal: 'Три рассказа Бунина: поля любовь/память/время на 1000 слов, столбцы и Zipf. Освоить пайплайн до переноса на диссертацию.',
+    skills: ['корпус с сайта', 'частоты', 'matplotlib', 'паспорт графика'],
     starter: `import requests
 BASE = "https://pavelaleks.github.io/samarkand_lectures/demo-corpora/bunin-temnye-allei/txt/"
 for fname in ["kavkaz.txt", "holodnaya-osen.txt", "chistyj-ponedelnik.txt"]:
@@ -24,86 +25,139 @@ for fname in ["kavkaz.txt", "holodnaya-osen.txt", "chistyj-ponedelnik.txt"]:
     print(fname, len(text.split()), "слов~")`,
   },
   {
-    id: 'p2',
+    id: 'p02',
     pair: 'Пара 2',
+    track: 'Бунин · демо',
     title: 'Дуга тональности и локации',
     minutes: '80–90 мин',
-    file: 'Para2_Bunin_Colab_duga_lokacii.ipynb',
-    goal: 'Эмоциональная дуга «Холодной осени», учебная карта мест, сравнение пространства с «Чистым понедельником».',
-    skills: ['sentiment-эвристика', 'чанки текста', 'сравнение рассказов', 'ограничения словаря'],
-    starter: `story = "Холодная осень"  # затем постройте дугу по 8 частям
-# см. полный ноутбук: словари POS/NEG и chunk_text()`,
+    file: 'Para02_Bunin_duga_lokacii.ipynb',
+    goal: 'Чанки «Холодной осени», учебный sentiment, сравнение мест с «Чистым понедельником».',
+    skills: ['чанки', 'словарь POS/NEG', 'ограничения метода'],
+    starter: `story = "Холодная осень"  # дуга по 8 чанкам — полный код в ноутбуке`,
   },
   {
-    id: 'p3',
-    pair: 'Если быстро · API',
-    title: 'OpenAlex: библиография вокруг Бунина',
-    minutes: '25–40 мин',
-    file: 'Para3_OpenAlex_API_Bunin.ipynb',
-    goal: 'Подключить бесплатный API OpenAlex, сохранить openalex_bunin_raw.txt, отобрать 5 полезных работ.',
-    skills: ['REST API', 'JSON → TXT', 'ручной отбор шума'],
-    starter: `import requests
-r = requests.get(
-    "https://api.openalex.org/works",
-    params={"search": '"Ivan Bunin"', "per-page": 5},
-    timeout=60,
-)
-print(r.json()["meta"]["count"])
-for w in r.json()["results"]:
-    print(w["publication_year"], w["display_name"])`,
+    id: 'p03',
+    pair: 'Пара 3',
+    track: 'Диссертация',
+    title: 'Паспорт корпуса и очистка',
+    minutes: '80–90 мин',
+    file: 'Para03_Korpus_pasport_dissertaciya.ipynb',
+    goal: 'Загрузить свои .txt магистерской (или демо-Чехова), заполнить паспорт, зафиксировать правила очистки.',
+    skills: ['паспорт корпуса', 'bias', 'clean.txt', 'опасные правила'],
+    starter: `MODE = "thesis"  # или "demo"
+THESIS_FILES = ["glava1.txt", "glava2.txt"]  # загрузите слева в Colab`,
+  },
+  {
+    id: 'p04',
+    pair: 'Пара 4',
+    track: 'Диссертация',
+    title: 'Zipf и частоты на своём тексте',
+    minutes: '80–90 мин',
+    file: 'Para04_Zipf_svoy_tekst.ipynb',
+    goal: 'Перенос пары 1: свои смысловые поля под гипотезу диссертации + Zipf.',
+    skills: ['свои стеммы', 'на 1000 слов', 'проверка цитатой'],
+    starter: `MODE = "thesis"
+FIELDS = {"поле_A": ["стем1"], "поле_B": ["стем2"]}  # под ваш вопрос`,
+  },
+  {
+    id: 'p05',
+    pair: 'Пара 5',
+    track: 'Диссертация',
+    title: 'Ключевые слова: текст vs фон',
+    minutes: '80–90 мин',
+    file: 'Para05_Klyuchevye_slova_kontrast.ipynb',
+    goal: 'Contrast target (ваш материал) vs reference (Бунин/Чехов/второй автор); вручную отсеять мусор.',
+    skills: ['keywords', 'корпус сравнения', 'ручной отбор'],
+    starter: `# target = Path("glava1.txt").read_text(encoding="utf-8")
+# reference = другой текст диссертации или рассказ с сайта`,
+  },
+  {
+    id: 'p06',
+    pair: 'Пара 6',
+    track: 'Диссертация / Чехов',
+    title: 'Стилиометрия mini-Delta',
+    minutes: '80–90 мин',
+    file: 'Para06_Stiliometriya_Delta_mini.ipynb',
+    goal: 'Матрица близости по MFW для глав диссертации или рассказов Чехова. Гипотеза, не атрибуция.',
+    skills: ['MFW', 'z-оценки', 'Delta', 'жанровый шум'],
+    starter: `!pip -q install  # sklearn/numpy уже в Colab
+# docs = {"глава1": ..., "глава2": ..., "контроль": ...}`,
+  },
+  {
+    id: 'p07',
+    pair: 'Пара 7',
+    track: 'Диссертация',
+    title: 'Дуга тональности на своём тексте',
+    minutes: '80–90 мин',
+    file: 'Para07_Duga_tonalnosti_dissertaciya.ipynb',
+    goal: 'Свои POS/NEG под тему диссертации; экстремум дуги проверить чтением.',
+    skills: ['свой словарь', 'чанки', 'ложная тональность'],
+    starter: `MODE = "thesis"
+THESIS_FILE = "glava1.txt"
+POS = {"…"}; NEG = {"…"}  # под вашу тему`,
+  },
+  {
+    id: 'p08',
+    pair: 'Пара 8',
+    track: 'Диссертация',
+    title: 'Места и имена (учебный NER)',
+    minutes: '80–90 мин',
+    file: 'Para08_Mesta_imena_NER.ipynb',
+    goal: 'Свои якоря мест/персон → таблица частот → бар; найти ложное срабатывание.',
+    skills: ['списки якорей', 'false positive', 'зачем в главе'],
+    starter: `PLACES = ["…"]  # места вашего текста
+PERSONS = ["…"]`,
+  },
+  {
+    id: 'p09',
+    pair: 'Пара 9',
+    track: 'Граф · Бунин или свой',
+    title: 'NetworkX: граф совстречаемости',
+    minutes: '80–90 мин',
+    file: 'Para09_NetworkX_graf.ipynb',
+    goal: 'Узлы = герои/мотивы (Бунин-демо или диссертация); правило ребра + порог веса.',
+    skills: ['networkx', 'правило ребра', 'спорное ребро'],
+    starter: `!pip -q install networkx
+NODES = ["он", "она", "Москва"]  # замените на своих`,
+  },
+  {
+    id: 'p10',
+    pair: 'Пара 10',
+    track: 'Диссертация / корпус',
+    title: 'LDA: темы мини-корпуса',
+    minutes: '80–90 мин',
+    file: 'Para10_LDA_temy_mini_korpus.ipynb',
+    goal: '6–12 документов (главы диссертации или рассказы); именование тем + таблица сомнений.',
+    skills: ['sklearn LDA', 'K тем', 'тема ≠ мотив'],
+    starter: `from sklearn.decomposition import LatentDirichletAllocation
+K = 4  # попробуйте 3–5`,
+  },
+  {
+    id: 'p11',
+    pair: 'Пара 11',
+    track: 'Диссертация · API',
+    title: 'OpenAlex: библиография темы',
+    minutes: '80–90 мин',
+    file: 'Para11_OpenAlex_bibliografiya_temy.ipynb',
+    goal: 'Три поисковых запроса под ваш вопрос → openalex_thesis_raw.txt → 5 полезных + 3 шумных.',
+    skills: ['OpenAlex', 'JSON→TXT', 'отбор'],
+    starter: `QUERIES = [
+  '"Ваш Автор" keyword',
+  'Ваш_термин AND literature',
+]`,
     extraFiles: ['openalex_bunin.py'],
   },
   {
-    id: 'p4',
-    pair: 'Если быстро · граф',
-    title: 'NetworkX: совстречаемость в «Чистом понедельнике»',
-    minutes: '25–40 мин',
-    file: 'Para4_NetworkX_graf_Chistyj_ponedelnik.ipynb',
-    goal: 'Построить граф узлов/рёбер по правилу окна предложений и обсудить спорное ребро.',
-    skills: ['networkx', 'правило ребра', 'порог веса', 'рисунок графа'],
-    starter: `!pip -q install networkx
-import networkx as nx, matplotlib.pyplot as plt
-G = nx.Graph()
-G.add_edge("Рассказчик", "Она", weight=5)
-G.add_edge("Она", "Москва", weight=3)
-nx.draw(G, with_labels=True, node_color="#99f6e4", node_size=1200)
-plt.show()`,
-  },
-  {
-    id: 'p5',
-    pair: 'Если быстро · API',
-    title: 'Gutendex + Open Library',
-    minutes: '20–35 мин',
-    file: 'Para5_Gutendex_OpenLibrary_API.ipynb',
-    goal: 'Два бесплатных книжных API без ключа: найти издания Bunin и построить столбики по годам.',
-    skills: ['Gutendex', 'Open Library', 'каталог ≠ история рецепции'],
-    starter: `import requests
-print(requests.get("https://gutendex.com/books", params={"search": "Bunin"}, timeout=60).json()["count"])
-ol = requests.get("https://openlibrary.org/search.json", params={"author": "Ivan Bunin", "limit": 10}, timeout=60).json()
-print("Open Library", ol["numFound"])
-for d in ol["docs"][:5]:
-    print(d.get("first_publish_year"), d.get("title"))`,
-  },
-  {
-    id: 'p6',
-    pair: 'Если быстро · API + таблица',
-    title: 'Wikidata SPARQL про Бунина',
-    minutes: '20–35 мин',
-    file: 'Para6_Wikidata_SPARQL_Bunin.ipynb',
-    goal: 'Сделать SPARQL-запрос к Wikidata и визуализировать типы связанных сущностей.',
-    skills: ['SPARQL', 'Wikidata', 'внешний слой фактов рядом с текстом'],
-    starter: `import requests
-q = '''SELECT ?item ?itemLabel WHERE {
-  ?item ?p wd:Q233005 .
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru,en". }
-} LIMIT 10'''
-r = requests.get(
-    "https://query.wikidata.org/sparql",
-    params={"query": q, "format": "json"},
-    headers={"User-Agent": "SamGU-DH-Course/1.0"},
-    timeout=60,
-)
-print(len(r.json()["results"]["bindings"]), "rows")`,
+    id: 'p12',
+    pair: 'Пара 12',
+    track: 'Диссертация · API',
+    title: 'Gutendex + Open Library + Wikidata',
+    minutes: '80–90 мин',
+    file: 'Para12_API_Gutendex_OL_Wikidata.ipynb',
+    goal: 'Каталожный слой по автору диссертации + протокол сверки ответа LLM по изданию.',
+    skills: ['Gutendex', 'Open Library', 'SPARQL', 'антигаллюцинация'],
+    starter: `AUTHOR = "Ivan Bunin"  # автор вашей диссертации
+AUTHOR_QID = "Q233005"  # найдите Q-id на wikidata.org`,
   },
 ]
 
@@ -144,24 +198,24 @@ export function ColabHandsOn() {
     <div className="space-y-8">
       <section className="rounded-2xl border-2 border-teal-500/40 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20 p-5 sm:p-6">
         <p className="text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200 mb-2">
-          Практика руками · Google Colab · цикл Бунина
+          12 пар · Google Colab · Бунин + тексты магистерской
         </p>
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-          Лаборатории Colab: частоты, графики, API и графы
+          Лаборатории Colab на весь курс
         </h2>
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mb-4">
-          Базовый Colab <strong>бесплатный</strong> (нужен Google-аккаунт). Платный Colab Pro для этих заданий не
-          нужен. Работайте на ноутбуках вместе: один код — общие графики — спор о тексте и методе.
+          Пары 1–2 — общий пайплайн на Бунине. Пары 3–12 — в основном на{' '}
+          <strong>ваших текстах диссертации</strong> (загрузка .txt в Colab); если файлов ещё нет, в ноутбуке есть
+          демо на Чехове/Бунине. Базовый Colab бесплатный.
         </p>
         <ol className="list-decimal pl-5 text-sm text-gray-800 dark:text-gray-200 space-y-1 mb-4">
           <li>
-            Откройте выбранную лабораторную кнопкой <strong>Открыть в Colab</strong> (или скачайте .ipynb и
-            загрузите через «Файл → Загрузить блокнот»).
+            Выберите пару → <strong>Открыть в Colab</strong> или скачайте .ipynb.
           </li>
           <li>
-            Нажмите <strong>Подключить</strong> → выполняйте ячейки сверху вниз (Shift+Enter).
+            Для диссертационных пар загрузите свои `.txt` (UTF-8) и поставьте <code>MODE = &quot;thesis&quot;</code>.
           </li>
-          <li>Если закончили рано — переходите к блокам «Если быстро» (API и графы).</li>
+          <li>Сдать с пары: график/таблица + цитата + ограничение метода.</li>
         </ol>
         <div className="flex flex-wrap gap-2">
           <a
@@ -176,20 +230,26 @@ export function ColabHandsOn() {
             className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-teal-300 dark:border-teal-700 text-sm font-semibold text-teal-900 dark:text-teal-100"
             to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
           >
-            Корпус «Тёмные аллеи»
+            Корпус Бунина
+          </Link>
+          <Link
+            className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-teal-300 dark:border-teal-700 text-sm font-semibold text-teal-900 dark:text-teal-100"
+            to="/courses/digital-humanities/demo/corpus/chekhov-rasskazy"
+          >
+            Корпус Чехова
           </Link>
           <a
             className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-sm font-semibold"
             href={`${DL}/openalex_bunin.py`}
             download
           >
-            Скачать openalex_bunin.py
+            openalex_bunin.py
           </a>
         </div>
       </section>
 
       <section>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Выберите лабораторную</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">12 лабораторных пар</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {LABS.map((item) => (
             <button
@@ -205,6 +265,7 @@ export function ColabHandsOn() {
               <div className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-1">
                 {item.pair} · {item.minutes}
               </div>
+              <div className="text-[11px] font-semibold text-amber-800 dark:text-amber-200 mb-1">{item.track}</div>
               <div className="font-bold text-gray-900 dark:text-white mb-1">{item.title}</div>
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{item.goal}</p>
             </button>
@@ -218,6 +279,7 @@ export function ColabHandsOn() {
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               {lab.pair}: {lab.title}
             </h3>
+            <p className="text-xs font-semibold text-amber-800 dark:text-amber-200 mt-1">{lab.track}</p>
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{lab.goal}</p>
           </div>
           <div className="flex flex-wrap gap-2 shrink-0">
@@ -273,8 +335,8 @@ export function ColabHandsOn() {
           <h4 className="font-bold text-gray-900 dark:text-white mb-2">Стартовый код (скопировать в ячейку)</h4>
           <CopyBlock code={lab.starter} />
           <p className="text-xs text-gray-500 mt-2">
-            Полный пайплайн — в ноутбуке. Если «Открыть в Colab» из GitHub не сработало сразу после деплоя,
-            скачайте .ipynb и загрузите вручную: Colab → Файл → Загрузить блокнот.
+            Полный пайплайн — в ноутбуке. Если Colab из GitHub не открылся, скачайте .ipynb → Colab → Файл → Загрузить
+            блокнот.
           </p>
         </div>
       </section>
@@ -283,11 +345,11 @@ export function ColabHandsOn() {
         <h3 className="font-bold text-gray-900 dark:text-white">Правило занятия</h3>
         <p>
           <strong>вопрос → процедура → картинка → цитата → ограничение.</strong> Красивый график без цитаты не
-          засчитывается как вывод.
+          засчитывается.
         </p>
         <p>
-          Бесплатные API на занятии: OpenAlex, Gutendex, Open Library, Wikidata. Не публикуйте ключи. Не долбите
-          SPARQL запросами в цикле.
+          Диссертационные пары рассчитаны на ваши произведения: курс даёт метод, материал — из магистерской. Демо-корпуса
+          Бунина и Чехова — запасной аэродром и общий язык группы.
         </p>
       </section>
     </div>
