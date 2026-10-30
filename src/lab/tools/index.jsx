@@ -13,6 +13,7 @@ import { ZipfLesson } from './ZipfLesson'
 import { StylometryLesson } from './StylometryLesson'
 import { NerLesson } from './NerLesson'
 import { PipelineLesson } from './PipelineLesson'
+import { ColabHandsOn } from './ColabHandsOn'
 
 const TOOLS = {
   CloseDistant,
@@ -33,6 +34,7 @@ const TOOLS = {
   PipelineLesson,
   MiniPanel,
   VerifyLab,
+  ColabHandsOn,
 }
 
 export function renderLabTool(name) {

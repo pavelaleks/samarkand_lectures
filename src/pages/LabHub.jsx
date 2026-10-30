@@ -126,8 +126,10 @@ export default function LabHub() {
             >
               {featured && (
                 <div className="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200">
-                  <span className="px-2 py-0.5 rounded-full bg-teal-600 text-white">Пример лекции 4</span>
-                  Закон Ципфа · цикл Бунина
+                  <span className="px-2 py-0.5 rounded-full bg-teal-600 text-white">
+                    {work.slug === 'colab-bunin' ? 'Практика Colab' : 'Пример лекции'}
+                  </span>
+                  {work.slug === 'colab-bunin' ? 'Бунин · API · графы' : work.title.includes('Ципф') ? 'Закон Ципфа · цикл Бунина' : 'Разбор на занятии'}
                 </div>
               )}
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-snug">
@@ -138,7 +140,9 @@ export default function LabHub() {
               )}
               {featured && (
                 <p className="mt-3 text-sm font-semibold text-teal-800 dark:text-teal-200">
-                  Открыть разбор α / R² + скрипты для PyCharm →
+                  {work.slug === 'colab-bunin'
+                    ? 'Открыть лаборатории Colab + скачать .ipynb →'
+                    : 'Открыть разбор и материалы занятия →'}
                 </p>
               )}
             </Link>
