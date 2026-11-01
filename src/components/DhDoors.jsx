@@ -31,6 +31,7 @@ const DOORS = [
 ]
 
 const RESOURCES = [
+  { to: '/courses/digital-humanities/cabinet', label: '★ Кабинет магистранта: литература по теме → Word', strong: true },
   { to: '/courses/digital-humanities/demo/corpus/bunin-temnye-allei', label: 'Корпус: Бунин, «Тёмные аллеи»' },
   { to: '/courses/digital-humanities/demo/corpus/chekhov-rasskazy', label: 'Корпус: Чехов, рассказы' },
   { to: '/courses/digital-humanities/passport', label: 'Шаблон «Методологический паспорт»' },
@@ -83,7 +84,11 @@ export default function DhDoors() {
           <Link
             key={r.to}
             to={r.to}
-            className="px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:border-teal-400 hover:text-teal-800 dark:hover:text-teal-200"
+            className={`px-3 py-1.5 rounded-full border hover:border-teal-400 ${
+              r.strong
+                ? 'border-amber-400 bg-amber-50 dark:bg-amber-950/30 text-amber-950 dark:text-amber-100 font-semibold'
+                : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:text-teal-800 dark:hover:text-teal-200'
+            }`}
           >
             {r.label}
           </Link>

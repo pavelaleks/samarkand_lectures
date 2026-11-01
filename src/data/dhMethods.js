@@ -162,7 +162,10 @@ export const METHODS = [
     pairs: [11],
     lectures: [11],
     stands: [],
-    resources: [{ to: '/courses/digital-humanities/demo/lit-search', label: 'Форма поиска статей' }],
+    resources: [
+      { to: '/courses/digital-humanities/cabinet', label: 'Кабинет магистранта: поиск и Word по ГОСТу' },
+      { to: '/courses/digital-humanities/demo/lit-search', label: 'Форма поиска статей' },
+    ],
     read: 'Каталог — сырьё: обязательный ручной отбор и отдельный поиск в eLibrary и КиберЛенинке.',
     lies: 'Неполнота (русскоязычные и старые работы), однофамильцы, дубли.',
     thesis: 'Поиск в OpenAlex (4 запроса; дата обращения …) дал … записей; после ручного отбора релевантными признаны …; пик публикаций приходится на … гг. …',
