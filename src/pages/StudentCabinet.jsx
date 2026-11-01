@@ -29,6 +29,7 @@ import { STYLES, download, gost, linkOf, toBibTeX, toCSV, toRIS } from '../lab/c
 import { bibliographyDocx } from '../lab/cabinet/exportWord'
 import { EMPTY_PROFILE, EXAMPLE_PROFILE, usePersistent } from '../lab/cabinet/store'
 import { reformulateLocal } from '../lab/litSearchLib'
+import { PROVIDERS, firebaseProvider, mergeCabinets, packForCloud, supabaseProvider } from '../lab/cabinet/cloud'
 
 const TABS = [
   { id: 'profile', label: 'Моя тема', icon: '①' },
@@ -38,6 +39,7 @@ const TABS = [
   { id: 'metrics', label: 'Наукометрия темы', icon: '▤' },
   { id: 'more', label: 'Где ещё искать', icon: '↗' },
   { id: 'api', label: 'API-журнал', icon: '{ }' },
+  { id: 'data', label: 'Мои данные', icon: '💾' },
 ]
 
 const splitKw = (s) =>
@@ -295,28 +297,13 @@ function ZeroHelp({ q, total, precise, profile, onRun }) {
 }
 
 // ---------------------------------------------------------------- 1. Профиль
-function ProfileTab({ profile, setProfile, list, setList, go }) {
+function ProfileTab({ profile, setProfile, go }) {
   const p = profile
   const set = (k) => (e) => setProfile({ ...p, [k]: e.target.value })
   const suggest = () => {
     const r = reformulateLocal(`${p.topic} ${p.author}`)
     const en = r.queries.filter((q) => /[a-z]/i.test(q)).slice(0, 4)
     setProfile({ ...p, kwEn: [...new Set([...splitKw(p.kwEn), ...en])].join('; ') })
-  }
-  const exportCabinet = () =>
-    download(`kabinet_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ profile: p, list }, null, 2), 'application/json')
-  const importCabinet = (e) => {
-    const f = e.target.files?.[0]
-    if (!f) return
-    f.text().then((t) => {
-      try {
-        const d = JSON.parse(t)
-        if (d.profile) setProfile({ ...EMPTY_PROFILE, ...d.profile })
-        if (Array.isArray(d.list)) setList(d.list)
-      } catch {
-        alert('Это не файл кабинета.')
-      }
-    })
   }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -392,18 +379,12 @@ function ProfileTab({ profile, setProfile, list, setList, go }) {
         <Card className="space-y-3">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Где хранится кабинет</h2>
           <p className="text-sm text-gray-600 dark:text-gray-300">
-            Только в этом браузере на этом компьютере — на сервер ничего не отправляется. Чтобы перенести кабинет на другой
-            компьютер, сохраните файл и загрузите его там.
+            Выберите сами: только в этом браузере (с копией в файле), в аккаунте по почте или в аккаунте Google — тогда
+            кабинет откроется на любом компьютере и телефоне.
           </p>
-          <div className="flex flex-wrap gap-2">
-            <Btn kind="ghost" onClick={exportCabinet}>
-              ⬇ Сохранить кабинет
-            </Btn>
-            <label className="inline-flex items-center px-3.5 py-2 rounded-xl text-sm font-semibold border border-gray-300 dark:border-gray-600 cursor-pointer hover:border-teal-400 text-gray-800 dark:text-gray-100">
-              ⬆ Загрузить
-              <input type="file" accept="application/json,.json" className="hidden" onChange={importCabinet} />
-            </label>
-          </div>
+          <Btn kind="ghost" onClick={() => go('data')}>
+            💾 Мои данные: выбрать способ хранения
+          </Btn>
         </Card>
         <Btn kind="amber" onClick={() => go('search')}>
           Дальше: искать литературу →
@@ -1704,12 +1685,388 @@ function ApiTab() {
   )
 }
 
+// ---------------------------------------------------------------- 8. Мои данные (хранение)
+const hashOf = (profile, list) => {
+  const t = JSON.stringify({ p: { ...profile, openAlexKey: '' }, l: list.map((i) => [i.key, i.group, i.note]) })
+  let h = 0
+  for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) | 0
+  return String(h)
+}
+
+/** Синхронизация с выбранным облаком: при входе — сверка, дальше — автосохранение через 1,5 с после изменений. */
+function useCloudSync({ mode, profile, list, setProfile, setList }) {
+  const [user, setUser] = useState(null)
+  const [status, setStatus] = useState({ state: 'idle' })
+  const [conflict, setConflict] = useState(null)
+  const [ready, setReady] = useState(false)
+  const [meta, setMeta] = usePersistent('dh_cab_sync_meta', {})
+  const provider = mode === 'local' ? null : PROVIDERS[mode]
+
+  const apply = (cab) => {
+    if (cab.profile) setProfile({ ...EMPTY_PROFILE, ...cab.profile, openAlexKey: profile.openAlexKey })
+    if (Array.isArray(cab.list)) setList(cab.list)
+  }
+  const pushNow = async (p = profile, l = list, u = user) => {
+    if (!provider || !u) return
+    setStatus({ state: 'saving' })
+    try {
+      await provider.save(packForCloud(p, l))
+      setMeta({ provider: mode, uid: u.id, hash: hashOf(p, l), at: Date.now() })
+      setStatus({ state: 'saved', at: new Date() })
+    } catch (e) {
+      setStatus({ state: 'error', msg: e.message })
+    }
+  }
+
+  const reconcile = async (u) => {
+    setStatus({ state: 'loading' })
+    let cloud = null
+    try {
+      cloud = await provider.load()
+    } catch (e) {
+      setStatus({ state: 'error', msg: e.message })
+      return
+    }
+    const localEmpty = !list.length && !profile.topic
+    const sameAcc = meta.provider === mode && meta.uid === u.id
+    const localDirty = hashOf(profile, list) !== meta.hash
+    if (!cloud) {
+      await pushNow(profile, list, u)
+    } else if (localEmpty || (sameAcc && !localDirty)) {
+      apply(cloud)
+      setMeta({ provider: mode, uid: u.id, hash: hashOf({ ...EMPTY_PROFILE, ...cloud.profile }, cloud.list || []), at: Date.now() })
+      setStatus({ state: 'saved', at: new Date(cloud.savedAt || Date.now()) })
+    } else if (sameAcc && new Date(cloud.savedAt).getTime() <= (meta.at || 0)) {
+      await pushNow(profile, list, u)
+    } else {
+      setConflict(cloud)
+      setStatus({ state: 'idle' })
+      return
+    }
+    setReady(true)
+  }
+
+  // при смене способа — узнать, вошёл ли студент
+  useEffect(() => {
+    let alive = true
+    setUser(null)
+    setReady(false)
+    setConflict(null)
+    setStatus({ state: 'idle' })
+    if (!provider || !provider.configured()) return
+    provider
+      .current()
+      .then((u) => {
+        if (!alive) return
+        setUser(u)
+        if (u) reconcile(u)
+      })
+      .catch((e) => alive && setStatus({ state: 'error', msg: e.message }))
+    return () => {
+      alive = false
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode])
+
+  // автосохранение
+  useEffect(() => {
+    if (!ready || !user || conflict) return
+    if (hashOf(profile, list) === meta.hash) return
+    const t = setTimeout(() => pushNow(), 1500)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile, list, ready, user, conflict])
+
+  const resolve = async (how) => {
+    const cloud = conflict
+    setConflict(null)
+    if (how === 'cloud') {
+      apply(cloud)
+      setMeta({ provider: mode, uid: user.id, hash: hashOf({ ...EMPTY_PROFILE, ...cloud.profile }, cloud.list || []), at: Date.now() })
+      setStatus({ state: 'saved', at: new Date() })
+    } else if (how === 'local') {
+      await pushNow()
+    } else {
+      const m = mergeCabinets({ profile, list }, cloud)
+      const prof = { ...EMPTY_PROFILE, ...m.profile, openAlexKey: profile.openAlexKey }
+      setProfile(prof)
+      setList(m.list)
+      await pushNow(prof, m.list)
+    }
+    setReady(true)
+  }
+
+  const onSignedIn = (u) => {
+    setUser(u)
+    reconcile(u)
+  }
+  const signOut = async () => {
+    await provider?.signOut().catch(() => {})
+    setUser(null)
+    setReady(false)
+    setStatus({ state: 'idle' })
+  }
+  return { user, status, conflict, resolve, onSignedIn, signOut, pushNow }
+}
+
+function SyncBadge({ mode, sync, go }) {
+  const label =
+    mode === 'local'
+      ? '💾 только в этом браузере'
+      : !sync.user
+        ? `☁ ${mode === 'supabase' ? 'аккаунт по почте' : 'аккаунт Google'}: войдите`
+        : sync.status.state === 'saving'
+          ? '☁ сохраняю…'
+          : sync.status.state === 'error'
+            ? '⚠ облако: ошибка'
+            : sync.status.state === 'saved'
+              ? `☁ сохранено ${sync.status.at?.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) || ''}`
+              : '☁ облако'
+  const bad = sync.status.state === 'error' || (mode !== 'local' && !sync.user)
+  return (
+    <button
+      type="button"
+      onClick={() => go('data')}
+      className={`text-xs px-2.5 py-1 rounded-full border ${
+        bad ? 'border-rose-300 text-rose-800 bg-rose-50 dark:bg-rose-950/30 dark:text-rose-200' : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
+      }`}
+      title="Где хранится кабинет"
+    >
+      {label}
+    </button>
+  )
+}
+
+function AuthBox({ kind, sync }) {
+  const [email, setEmail] = useState('')
+  const [pw, setPw] = useState('')
+  const [msg, setMsg] = useState('')
+  const [busy, setBusy] = useState(false)
+  const act = async (fn) => {
+    setBusy(true)
+    setMsg('')
+    try {
+      await fn()
+    } catch (e) {
+      setMsg(e.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+  if (sync.user)
+    return (
+      <div className="space-y-2">
+        <p className="text-sm">
+          Вы вошли как <strong>{sync.user.email || sync.user.name}</strong>.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Btn kind="ghost" onClick={() => sync.pushNow()}>
+            Сохранить сейчас
+          </Btn>
+          <Btn kind="danger" onClick={sync.signOut}>
+            Выйти
+          </Btn>
+        </div>
+        <p className="text-xs text-gray-500">На общем компьютере в аудитории обязательно нажмите «Выйти».</p>
+      </div>
+    )
+  if (kind === 'firebase')
+    return (
+      <div className="space-y-2">
+        <Btn onClick={() => act(async () => sync.onSignedIn((await firebaseProvider.signInGoogle()).user))} disabled={busy}>
+          {busy ? '…' : 'Войти через Google'}
+        </Btn>
+        {msg && <p className="text-sm text-rose-600">{msg}</p>}
+      </div>
+    )
+  return (
+    <form
+      className="space-y-2"
+      onSubmit={(e) => {
+        e.preventDefault()
+        act(async () => sync.onSignedIn((await supabaseProvider.signIn(email.trim(), pw)).user))
+      }}
+    >
+      <input className={inputCls} type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="почта" required />
+      <input className={inputCls} type="password" autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="пароль (от 6 символов)" required minLength={6} />
+      <div className="flex flex-wrap gap-2">
+        <Btn type="submit" disabled={busy}>
+          Войти
+        </Btn>
+        <Btn
+          kind="ghost"
+          disabled={busy || !email || pw.length < 6}
+          onClick={() =>
+            act(async () => {
+              const r = await supabaseProvider.signUp(email.trim(), pw)
+              if (r.needConfirm) setMsg('Почти готово: откройте письмо и подтвердите почту, затем нажмите «Войти».')
+              else sync.onSignedIn(r.user)
+            })
+          }
+        >
+          Зарегистрироваться
+        </Btn>
+        <button
+          type="button"
+          className="text-sm underline text-gray-600 dark:text-gray-300"
+          disabled={!email}
+          onClick={() => act(async () => (await supabaseProvider.resetPassword(email.trim()), setMsg('Письмо для смены пароля отправлено.')))}
+        >
+          забыли пароль?
+        </button>
+      </div>
+      {msg && <p className="text-sm text-rose-600 dark:text-rose-300">{msg}</p>}
+    </form>
+  )
+}
+
+function StorageOption({ id, mode, setMode, title, sub, children, available = true, note }) {
+  return (
+    <Card className={`space-y-3 ${mode === id ? 'border-2 border-teal-500 dark:border-teal-400' : ''}`}>
+      <label className={`flex items-start gap-3 ${available ? 'cursor-pointer' : 'opacity-60'}`}>
+        <input type="radio" name="storage" className="mt-1.5" checked={mode === id} disabled={!available} onChange={() => setMode(id)} />
+        <span>
+          <span className="block text-lg font-bold text-gray-900 dark:text-white">{title}</span>
+          <span className="block text-sm text-gray-600 dark:text-gray-300">{sub}</span>
+        </span>
+      </label>
+      {!available && <p className="text-sm text-amber-800 dark:text-amber-200 bg-amber-50 dark:bg-amber-950/30 rounded-lg p-2">{note}</p>}
+      {available && mode === id && children}
+    </Card>
+  )
+}
+
+function DataTab({ mode, setMode, sync, profile, setProfile, list, setList, lastExport, setLastExport, go }) {
+  const exportCabinet = () => {
+    download(`kabinet_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ profile: { ...profile, openAlexKey: '' }, list }, null, 2), 'application/json')
+    setLastExport(Date.now())
+  }
+  const importCabinet = (e) => {
+    const f = e.target.files?.[0]
+    if (!f) return
+    f.text().then((t) => {
+      try {
+        const d = JSON.parse(t)
+        const how = list.length ? window.confirm('Объединить с текущим кабинетом? (Отмена — заменить полностью)') : false
+        const m = how ? mergeCabinets({ profile, list }, d) : d
+        if (m.profile) setProfile({ ...EMPTY_PROFILE, ...m.profile, openAlexKey: profile.openAlexKey })
+        if (Array.isArray(m.list)) setList(m.list)
+      } catch {
+        alert('Это не файл кабинета.')
+      }
+    })
+    e.target.value = ''
+  }
+  return (
+    <div className="space-y-5">
+      {sync.conflict && (
+        <Card className="space-y-3 border-2 border-amber-400">
+          <p className="font-semibold text-gray-900 dark:text-white">В облаке уже есть кабинет, и он отличается от того, что в этом браузере.</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            В облаке: {sync.conflict.list?.length || 0} работ, тема «{sync.conflict.profile?.topic || '—'}», сохранён{' '}
+            {sync.conflict.savedAt ? new Date(sync.conflict.savedAt).toLocaleString('ru-RU') : '—'}. Здесь: {list.length} работ.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Btn onClick={() => sync.resolve('merge')}>Объединить (рекомендуется)</Btn>
+            <Btn kind="ghost" onClick={() => sync.resolve('cloud')}>
+              Взять из облака
+            </Btn>
+            <Btn kind="ghost" onClick={() => sync.resolve('local')}>
+              Оставить этот и записать в облако
+            </Btn>
+          </div>
+        </Card>
+      )}
+      <Card>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Где хранить мой кабинет</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-300">
+          Тема, запросы и список литературы. Выберите один из трёх способов — его можно сменить в любой момент, данные не
+          пропадут. Ключ OpenAlex всегда остаётся только в этом браузере.
+        </p>
+      </Card>
+
+      <StorageOption mode={mode} setMode={setMode} id="local" title="1. Только в этом браузере + копия в файле" sub="Без регистрации. Кабинет живёт на этом компьютере; для переноса и подстраховки — файл и Zotero.">
+        <ul className="text-sm text-gray-700 dark:text-gray-300 list-disc pl-5 space-y-1">
+          <li>Данные сохраняются при закрытии сайта, но пропадут при очистке браузера, в режиме инкогнито и на общих компьютерах.</li>
+          <li>
+            Сейчас здесь: <strong>{list.length}</strong> работ. Последняя копия в файл:{' '}
+            <strong>{lastExport ? new Date(lastExport).toLocaleString('ru-RU') : 'ещё не делали'}</strong>.
+          </li>
+        </ul>
+        <div className="flex flex-wrap gap-2">
+          <Btn onClick={exportCabinet}>⬇ Сохранить копию кабинета (файл)</Btn>
+          <label className="inline-flex items-center px-3.5 py-2 rounded-xl text-sm font-semibold border border-gray-300 dark:border-gray-600 cursor-pointer hover:border-teal-400 text-gray-800 dark:text-gray-100">
+            ⬆ Загрузить из файла
+            <input type="file" accept="application/json,.json" className="hidden" onChange={importCabinet} />
+          </label>
+        </div>
+        <details className="rounded-xl bg-gray-50 dark:bg-gray-900/50 p-3 text-sm">
+          <summary className="cursor-pointer font-semibold">Долгое хранение в Zotero (бесплатно, синхронизация между устройствами)</summary>
+          <ol className="list-decimal pl-5 mt-2 space-y-1 text-gray-700 dark:text-gray-300">
+            <li>
+              Установите Zotero и создайте бесплатный аккаунт:{' '}
+              <a className="underline" href="https://www.zotero.org/download/" target="_blank" rel="noreferrer">
+                zotero.org/download
+              </a>
+              .
+            </li>
+            <li>
+              Во вкладке «Мой список» нажмите <strong>RIS (Zotero)</strong> — скачается файл.
+            </li>
+            <li>В Zotero: Файл → Импортировать… → выберите файл. Работы появятся в библиотеке и синхронизируются с аккаунтом.</li>
+            <li>В Word Zotero вставляет ссылки и список литературы по ГОСТу (стиль «Russian GOST R 7.0.5-2008»).</li>
+          </ol>
+          <button type="button" className="mt-2 underline text-teal-700 dark:text-teal-300" onClick={() => go('list')}>
+            Перейти к «Моему списку» →
+          </button>
+        </details>
+      </StorageOption>
+
+      <StorageOption
+        mode={mode}
+        setMode={setMode}
+        id="supabase"
+        title="2. Аккаунт по почте"
+        sub="Регистрация почтой и паролем. Кабинет сохраняется автоматически и открывается на любом компьютере и телефоне."
+        available={supabaseProvider.configured()}
+        note="Этот способ ещё не подключён: преподавателю нужно один раз создать бесплатный проект Supabase (инструкция — docs/CABINET_CLOUD_SETUP.md в репозитории сайта). Пока пользуйтесь способом 1."
+      >
+        <AuthBox kind="supabase" sync={sync} />
+      </StorageOption>
+
+      <StorageOption
+        mode={mode}
+        setMode={setMode}
+        id="firebase"
+        title="3. Аккаунт Google"
+        sub="Вход одной кнопкой через Google-аккаунт. Автосохранение, доступ с любого устройства."
+        available={firebaseProvider.configured()}
+        note="Этот способ ещё не подключён: преподавателю нужно один раз создать бесплатный проект Firebase (инструкция — docs/CABINET_CLOUD_SETUP.md). Пока пользуйтесь способом 1."
+      >
+        <AuthBox kind="firebase" sync={sync} />
+      </StorageOption>
+
+      {mode !== 'local' && sync.status.state === 'error' && <p className="text-sm text-rose-600">Облако: {sync.status.msg}</p>}
+      <p className="text-xs text-gray-500 dark:text-gray-400">
+        Кабинет хранит только тему, запросы и список литературы. Пароли обрабатывает сервис входа (Supabase или Google), сайт их
+        не видит. Каждый пользователь имеет доступ только к своему кабинету.
+      </p>
+    </div>
+  )
+}
+
 // ---------------------------------------------------------------- страница
 export default function StudentCabinet() {
   const [profile, setProfile] = usePersistent('dh_cab_profile', EMPTY_PROFILE)
   const [list, setList] = usePersistent('dh_cab_list', [])
   const [tab, setTab] = useState(() => (window.location.hash || '').replace('#', '') || 'profile')
   const [toast, setToast] = useState('')
+  const [storedMode, setMode] = usePersistent('dh_cab_storage', 'local')
+  const mode = storedMode === 'local' || PROVIDERS[storedMode]?.configured() ? storedMode : 'local'
+  const [lastExport, setLastExport] = usePersistent('dh_cab_last_export', 0)
+  const pFull = { ...EMPTY_PROFILE, ...profile }
+  const sync = useCloudSync({ mode, profile: pFull, list, setProfile, setList })
+  const needCopy = mode === 'local' && list.length >= 3 && (!lastExport || Date.now() - lastExport > 3 * 24 * 3600 * 1000)
 
   useEffect(() => {
     window.scrollTo({ top: 0 })
@@ -1728,7 +2085,7 @@ export default function StudentCabinet() {
     setToast(`Добавлено в «${group}»`)
     setTimeout(() => setToast(''), 1600)
   }
-  const p = { ...EMPTY_PROFILE, ...profile }
+  const p = pFull
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -1742,12 +2099,33 @@ export default function StudentCabinet() {
           Тема → поиск литературы сразу в шести научных базах → свой список по главам → Word по ГОСТу со ссылками. Плюс
           справка об авторе и наукометрия темы. Всё через открытые API — журнал запросов показывает, как это устроено.
         </p>
-        {p.topic && (
-          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-            Ваша тема: <span className="font-semibold text-gray-900 dark:text-gray-100">{p.topic}</span>
-          </p>
-        )}
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          {p.topic && (
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Ваша тема: <span className="font-semibold text-gray-900 dark:text-gray-100">{p.topic}</span>
+            </p>
+          )}
+          <SyncBadge mode={mode} sync={sync} go={go} />
+        </div>
       </header>
+      {needCopy && tab !== 'data' && (
+        <div className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 px-4 py-3 text-sm text-amber-950 dark:text-amber-100">
+          <span>
+            В списке уже {list.length} работ, а они хранятся только в этом браузере. Сохраните копию или включите аккаунт.
+          </span>
+          <button type="button" className="font-semibold underline" onClick={() => go('data')}>
+            Мои данные →
+          </button>
+        </div>
+      )}
+      {sync.conflict && tab !== 'data' && (
+        <div className="mb-5 rounded-xl border-2 border-amber-400 bg-amber-50 dark:bg-amber-950/30 px-4 py-3 text-sm">
+          В облаке есть другая версия кабинета.{' '}
+          <button type="button" className="font-semibold underline" onClick={() => go('data')}>
+            Выбрать, что оставить →
+          </button>
+        </div>
+      )}
 
       <nav className="mb-6" aria-label="Разделы кабинета">
         <div className="flex gap-2 overflow-x-auto pb-1">
@@ -1775,13 +2153,27 @@ export default function StudentCabinet() {
         </div>
       </nav>
 
-      {tab === 'profile' && <ProfileTab profile={p} setProfile={setProfile} list={list} setList={setList} go={go} />}
+      {tab === 'profile' && <ProfileTab profile={p} setProfile={setProfile} go={go} />}
       {tab === 'search' && <SearchTab profile={p} list={list} addItem={addItem} go={go} />}
       {tab === 'list' && <ListTab profile={p} list={list} setList={setList} addItem={addItem} />}
       {tab === 'author' && <AuthorTab profile={p} />}
       {tab === 'metrics' && <MetricsTab profile={p} list={list} addItem={addItem} />}
       {tab === 'more' && <MoreTab profile={p} />}
       {tab === 'api' && <ApiTab />}
+      {tab === 'data' && (
+        <DataTab
+          mode={mode}
+          setMode={setMode}
+          sync={sync}
+          profile={p}
+          setProfile={setProfile}
+          list={list}
+          setList={setList}
+          lastExport={lastExport}
+          setLastExport={setLastExport}
+          go={go}
+        />
+      )}
 
       {toast && (
         <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm shadow-lg" role="status">
