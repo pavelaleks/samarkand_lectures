@@ -114,24 +114,31 @@ function oaParams(url, { apiKey } = {}) {
   return url
 }
 
-export function openAlexFilter({ fromYear, toYear, lang, oaOnly } = {}) {
+export function openAlexFilter({ fromYear, toYear, lang, oaOnly, extraFilter, precise, query } = {}) {
   const f = []
+  // «Точный» режим: искать только в названии и аннотации, а не в полных текстах
+  if (precise && query) f.push(`title_and_abstract.search:${String(query).replace(/[,:]/g, ' ').trim()}`)
   if (fromYear) f.push(`from_publication_date:${fromYear}-01-01`)
   if (toYear) f.push(`to_publication_date:${toYear}-12-31`)
   if (lang) f.push(`language:${lang}`)
   if (oaOnly) f.push('is_oa:true')
+  if (extraFilter) f.push(extraFilter)
   return f.join(',')
 }
 
+/** Короткий ID OpenAlex из URL: https://openalex.org/S3127539 → S3127539 */
+export const oaShortId = (key) => String(key || '').split('/').pop()
+
 export async function searchOpenAlex(query, opts = {}) {
   const url = new URL(`${OA}/works`)
-  url.searchParams.set('search', query)
+  url.searchParams.set('search', query) // ранжирование по релевантности; точность даёт фильтр title_and_abstract
   url.searchParams.set('per_page', String(opts.limit || 25))
+  if (opts.sort) url.searchParams.set('sort', opts.sort)
   url.searchParams.set(
     'select',
     'id,doi,title,display_name,publication_year,authorships,primary_location,biblio,cited_by_count,open_access,language,type,abstract_inverted_index'
   )
-  const filter = openAlexFilter(opts)
+  const filter = openAlexFilter({ ...opts, query })
   if (filter) url.searchParams.set('filter', filter)
   oaParams(url, opts)
   const data = await apiGet('OpenAlex', url)
@@ -163,9 +170,9 @@ export async function searchOpenAlex(query, opts = {}) {
 /** Агрегаты OpenAlex: group_by=publication_year | primary_location.source.id | authorships.author.id | language | topics.id */
 export async function openAlexGroup(query, groupBy, opts = {}) {
   const url = new URL(`${OA}/works`)
-  url.searchParams.set('search', query)
+  url.searchParams.set('search', query) // ранжирование по релевантности; точность даёт фильтр title_and_abstract
   url.searchParams.set('group_by', groupBy)
-  const filter = openAlexFilter(opts)
+  const filter = openAlexFilter({ ...opts, query })
   if (filter) url.searchParams.set('filter', filter)
   oaParams(url, opts)
   const data = await apiGet('OpenAlex', url)
