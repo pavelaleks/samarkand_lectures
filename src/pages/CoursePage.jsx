@@ -71,13 +71,13 @@ export default function CoursePage() {
         </Link>
         
         <div className={`h-3 rounded-2xl bg-gradient-to-r ${bgGradient} mb-6`}></div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
+        <h1 className="text-[1.6rem] leading-tight sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-6 text-gray-900 dark:text-white">
           {course.title}
         </h1>
-        <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+        <p className="text-base sm:text-xl text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
           {course.description}
         </p>
-        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 italic mb-6">
+        <p className="hidden sm:block text-base sm:text-lg text-gray-500 dark:text-gray-400 italic mb-6">
           {course.descriptionEn}
         </p>
 
