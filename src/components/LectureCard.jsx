@@ -1,10 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import demos from '../data/demos.json'
+import { LECTURE_TO_METHOD, methodById } from '../data/dhMethods'
 
-export default function LectureCard({ lecture, courseSlug, index }) {
-  const [isOpen, setIsOpen] = useState(false)
+export default function LectureCard({ lecture, courseSlug, index, defaultOpen = false }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+  const rootRef = useRef(null)
+  const method =
+    courseSlug === 'digital-humanities' ? methodById(LECTURE_TO_METHOD[String(lecture.number)]) : null
+
+  useEffect(() => {
+    if (defaultOpen) {
+      setIsOpen(true)
+      setTimeout(() => rootRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 250)
+    }
+  }, [defaultOpen])
   const [htmlContent, setHtmlContent] = useState('')
   const [loadingHtml, setLoadingHtml] = useState(false)
 
@@ -45,10 +56,11 @@ export default function LectureCard({ lecture, courseSlug, index }) {
 
   return (
     <motion.div
+      ref={rootRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: index * 0.05 }}
-      className="card hover:shadow-2xl transition-all duration-300"
+      className="card hover:shadow-2xl transition-all duration-300 scroll-mt-24"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -93,11 +105,28 @@ export default function LectureCard({ lecture, courseSlug, index }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-teal-900 dark:text-teal-100">Демо · {demoWork.title}</p>
-                    <p className="text-xs text-teal-800/80 dark:text-teal-200/80 mt-0.5">{demoWork.minutes} · показать на лекции</p>
+                    <p className="text-xs text-teal-800/80 dark:text-teal-200/80 mt-0.5">Интерактивный стенд · попробовать на Бунине</p>
                   </div>
                   <svg className="w-5 h-5 text-teal-600 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
+                </Link>
+              )}
+
+              {method && (
+                <Link
+                  to={`/courses/digital-humanities/navigator#method-${method.id}`}
+                  className="mb-6 -mt-3 flex items-center gap-3 p-4 rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 hover:shadow-md transition-all group"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-amber-950 dark:text-amber-100">
+                      Применить к диссертации · {method.title}
+                    </p>
+                    <p className="text-xs text-amber-900/80 dark:text-amber-200/80 mt-0.5">
+                      Карточка метода: как выполнить в Colab на своём тексте и как написать в работе
+                    </p>
+                  </div>
+                  <span className="text-amber-700 dark:text-amber-300 font-semibold">→</span>
                 </Link>
               )}
 

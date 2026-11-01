@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { LabReportProvider } from '../lab/LabReportContext'
+import { PAIRS, STAND_TO_METHOD, colabUrl, methodById } from '../data/dhMethods'
 
 export default function LabShell({ work, children, courseSlug = 'digital-humanities' }) {
+  const method = methodById(STAND_TO_METHOD[work.slug])
   return (
     <LabReportProvider work={work} mode="demo">
       <div className="demo-stage max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
@@ -29,6 +31,35 @@ export default function LabShell({ work, children, courseSlug = 'digital-humanit
         <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 shadow-sm">
           {children}
         </div>
+
+        {method && (
+          <aside className="mt-8 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50/80 dark:bg-amber-950/20 p-5 sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-200 mb-1">
+              Дальше: перенести на свой текст
+            </p>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">{method.title}</h2>
+            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">{method.question}</p>
+            <div className="flex flex-wrap gap-2">
+              {method.pairs.map((p) => (
+                <a
+                  key={p}
+                  href={colabUrl(p)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-sm font-semibold"
+                >
+                  ▶ Colab · Пара {p}: {PAIRS[p].title}
+                </a>
+              ))}
+              <Link
+                to={`/courses/${courseSlug}/navigator#method-${method.id}`}
+                className="px-4 py-2 rounded-xl border border-amber-400 dark:border-amber-600 text-sm font-semibold text-amber-900 dark:text-amber-100 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+              >
+                Карточка метода: как написать в диссертации →
+              </Link>
+            </div>
+          </aside>
+        )}
       </div>
     </LabReportProvider>
   )

@@ -1,6 +1,24 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import demos from '../data/demos.json'
+import { STAND_TO_METHOD, methodById } from '../data/dhMethods'
+
+const stands = demos.works
+  .filter((w) => w.slug !== 'colab-bunin')
+  .sort((a, b) => Number(a.lecture) - Number(b.lecture))
+
+function SmallCard({ to, kicker, title, text }) {
+  return (
+    <Link
+      to={to}
+      className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 hover:border-teal-400 dark:hover:border-teal-500 hover:shadow-lg transition-all"
+    >
+      <p className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-1">{kicker}</p>
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 leading-snug">{title}</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{text}</p>
+    </Link>
+  )
+}
 
 export default function LabHub() {
   return (
@@ -9,147 +27,141 @@ export default function LabHub() {
         to="/courses/digital-humanities"
         className="inline-flex items-center gap-2 text-teal-700 dark:text-teal-400 hover:underline mb-6 font-medium"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        К курсу
+        ← К курсу
       </Link>
 
-      <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-        <div className="h-3 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-700 mb-6" />
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          {demos.title}
-        </h1>
-        <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed mb-6">
-          {demos.subtitle}
+      <motion.header initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
+        <p className="text-sm font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-2">
+          Шаг 2 из 3 · Попробовать
         </p>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          Инструменты курса
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed">
+          Здесь два вида практики. <strong>Стенды</strong> — интерактивные демонстрации к лекциям прямо в браузере, на
+          рассказах Бунина: понять, как работает метод. <strong>Пары в Colab</strong> — тот же метод на настоящем коде,
+          сначала на Бунине, потом на текстах вашей диссертации.
+        </p>
+      </motion.header>
 
-        <div className="flex flex-col gap-3 max-w-3xl">
-          <Link
-            to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
-            className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30 p-5 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex-1">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                Бунин · «Тёмные аллеи» — все 37 рассказов
-              </h2>
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                Читайте тексты прямо здесь: оглавление, поиск, листание.
-              </p>
-            </div>
-            <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-amber-600 text-white text-sm font-semibold">
-              Читать →
-            </span>
-          </Link>
-          <Link
-            to="/courses/digital-humanities/demo/wikidata-bunin"
-            className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl border-2 border-teal-400 dark:border-teal-600 bg-teal-50 dark:bg-teal-950/30 p-5 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex-1">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                Wikidata · геопоэтика «Тёмных аллей»
-              </h2>
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                Живая карта OSM: топосы рассказов, цитаты, зачем каждый пункт, SPARQL → CSV.
-              </p>
-            </div>
-            <span className="shrink-0 self-start sm:self-center px-4 py-2 rounded-xl bg-teal-700 text-white text-sm font-semibold">
-              Открыть →
-            </span>
-          </Link>
-        </div>
-      </motion.div>
-
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ресурсы</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-10">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-12">
         <Link
-          to="/courses/digital-humanities/demo/lit-search"
-          className="block rounded-2xl border-2 border-indigo-400 dark:border-indigo-600 bg-indigo-50/80 dark:bg-indigo-950/30 p-5 sm:p-6 hover:shadow-xl transition-all"
+          to="/courses/digital-humanities/demo/colab-bunin"
+          className="group block rounded-2xl border-2 border-amber-400 dark:border-amber-600 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/10 p-6 hover:shadow-xl transition-all"
         >
-          <div className="text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300 mb-1">
-            Обзор литературы
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">Поиск статей по теме</h3>
-          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-            Тема → ключевые слова / перефраз → OpenAlex, Crossref, Semantic Scholar. CSV для курсовой.
+          <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-200 mb-2">
+            Практика · Google Colab · бесплатно
           </p>
-          <p className="mt-3 text-sm font-semibold text-indigo-800 dark:text-indigo-200">Открыть форму →</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">12 пар в Colab</h2>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            Код спрятан — вы меняете только поля формы. Демо на Бунине работает «из коробки», затем — «Мои файлы»
+            (.txt или .docx вашей магистерской).
+          </p>
+          <p className="mt-4 font-semibold text-amber-900 dark:text-amber-100 group-hover:underline">Открыть список пар →</p>
         </Link>
         <Link
-          to="/courses/digital-humanities/demo/intertext"
-          className="block rounded-2xl border-2 border-violet-400 dark:border-violet-600 bg-violet-50/80 dark:bg-violet-950/30 p-5 sm:p-6 hover:shadow-xl transition-all"
+          to="/courses/digital-humanities/navigator"
+          className="group block rounded-2xl border-2 border-teal-400 dark:border-teal-600 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/30 dark:to-cyan-950/10 p-6 hover:shadow-xl transition-all"
         >
-          <div className="text-xs font-bold uppercase tracking-wide text-violet-700 dark:text-violet-300 mb-1">
-            Close reading + LLM
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">
-            Интертекстуальный анализ
-          </h3>
-          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-            Фрагмент + ключ DeepSeek → цитаты, аллюзии, уровни уверенности и чеклист проверки.
+          <p className="text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200 mb-2">
+            Шаг 3 · Применить к диссертации
           </p>
-          <p className="mt-3 text-sm font-semibold text-violet-800 dark:text-violet-200">Открыть форму →</p>
-        </Link>
-        <Link
-          to="/courses/digital-humanities/demo/pipeline"
-          className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 hover:border-teal-400 transition-all md:col-span-2"
-        >
-          <div className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300 mb-1">
-            Каталог API
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">Gutendex, Gallica, Wikidata…</h3>
-          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-            Список бесплатных и платных API для DH — вкладка «Другие API» на стенде Л11.
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Какой метод нужен моей теме?</h2>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            Навигатор: тип темы → методы → пара Colab → образец абзаца для главы и слайда для защиты.
           </p>
+          <p className="mt-4 font-semibold text-teal-900 dark:text-teal-100 group-hover:underline">Открыть навигатор →</p>
         </Link>
-      </div>
+      </section>
 
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Инструменты</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {demos.works.map((work, index) => {
-          const featured = Boolean(work.featured)
-          return (
-          <motion.div
-            key={work.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.03 }}
-            className={featured ? 'md:col-span-2' : undefined}
-          >
-            <Link
-              to={`/courses/digital-humanities/demo/${work.slug}`}
-              className={`block h-full rounded-2xl p-5 sm:p-6 hover:shadow-xl transition-all ${
-                featured
-                  ? 'border-2 border-teal-500 dark:border-teal-400 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20'
-                  : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-teal-300 dark:hover:border-teal-600'
-              }`}
-            >
-              {featured && (
-                <div className="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200">
-                  <span className="px-2 py-0.5 rounded-full bg-teal-600 text-white">
-                    {work.slug === 'colab-bunin' ? 'Практика Colab' : 'Пример лекции'}
+      <section className="mb-12">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1">Стенды к лекциям</h2>
+        <p className="text-gray-600 dark:text-gray-400 mb-5">По порядку лекций. Каждый стенд — один вопрос и один метод.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {stands.map((work, i) => {
+            const m = methodById(STAND_TO_METHOD[work.slug])
+            return (
+              <motion.div
+                key={work.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.02 }}
+              >
+                <Link
+                  to={`/courses/digital-humanities/demo/${work.slug}`}
+                  className="flex flex-col h-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 hover:border-teal-400 dark:hover:border-teal-500 hover:shadow-lg transition-all"
+                >
+                  <span className="self-start text-xs font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-900 dark:bg-sky-900/40 dark:text-sky-100 mb-2">
+                    Лекция {work.lecture}
                   </span>
-                  {work.slug === 'colab-bunin' ? '12 пар · Бунин + диссертация' : work.title.includes('Ципф') ? 'Закон Ципфа · цикл Бунина' : 'Разбор на занятии'}
-                </div>
-              )}
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-snug">
-                {work.title}
-              </h3>
-              {work.question && (
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{work.question}</p>
-              )}
-              {featured && (
-                <p className="mt-3 text-sm font-semibold text-teal-800 dark:text-teal-200">
-                  {work.slug === 'colab-bunin'
-                    ? '12 пар Colab: открыть / скачать .ipynb / копировать код →'
-                    : 'Открыть разбор и материалы занятия →'}
-                </p>
-              )}
-            </Link>
-          </motion.div>
-          )
-        })}
-      </div>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-snug mb-2">
+                    {work.title.replace(/^Лекция \d+ · /, '')}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">{work.question}</p>
+                  {m && (
+                    <p className="mt-3 text-xs font-semibold text-gray-500 dark:text-gray-400">Метод: {m.title}</p>
+                  )}
+                </Link>
+              </motion.div>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Корпуса и карты</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <SmallCard
+            to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
+            kicker="Корпус"
+            title="Бунин · «Тёмные аллеи»"
+            text="Все 37 рассказов: оглавление, поиск, листание. Эти же тексты подключаются в Colab."
+          />
+          <SmallCard
+            to="/courses/digital-humanities/demo/corpus/chekhov-rasskazy"
+            kicker="Корпус"
+            title="Чехов · рассказы"
+            text="14 рассказов — фон для сравнения и стилиометрии."
+          />
+          <SmallCard
+            to="/courses/digital-humanities/demo/wikidata-bunin"
+            kicker="Карта"
+            title="Геопоэтика «Тёмных аллей»"
+            text="Живая карта топосов с цитатами; запрос SPARQL → CSV."
+          />
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ресурсы для диссертации</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <SmallCard
+            to="/courses/digital-humanities/demo/lit-search"
+            kicker="Обзор литературы"
+            title="Поиск статей по теме"
+            text="Тема → запросы → OpenAlex, Crossref, Semantic Scholar → CSV."
+          />
+          <SmallCard
+            to="/courses/digital-humanities/demo/intertext"
+            kicker="Close reading + ИИ"
+            title="Интертекстуальный анализ"
+            text="Цитаты, аллюзии, уверенность и чек-лист проверки (нужен ключ DeepSeek; бесплатная замена — пара 12)."
+          />
+          <SmallCard
+            to="/courses/digital-humanities/passport"
+            kicker="Итог семестра"
+            title="Методологический паспорт"
+            text="Шаблон .docx: корпус, методы, цитаты, ограничения, протокол ИИ, слайд защиты."
+          />
+        </div>
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+          Каталог API (Gutendex, Gallica, Wikidata…) — во вкладке «Другие API»{' '}
+          <Link to="/courses/digital-humanities/demo/pipeline" className="underline">
+            стенда лекции 11
+          </Link>
+          .
+        </p>
+      </section>
     </div>
   )
 }
