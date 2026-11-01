@@ -492,3 +492,54 @@ export async function fetchByDOI(doiRaw) {
     isbn: (w.ISBN || [])[0] || '',
   })
 }
+
+/** Сколько работ OpenAlex находит по запросу (лёгкий запрос: 1 запись). */
+export async function openAlexCount(query, opts = {}) {
+  const url = new URL(`${OA}/works`)
+  url.searchParams.set('search', query)
+  url.searchParams.set('per_page', '1')
+  url.searchParams.set('select', 'id')
+  const filter = openAlexFilter({ ...opts, query })
+  if (filter) url.searchParams.set('filter', filter)
+  oaParams(url, opts)
+  const data = await apiGet('OpenAlex', url, { sample: false })
+  return data.meta?.count ?? 0
+}
+
+// Синонимы для расширения слишком узкого запроса (англ. — язык большинства каталогов)
+const SYN = [
+  [/^(eastern|east|oriental|orient)$/i, ['Orient', 'Orientalism', 'East']],
+  [/^(woman|women|female|feminine)$/i, ['women', 'heroine', 'female', 'gender']],
+  [/^(memory|memories|remembrance)$/i, ['memory', 'nostalgia', 'past']],
+  [/^(love|eros|romance)$/i, ['love', 'eros', 'desire']],
+  [/^(space|place|landscape)$/i, ['space', 'landscape', 'topos']],
+  [/^(image|images|imagery)$/i, ['image', 'representation']],
+  [/^(motif|motifs|theme)$/i, ['motif', 'theme']],
+  [/^(death|dying)$/i, ['death', 'mortality']],
+  [/^(city|urban)$/i, ['city', 'urban']],
+  [/^(heroine|heroines)$/i, ['heroine', 'female character', 'women']],
+]
+
+/** Варианты запроса: «имя + понятие/синоним», без одного слова, с синонимами. */
+export function queryVariants(q) {
+  const words = String(q || '')
+    .replace(/["«»]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean)
+  const syn = (w) => SYN.filter(([re]) => re.test(w)).flatMap(([, alts]) => alts)
+  const out = []
+  const add = (v) => {
+    const k = v.trim()
+    if (k && k !== words.join(' ') && !out.includes(k)) out.push(k)
+  }
+  const name = words.find((w) => /^[A-ZА-ЯЁ]/.test(w))
+  if (name) {
+    for (const w of words.filter((x) => x !== name)) {
+      add(`${name} ${w}`)
+      syn(w).forEach((a) => add(`${name} ${a}`))
+    }
+  }
+  if (words.length >= 2) words.forEach((_, i) => add(words.filter((__, j) => j !== i).join(' ')))
+  words.forEach((w, i) => syn(w).forEach((a) => add(words.map((x, j) => (j === i ? a : x)).join(' '))))
+  return out.slice(0, 10)
+}

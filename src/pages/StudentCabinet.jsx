@@ -7,6 +7,8 @@ import {
   gutendexAuthor,
   onApiLog,
   oaShortId,
+  openAlexCount,
+  queryVariants,
   openAlexGroup,
   searchOpenAlex,
   pythonFor,
@@ -221,6 +223,68 @@ function Badges({ r }) {
   )
 }
 
+// ---------------------------------------------------------------- подсказка при пустой выдаче
+function ZeroHelp({ q, total, precise, profile, onRun }) {
+  const [counts, setCounts] = useState({})
+  const variants = useMemo(() => queryVariants(q), [q])
+  useEffect(() => {
+    let alive = true
+    setCounts({})
+    const o = { apiKey: profile.openAlexKey, fromYear: profile.fromYear, toYear: profile.toYear }
+    const jobs = [
+      ...(precise ? [['__full', q, false]] : []),
+      ...variants.map((v) => [v, v, precise]),
+    ]
+    jobs.forEach(([key, query, prec]) =>
+      openAlexCount(query, { ...o, precise: prec })
+        .then((n) => alive && setCounts((c) => ({ ...c, [key]: n })))
+        .catch(() => alive && setCounts((c) => ({ ...c, [key]: null })))
+    )
+    return () => {
+      alive = false
+    }
+  }, [q, precise, variants, profile.openAlexKey, profile.fromYear, profile.toYear])
+  const n = (k) => (k in counts ? (counts[k] == null ? '—' : counts[k].toLocaleString('ru-RU')) : '…')
+  const ranked = [...variants].sort((a, b) => (counts[b] ?? -1) - (counts[a] ?? -1))
+  return (
+    <Card className="space-y-3 border-2 border-amber-300 dark:border-amber-700">
+      <p className="font-semibold text-gray-900 dark:text-white">
+        {total === 0 ? `По запросу «${q}» OpenAlex ничего не нашёл.` : `По запросу «${q}» найдено всего ${total}.`} Так бывает с узкими
+        темами: слова должны встретиться все сразу.
+      </p>
+      <p className="text-sm text-gray-600 dark:text-gray-300">
+        Попробуйте вариант пошире — рядом указано, сколько работ он даст{profile.fromYear || profile.toYear ? ` (с учётом годов ${profile.fromYear || '…'}–${profile.toYear || '…'})` : ''}:
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {precise && (
+          <button
+            type="button"
+            onClick={() => onRun(q, false)}
+            className="px-3 py-1.5 rounded-full text-sm border-2 border-amber-400 bg-amber-50 dark:bg-amber-950/30 text-amber-950 dark:text-amber-100 hover:bg-amber-100"
+          >
+            «{q}» и в полных текстах · <strong>{n('__full')}</strong>
+          </button>
+        )}
+        {ranked.map((v) => (
+          <button
+            key={v}
+            type="button"
+            disabled={counts[v] === 0}
+            onClick={() => onRun(v, precise)}
+            className="px-3 py-1.5 rounded-full text-sm border border-teal-300 dark:border-teal-700 text-teal-900 dark:text-teal-100 hover:bg-teal-50 dark:hover:bg-teal-950/40 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {v} · <strong>{n(v)}</strong>
+          </button>
+        ))}
+      </div>
+      <p className="text-xs text-gray-500 dark:text-gray-400">
+        Советы: ключевое понятие + имя автора («Bunin Orientalism»); англоязычные термины науки (Orientalism, gender, imagology);
+        уберите годы во вкладке «Моя тема». Русскоязычные работы ищите также в КиберЛенинке — вкладка «Где ещё искать».
+      </p>
+    </Card>
+  )
+}
+
 // ---------------------------------------------------------------- 1. Профиль
 function ProfileTab({ profile, setProfile, list, setList, go }) {
   const p = profile
@@ -356,7 +420,7 @@ function SearchTab({ profile, list, addItem, go }) {
   const [group, setGroup] = useState(profile.groups?.[0] || 'Без раздела')
   const inList = useMemo(() => new Set(list.map((i) => i.key)), [list])
 
-  const run = async (query = q) => {
+  const run = async (query = q, prec = precise) => {
     if (!query.trim()) return
     setQ(query)
     setBusy(true)
@@ -367,7 +431,7 @@ function SearchTab({ profile, list, addItem, go }) {
         toYear: profile.toYear,
         lang,
         oaOnly,
-        precise,
+        precise: prec,
         apiKey: profile.openAlexKey,
         limit: 25,
       })
@@ -548,6 +612,18 @@ function SearchTab({ profile, list, addItem, go }) {
           </ul>
           {!shown.length && <p className="text-sm text-gray-500">Ничего не найдено. Попробуйте запрос по-английски или уберите фильтры.</p>}
         </Card>
+      )}
+      {res && res.items.length < 5 && src.includes('openalex') && (
+        <ZeroHelp
+          q={q}
+          total={res.status.openalex?.total ?? 0}
+          precise={precise}
+          profile={profile}
+          onRun={(v, prec) => {
+            setPrecise(prec)
+            run(v, prec)
+          }}
+        />
       )}
 
       {!res && !busy && (
@@ -923,21 +999,24 @@ function MetricsTab({ profile, list, addItem }) {
   const [asked, setAsked] = useState({ q: '', precise: true })
   const opts = () => ({ apiKey: profile.openAlexKey, precise: asked.precise, fromYear: profile.fromYear, toYear: profile.toYear })
 
-  const run = async () => {
-    if (!q.trim()) return
+  const run = async (query = q, prec = precise) => {
+    const qq = String(query).trim()
+    if (!qq) return
+    setQ(qq)
+    setPrecise(prec)
     setBusy(true)
     setErr('')
     setR(null)
     setDrill(null)
-    const o = { apiKey: profile.openAlexKey, precise, fromYear: profile.fromYear, toYear: profile.toYear }
-    setAsked({ q: q.trim(), precise })
+    const o = { apiKey: profile.openAlexKey, precise: prec, fromYear: profile.fromYear, toYear: profile.toYear }
+    setAsked({ q: qq, precise: prec })
     try {
       const [years, sources, authors, langs, topics] = await Promise.all([
-        openAlexGroup(q.trim(), 'publication_year', o),
-        openAlexGroup(q.trim(), 'primary_location.source.id', o),
-        openAlexGroup(q.trim(), 'authorships.author.id', o),
-        openAlexGroup(q.trim(), 'language', o),
-        openAlexGroup(q.trim(), 'primary_topic.id', o),
+        openAlexGroup(qq, 'publication_year', o),
+        openAlexGroup(qq, 'primary_location.source.id', o),
+        openAlexGroup(qq, 'authorships.author.id', o),
+        openAlexGroup(qq, 'language', o),
+        openAlexGroup(qq, 'primary_topic.id', o),
       ])
       setR({ years, sources, authors, langs, topics })
     } catch (e) {
@@ -992,7 +1071,10 @@ function MetricsTab({ profile, list, addItem }) {
         </p>
         {err && <p className="text-sm text-rose-600">{err}</p>}
       </Card>
-      {r && (
+      {r && (r.years.total ?? 0) < 5 && (
+        <ZeroHelp q={asked.q} total={r.years.total ?? 0} precise={asked.precise} profile={profile} onRun={(v, prec) => run(v, prec)} />
+      )}
+      {r && (r.years.total ?? 0) > 0 && (
         <>
           <Card>
             <h3 className="font-bold text-gray-900 dark:text-white mb-1">Публикации по годам</h3>
