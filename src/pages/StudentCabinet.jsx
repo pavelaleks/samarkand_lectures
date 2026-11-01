@@ -6,7 +6,15 @@ import {
   fetchByDOI,
   gutendexAuthor,
   onApiLog,
+  booleanQuery,
+  conceptsFrom,
+  flatQuery,
   oaShortId,
+  openAlexKeywords,
+  openAlexSnowball,
+  relatedWords,
+  searchCrossref,
+  translateRuEn,
   openAlexCount,
   queryVariants,
   openAlexGroup,
@@ -279,7 +287,8 @@ function ZeroHelp({ q, total, precise, profile, onRun }) {
       </div>
       <p className="text-xs text-gray-500 dark:text-gray-400">
         Советы: ключевое понятие + имя автора («Bunin Orientalism»); англоязычные термины науки (Orientalism, gender, imagology);
-        уберите годы во вкладке «Моя тема». Русскоязычные работы ищите также в КиберЛенинке — вкладка «Где ещё искать».
+        уберите годы во вкладке «Моя тема». Лучше всего — «Конструктор запроса» во вкладке «Поиск литературы»: он подберёт синонимы
+        для каждого понятия вашей темы. Русскоязычные работы ищите также в КиберЛенинке — вкладка «Где ещё искать».
       </p>
     </Card>
   )
@@ -404,6 +413,315 @@ function ProfileTab({ profile, setProfile, list, setList, go }) {
   )
 }
 
+// ---------------------------------------------------------------- конструктор запроса
+const RU_STOP = new Set(
+  'и в во на с со к по о об от из за для при через а но или как что это тот эта эти творчество творчестве творчества произведении произведениях произведения особенности особенность роль функция функции специфика аспект аспекты анализ исследование материале материал примере пример проблема проблемы вопрос'.split(
+    ' '
+  )
+)
+const ruQueryFrom = (topic) =>
+  String(topic || '')
+    .replace(/[«»"“”.,;:()]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w.length > 3 && !RU_STOP.has(w.toLowerCase()))
+    .join(' ')
+
+function TermChip({ term, count, onRemove, onAdd, selected }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm border ${
+        selected
+          ? 'bg-teal-700 text-white border-teal-700'
+          : 'bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-gray-600'
+      }`}
+    >
+      {onAdd ? (
+        <button type="button" onClick={onAdd} className="hover:underline" title="Добавить как синоним (ИЛИ)">
+          + {term}
+        </button>
+      ) : (
+        term
+      )}
+      {count !== undefined && (
+        <span className={`text-xs tabular-nums ${selected ? 'text-teal-100' : 'text-gray-500'}`} title="Сколько работ OpenAlex найдёт с этим словом (вместе с автором)">
+          {count === null ? '…' : count.toLocaleString('ru-RU')}
+        </span>
+      )}
+      {onRemove && (
+        <button type="button" onClick={onRemove} className="ml-0.5 opacity-70 hover:opacity-100" aria-label={`убрать ${term}`}>
+          ×
+        </button>
+      )}
+    </span>
+  )
+}
+
+function ConceptCard({ c, author, profile, onChange, onRemove }) {
+  const [sugg, setSugg] = useState(null)
+  const [counts, setCounts] = useState({})
+  const [own, setOwn] = useState('')
+  const countFor = (term) => {
+    if (counts[term] !== undefined) return
+    setCounts((x) => ({ ...x, [term]: null }))
+    const q = author && !c.isAuthor ? `${author} AND ${/\s/.test(term) ? `"${term}"` : term}` : term
+    openAlexCount(q, { apiKey: profile.openAlexKey, precise: true })
+      .then((n) => setCounts((x) => ({ ...x, [term]: n })))
+      .catch(() => setCounts((x) => ({ ...x, [term]: undefined })))
+  }
+  useEffect(() => {
+    c.terms.forEach(countFor)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [c.terms.join('|')])
+  const loadSugg = async () => {
+    setSugg([])
+    try {
+      const w = await relatedWords(c.main || c.terms[0], 12)
+      const fresh = w.filter((x) => !c.terms.includes(x))
+      setSugg(fresh)
+      fresh.forEach(countFor)
+    } catch {
+      setSugg([])
+    }
+  }
+  const addTerm = (t) => {
+    const v = t.trim()
+    if (v && !c.terms.includes(v)) onChange({ ...c, terms: [...c.terms, v] })
+  }
+  const off = c.off
+  return (
+    <div className={`rounded-xl border p-3 space-y-2 ${off ? 'border-dashed border-gray-300 dark:border-gray-600 opacity-60' : 'border-gray-200 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-900/40'}`}>
+      <div className="flex flex-wrap items-center gap-2 justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold uppercase tracking-wide text-gray-500">{c.isAuthor ? 'автор' : 'понятие'}</span>
+          <span className="font-semibold text-gray-900 dark:text-white">{c.label}</span>
+        </div>
+        <div className="flex items-center gap-3 text-xs">
+          <label className="flex items-center gap-1" title="Если снять — понятие не участвует в поиске">
+            <input type="checkbox" checked={!off} onChange={(e) => onChange({ ...c, off: !e.target.checked })} /> учитывать
+          </label>
+          <button type="button" onClick={onRemove} className="text-rose-600 hover:underline">
+            удалить
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {c.terms.map((t) => (
+          <TermChip
+            key={t}
+            term={t}
+            selected
+            count={counts[t]}
+            onRemove={c.terms.length > 1 ? () => onChange({ ...c, terms: c.terms.filter((x) => x !== t) }) : undefined}
+          />
+        ))}
+      </div>
+      {sugg && sugg.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          <span className="text-xs text-gray-500 self-center">близкие слова:</span>
+          {[...sugg]
+            .sort((a, b) => (counts[b] ?? -1) - (counts[a] ?? -1))
+            .map((t) => (
+              <TermChip key={t} term={t} count={counts[t]} onAdd={() => addTerm(t)} />
+            ))}
+        </div>
+      )}
+      {sugg && !sugg.length && <p className="text-xs text-gray-500">Подсказок нет — впишите свой вариант.</p>}
+      <div className="flex flex-wrap gap-2 items-center">
+        {!c.isAuthor && !sugg && (
+          <button type="button" onClick={loadSugg} className="text-sm text-teal-700 dark:text-teal-300 underline">
+            подобрать синонимы
+          </button>
+        )}
+        <form
+          className="flex gap-1"
+          onSubmit={(e) => {
+            e.preventDefault()
+            addTerm(own)
+            setOwn('')
+          }}
+        >
+          <input className="rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-2 py-1 text-sm w-44" value={own} onChange={(e) => setOwn(e.target.value)} placeholder={c.isAuthor ? 'вариант имени' : 'свой синоним'} />
+          <button type="submit" className="text-sm px-2 rounded-lg border border-gray-300 dark:border-gray-600">
+            +
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+function QueryBuilder({ profile, busy, onSearch, st, setSt }) {
+  const ru = st.ru || profile.topic || ''
+  const [msg, setMsg] = useState('')
+  const [ladder, setLadder] = useState(null)
+  const active = (st.concepts || []).filter((c) => !c.off && c.terms.length)
+  const bool = booleanQuery(active)
+  const author = (st.concepts || []).find((c) => c.isAuthor && !c.off)?.terms?.[0] || ''
+
+  const analyze = async () => {
+    setMsg('Перевожу тему…')
+    setLadder(null)
+    let en = st.en
+    try {
+      en = await translateRuEn(ru)
+      setMsg('')
+    } catch (e) {
+      setMsg(e.message)
+    }
+    const concepts = conceptsFrom(en || '', profile.authorLatin)
+    setSt({ ru, en: en || '', concepts })
+  }
+  const rebuild = () => setSt({ ...st, concepts: conceptsFrom(st.en, profile.authorLatin) })
+  const setConcept = (i, c) => setSt({ ...st, concepts: st.concepts.map((x, j) => (j === i ? c : x)) })
+
+  // «Лестница»: сколько найдёт весь запрос и запрос без каждого из понятий
+  const checkLadder = async () => {
+    const o = { apiKey: profile.openAlexKey, precise: true }
+    const rows = [{ label: 'все понятия вместе', q: bool }]
+    active.forEach((c) => {
+      if (active.length > 1) rows.push({ label: `без «${c.label}»`, q: booleanQuery(active.filter((x) => x !== c)), drop: c.id })
+    })
+    setLadder(rows.map((r) => ({ ...r, n: null })))
+    const ns = await Promise.all(rows.map((r) => openAlexCount(r.q, o).catch(() => null)))
+    setLadder(rows.map((r, i) => ({ ...r, n: ns[i] })))
+  }
+  useEffect(() => {
+    setLadder(null)
+  }, [bool])
+
+  return (
+    <Card className="space-y-4 border-2 border-teal-300 dark:border-teal-700">
+      <div>
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Конструктор запроса — для любой темы</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          Научные базы почти не понимают русские формулировки тем. Конструктор переводит тему, делит её на понятия, к
+          каждому подбирает синонимы и показывает, сколько работ даёт каждое слово. Из этого собирается точный запрос:
+          (синоним ИЛИ синоним) И (синоним ИЛИ синоним).
+        </p>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <Field label="1. Тема по-русски">
+          <textarea className={inputCls} rows={2} value={ru} onChange={(e) => setSt({ ...st, ru: e.target.value })} placeholder="Например: Образ сада в лирике Анны Ахматовой" />
+        </Field>
+        <Field label="2. По-английски (можно поправить)" hint={profile.authorLatin ? `Автор: ${profile.authorLatin} (из «Моя тема»)` : 'Совет: впишите автора латиницей во вкладке «Моя тема» — он станет отдельным понятием.'}>
+          <textarea className={inputCls} rows={2} value={st.en} onChange={(e) => setSt({ ...st, en: e.target.value })} placeholder="The image of the garden in Anna Akhmatova's lyrics" />
+        </Field>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Btn onClick={analyze} disabled={!ru.trim()}>
+          Перевести и разобрать на понятия
+        </Btn>
+        {st.en && (
+          <Btn kind="ghost" onClick={rebuild}>
+            Разобрать заново из английского
+          </Btn>
+        )}
+        {msg && <span className="text-sm text-gray-500 self-center">{msg}</span>}
+      </div>
+
+      {st.concepts?.length > 0 && (
+        <>
+          <div>
+            <p className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              3. Понятия. Внутри понятия слова соединяются через ИЛИ, понятия между собой — через И. Число рядом со словом —
+              сколько работ найдётся{author ? ` вместе с «${author}»` : ''}.
+            </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              {st.concepts.map((c, i) => (
+                <ConceptCard
+                  key={c.id + i}
+                  c={c}
+                  author={author}
+                  profile={profile}
+                  onChange={(nc) => setConcept(i, nc)}
+                  onRemove={() => setSt({ ...st, concepts: st.concepts.filter((_, j) => j !== i) })}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              className="mt-2 text-sm text-teal-700 dark:text-teal-300 underline"
+              onClick={() => {
+                const w = window.prompt('Новое понятие (по-английски):')
+                if (w?.trim()) setSt({ ...st, concepts: [...st.concepts, { id: w.trim().toLowerCase(), label: w.trim(), terms: [w.trim()], main: w.trim() }] })
+              }}
+            >
+              + добавить понятие
+            </button>
+          </div>
+          <div className="rounded-xl bg-slate-900 text-slate-100 p-3 text-sm font-mono break-words">{bool || '—'}</div>
+          <div className="flex flex-wrap gap-2 items-center">
+            <Btn kind="amber" disabled={busy || !bool} onClick={() => onSearch(bool, flatQuery(active), ruQueryFrom(ru))}>
+              {busy ? 'Ищу…' : '4. Найти литературу'}
+            </Btn>
+            <Btn kind="ghost" disabled={!bool} onClick={checkLadder}>
+              Проверить: что сужает поиск?
+            </Btn>
+          </div>
+          {ladder && (
+            <ul className="text-sm space-y-1">
+              {ladder.map((r) => (
+                <li key={r.label} className="flex items-center gap-2">
+                  <span className="w-48 text-gray-700 dark:text-gray-300">{r.label}</span>
+                  <span className="tabular-nums font-semibold">{r.n == null ? '…' : r.n.toLocaleString('ru-RU')}</span>
+                  {r.drop && r.n > 0 && (
+                    <button
+                      type="button"
+                      className="text-teal-700 dark:text-teal-300 underline"
+                      onClick={() => setSt({ ...st, concepts: st.concepts.map((c) => (c.id === r.drop ? { ...c, off: true } : c)) })}
+                    >
+                      не учитывать это понятие
+                    </button>
+                  )}
+                </li>
+              ))}
+              <li className="text-xs text-gray-500">
+                Если «все понятия вместе» дают 0, а без какого-то понятия — десятки работ, значит, в науке это понятие называют
+                иначе: подберите для него синонимы или отключите его.
+              </li>
+            </ul>
+          )}
+        </>
+      )}
+    </Card>
+  )
+}
+
+function SciKeywords({ query, profile, onUse }) {
+  const [kw, setKw] = useState(null)
+  useEffect(() => {
+    let alive = true
+    setKw(null)
+    openAlexKeywords(query, { apiKey: profile.openAlexKey, precise: false })
+      .then((k) => alive && setKw(k))
+      .catch(() => alive && setKw([]))
+    return () => {
+      alive = false
+    }
+  }, [query, profile.openAlexKey])
+  if (!kw || !kw.length) return null
+  return (
+    <Card className="space-y-2">
+      <p className="font-semibold text-gray-900 dark:text-white">Как эту тему называют в научной литературе</p>
+      <p className="text-xs text-gray-500">
+        Ключевые слова, которыми OpenAlex размечает найденные работы. Нажмите — слово добавится к поиску как новое понятие.
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {kw.map((k) => (
+          <button
+            key={k.key}
+            type="button"
+            onClick={() => onUse(k.name)}
+            className="px-2.5 py-1 rounded-full text-sm border border-indigo-300 dark:border-indigo-700 text-indigo-900 dark:text-indigo-100 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
+          >
+            {k.name} <span className="text-xs text-gray-500">{k.count}</span>
+          </button>
+        ))}
+      </div>
+    </Card>
+  )
+}
+
 // ---------------------------------------------------------------- 2. Поиск
 function SearchTab({ profile, list, addItem, go }) {
   const chips = [...splitKw(profile.kwRu), ...splitKw(profile.kwEn)]
@@ -419,26 +737,64 @@ function SearchTab({ profile, list, addItem, go }) {
   const [open, setOpen] = useState({})
   const [group, setGroup] = useState(profile.groups?.[0] || 'Без раздела')
   const inList = useMemo(() => new Set(list.map((i) => i.key)), [list])
+  const [st, setSt] = usePersistent('dh_cab_builder', { ru: '', en: '', concepts: [] })
+  const [asked, setAsked] = useState('')
+  const [drill, setDrill] = useState(null)
 
-  const run = async (query = q, prec = precise) => {
+  const run = async (query = q, prec = precise, extra = {}) => {
     if (!query.trim()) return
     setQ(query)
+    setAsked(query.trim())
     setBusy(true)
     setRes(null)
+    setDrill(null)
+    const o = {
+      fromYear: profile.fromYear,
+      toYear: profile.toYear,
+      lang,
+      oaOnly,
+      precise: prec,
+      apiKey: profile.openAlexKey,
+      limit: 25,
+      flat: extra.flat,
+    }
     try {
-      const r = await searchAll(query.trim(), src, {
-        fromYear: profile.fromYear,
-        toYear: profile.toYear,
-        lang,
-        oaOnly,
-        precise: prec,
-        apiKey: profile.openAlexKey,
-        limit: 25,
-      })
+      const r = await searchAll(query.trim(), src, o)
+      // Русскоязычная литература: тот же смысл, но русскими словами — в Crossref (там много журналов из России и СНГ)
+      if (extra.ru && src.includes('crossref')) {
+        try {
+          const rr = await searchCrossref(extra.ru, { ...o, limit: 20 })
+          const keys = new Set(r.items.map((i) => i.key))
+          const add = rr.items.filter((i) => !keys.has(i.key)).map((i) => ({ ...i, sources: ['Crossref (рус.)'] }))
+          r.items.push(...add)
+          r.status.crossref_ru = { ok: true, n: rr.items.length, total: rr.total }
+        } catch (e) {
+          r.status.crossref_ru = { ok: false, error: e.message }
+        }
+      }
       setRes(r)
     } finally {
       setBusy(false)
     }
+  }
+
+  const snow = async (r, mode) => {
+    const label = { cites: 'Кто цитирует', refs: 'На что ссылается', related: 'Похожие работы' }[mode] + `: «${r.title.slice(0, 90)}»`
+    const kicker = 'Снежный ком: литература вокруг одной работы'
+    setDrill({ key: mode + r.oaId, label, kicker, busy: true })
+    setTimeout(() => document.getElementById('snow')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+    try {
+      const x = await openAlexSnowball(r.oaId, mode, { apiKey: profile.openAlexKey })
+      setDrill({ key: mode + r.oaId, label, kicker, items: x.items, total: x.total })
+    } catch (e) {
+      setDrill({ key: mode + r.oaId, label, kicker, error: e.message })
+    }
+  }
+
+  const addConcept = (name) => {
+    const n = name.trim()
+    setSt((x) => ({ ...x, concepts: [...(x.concepts || []), { id: n.toLowerCase(), label: n, terms: [n], main: n }] }))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const shown = useMemo(() => {
@@ -457,7 +813,9 @@ function SearchTab({ profile, list, addItem, go }) {
 
   return (
     <div className="space-y-5">
+      <QueryBuilder profile={profile} busy={busy} st={st} setSt={setSt} onSearch={(bool, flat, ru) => run(bool, precise, { flat, ru })} />
       <Card className="space-y-4">
+        <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">Или введите запрос сами</p>
         <form
           className="flex flex-col sm:flex-row gap-2"
           onSubmit={(e) => {
@@ -541,7 +899,7 @@ function SearchTab({ profile, list, addItem, go }) {
 
       {res && (
         <div className="flex flex-wrap gap-2 text-xs">
-          {SOURCES.filter((s) => src.includes(s.id)).map((s) => {
+          {[...SOURCES.filter((s) => src.includes(s.id)), ...(res.status.crossref_ru ? [{ id: 'crossref_ru', name: 'Crossref по-русски' }] : [])].map((s) => {
             const st = res.status[s.id]
             return (
               <span
@@ -558,6 +916,10 @@ function SearchTab({ profile, list, addItem, go }) {
         </div>
       )}
 
+      <div id="snow" className="scroll-mt-4">
+        {drill && <DrillList drill={drill} profile={profile} list={list} addItem={addItem} onClose={() => setDrill(null)} />}
+      </div>
+      {res && res.items.length > 0 && asked && <SciKeywords query={asked} profile={profile} onUse={addConcept} />}
       {res && (
         <Card className="space-y-3">
           <div className="flex flex-col md:flex-row md:items-center gap-3 md:justify-between">
@@ -597,6 +959,21 @@ function SearchTab({ profile, list, addItem, go }) {
                     </button>
                   )}
                   {open[r.key] && <p className="mt-2 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{r.abstract}</p>}
+                  {r.oaId && (
+                    <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+                      {r.cited > 0 && (
+                        <button type="button" className="text-indigo-700 dark:text-indigo-300 underline" onClick={() => snow(r, 'cites')}>
+                          ↳ кто цитирует ({r.cited})
+                        </button>
+                      )}
+                      <button type="button" className="text-indigo-700 dark:text-indigo-300 underline" onClick={() => snow(r, 'refs')}>
+                        ↳ её список литературы
+                      </button>
+                      <button type="button" className="text-indigo-700 dark:text-indigo-300 underline" onClick={() => snow(r, 'related')}>
+                        ↳ похожие работы
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="shrink-0">
                   {inList.has(r.key) ? (
@@ -613,7 +990,13 @@ function SearchTab({ profile, list, addItem, go }) {
           {!shown.length && <p className="text-sm text-gray-500">Ничего не найдено. Попробуйте запрос по-английски или уберите фильтры.</p>}
         </Card>
       )}
-      {res && res.items.length < 5 && src.includes('openalex') && (
+      {res && res.items.length < 5 && /\b(AND|OR)\b/.test(asked) && (
+        <Card className="text-sm text-gray-700 dark:text-gray-300 border-2 border-amber-300 dark:border-amber-700">
+          Найдено мало. В конструкторе выше нажмите <strong>«Проверить: что сужает поиск?»</strong> — увидите, какое понятие
+          «обнуляет» выдачу, и подберите для него синонимы или отключите его.
+        </Card>
+      )}
+      {res && res.items.length < 5 && src.includes('openalex') && !/\b(AND|OR)\b/.test(asked) && (
         <ZeroHelp
           q={q}
           total={res.status.openalex?.total ?? 0}
@@ -952,7 +1335,7 @@ function DrillList({ drill, profile, list, addItem, onClose }) {
     <Card className="space-y-3 border-2 border-teal-400 dark:border-teal-600">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300">Работы по вашему запросу</p>
+          <p className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300">{drill.kicker || 'Работы по вашему запросу'}</p>
           <h3 className="text-lg font-bold text-gray-900 dark:text-white">{drill.label}</h3>
           {drill.total != null && <p className="text-sm text-gray-500">Найдено: {drill.total}. Показаны первые {drill.items?.length || 0}, по числу цитирований.</p>}
         </div>
@@ -1216,6 +1599,8 @@ const API_TABLE = [
   ['Wikidata', 'wikidata.org, query.wikidata.org', 'Факты об авторе, произведения (SPARQL)', 'нет', 'https://www.wikidata.org/wiki/Wikidata:Data_access'],
   ['Wikipedia REST', 'ru.wikipedia.org/api/rest_v1', 'Краткая справка и портрет', 'нет', 'https://ru.wikipedia.org/api/rest_v1/'],
   ['Gutendex', 'gutendex.com', 'Тексты Project Gutenberg', 'нет', 'https://gutendex.com/'],
+  ['MyMemory', 'api.mymemory.translated.net', 'Перевод темы на английский в конструкторе запроса', 'нет (≈5000 символов в день)', 'https://mymemory.translated.net/doc/spec.php'],
+  ['Datamuse', 'api.datamuse.com', 'Близкие по смыслу слова — кандидаты в синонимы', 'нет', 'https://www.datamuse.com/api/'],
 ]
 
 function ApiTab() {
