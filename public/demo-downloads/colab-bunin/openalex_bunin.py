@@ -27,7 +27,10 @@ import requests
 
 API = "https://api.openalex.org/works"
 API_KEY = ""  # вставьте свой ключ или оставьте пустым
-OUT_FILE = Path(__file__).resolve().parent / "openalex_bunin_raw.txt"
+try:  # в .py-файле — рядом со скриптом; в Colab/Jupyter (__file__ нет) — в текущей папке
+    OUT_FILE = Path(__file__).resolve().parent / "openalex_bunin_raw.txt"
+except NameError:
+    OUT_FILE = Path.cwd() / "openalex_bunin_raw.txt"
 
 # Три фиксированных запроса задания (не меняйте без разрешения преподавателя).
 # У A и C — параметр search; у B — filter по заголовку (так меньше «шума»).
@@ -70,6 +73,11 @@ def fetch(mode: str, value: str, per_page: int = 25) -> dict:
     if API_KEY:
         params["api_key"] = API_KEY
     response = requests.get(API, params=params, timeout=60)
+    if response.status_code == 429:
+        raise SystemExit(
+            "OpenAlex: дневной лимит без ключа исчерпан (429). Получите бесплатный ключ "
+            "на https://openalex.org/settings/api и вставьте его в API_KEY."
+        )
     response.raise_for_status()
     return response.json()
 

@@ -1,12 +1,15 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useSearchParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import LectureCard from '../components/LectureCard'
+import DhDoors from '../components/DhDoors'
 import coursesData from '../data/courses.json'
 import lecturesIndex from '../data/lectures.json'
 
 export default function CoursePage() {
   const { slug } = useParams()
+  const [searchParams] = useSearchParams()
+  const openLecture = searchParams.get('open')
   const [lectures, setLectures] = useState([])
   const course = coursesData.courses.find(c => c.slug === slug)
   
@@ -23,10 +26,12 @@ export default function CoursePage() {
     
     // Прокручиваем к началу страницы при загрузке/переходе
     // Используем небольшой таймаут, чтобы React Router успел обновить DOM
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    }, 0)
-  }, [slug])
+    if (!openLecture) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      }, 0)
+    }
+  }, [slug, openLecture])
 
   if (!course) {
     return (
@@ -76,88 +81,12 @@ export default function CoursePage() {
           {course.descriptionEn}
         </p>
 
-        {slug === 'digital-humanities' && (
-          <Link
-            to="/courses/digital-humanities/demo"
-            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-teal-300 dark:border-teal-700 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/30 hover:shadow-xl transition-all group mb-2"
-          >
-            <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-teal-900 dark:text-teal-100 mb-1">
-                Инструменты курса
-              </h2>
-              <p className="text-sm sm:text-base text-teal-900/80 dark:text-teal-100/80 leading-relaxed">
-                Учебные инструменты и корпус текстов к занятиям.
-              </p>
-            </div>
-            <span className="text-teal-700 dark:text-teal-300 font-semibold inline-flex items-center gap-1">
-              Открыть
-              <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-          </Link>
-        )}
-
-        {slug === 'digital-humanities' && (
-          <Link
-            to="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
-            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50/90 dark:bg-amber-950/30 hover:shadow-xl transition-all group mb-2"
-          >
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-amber-950 dark:text-amber-100 mb-1">
-                Корпус: Бунин · «Тёмные аллеи»
-              </h2>
-              <p className="text-sm sm:text-base text-amber-950/80 dark:text-amber-100/80 leading-relaxed">
-                Все 37 рассказов цикла — с оглавлением по частям.
-              </p>
-            </div>
-            <span className="text-amber-800 dark:text-amber-200 font-semibold">Читать →</span>
-          </Link>
-        )}
-
-        {slug === 'digital-humanities' && (
-          <Link
-            to="/courses/digital-humanities/demo/lit-search"
-            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-indigo-300 dark:border-indigo-700 bg-indigo-50/90 dark:bg-indigo-950/30 hover:shadow-xl transition-all group mb-2"
-          >
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-indigo-950 dark:text-indigo-100 mb-1">
-                Ресурсы: поиск статей по теме
-              </h2>
-              <p className="text-sm sm:text-base text-indigo-950/80 dark:text-indigo-100/80 leading-relaxed">
-                Перефраз запроса → OpenAlex / Crossref / Semantic Scholar → CSV.
-              </p>
-            </div>
-            <span className="text-indigo-800 dark:text-indigo-200 font-semibold">Открыть →</span>
-          </Link>
-        )}
-
-        {slug === 'digital-humanities' && (
-          <Link
-            to="/courses/digital-humanities/demo/intertext"
-            className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border-2 border-violet-300 dark:border-violet-700 bg-violet-50/90 dark:bg-violet-950/30 hover:shadow-xl transition-all group mb-2"
-          >
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-violet-950 dark:text-violet-100 mb-1">
-                Ресурсы: интертекстуальный анализ
-              </h2>
-              <p className="text-sm sm:text-base text-violet-950/80 dark:text-violet-100/80 leading-relaxed">
-                Фрагмент + DeepSeek → цитаты, аллюзии, уверенность, чеклист проверки.
-              </p>
-            </div>
-            <span className="text-violet-800 dark:text-violet-200 font-semibold">Открыть →</span>
-          </Link>
-        )}
+        {slug === 'digital-humanities' && <DhDoors />}
       </motion.div>
 
-      <div className="space-y-4 sm:space-y-6">
+      <div id="lectures" className="space-y-4 sm:space-y-6 scroll-mt-24">
         <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900 dark:text-white">
-          Содержание курса {lectures.length > 0 && `(${lectures.length})`}
+          {slug === 'digital-humanities' ? 'Лекции' : 'Содержание курса'} {lectures.length > 0 && `(${lectures.length})`}
         </h2>
         
         {lectures.length > 0 ? (
@@ -167,6 +96,7 @@ export default function CoursePage() {
               lecture={lecture}
               courseSlug={slug}
               index={index}
+              defaultOpen={openLecture === String(lecture.number)}
             />
           ))
         ) : (

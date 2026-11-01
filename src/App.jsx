@@ -13,6 +13,8 @@ import LeerssenLecture from './pages/LeerssenLecture'
 import WikidataBunin from './pages/WikidataBunin'
 import LitSearch from './pages/LitSearch'
 import IntertextAnalysis from './pages/IntertextAnalysis'
+import MethodNavigator from './pages/MethodNavigator'
+import ThesisPassport from './pages/ThesisPassport'
 
 function LabWorkRedirect() {
   const { workSlug } = useParams()
@@ -49,6 +51,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/courses/digital-humanities/demo" element={<LabHub />} />
+                <Route path="/courses/digital-humanities/navigator" element={<MethodNavigator />} />
+                <Route path="/courses/digital-humanities/passport" element={<ThesisPassport />} />
                 <Route
                   path="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
                   element={<BuninReader />}
