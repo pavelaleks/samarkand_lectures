@@ -134,6 +134,20 @@ export default function LabHub() {
 
       <section>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ресурсы для диссертации</h2>
+        <Link
+          to="/courses/digital-humanities/cabinet"
+          className="group mb-4 flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl border-2 border-amber-400 dark:border-amber-600 bg-amber-50/80 dark:bg-amber-950/20 p-5 sm:p-6 hover:shadow-xl transition-all"
+        >
+          <div className="flex-1">
+            <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-200 mb-1">Открытые API · ресурс на весь срок магистратуры</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1">Кабинет магистранта</h3>
+            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+              Поиск литературы по теме диссертации в OpenAlex, Crossref, DOAJ, Google Books и др. → список по главам → Word по ГОСТу со
+              ссылками, Zotero. Справка об авторе (Wikidata), наукометрия темы, журнал API-запросов с кодом для Colab.
+            </p>
+          </div>
+          <span className="font-semibold text-amber-900 dark:text-amber-100 group-hover:underline shrink-0">Открыть кабинет →</span>
+        </Link>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <SmallCard
             to="/courses/digital-humanities/demo/lit-search"
