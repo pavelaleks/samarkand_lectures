@@ -131,7 +131,7 @@ export const oaShortId = (key) => String(key || '').split('/').pop()
 
 export async function searchOpenAlex(query, opts = {}) {
   const url = new URL(`${OA}/works`)
-  url.searchParams.set('search', query) // ранжирование по релевантности; точность даёт фильтр title_and_abstract
+  if (query) url.searchParams.set('search', query) // ранжирование по релевантности; точность даёт фильтр title_and_abstract
   url.searchParams.set('per_page', String(opts.limit || 25))
   if (opts.sort) url.searchParams.set('sort', opts.sort)
   url.searchParams.set(
@@ -147,6 +147,7 @@ export async function searchOpenAlex(query, opts = {}) {
     items: (data.results || []).map((w) =>
       finish({
         source: 'OpenAlex',
+        oaId: String(w.id || '').split('/').pop(),
         type: OA_TYPES[w.type] || (w.type === 'book' ? 'book' : 'article'),
         title: w.title || w.display_name,
         authors: (w.authorships || []).map((a) => a.author?.display_name).filter(Boolean),
@@ -358,7 +359,9 @@ export const SOURCES = [
 /** Поиск во всех выбранных источниках параллельно, слияние дублей по DOI/ISBN/названию. */
 export async function searchAll(query, sourceIds, opts = {}) {
   const chosen = SOURCES.filter((s) => sourceIds.includes(s.id))
-  const settled = await Promise.allSettled(chosen.map((s) => s.fn(query, opts)))
+  // Булев запрос (AND/OR/скобки) понимают OpenAlex и DOAJ; остальным — плоский список слов
+  const BOOL = new Set(['openalex', 'doaj'])
+  const settled = await Promise.allSettled(chosen.map((s) => s.fn(BOOL.has(s.id) ? query : opts.flat || query, opts)))
   const status = {}
   const merged = new Map()
   settled.forEach((r, i) => {
@@ -506,19 +509,7 @@ export async function openAlexCount(query, opts = {}) {
   return data.meta?.count ?? 0
 }
 
-// Синонимы для расширения слишком узкого запроса (англ. — язык большинства каталогов)
-const SYN = [
-  [/^(eastern|east|oriental|orient)$/i, ['Orient', 'Orientalism', 'East']],
-  [/^(woman|women|female|feminine)$/i, ['women', 'heroine', 'female', 'gender']],
-  [/^(memory|memories|remembrance)$/i, ['memory', 'nostalgia', 'past']],
-  [/^(love|eros|romance)$/i, ['love', 'eros', 'desire']],
-  [/^(space|place|landscape)$/i, ['space', 'landscape', 'topos']],
-  [/^(image|images|imagery)$/i, ['image', 'representation']],
-  [/^(motif|motifs|theme)$/i, ['motif', 'theme']],
-  [/^(death|dying)$/i, ['death', 'mortality']],
-  [/^(city|urban)$/i, ['city', 'urban']],
-  [/^(heroine|heroines)$/i, ['heroine', 'female character', 'women']],
-]
+const SYN = [] // синонимы подбираются универсально через Datamuse (relatedWords) в конструкторе запроса
 
 /** Варианты запроса: «имя + понятие/синоним», без одного слова, с синонимами. */
 export function queryVariants(q) {
@@ -542,4 +533,101 @@ export function queryVariants(q) {
   if (words.length >= 2) words.forEach((_, i) => add(words.filter((__, j) => j !== i).join(' ')))
   words.forEach((w, i) => syn(w).forEach((a) => add(words.map((x, j) => (j === i ? a : x)).join(' '))))
   return out.slice(0, 10)
+}
+
+
+// ---------------------------------------------------------------- Конструктор запроса (для любой темы)
+
+/** Перевод RU → EN (MyMemory, бесплатно, без ключа; ~5000 символов в день на устройство). */
+export async function translateRuEn(text) {
+  const url = new URL('https://api.mymemory.translated.net/get')
+  url.searchParams.set('q', String(text).slice(0, 450))
+  url.searchParams.set('langpair', 'ru|en')
+  const d = await apiGet('MyMemory (перевод)', url)
+  const t = d.responseData?.translatedText || ''
+  if (!t || /MYMEMORY WARNING|QUERY LENGTH/i.test(t)) throw new Error('Переводчик недоступен — впишите английские слова сами')
+  return t.replace(/&#39;/g, "'").replace(/&quot;/g, '"')
+}
+
+/** Слова, близкие по смыслу (Datamuse «means like»): кандидаты в синонимы для поиска. */
+export async function relatedWords(word, max = 12) {
+  const url = new URL('https://api.datamuse.com/words')
+  url.searchParams.set('ml', word)
+  url.searchParams.set('max', String(max * 2))
+  const d = await apiGet('Datamuse (синонимы)', url, { sample: false })
+  return (Array.isArray(d) ? d : [])
+    .map((x) => x.word)
+    .filter((w) => /^[a-z][a-z' -]{2,30}$/i.test(w) && w.split(' ').length <= 2)
+    .slice(0, max)
+}
+
+const EN_STOP = new Set(
+  `a an the of in on at to for from by with and or as about into over under between among within without
+  his her their its our your my this that these those is are was were be been being which who whom whose
+  work works creativity creative oeuvre writings writing heritage legacy artistic art aspects aspect role
+  features feature peculiarities specificity analysis study studies research problem problems question
+  questions issue issues some certain based using use case example material context`.split(/\s+/)
+)
+
+/** Английская фраза → понятия (слова без служебных и «учёных» связок). Имя автора — отдельным понятием. */
+export function conceptsFrom(englishText, authorLatin = '') {
+  const author = String(authorLatin || '').trim()
+  let t = ` ${englishText} `.replace(/[.,;:!?()]/g, ' ')
+  const surname = author.split(/\s+/).pop()
+  const out = []
+  if (author) {
+    out.push({ id: 'author', label: author, terms: [surname], main: surname, isAuthor: true })
+    t = t.replace(new RegExp(`\\b(${author.split(/\s+/).join('|')})('s)?\\b`, 'gi'), ' ')
+  }
+  // Названия произведений и устойчивые сочетания: «в кавычках» или Несколько Слов С Заглавной → одно понятие
+  const phrases = []
+  t = t.replace(/["«“]([^"»”]{3,60})["»”]/g, (_, p) => {
+    phrases.push(p.trim())
+    return ' '
+  })
+  t = t.replace(/\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\b/g, (m) => {
+    const p = m.replace(/^(The|A|An|In|On|Of)\s+/, '')
+    if (p.split(/\s+/).length >= 2) {
+      phrases.push(p)
+      return ' '
+    }
+    return m
+  })
+  for (const p of [...new Set(phrases)]) out.push({ id: p.toLowerCase(), label: p, terms: [p], main: p })
+  const words = t
+    .split(/\s+/)
+    .map((w) => w.replace(/'s$/i, '').replace(/["«»“”]/g, '').toLowerCase())
+    .filter((w) => w.length > 2 && !EN_STOP.has(w))
+  for (const w of [...new Set(words)]) out.push({ id: w, label: w, terms: [w], main: w })
+  return out
+}
+
+const quoteTerm = (t) => (/\s/.test(t) ? `"${t}"` : t)
+
+/** Понятия → булев запрос: (a OR b) AND (c OR d). */
+export function booleanQuery(concepts) {
+  return concepts
+    .filter((c) => c.terms?.length)
+    .map((c) => (c.terms.length > 1 ? `(${c.terms.map(quoteTerm).join(' OR ')})` : quoteTerm(c.terms[0])))
+    .join(' AND ')
+}
+
+/** Плоский запрос для баз без булевой логики: по одному главному слову из понятия. */
+export function flatQuery(concepts) {
+  return concepts
+    .filter((c) => c.terms?.length)
+    .map((c) => c.main || c.terms[0])
+    .join(' ')
+}
+
+/** Какими ключевыми словами сама наука описывает найденные работы (OpenAlex keywords). */
+export async function openAlexKeywords(query, opts = {}) {
+  const r = await openAlexGroup(query, 'keywords.id', opts)
+  return r.groups.filter((g) => g.name && g.key !== 'unknown').slice(0, 25)
+}
+
+/** «Снежный ком» от одной работы: кто её цитирует, на что она ссылается, похожие. */
+export async function openAlexSnowball(oaId, mode, opts = {}) {
+  const filter = { cites: `cites:${oaId}`, refs: `cited_by:${oaId}`, related: `related_to:${oaId}` }[mode]
+  return searchOpenAlex('', { ...opts, precise: false, extraFilter: filter, limit: 25, sort: 'cited_by_count:desc' })
 }
