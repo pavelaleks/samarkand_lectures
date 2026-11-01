@@ -6,7 +6,9 @@ import {
   fetchByDOI,
   gutendexAuthor,
   onApiLog,
+  oaShortId,
   openAlexGroup,
+  searchOpenAlex,
   pythonFor,
   searchAll,
   wikidataAuthor,
@@ -76,18 +78,18 @@ function Card({ children, className = '' }) {
   )
 }
 
-function Bars({ data, max = 12, valueLabel = 'работ', onClickName }) {
+function Bars({ data, max = 12, valueLabel = 'работ', onPick, extUrl, active }) {
   const rows = data.slice(0, max)
   const top = Math.max(1, ...rows.map((r) => r.count))
   return (
     <div className="space-y-1.5">
       {rows.map((r) => (
-        <div key={r.key} className="flex items-center gap-3 text-sm">
+        <div key={r.key} className={`flex items-center gap-2 text-sm rounded-lg ${active === r.key ? 'bg-teal-50 dark:bg-teal-950/40' : ''}`}>
           <span className="w-40 sm:w-56 shrink-0 truncate text-gray-800 dark:text-gray-200" title={r.name}>
-            {onClickName ? (
-              <a href={onClickName(r)} target="_blank" rel="noreferrer" className="hover:underline">
+            {onPick ? (
+              <button type="button" onClick={() => onPick(r)} className="text-left hover:underline text-teal-800 dark:text-teal-200 truncate max-w-full">
                 {r.name}
-              </a>
+              </button>
             ) : (
               r.name
             )}
@@ -95,16 +97,26 @@ function Bars({ data, max = 12, valueLabel = 'работ', onClickName }) {
           <span className="flex-1 h-3 rounded bg-gray-100 dark:bg-gray-700 overflow-hidden">
             <span className="block h-full bg-teal-600 dark:bg-teal-400" style={{ width: `${(100 * r.count) / top}%` }} />
           </span>
-          <span className="w-14 text-right tabular-nums text-gray-600 dark:text-gray-300">{r.count}</span>
+          <span className="w-10 text-right tabular-nums text-gray-600 dark:text-gray-300">{r.count}</span>
+          {extUrl && (
+            <a href={extUrl(r)} target="_blank" rel="noreferrer" title="Профиль в OpenAlex (все работы, не только по теме)" className="w-5 text-gray-400 hover:text-teal-600">
+              ↗
+            </a>
+          )}
         </div>
       ))}
       {!rows.length && <p className="text-sm text-gray-500">Нет данных.</p>}
-      {!!rows.length && <p className="text-xs text-gray-500 dark:text-gray-400">Число — {valueLabel}.</p>}
+      {!!rows.length && (
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          Число — {valueLabel} по вашему запросу.{onPick ? ' Нажмите на название — покажу эти работы.' : ''}
+          {extUrl ? ' ↗ — профиль в OpenAlex (все работы).' : ''}
+        </p>
+      )}
     </div>
   )
 }
 
-function YearChart({ data }) {
+function YearChart({ data, onPick }) {
   const rows = [...data].filter((d) => +d.key >= 1950 && +d.key <= new Date().getFullYear()).sort((a, b) => +a.key - +b.key)
   if (!rows.length) return <p className="text-sm text-gray-500">Нет данных по годам.</p>
   const top = Math.max(...rows.map((r) => r.count))
@@ -119,7 +131,14 @@ function YearChart({ data }) {
           const h = (H * r.count) / top
           return (
             <g key={r.key}>
-              <rect x={PAD + i * bw + 1} y={H - h} width={Math.max(bw - 2, 1)} height={h} className="fill-teal-600 dark:fill-teal-400">
+              <rect
+                x={PAD + i * bw + 1}
+                y={H - h}
+                width={Math.max(bw - 2, 1)}
+                height={h}
+                className={`fill-teal-600 dark:fill-teal-400 ${onPick ? 'cursor-pointer hover:fill-amber-500' : ''}`}
+                onClick={onPick ? () => onPick(r) : undefined}
+              >
                 <title>
                   {r.key}: {r.count}
                 </title>
@@ -133,7 +152,7 @@ function YearChart({ data }) {
           )
         })}
       </svg>
-      <p className="text-xs text-gray-500 dark:text-gray-400">Максимум: {top} работ в год. Наведите на столбец, чтобы увидеть число.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400">Максимум: {top} работ в год. Наведите на столбец, чтобы увидеть число{onPick ? ', нажмите — покажу работы этого года' : ''}.</p>
     </div>
   )
 }
@@ -328,6 +347,7 @@ function SearchTab({ profile, list, addItem, go }) {
   const [src, setSrc] = usePersistent('dh_cab_sources', SOURCES.filter((s) => s.on).map((s) => s.id))
   const [lang, setLang] = useState('')
   const [oaOnly, setOaOnly] = useState(false)
+  const [precise, setPrecise] = usePersistent('dh_cab_precise', true)
   const [busy, setBusy] = useState(false)
   const [res, setRes] = useState(null)
   const [sort, setSort] = useState('rel')
@@ -347,6 +367,7 @@ function SearchTab({ profile, list, addItem, go }) {
         toYear: profile.toYear,
         lang,
         oaOnly,
+        precise,
         apiKey: profile.openAlexKey,
         limit: 25,
       })
@@ -442,6 +463,10 @@ function SearchTab({ profile, list, addItem, go }) {
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={oaOnly} onChange={(e) => setOaOnly(e.target.checked)} />
               только с открытым полным текстом
+            </label>
+            <label className="flex items-center gap-2" title="Без галочки OpenAlex ищет и в полных текстах — больше случайных работ">
+              <input type="checkbox" checked={precise} onChange={(e) => setPrecise(e.target.checked)} />
+              OpenAlex: искать только в названии и аннотации
             </label>
             <span className="text-gray-500">
               Годы: {profile.fromYear || '…'}–{profile.toYear || '…'} (меняются в «Моя тема»)
@@ -718,7 +743,7 @@ function AuthorTab({ profile }) {
       setData({ ...d, qid: c.qid, label: c.label, description: c.description })
       wikipediaSummary(d.wikiUrl).then(setWiki).catch(() => {})
       const latin = profile.authorLatin || c.label
-      openAlexGroup(`"${latin}"`, 'publication_year', { apiKey: profile.openAlexKey })
+      openAlexGroup(`"${latin}"`, 'publication_year', { apiKey: profile.openAlexKey, precise: true })
         .then((r) => setYears(r))
         .catch(() => {})
       gutendexAuthor(latin.split(' ').slice(-1)[0])
@@ -797,7 +822,7 @@ function AuthorTab({ profile }) {
             )}
             <Card>
               <h3 className="font-bold text-gray-900 dark:text-white mb-1">Интерес исследователей по годам</h3>
-              <p className="text-xs text-gray-500 mb-3">OpenAlex: работы, где упоминается «{profile.authorLatin || data.label}». Всего: {years?.total?.toLocaleString('ru-RU') ?? '…'}</p>
+              <p className="text-xs text-gray-500 mb-3">OpenAlex: работы, где автор назван в названии или аннотации: «{profile.authorLatin || data.label}». Всего: {years?.total?.toLocaleString('ru-RU') ?? '…'}</p>
               {years ? <YearChart data={years.groups} /> : <p className="text-sm text-gray-500">Загружаю…</p>}
             </Card>
             <Card>
@@ -844,25 +869,75 @@ function AuthorTab({ profile }) {
 }
 
 // ---------------------------------------------------------------- 5. Наукометрия
-function MetricsTab({ profile }) {
+function DrillList({ drill, profile, list, addItem, onClose }) {
+  const inList = new Set(list.map((i) => i.key))
+  const group = (profile.groups || []).filter(Boolean)[0] || 'Без раздела'
+  return (
+    <Card className="space-y-3 border-2 border-teal-400 dark:border-teal-600">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide text-teal-700 dark:text-teal-300">Работы по вашему запросу</p>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{drill.label}</h3>
+          {drill.total != null && <p className="text-sm text-gray-500">Найдено: {drill.total}. Показаны первые {drill.items?.length || 0}, по числу цитирований.</p>}
+        </div>
+        <Btn kind="ghost" onClick={onClose}>
+          ✕ Закрыть
+        </Btn>
+      </div>
+      {drill.busy && <p className="text-sm text-gray-500">Загружаю…</p>}
+      {drill.error && <p className="text-sm text-rose-600">{drill.error}</p>}
+      <ul className="divide-y divide-gray-100 dark:divide-gray-700">
+        {(drill.items || []).map((r) => (
+          <li key={r.key} className="py-3 flex flex-col sm:flex-row gap-3">
+            <div className="flex-1 min-w-0">
+              <a href={linkOf(r)} target="_blank" rel="noreferrer" className="font-semibold text-gray-900 dark:text-white hover:text-teal-700 dark:hover:text-teal-300">
+                {r.title}
+              </a>
+              <ItemMeta r={r} />
+              <Badges r={r} />
+            </div>
+            <div className="shrink-0">
+              {inList.has(r.key) ? (
+                <span className="inline-block px-3 py-2 rounded-xl text-sm font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200">✓ в списке</span>
+              ) : (
+                <Btn kind="amber" onClick={() => addItem(r, group)}>
+                  + В мой список
+                </Btn>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  )
+}
+
+function MetricsTab({ profile, list, addItem }) {
   const first = splitKw(profile.kwEn)[0] || splitKw(profile.kwRu)[0] || ''
   const [q, setQ] = useState(first)
+  const [precise, setPrecise] = usePersistent('dh_cab_precise', true)
   const [busy, setBusy] = useState(false)
   const [r, setR] = useState(null)
   const [err, setErr] = useState('')
+  const [drill, setDrill] = useState(null)
+  const [asked, setAsked] = useState({ q: '', precise: true })
+  const opts = () => ({ apiKey: profile.openAlexKey, precise: asked.precise, fromYear: profile.fromYear, toYear: profile.toYear })
+
   const run = async () => {
     if (!q.trim()) return
     setBusy(true)
     setErr('')
     setR(null)
-    const o = { apiKey: profile.openAlexKey }
+    setDrill(null)
+    const o = { apiKey: profile.openAlexKey, precise, fromYear: profile.fromYear, toYear: profile.toYear }
+    setAsked({ q: q.trim(), precise })
     try {
       const [years, sources, authors, langs, topics] = await Promise.all([
-        openAlexGroup(q, 'publication_year', o),
-        openAlexGroup(q, 'primary_location.source.id', o),
-        openAlexGroup(q, 'authorships.author.id', o),
-        openAlexGroup(q, 'language', o),
-        openAlexGroup(q, 'primary_topic.id', o),
+        openAlexGroup(q.trim(), 'publication_year', o),
+        openAlexGroup(q.trim(), 'primary_location.source.id', o),
+        openAlexGroup(q.trim(), 'authorships.author.id', o),
+        openAlexGroup(q.trim(), 'language', o),
+        openAlexGroup(q.trim(), 'primary_topic.id', o),
       ])
       setR({ years, sources, authors, langs, topics })
     } catch (e) {
@@ -871,7 +946,23 @@ function MetricsTab({ profile }) {
       setBusy(false)
     }
   }
+
+  /** Нажали на журнал / исследователя / тему / язык / год → работы по ТОМУ ЖЕ запросу с этим фильтром */
+  const pick = async (field, g, label) => {
+    const value = field === 'publication_year' || field === 'language' ? g.key : oaShortId(g.key)
+    const key = `${field}:${value}`
+    setDrill({ key, label, busy: true })
+    setTimeout(() => document.getElementById('drill')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+    try {
+      const res = await searchOpenAlex(asked.q, { ...opts(), extraFilter: key, limit: 25, sort: 'cited_by_count:desc' })
+      setDrill({ key, label, items: res.items, total: res.total })
+    } catch (e) {
+      setDrill({ key, label, error: e.message })
+    }
+  }
+
   const LANG = { en: 'английский', ru: 'русский', de: 'немецкий', fr: 'французский', es: 'испанский', uz: 'узбекский', it: 'итальянский', pl: 'польский', uk: 'украинский' }
+  const ext = (g) => g.key
   return (
     <div className="space-y-5">
       <Card className="space-y-2">
@@ -887,9 +978,17 @@ function MetricsTab({ profile }) {
             {busy ? 'Считаю…' : 'Посчитать'}
           </Btn>
         </form>
+        <label className="flex items-start gap-2 text-sm text-gray-800 dark:text-gray-200">
+          <input type="checkbox" className="mt-1" checked={precise} onChange={(e) => setPrecise(e.target.checked)} />
+          <span>
+            <strong>Только в названии и аннотации</strong> (рекомендуется). Без этой галочки OpenAlex ищет слова и в полных
+            текстах — тогда в статистику попадают случайные работы, где слова лишь упомянуты.
+          </span>
+        </label>
         <p className="text-xs text-gray-500">
           Пять агрегирующих запросов к OpenAlex (параметр <code>group_by</code>): сколько работ по годам, какие журналы,
-          исследователи, языки и научные темы. Хорошо подходит для обзора историографии во Введении.
+          исследователи, языки и научные темы — <strong>только среди работ по вашему запросу</strong>. Годы:{' '}
+          {profile.fromYear || '…'}–{profile.toYear || '…'} (из «Моя тема»).
         </p>
         {err && <p className="text-sm text-rose-600">{err}</p>}
       </Card>
@@ -897,25 +996,43 @@ function MetricsTab({ profile }) {
         <>
           <Card>
             <h3 className="font-bold text-gray-900 dark:text-white mb-1">Публикации по годам</h3>
-            <p className="text-xs text-gray-500 mb-3">Всего работ по запросу: {r.years.total?.toLocaleString('ru-RU')}</p>
-            <YearChart data={r.years.groups} />
+            <p className="text-xs text-gray-500 mb-3">Всего работ по запросу «{asked.q}»: {r.years.total?.toLocaleString('ru-RU')}</p>
+            <YearChart data={r.years.groups} onPick={(g) => pick('publication_year', g, `«${asked.q}» · ${g.key} год`)} />
           </Card>
+          <div id="drill" className="scroll-mt-4">
+            {drill && <DrillList drill={drill} profile={profile} list={list} addItem={addItem} onClose={() => setDrill(null)} />}
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <Card>
               <h3 className="font-bold text-gray-900 dark:text-white mb-3">Журналы и издания</h3>
-              <Bars data={r.sources.groups.filter((g) => g.key && g.key !== 'unknown')} onClickName={(g) => g.key} />
+              <Bars
+                data={r.sources.groups.filter((g) => g.key && g.key !== 'unknown')}
+                onPick={(g) => pick('primary_location.source.id', g, `«${asked.q}» в издании «${g.name}»`)}
+                extUrl={ext}
+              />
             </Card>
             <Card>
               <h3 className="font-bold text-gray-900 dark:text-white mb-3">Исследователи</h3>
-              <Bars data={r.authors.groups.filter((g) => g.key && g.key !== 'unknown')} onClickName={(g) => g.key} />
+              <Bars
+                data={r.authors.groups.filter((g) => g.key && g.key !== 'unknown')}
+                onPick={(g) => pick('authorships.author.id', g, `«${asked.q}»: работы автора ${g.name}`)}
+                extUrl={ext}
+              />
             </Card>
             <Card>
               <h3 className="font-bold text-gray-900 dark:text-white mb-3">Языки</h3>
-              <Bars data={r.langs.groups.map((g) => ({ ...g, name: LANG[g.key] || g.name }))} />
+              <Bars
+                data={r.langs.groups.map((g) => ({ ...g, name: LANG[g.key] || g.name }))}
+                onPick={(g) => pick('language', g, `«${asked.q}» · язык: ${LANG[g.key] || g.name}`)}
+              />
             </Card>
             <Card>
               <h3 className="font-bold text-gray-900 dark:text-white mb-3">Научные темы (классификация OpenAlex)</h3>
-              <Bars data={r.topics.groups.filter((g) => g.key && g.key !== 'unknown')} onClickName={(g) => g.key} />
+              <Bars
+                data={r.topics.groups.filter((g) => g.key && g.key !== 'unknown')}
+                onPick={(g) => pick('primary_topic.id', g, `«${asked.q}» · тема OpenAlex: ${g.name}`)}
+                extUrl={ext}
+              />
             </Card>
           </div>
           <p className="text-xs text-gray-500">
@@ -1195,7 +1312,7 @@ export default function StudentCabinet() {
       {tab === 'search' && <SearchTab profile={p} list={list} addItem={addItem} go={go} />}
       {tab === 'list' && <ListTab profile={p} list={list} setList={setList} addItem={addItem} />}
       {tab === 'author' && <AuthorTab profile={p} />}
-      {tab === 'metrics' && <MetricsTab profile={p} />}
+      {tab === 'metrics' && <MetricsTab profile={p} list={list} addItem={addItem} />}
       {tab === 'more' && <MoreTab profile={p} />}
       {tab === 'api' && <ApiTab />}
 
