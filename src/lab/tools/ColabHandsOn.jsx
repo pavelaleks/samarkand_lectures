@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const base = import.meta.env.BASE_URL || '/'
@@ -116,7 +116,23 @@ function CopyBlock({ code }) {
 }
 
 export function ColabHandsOn() {
-  const [active, setActive] = useState(LABS[0].id)
+  const [active, setActive] = useState(() => {
+    try {
+      const n = new URLSearchParams(window.location.search).get('pair')
+      return n && LABS.some((l) => l.id === `p${String(n).padStart(2, '0')}`) ? `p${String(n).padStart(2, '0')}` : LABS[0].id
+    } catch {
+      return LABS[0].id
+    }
+  })
+  useEffect(() => {
+    if (/[?&]pair=/.test(window.location.search)) {
+      setTimeout(() => document.getElementById('lab-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300)
+    }
+  }, [])
+  const pick = (id) => {
+    setActive(id)
+    setTimeout(() => document.getElementById('lab-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+  }
   const lab = useMemo(() => LABS.find((l) => l.id === active) || LABS[0], [active])
   const colabUrl = `${COLAB_GH}/${lab.file}`
   const ghUrl = `${GH_BLOB}/${lab.file}`
@@ -124,6 +140,19 @@ export function ColabHandsOn() {
 
   return (
     <div className="space-y-8">
+      <button
+        type="button"
+        onClick={() => pick('p13')}
+        className="w-full text-left rounded-2xl border-2 border-fuchsia-400 dark:border-fuchsia-600 bg-gradient-to-r from-fuchsia-50 to-violet-50 dark:from-fuchsia-950/30 dark:to-violet-950/20 p-4 sm:p-5 hover:shadow-lg transition-shadow flex flex-col sm:flex-row sm:items-center gap-3"
+      >
+        <span className="flex-1">
+          <span className="block text-xs font-bold uppercase tracking-wide text-fuchsia-800 dark:text-fuchsia-200">Новое · пара 13</span>
+          <span className="block text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Streamlit: веб-панель своей диссертации</span>
+          <span className="block text-sm text-gray-700 dark:text-gray-300">Запуск прямо в Colab, ссылка открывается и на телефоне: первое приложение → API → панель на своих текстах.</span>
+        </span>
+        <span className="font-semibold text-fuchsia-900 dark:text-fuchsia-100 shrink-0">Открыть пару 13 →</span>
+      </button>
+
       <section className="rounded-2xl border-2 border-teal-500/40 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20 p-5 sm:p-6">
         <p className="text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200 mb-2">
           13 пар · Google Colab · бесплатно · Бунин → ваш текст
@@ -188,7 +217,7 @@ export function ColabHandsOn() {
             <button
               key={item.id}
               type="button"
-              onClick={() => setActive(item.id)}
+              onClick={() => pick(item.id)}
               className={`text-left rounded-2xl p-4 border transition-all ${
                 active === item.id
                   ? 'border-teal-600 bg-teal-50 dark:bg-teal-950/40 shadow'
@@ -206,7 +235,7 @@ export function ColabHandsOn() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 space-y-4">
+      <section id="lab-detail" className="scroll-mt-20 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">

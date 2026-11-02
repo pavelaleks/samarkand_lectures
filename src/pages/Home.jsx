@@ -25,10 +25,17 @@ const TOOLS = [
   },
   {
     to: '/courses/digital-humanities/demo/colab-bunin',
-    title: '12 практикумов в Colab',
+    title: '13 практикумов в Colab',
     text: 'Бесплатно, без установки: сначала на Бунине, потом на тексте своей диссертации',
     icon: <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />,
     accent: 'bg-sky-600',
+  },
+  {
+    to: '/courses/digital-humanities/demo/colab-bunin?pair=13',
+    title: 'Streamlit: своя веб-панель',
+    text: 'Веб-приложение для своей диссертации прямо в Colab — показать на предзащите по ссылке',
+    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M4 5h16v11H4zM8 20h8M12 16v4M8 12l2-2 2 2 4-4" />,
+    accent: 'bg-fuchsia-600',
   },
   {
     to: '/courses/digital-humanities/passport',
@@ -146,7 +153,7 @@ export default function Home() {
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Для работы над диссертацией</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
           {TOOLS.map((t) => (
             <Link
               key={t.to}
