@@ -11,9 +11,10 @@ const THEME = {
 // Дополнительные входы для отдельных курсов
 const EXTRAS = {
   'digital-humanities': {
-    facts: ['14 практикумов в Colab', 'интерактивные стенды', 'кабинет магистранта'],
+    facts: ['14 практикумов в Colab', 'все методы на своём тексте', 'кабинет магистранта'],
     links: [
       { to: '/courses/digital-humanities/demo', label: 'Инструменты' },
+      { to: '/courses/digital-humanities/my-lab', label: 'Мои тексты' },
       { to: '/courses/digital-humanities/navigator', label: 'Навигатор методов' },
       { to: '/courses/digital-humanities/cabinet', label: 'Кабинет магистранта' },
     ],

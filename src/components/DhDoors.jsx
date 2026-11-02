@@ -13,7 +13,7 @@ const DOORS = [
   {
     n: 2,
     title: 'Попробовать',
-    text: 'Интерактивные стенды к лекциям и 14 пар в Google Colab — всё на рассказах Бунина, ничего не нужно устанавливать.',
+    text: 'Стенды к лекциям: сначала на Бунине, затем каждый метод — на своих текстах прямо в браузере. Плюс 14 пар в Google Colab.',
     cta: 'Стенды и Colab',
     to: '/courses/digital-humanities/demo',
     cls: 'border-teal-300 dark:border-teal-700 bg-teal-50/80 dark:bg-teal-950/20',
@@ -31,6 +31,7 @@ const DOORS = [
 ]
 
 const RESOURCES = [
+  { to: '/courses/digital-humanities/my-lab', label: '🧪 Лаборатория «Мои тексты»: все методы на своих текстах', strong: true },
   { to: '/courses/digital-humanities/cabinet', label: '★ Кабинет магистранта: литература по теме → Word', strong: true },
   { to: '/courses/digital-humanities/demo/corpus/bunin-temnye-allei', label: 'Корпус: Бунин, «Тёмные аллеи»' },
   { to: '/courses/digital-humanities/demo/corpus/chekhov-rasskazy', label: 'Корпус: Чехов, рассказы' },
