@@ -52,7 +52,7 @@ export default function LabHub() {
           <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-200 mb-2">
             Практика · Google Colab · бесплатно
           </p>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">13 пар в Colab</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">14 пар в Colab</h2>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
             Код спрятан — вы меняете только поля формы. Демо на Бунине работает «из коробки», затем — «Мои файлы»
             (.txt или .docx вашей магистерской).
@@ -60,16 +60,16 @@ export default function LabHub() {
           <p className="mt-4 font-semibold text-amber-900 dark:text-amber-100 group-hover:underline">Открыть список пар →</p>
         </Link>
         <Link
-          to="/courses/digital-humanities/demo/colab-bunin?pair=13"
+          to="/courses/digital-humanities/demo/colab-bunin?pair=14"
           className="group block rounded-2xl border-2 border-fuchsia-400 dark:border-fuchsia-600 bg-gradient-to-br from-fuchsia-50 to-violet-50 dark:from-fuchsia-950/30 dark:to-violet-950/10 p-6 hover:shadow-xl transition-all"
         >
-          <p className="text-xs font-bold uppercase tracking-wide text-fuchsia-800 dark:text-fuchsia-200 mb-2">Новое · пара 13 · Streamlit</p>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Веб-панель своей диссертации</h2>
+          <p className="text-xs font-bold uppercase tracking-wide text-fuchsia-800 dark:text-fuchsia-200 mb-2">Новое · пары 13–14 · Streamlit</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Своё веб-приложение для диссертации</h2>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            Streamlit прямо в Colab: своё веб-приложение с корпусом, частотами, контекстами и литературой через API — ссылка
-            открывается и на телефоне.
+            Пара 14 — собрать свой кабинет с нуля за 8 шагов (свои тексты, цитаты в Word, API, тренажёр). Пара 13 —
+            готовая панель диссертации. Всё в Colab, ссылка открывается и на телефоне.
           </p>
-          <p className="mt-4 font-semibold text-fuchsia-900 dark:text-fuchsia-100 group-hover:underline">Открыть пару 13 →</p>
+          <p className="mt-4 font-semibold text-fuchsia-900 dark:text-fuchsia-100 group-hover:underline">Открыть пару 14 →</p>
         </Link>
         <Link
           to="/courses/digital-humanities/navigator"

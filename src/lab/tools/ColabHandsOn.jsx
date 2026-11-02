@@ -87,6 +87,12 @@ const LABS = [
     skills: ['Streamlit', 'виджеты', 'API → таблица', 'веб-панель', 'предзащита'],
     fields: 'APP · блок НАСТРОЙКИ в app_03_panel.py',
     extraFiles: ['../streamlit/app_01_hello.py', '../streamlit/app_02_openalex.py', '../streamlit/app_03_panel.py'] },
+  { id: 'p14', pair: 'Пара 14', track: 'Ваша диссертация · веб', title: 'Своё Streamlit-приложение с нуля',
+    file: 'Para14_Streamlit_s_nulya.ipynb', method: 'fields',
+    goal: 'Восемь шагов от пустого файла до своего кабинета на своих текстах: загрузка .txt/.docx → частоты → контексты → меню разделов → блокнот цитат с выгрузкой в Word → литература через API → тренажёр по своим текстам. Весь код виден, новые строки помечены; в конце — свой раздел с помощью бесплатного ИИ и шпаргалка.',
+    skills: ['Streamlit с нуля', 'свои файлы', 'session_state', 'API', 'тренажёр', 'свой раздел с ИИ'],
+    fields: 'my_app.py — ячейка каждого шага',
+    extraFiles: ['../streamlit/steps/step1.py', '../streamlit/steps/step5.py', '../streamlit/steps/step8.py'] },
 ]
 
 function CopyBlock({ code }) {
@@ -140,22 +146,28 @@ export function ColabHandsOn() {
 
   return (
     <div className="space-y-8">
-      <button
-        type="button"
-        onClick={() => pick('p13')}
-        className="w-full text-left rounded-2xl border-2 border-fuchsia-400 dark:border-fuchsia-600 bg-gradient-to-r from-fuchsia-50 to-violet-50 dark:from-fuchsia-950/30 dark:to-violet-950/20 p-4 sm:p-5 hover:shadow-lg transition-shadow flex flex-col sm:flex-row sm:items-center gap-3"
-      >
-        <span className="flex-1">
-          <span className="block text-xs font-bold uppercase tracking-wide text-fuchsia-800 dark:text-fuchsia-200">Новое · пара 13</span>
-          <span className="block text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Streamlit: веб-панель своей диссертации</span>
-          <span className="block text-sm text-gray-700 dark:text-gray-300">Запуск прямо в Colab, ссылка открывается и на телефоне: первое приложение → API → панель на своих текстах.</span>
-        </span>
-        <span className="font-semibold text-fuchsia-900 dark:text-fuchsia-100 shrink-0">Открыть пару 13 →</span>
-      </button>
+      <div className="grid sm:grid-cols-2 gap-3">
+        {[
+          ['p14', 'Новое · пара 14', 'Своё Streamlit-приложение с нуля', 'Восемь шагов до своего кабинета на своих текстах: частоты, контексты, цитаты в Word, API, тренажёр.', 'Открыть пару 14 →'],
+          ['p13', 'Пара 13', 'Streamlit: готовая веб-панель', 'Запустить и настроить готовую «Панель диссертации»; ссылка открывается и на телефоне.', 'Открыть пару 13 →'],
+        ].map(([id, kicker, title, text, cta]) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => pick(id)}
+            className={`text-left rounded-2xl border-2 p-4 sm:p-5 hover:shadow-lg transition-shadow flex flex-col gap-1 ${id === 'p14' ? 'border-fuchsia-500 dark:border-fuchsia-500 bg-gradient-to-r from-fuchsia-50 to-violet-50 dark:from-fuchsia-950/30 dark:to-violet-950/20' : 'border-fuchsia-200 dark:border-fuchsia-900 bg-white dark:bg-gray-800'}`}
+          >
+            <span className="text-xs font-bold uppercase tracking-wide text-fuchsia-800 dark:text-fuchsia-200">{kicker}</span>
+            <span className="text-lg font-bold text-gray-900 dark:text-white">{title}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">{text}</span>
+            <span className="mt-1 font-semibold text-fuchsia-900 dark:text-fuchsia-100">{cta}</span>
+          </button>
+        ))}
+      </div>
 
       <section className="rounded-2xl border-2 border-teal-500/40 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20 p-5 sm:p-6">
         <p className="text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200 mb-2">
-          13 пар · Google Colab · бесплатно · Бунин → ваш текст
+          14 пар · Google Colab · бесплатно · Бунин → ваш текст
         </p>
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
           Лаборатории Colab на весь курс
@@ -211,7 +223,7 @@ export function ColabHandsOn() {
       </section>
 
       <section>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">13 лабораторных пар</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">14 лабораторных пар</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {LABS.map((item) => (
             <button

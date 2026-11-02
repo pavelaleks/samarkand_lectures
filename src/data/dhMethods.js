@@ -18,6 +18,7 @@ export const PAIRS = {
   11: { file: 'Para11_OpenAlex_bibliografiya_temy.ipynb', title: 'Библиография под тему: OpenAlex' },
   12: { file: 'Para12_API_Gutendex_OL_Wikidata.ipynb', title: 'Справочные данные и проверка ответа ИИ' },
   13: { file: 'Para13_Streamlit_panel.ipynb', title: 'Streamlit: веб-панель диссертации' },
+  14: { file: 'Para14_Streamlit_s_nulya.ipynb', title: 'Своё Streamlit-приложение с нуля' },
 }
 
 export const colabUrl = (pair) => `${COLAB_GH}/${PAIRS[pair].file}`
