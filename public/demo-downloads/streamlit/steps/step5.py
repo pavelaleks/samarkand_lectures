@@ -15,7 +15,11 @@ def read_file(f):
     if f.name.lower().endswith(".docx"):
         import io
         from docx import Document
-        return "\n".join(p.text for p in Document(io.BytesIO(data)).paragraphs)
+        from docx.oxml.ns import qn
+        from docx.text.paragraph import Paragraph
+        doc = Document(io.BytesIO(data))
+        # все абзацы, включая таблицы и надписи (doc.paragraphs таблицы пропускает)
+        return "\n".join(Paragraph(p, doc).text for p in doc.element.body.iter(qn("w:p")))
     for enc in ("utf-8-sig", "cp1251"):
         try:
             return data.decode(enc)
@@ -59,7 +63,7 @@ if page == "Мои тексты":                                           # Н
             for name, t in texts.items()]                          # НОВОЕ: строка таблицы на каждый текст
     st.dataframe(pd.DataFrame(rows), hide_index=True)              # НОВОЕ
     name = st.selectbox("Прочитать", list(texts))                  # НОВОЕ: выпадающий список
-    st.write(texts[name][:3000])
+    st.text_area("Текст целиком (прокрутите)", texts[name], height=400)
 
 elif page == "Частоты":                                            # НОВОЕ: раздел 2
     name = st.selectbox("Текст", ["все вместе"] + list(texts))     # НОВОЕ

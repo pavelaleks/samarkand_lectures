@@ -14,7 +14,11 @@ def read_file(f):
     if f.name.lower().endswith(".docx"):
         import io
         from docx import Document
-        return "\n".join(p.text for p in Document(io.BytesIO(data)).paragraphs)
+        from docx.oxml.ns import qn
+        from docx.text.paragraph import Paragraph
+        doc = Document(io.BytesIO(data))
+        # все абзацы, включая таблицы и надписи (doc.paragraphs таблицы пропускает)
+        return "\n".join(Paragraph(p, doc).text for p in doc.element.body.iter(qn("w:p")))
     for enc in ("utf-8-sig", "cp1251"):
         try:
             return data.decode(enc)
