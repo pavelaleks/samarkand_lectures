@@ -10,7 +10,7 @@ const COLAB_GH =
 
 const SETUP_CODE = `import requests, importlib
 _u = "https://pavelaleks.github.io/samarkand_lectures/demo-downloads/colab-bunin/dh_utils.py"
-open("dh_utils.py", "w", encoding="utf-8").write(requests.get(_u, timeout=60).text)
+open("dh_utils.py", "wb").write(requests.get(_u, timeout=60).content)
 import dh_utils; importlib.reload(dh_utils)
 from dh_utils import *
 setup()

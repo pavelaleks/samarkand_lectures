@@ -46,7 +46,7 @@ SETUP = code("""
 #@title 🔧 Подготовка — просто запустите ▶ (≈20 сек) { display-mode: "form" }
 import requests, importlib
 _u = "https://pavelaleks.github.io/samarkand_lectures/demo-downloads/colab-bunin/dh_utils.py"
-open("dh_utils.py", "w", encoding="utf-8").write(requests.get(_u, timeout=60).text)
+open("dh_utils.py", "wb").write(requests.get(_u, timeout=60).content)  # байты как есть: UTF-8
 import dh_utils; importlib.reload(dh_utils)
 from dh_utils import *
 setup()
@@ -730,7 +730,7 @@ B = "https://pavelaleks.github.io/samarkand_lectures/demo-downloads/"
 for f in ["colab-bunin/dh_utils.py", "streamlit/app_01_hello.py", "streamlit/app_02_openalex.py", "streamlit/app_03_panel.py"]:
     name = f.split("/")[-1]
     if RESET_APPS or name == "dh_utils.py" or not os.path.exists(name):
-        open(name, "w", encoding="utf-8").write(requests.get(B + f, timeout=60).text)
+        open(name, "wb").write(requests.get(B + f, timeout=60).content)  # байты как есть: UTF-8
 if not os.path.exists("cloudflared"):
     subprocess.run("wget -q -O cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && chmod +x cloudflared", shell=True)
 print("✓ Готово:", ", ".join(sorted(x for x in os.listdir(".") if x.endswith(".py"))))
