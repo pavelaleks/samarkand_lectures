@@ -1,19 +1,19 @@
 {
   "courseSlug": "digital-humanities",
   "title": "Инструменты курса",
-  "subtitle": "Стенды к лекциям, 12 пар в Google Colab и корпуса Бунина и Чехова.",
+  "subtitle": "Стенды к лекциям, 14 пар в Google Colab и корпуса Бунина и Чехова.",
   "howTo": [],
   "works": [
     {
       "id": "colab-bunin-hands-on",
       "lecture": 0,
       "slug": "colab-bunin",
-      "title": "Практика · 12 пар в Google Colab",
-      "minutes": "12 пар",
+      "title": "Практика · 14 пар в Google Colab",
+      "minutes": "14 пар",
       "tool": "ColabHandsOn",
       "featured": true,
       "question": "Как провести цифровой разбор в бесплатном Colab — сначала на Бунине, потом на текстах своей магистерской — не меняя ни строчки кода?",
-      "punchline": "Пары 1–2: пайплайн на Бунине. Пары 3–12: паспорт корпуса, Zipf, keywords, Delta, дуга, NER, граф, LDA, OpenAlex и каталожные API — на своих .txt (демо Чехов/Бунин в запасе).",
+      "punchline": "Пары 1–2: пайплайн на Бунине. Пары 3–12: паспорт корпуса, Zipf, keywords, Delta, дуга, NER, граф, LDA, OpenAlex и каталожные API — на своих .txt (демо Чехов/Бунин в запасе). Пары 13–14: Streamlit — готовая веб-панель и своё приложение с нуля (здесь уже пишем код сами).",
       "clickPath": [
         "Откройте лабораторию → пара → «Открыть в Colab» или скачайте .ipynb.",
         "Пары 1–2 на корпусе Бунина с сайта.",

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const base = import.meta.env.BASE_URL || '/'
@@ -87,6 +87,12 @@ const LABS = [
     skills: ['Streamlit', 'виджеты', 'API → таблица', 'веб-панель', 'предзащита'],
     fields: 'APP · блок НАСТРОЙКИ в app_03_panel.py',
     extraFiles: ['../streamlit/app_01_hello.py', '../streamlit/app_02_openalex.py', '../streamlit/app_03_panel.py'] },
+  { id: 'p14', pair: 'Пара 14', track: 'Ваша диссертация · веб', title: 'Своё Streamlit-приложение с нуля',
+    file: 'Para14_Streamlit_s_nulya.ipynb', method: 'fields',
+    goal: 'Восемь шагов от пустого файла до своего кабинета на своих текстах: загрузка .txt/.docx → частоты → контексты → меню разделов → блокнот цитат с выгрузкой в Word → литература через API → тренажёр по своим текстам. Весь код виден, новые строки помечены; в конце — свой раздел с помощью бесплатного ИИ и шпаргалка.',
+    skills: ['Streamlit с нуля', 'свои файлы', 'session_state', 'API', 'тренажёр', 'свой раздел с ИИ'],
+    fields: 'my_app.py — ячейка каждого шага',
+    extraFiles: ['../streamlit/steps/step1.py', '../streamlit/steps/step5.py', '../streamlit/steps/step8.py'] },
 ]
 
 function CopyBlock({ code }) {
@@ -116,7 +122,23 @@ function CopyBlock({ code }) {
 }
 
 export function ColabHandsOn() {
-  const [active, setActive] = useState(LABS[0].id)
+  const [active, setActive] = useState(() => {
+    try {
+      const n = new URLSearchParams(window.location.search).get('pair')
+      return n && LABS.some((l) => l.id === `p${String(n).padStart(2, '0')}`) ? `p${String(n).padStart(2, '0')}` : LABS[0].id
+    } catch {
+      return LABS[0].id
+    }
+  })
+  useEffect(() => {
+    if (/[?&]pair=/.test(window.location.search)) {
+      setTimeout(() => document.getElementById('lab-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300)
+    }
+  }, [])
+  const pick = (id) => {
+    setActive(id)
+    setTimeout(() => document.getElementById('lab-detail')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+  }
   const lab = useMemo(() => LABS.find((l) => l.id === active) || LABS[0], [active])
   const colabUrl = `${COLAB_GH}/${lab.file}`
   const ghUrl = `${GH_BLOB}/${lab.file}`
@@ -124,9 +146,28 @@ export function ColabHandsOn() {
 
   return (
     <div className="space-y-8">
+      <div className="grid sm:grid-cols-2 gap-3">
+        {[
+          ['p14', 'Новое · пара 14', 'Своё Streamlit-приложение с нуля', 'Восемь шагов до своего кабинета на своих текстах: частоты, контексты, цитаты в Word, API, тренажёр.', 'Открыть пару 14 →'],
+          ['p13', 'Пара 13', 'Streamlit: готовая веб-панель', 'Запустить и настроить готовую «Панель диссертации»; ссылка открывается и на телефоне.', 'Открыть пару 13 →'],
+        ].map(([id, kicker, title, text, cta]) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => pick(id)}
+            className={`text-left rounded-2xl border-2 p-4 sm:p-5 hover:shadow-lg transition-shadow flex flex-col gap-1 ${id === 'p14' ? 'border-fuchsia-500 dark:border-fuchsia-500 bg-gradient-to-r from-fuchsia-50 to-violet-50 dark:from-fuchsia-950/30 dark:to-violet-950/20' : 'border-fuchsia-200 dark:border-fuchsia-900 bg-white dark:bg-gray-800'}`}
+          >
+            <span className="text-xs font-bold uppercase tracking-wide text-fuchsia-800 dark:text-fuchsia-200">{kicker}</span>
+            <span className="text-lg font-bold text-gray-900 dark:text-white">{title}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">{text}</span>
+            <span className="mt-1 font-semibold text-fuchsia-900 dark:text-fuchsia-100">{cta}</span>
+          </button>
+        ))}
+      </div>
+
       <section className="rounded-2xl border-2 border-teal-500/40 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20 p-5 sm:p-6">
         <p className="text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200 mb-2">
-          13 пар · Google Colab · бесплатно · Бунин → ваш текст
+          14 пар · Google Colab · бесплатно · Бунин → ваш текст
         </p>
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
           Лаборатории Colab на весь курс
@@ -182,13 +223,13 @@ export function ColabHandsOn() {
       </section>
 
       <section>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">13 лабораторных пар</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">14 лабораторных пар</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {LABS.map((item) => (
             <button
               key={item.id}
               type="button"
-              onClick={() => setActive(item.id)}
+              onClick={() => pick(item.id)}
               className={`text-left rounded-2xl p-4 border transition-all ${
                 active === item.id
                   ? 'border-teal-600 bg-teal-50 dark:bg-teal-950/40 shadow'
@@ -206,7 +247,7 @@ export function ColabHandsOn() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 space-y-4">
+      <section id="lab-detail" className="scroll-mt-20 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 sm:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">

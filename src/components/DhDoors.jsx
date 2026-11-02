@@ -13,7 +13,7 @@ const DOORS = [
   {
     n: 2,
     title: 'Попробовать',
-    text: 'Интерактивные стенды к лекциям и 12 пар в Google Colab — всё на рассказах Бунина, ничего не нужно устанавливать.',
+    text: 'Интерактивные стенды к лекциям и 14 пар в Google Colab — всё на рассказах Бунина, ничего не нужно устанавливать.',
     cta: 'Стенды и Colab',
     to: '/courses/digital-humanities/demo',
     cls: 'border-teal-300 dark:border-teal-700 bg-teal-50/80 dark:bg-teal-950/20',
