@@ -698,6 +698,130 @@ check_quotes(ANSWER, texts)
             "промпт + ответ ИИ + таблица проверки цитат", "заполненный протокол работы с ИИ"]),
 ]
 
+
+# ---------------------------------------------------------------- 13 · Streamlit
+NB["Para13_Streamlit_panel.ipynb"] = [
+    md("""
+# Пара 13. Streamlit: веб-приложение для своей диссертации
+
+| | |
+|---|---|
+| **Зачем** | Превратить свои подсчёты в интерактивную страницу: показать на предзащите, отправить руководителю ссылку, проверять гипотезы «на лету». |
+| **Что получите** | Работающую «Панель моей диссертации» (ваш корпус, поля, контексты, дуга, ключевые слова, литература через API, проверка цитат ИИ) и навык менять её код. |
+| **Где** | Прямо здесь, в бесплатном Colab: устанавливать ничего не нужно. Ссылка на приложение откроется и на телефоне. |
+
+Три приложения по нарастающей: **app_01_hello** (как устроена страница) → **app_02_openalex** (подключаем API) → **app_03_panel** (панель диссертации).
+"""),
+    md("""
+### Как работать
+1. **Файл → Сохранить копию на Диске.**
+2. Запустите ячейку **«Подготовка»** (≈1 мин).
+3. В ячейке **«Запуск»** выберите приложение и запустите — появится ссылка вида `https://…trycloudflare.com`. Откройте её.
+4. Чтобы поменять приложение: слева значок папки → двойной щелчок по файлу `app_…py` → правьте → **Ctrl+S**. Страница приложения обновится сама (или меню ⋮ → *Rerun*).
+5. Ссылка работает, пока открыт этот блокнот. Закрыли — запустите «Запуск» снова (ссылка будет новой).
+"""),
+    code("""
+#@title 🔧 Подготовка — установить Streamlit и скачать приложения (≈1 мин) { display-mode: "form" }
+#@markdown Ваши правки в app_…py не затираются. Поставьте галочку, чтобы вернуть исходные файлы.
+RESET_APPS = False  #@param {type:"boolean"}
+import os, subprocess, requests
+subprocess.run("pip -q install streamlit python-docx pymorphy3", shell=True)
+B = "https://pavelaleks.github.io/samarkand_lectures/demo-downloads/"
+for f in ["colab-bunin/dh_utils.py", "streamlit/app_01_hello.py", "streamlit/app_02_openalex.py", "streamlit/app_03_panel.py"]:
+    name = f.split("/")[-1]
+    if RESET_APPS or name == "dh_utils.py" or not os.path.exists(name):
+        open(name, "w", encoding="utf-8").write(requests.get(B + f, timeout=60).text)
+if not os.path.exists("cloudflared"):
+    subprocess.run("wget -q -O cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && chmod +x cloudflared", shell=True)
+print("✓ Готово:", ", ".join(sorted(x for x in os.listdir(".") if x.endswith(".py"))))
+"""),
+    code("""
+#@title ▶ Запуск приложения { display-mode: "form" }
+APP = "app_03_panel.py"  #@param ["app_01_hello.py", "app_02_openalex.py", "app_03_panel.py"]
+import subprocess, time, socket, re
+subprocess.run("pkill -f 'streamlit run'; pkill -f 'cloudflared tunnel'", shell=True)
+time.sleep(1)
+st_log = open("streamlit.log", "w")
+subprocess.Popen(["streamlit", "run", APP, "--server.port", "8501", "--server.headless", "true",
+                  "--server.enableCORS", "false", "--server.enableXsrfProtection", "false",
+                  "--server.runOnSave", "true", "--browser.gatherUsageStats", "false"],
+                 stdout=st_log, stderr=subprocess.STDOUT)
+for _ in range(60):
+    try:
+        socket.create_connection(("127.0.0.1", 8501), 1).close(); break
+    except OSError:
+        time.sleep(1)
+else:
+    print("✗ Streamlit не запустился. Посмотрите журнал в ячейке ниже."); raise SystemExit
+cf_log = open("cloudflared.log", "w")
+subprocess.Popen(["./cloudflared", "tunnel", "--url", "http://127.0.0.1:8501", "--no-autoupdate"], stdout=cf_log, stderr=subprocess.STDOUT)
+url = None
+for _ in range(40):
+    time.sleep(1)
+    m = re.search(r"https://[a-z0-9-]+\\.trycloudflare\\.com", open("cloudflared.log").read())
+    if m:
+        url = m.group(0); break
+from IPython.display import HTML, display
+if url:
+    display(HTML(f'<p style="font-size:18px">✓ Приложение <b>{APP}</b> запущено: <a href="{url}" target="_blank">{url}</a></p>'
+                 '<p>Ссылка открывается в любом браузере, в том числе на телефоне. Если страница не грузится — подождите 10–20 секунд и обновите.</p>'))
+else:
+    print("Туннель не ответил. Запасной вариант — откройте через Colab:")
+    from google.colab import output
+    output.serve_kernel_port_as_window(8501, anchor_text="▶ Открыть приложение")
+"""),
+    code("""
+#@title 🩺 Если что-то не работает: журнал приложения { display-mode: "form" }
+print(open("streamlit.log").read()[-3000:])
+"""),
+    md("""
+## Пара A. Как устроен Streamlit (app_01 → app_02)
+**app_01_hello.py** — откройте файл и выполните 4 задания из шапки: заголовок под свою тему, новое поле, другой слайдер, третья метрика. Главное: *каждая строка `st.…` — это элемент страницы; после сохранения файл выполняется заново сверху вниз.*
+
+**app_02_openalex.py** — подключение API. Разверните на странице «Как это устроено»: адрес запроса и JSON-ответ. Задания:
+1. свой запрос в `QUERY_DEFAULT`;
+2. колонка «язык»;
+3. галочка «только открытый доступ» (`is_oa:true`);
+4. *(сложнее)* второй источник — Crossref.
+
+**Сдать:** скриншот своего app_02 с запросом по теме диссертации + одна найденная полезная работа.
+"""),
+    md("""
+## Пара B. Панель моей диссертации (app_03)
+1. Запустите **app_03_panel.py** с демо-текстами Бунина — пройдите все 8 разделов.
+2. В разделе «1. Мой корпус» загрузите **свои** файлы (.txt / .docx).
+3. Откройте `app_03_panel.py` и поменяйте блок **НАСТРОЙКИ**: `THESIS_TITLE`, `AUTHOR_LATIN`, `FIELDS_DEFAULT`, `POS_DEFAULT`, `NEG_DEFAULT`, `QUERIES_DEFAULT`.
+4. Уберите из списка `PAGES` разделы, которые вашей теме не нужны.
+
+**Сдать:** ссылку на работающую панель (покажите с телефона соседу) + скриншот самого убедительного раздела.
+"""),
+    md("""
+## Пара C. Свой раздел и подготовка к предзащите
+Добавьте в панель **свой раздел** — например, «Мои цитаты» (таблица `st.dataframe` с цитатами и страницами), «График по главам» или любой метод из пар 6–10 (`dh.delta`, `dh.cooccurrence` + `dh.draw_graph`, `dh.topics`). Шаблон:
+
+```python
+elif page.startswith("9"):
+    st.write("Мой раздел")
+```
+и допишите `"9. Мой раздел"` в список `PAGES`. Застряли — скопируйте ошибку из журнала в бесплатный чат ИИ: «объясни новичку, как исправить».
+
+**Сдать:** скачайте свой `app_03_panel.py` (ячейка ниже) — он пойдёт в приложение к диссертации.
+"""),
+    code("""
+#@title ⬇ Скачать своё приложение { display-mode: "form" }
+from google.colab import files
+files.download("app_03_panel.py")
+"""),
+    md("""
+### По желанию: постоянная ссылка (Streamlit Community Cloud, бесплатно)
+Ссылка из Colab живёт, пока открыт блокнот. Постоянный адрес вида `https://ваша-тема.streamlit.app`:
+1. Зарегистрируйтесь на github.com и создайте репозиторий.
+2. Загрузите туда `app_03_panel.py`, `dh_utils.py` и файл `requirements.txt` с тремя строками: `streamlit`, `pymorphy3`, `python-docx`.
+3. Зайдите на share.streamlit.io через GitHub → **Create app** → выберите репозиторий и файл `app_03_panel.py` → **Deploy**.
+Свои тексты в публичный репозиторий не кладите, если они защищены авторским правом, — загружайте их в панели через «Мои файлы».
+"""),
+]
+
 for name, cells in NB.items():
     nb = {
         "cells": __import__("copy").deepcopy(cells),
