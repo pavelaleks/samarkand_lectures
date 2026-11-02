@@ -1,15 +1,15 @@
 {
   "courseSlug": "digital-humanities",
   "title": "Инструменты курса",
-  "subtitle": "Стенды к лекциям, 12 пар в Google Colab и корпуса Бунина и Чехова.",
+  "subtitle": "Стенды к лекциям, 13 пар в Google Colab и корпуса Бунина и Чехова.",
   "howTo": [],
   "works": [
     {
       "id": "colab-bunin-hands-on",
       "lecture": 0,
       "slug": "colab-bunin",
-      "title": "Практика · 12 пар в Google Colab",
-      "minutes": "12 пар",
+      "title": "Практика · 13 пар в Google Colab",
+      "minutes": "13 пар",
       "tool": "ColabHandsOn",
       "featured": true,
       "question": "Как провести цифровой разбор в бесплатном Colab — сначала на Бунине, потом на текстах своей магистерской — не меняя ни строчки кода?",
