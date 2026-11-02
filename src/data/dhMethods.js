@@ -17,6 +17,7 @@ export const PAIRS = {
   10: { file: 'Para10_LDA_temy_mini_korpus.ipynb', title: 'Тематическое моделирование (LDA)' },
   11: { file: 'Para11_OpenAlex_bibliografiya_temy.ipynb', title: 'Библиография под тему: OpenAlex' },
   12: { file: 'Para12_API_Gutendex_OL_Wikidata.ipynb', title: 'Справочные данные и проверка ответа ИИ' },
+  13: { file: 'Para13_Streamlit_panel.ipynb', title: 'Streamlit: веб-панель диссертации' },
 }
 
 export const colabUrl = (pair) => `${COLAB_GH}/${PAIRS[pair].file}`

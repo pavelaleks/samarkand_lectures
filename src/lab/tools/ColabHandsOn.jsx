@@ -81,6 +81,12 @@ const LABS = [
     goal: 'Wikidata и Open Library по автору; промпт для бесплатного чата ИИ и автоматическая проверка его цитат по тексту.',
     skills: ['Wikidata', 'Open Library', 'промпт', 'проверка цитат'],
     fields: 'AUTHOR · QUESTION · ANSWER' },
+  { id: 'p13', pair: 'Пара 13', track: 'Ваша диссертация · веб', title: 'Streamlit: веб-панель своей диссертации',
+    file: 'Para13_Streamlit_panel.ipynb', method: 'fields',
+    goal: 'Запуск Streamlit прямо в Colab по ссылке (открывается и на телефоне): первое приложение → подключение API OpenAlex → «Панель моей диссертации» на своих текстах; свой раздел для предзащиты.',
+    skills: ['Streamlit', 'виджеты', 'API → таблица', 'веб-панель', 'предзащита'],
+    fields: 'APP · блок НАСТРОЙКИ в app_03_panel.py',
+    extraFiles: ['../streamlit/app_01_hello.py', '../streamlit/app_02_openalex.py', '../streamlit/app_03_panel.py'] },
 ]
 
 function CopyBlock({ code }) {
@@ -120,7 +126,7 @@ export function ColabHandsOn() {
     <div className="space-y-8">
       <section className="rounded-2xl border-2 border-teal-500/40 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/40 dark:to-cyan-950/20 p-5 sm:p-6">
         <p className="text-xs font-bold uppercase tracking-wide text-teal-800 dark:text-teal-200 mb-2">
-          12 пар · Google Colab · бесплатно · Бунин → ваш текст
+          13 пар · Google Colab · бесплатно · Бунин → ваш текст
         </p>
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
           Лаборатории Colab на весь курс
@@ -176,7 +182,7 @@ export function ColabHandsOn() {
       </section>
 
       <section>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">12 лабораторных пар</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">13 лабораторных пар</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {LABS.map((item) => (
             <button
@@ -252,7 +258,7 @@ export function ColabHandsOn() {
             Доп. файлы:{' '}
             {lab.extraFiles.map((f) => (
               <a key={f} className="underline font-semibold mr-3" href={`${DL}/${f}`} download>
-                {f}
+                {f.split("/").pop()}
               </a>
             ))}
           </div>
