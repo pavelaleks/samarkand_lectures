@@ -49,7 +49,7 @@ HOWTO = md("""
 3. Сначала запустите всё как есть: демо на готовой паре текстов из Викитеки. Потом впишите свои тексты.
 
 **Как задать тексты** (в полях через `;`):
-- ключ готового текста: `pushkin-arzrum`, `custine`, `vambery` — список выводит `list_texts()`;
+- ключ готового текста: `pushkin-arzrum`, `custine`, `vambery` — список выводит `list_texts()`; русский перевод западного текста — `hugo-orientales@ru`;
 - страница Викитеки: `ws:ru:Мцыри (Лермонтов)`, `ws:en:The Giaour`, `ws:fr:Les Orientales`;
 - ссылка на .txt: `https://www.gutenberg.org/cache/epub/41751/pg41751.txt`;
 - `МОИ ФАЙЛЫ` — появится кнопка загрузки .txt или .docx.

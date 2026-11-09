@@ -78,6 +78,74 @@ export async function loadData(name) {
 
 export function params() { return new URLSearchParams(location.search) }
 
+// Каждый западный текст с переводом на Викитеке получает вариант «id@ru» — русский перевод.
+export function expandPresets(texts) {
+  const out = {}
+  for (const [id, t] of Object.entries(texts || {})) {
+    out[id] = t
+    if (t.tr) out[`${id}@ru`] = { ...t, title: `${t.title} — русский перевод`, lang: 'ru', src: t.tr, of: id, isTr: true }
+  }
+  return out
+}
+
+// Текст из Викитеки без интерфейса: точное название или поиск; оглавление → главы, редакции → одна.
+export async function fetchWsDoc(src, meta = {}, depth = 0) {
+  let page = null
+  let alternatives = []
+  if (src.title) {
+    try { page = await wikisourcePage(src.lang, src.title) } catch (e) { if (e.code !== 'missingtitle') throw e }
+  }
+  if (!page) {
+    alternatives = await wikisourceSearch(src.lang, src.query || src.title || '', 6)
+    if (!alternatives.length) return null
+    page = await wikisourcePage(src.lang, alternatives[0].title)
+  }
+  let text = page.text
+  const words = (text.match(/\p{L}+/gu) || []).length
+  if (words < 120 && page.subpages.length && depth < 2) {
+    const chapters = page.subpages.filter((x) => x.title.startsWith(page.title + '/')).slice(0, 40)
+    if (chapters.length) {
+      const parts = []
+      for (const c of chapters) { try { parts.push((await wikisourcePage(src.lang, c.title)).text) } catch { /* пропуск */ } }
+      text = parts.join('\n\n')
+    } else {
+      const ed = page.subpages.find((x) => !/\(ДО\)|\/ДО$/.test(x.title)) || page.subpages[0]
+      const d = await fetchWsDoc({ lang: src.lang, title: ed.title }, meta, depth + 1)
+      if (d) d.alternatives = alternatives
+      return d
+    }
+  }
+  return { id: meta.id || `ws:${src.lang}:${page.title}`, author: meta.author || '', title: meta.title || page.title, year: meta.year || '',
+    lang: src.lang, side: meta.side || '', text, url: page.url, source: 'Викитека', wsTitle: page.title, alternatives }
+}
+
+// Мост через словарь: основа запроса («гарем») → строки словаря (мотив «гарем, сераль, одалиска»),
+// чтобы искать их формы на языке каждого текста (harem, sérail, odalisque).
+export function bridgeQuery(query, lex) {
+  const stems = query.split(',').map((x) => norm(x.trim())).filter((x) => x.length >= 2)
+  const items = []
+  for (const kind of ['motifs', 'traits', 'groups']) {
+    for (const it of lex[kind]) {
+      const hit = stems.some((q) => Object.values(it.forms).some((f) =>
+        f.p.some((p) => p.length >= 3 && (q.startsWith(p) || (q.length >= 4 && p.startsWith(q)))) ||
+        f.x.some((x) => x === q || (q.length >= 4 && x.startsWith(q)))))
+      if (hit) items.push({ kind, id: it.id, label: it.label, forms: it.forms })
+    }
+  }
+  return { stems, items }
+}
+
+// Предложения анализа, где есть основа запроса или строка словаря из моста.
+export function bridgeHits(an, bridge) {
+  const out = []
+  for (const s of an.sentences) {
+    const words = tokens(s.s).filter((t) => bridge.stems.some((q) => t.n.startsWith(q))).map((t) => t.raw)
+    for (const it of bridge.items) { const w = s[it.kind].get(it.id); if (w) words.push(...w) }
+    if (words.length) out.push({ s, words })
+  }
+  return out
+}
+
 // ───────────────────────── нормализация и токены ─────────────────────────
 const CHARMAP = { 'ё': 'е', 'ѣ': 'е', 'і': 'и', 'ї': 'и', 'ѵ': 'и', 'ѳ': 'ф' }
 export function norm(s) {
@@ -305,11 +373,14 @@ export function stripGutenberg(text) {
 // ───────────────────────── слот текста (UI) ─────────────────────────
 // Слот: пресет | Викитека | файл | вставить. onLoad(doc), где doc = {id, label, author, title, lang, side, text, url}
 export class TextSlot {
-  constructor(root, { name = 'Текст', side = '', presets = null, onLoad = () => {}, onClear = () => {} } = {}) {
+  constructor(root, opts = {}) {
+    const { name = 'Текст', side = '', presets = null, onLoad = () => {}, onClear = () => {} } = opts
     this.root = root
     this.name = name
     this.side = side
-    this.presets = presets
+    this.presets = presets ? expandPresets(presets) : null
+    this.withTranslation = !!opts.withTranslation
+    this.onTranslation = opts.onTranslation || (() => {})
     this.onLoad = onLoad
     this.onClear = onClear
     this.doc = null
@@ -353,13 +424,19 @@ export class TextSlot {
     const groups = { 'россия': h('optgroup', { label: 'Россия' }), 'запад': h('optgroup', { label: 'Запад' }) }
     for (const [id, t] of Object.entries(this.presets)) {
       const g = groups[t.side] || groups['запад']
-      g.append(h('option', { value: id }, `${t.author}. ${t.title} (${t.year})`))
+      g.append(h('option', { value: id }, `${t.isTr ? '   ↳ ' : ''}${t.author}. ${t.title}${t.isTr ? '' : ` (${t.year})`}`))
     }
     sel.append(groups['россия'], groups['запад'])
     const btn = h('button', { type: 'button', class: 'primary' }, 'Загрузить')
     btn.addEventListener('click', () => sel.value && this.loadPreset(sel.value))
     this.presetSelect = sel
-    return h('div', { class: 'row' }, h('div', { class: 'grow' }, sel), btn)
+    const row = h('div', { class: 'row' }, h('div', { class: 'grow' }, sel), btn)
+    if (!this.withTranslation) return row
+    this.trBox = h('input', { type: 'checkbox' })
+    this.trBox.checked = true
+    const lab = h('label', { class: 'small', style: { display: 'flex', gap: '.4rem', alignItems: 'center', marginTop: '.45rem' } }, this.trBox,
+      'и русский перевод рядом, если он есть на Викитеке (поиск идёт по обоим)')
+    return h('div', {}, row, lab)
   }
 
   wsPane() {
@@ -512,6 +589,41 @@ export class TextSlot {
     this.status(`Загружено: ${doc.author ? doc.author + '. ' : ''}${doc.title}${doc.url ? '' : ''}`, 'ok')
     if (doc.url) this.statusEl.append(' · ', h('a', { href: doc.url, target: '_blank', rel: 'noopener' }, 'источник'))
     this.onLoad(doc)
+    this.maybeTranslation(doc)
+  }
+
+  async maybeTranslation(doc) {
+    if (!this.withTranslation) return
+    const t = this.presets && this.presets[doc.id]
+    if (!t || t.isTr || !t.tr || doc.lang === 'ru' || (this.trBox && !this.trBox.checked)) { this.trDoc = null; this.onTranslation(null); return }
+    const line = h('div', { class: 'status' }, 'Ищу русский перевод на Викитеке…')
+    this.trLine?.remove()
+    this.trLine = line
+    this.statusEl.after(line)
+    try {
+      const tr = await fetchWsDoc(t.tr, { id: doc.id + '@ru', author: t.author, title: `${t.title} — русский перевод`, side: t.side })
+      if (!tr || (tr.text.match(/\p{L}+/gu) || []).length < 40) {
+        line.className = 'status err'
+        line.textContent = 'Русского перевода в открытом доступе на Викитеке не нашлось. Можно вставить фрагмент перевода во вкладке «Вставить» другого слота или загрузить файл.'
+        this.trDoc = null; this.onTranslation(null); return
+      }
+      this.trDoc = tr
+      line.className = 'status ok'
+      line.innerHTML = `Перевод: ${esc(tr.wsTitle)} · <a href="${esc(tr.url)}" target="_blank" rel="noopener">источник</a>. Проверьте, тот ли это текст. `
+      if (tr.alternatives?.length > 1) {
+        const sel = h('select', { 'aria-label': 'Другой перевод' }, ...tr.alternatives.map((a) => h('option', { value: a.title }, a.title)))
+        sel.value = tr.wsTitle
+        sel.addEventListener('change', async () => {
+          const d = await fetchWsDoc({ lang: 'ru', title: sel.value }, { id: tr.id, author: tr.author, title: tr.title, side: tr.side })
+          if (d) { d.alternatives = tr.alternatives; this.trDoc = d; this.onTranslation(d) }
+        })
+        line.append('Другой вариант: ', sel)
+      }
+      this.onTranslation(tr)
+    } catch (e) {
+      line.className = 'status err'; line.textContent = 'Перевод не загрузился: ' + e.message
+      this.trDoc = null; this.onTranslation(null)
+    }
   }
 }
 

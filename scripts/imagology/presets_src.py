@@ -87,6 +87,28 @@ TEXTS = {
                     read="https://www.gutenberg.org/ebooks/41751"),
 }
 
+# Русские переводы западных текстов на Викитеке (ru). Ищутся на лету: если старого перевода
+# в открытом доступе нет, стенд скажет об этом и предложит загрузить файл.
+TRANSLATIONS = {
+    "montesquieu": ws("ru", None, "Персидские письма Монтескьё"),
+    "custine": ws("ru", None, "Кюстин Россия в 1839 году"),
+    "hugo-orientales": ws("ru", None, "Гюго Восточные мотивы"),
+    "chateaubriand": ws("ru", None, "Шатобриан Путешествие из Парижа в Иерусалим"),
+    "dumas-caucase": ws("ru", None, "Дюма Кавказ"),
+    "goethe-divan": ws("ru", None, "Гёте Западно-восточный диван"),
+    "byron-giaour": ws("ru", None, "Гяур Байрон"),
+    "byron-abydos": ws("ru", "Абидосская невеста (Байрон)", "Абидосская невеста Байрон"),
+    "moore-peri": ws("ru", "Пери и ангел (Жуковский)", "Пери и ангел Жуковский"),
+    "montagu": ws("ru", None, "Монтегю письма из Турции"),
+    "carlyle-prophet": ws("ru", None, "Карлейль Герои и героическое в истории"),
+    "kipling-ballad": ws("ru", None, "Киплинг Баллада о Востоке и Западе"),
+    "kipling-burden": ws("ru", None, "Киплинг Бремя белых"),
+    "marco-polo": ws("ru", None, "Марко Поло книга о разнообразии мира"),
+    "vambery": ws("ru", None, "Вамбери Путешествие по Средней Азии"),
+}
+for _k, _src in TRANSLATIONS.items():
+    TEXTS[_k]["tr"] = _src
+
 # Пары: левый текст — Россия, правый — Запад (или наоборот), с вопросом к сравнению и фокусом.
 PAIRS = [
     dict(id="persidskie", lectures=[1, 2], left="karamzin", right="montesquieu",
