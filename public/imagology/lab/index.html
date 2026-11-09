@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Лаборатория имагологии · Восток в русских и западных текстах</title>
+<meta name="description" content="Четыре цифровых стенда, практические занятия и сквозное задание «Досье одного образа» к курсу «Имагология»." />
+<link rel="stylesheet" href="lab.css" />
+</head>
+<body>
+<main class="wrap">
+  <p class="kicker">Курс «Имагология» · цифровая практика</p>
+  <h1>Лаборатория имагологии</h1>
+  <p class="lead">Курс читает Восток русской литературы рядом с Востоком Западной Европы: Пушкин и Гюго, Лермонтов и Киплинг, Карамзин и Монтескьё, Брокгауз и Britannica о Самарканде. Лаборатория даёт для этого четыре инструмента. Они работают в браузере на открытых текстах Викитеки и изображениях Wikimedia Commons, ничего не нужно устанавливать.</p>
+
+  <section class="grid" style="margin-top:1.5rem">
+    <div class="panel">
+      <p class="kicker">1 · Понять</p>
+      <h3 style="margin-top:0">Лекции</h3>
+      <p class="small muted">18 лекций: краткое содержание, параллель «Запад ↔ Россия», DH-ход и литература в открытом доступе.</p>
+      <a class="btn small" href="/samarkand_lectures/courses/imagology">К лекциям курса →</a>
+    </div>
+    <div class="panel">
+      <p class="kicker">2 · Попробовать</p>
+      <h3 style="margin-top:0">Практические занятия</h3>
+      <p class="small muted">9 занятий по 80 минут: пара текстов, ход работы по шагам, стенд, что сдать и как оценивается.</p>
+      <a class="btn small" href="practicum.html">Открыть практикум →</a>
+    </div>
+    <div class="panel">
+      <p class="kicker">3 · Применить</p>
+      <h3 style="margin-top:0">Досье одного образа</h3>
+      <p class="small muted">Сквозное задание семестра: один образ (сарт, черкешенка, дервиш, Самарканд) в русских и западных источниках.</p>
+      <a class="btn small" href="practicum.html#dosye">Задание и шаблон →</a>
+    </div>
+  </section>
+
+  <h2>Стенды</h2>
+  <div class="grid">
+    <a class="card" href="volkertafel.html">
+      <p class="kicker">Стенд 1 · этнотип</p>
+      <h3>Цифровая Völkertafel</h3>
+      <p>Таблица «народ × признак», как в Штирийской таблице народов, но заполненная корпусом. Два корпуса рядом: как Россия и Запад заполняют одну сетку. Клик по клетке — контексты.</p>
+      <span class="more">Открыть →</span>
+    </a>
+    <a class="card" href="parallel.html">
+      <p class="kicker">Стенд 2 · мотивы</p>
+      <h3>Параллельный читатель</h3>
+      <p>Два текста на разных языках: профили мотивов (гарем, кинжал, пустыня, мечеть) и признаков, одна «сцена» в обоих текстах, ключевые слова для текстов одного языка.</p>
+      <span class="more">Открыть →</span>
+    </a>
+    <a class="card" href="karta.html">
+      <p class="kicker">Стенд 3 · пространство</p>
+      <h3>Карта взгляда</h3>
+      <p>Маршруты Никитина, Карамзина, Пушкина, Лермонтова, Кюстина, Дюма, Вамбери, Верещагина, Скайлера и Бёрнаби. Места загруженного текста, регионы, поиск координат в Wikidata.</p>
+      <span class="more">Открыть →</span>
+    </a>
+    <a class="card" href="galereya.html">
+      <p class="kicker">Стенд 4 · визуальный образ</p>
+      <h3>Галерея образов Востока</h3>
+      <p>Верещагин, «Туркестанский альбом», Прокудин-Горский, Жером, Делакруа. Разметка по кодовой книге: кто смотрит, жанр, фигуры, мотивы. Сводка по сериям.</p>
+      <span class="more">Открыть →</span>
+    </a>
+  </div>
+
+  <h2>Блокноты Google Colab</h2>
+  <p class="muted">Те же методы на коде Python: для курсовой и магистерской, на больших текстах из Project Gutenberg (например, Вамбери), с графиками для главы. Код спрятан, меняются поля формы.</p>
+  <div class="grid" id="colab"></div>
+
+  <h2>Пары «Запад ↔ Россия»</h2>
+  <p class="muted">Каждую пару можно открыть сразу в стенде. Тексты подгружаются из Викитеки.</p>
+  <div class="table-wrap"><table class="table" id="pairs"><thead><tr><th>Пара</th><th>Лекции</th><th>Стенды</th></tr></thead><tbody></tbody></table></div>
+
+  <h2>Открытые источники</h2>
+  <div class="grid-2">
+    <div class="panel small">
+      <h3 style="margin-top:0">Тексты</h3>
+      <ul>
+        <li><a href="https://ru.wikisource.org" target="_blank" rel="noopener">Викитека</a> (ru, en, fr, de) — Пушкин, Лермонтов, Достоевский, Байрон, Гюго, Гёте, ЭСБЕ, Britannica 1911.</li>
+        <li><a href="https://www.gutenberg.org/ebooks/41751" target="_blank" rel="noopener">Project Gutenberg</a> — Вамбери «Travels in Central Asia», Кюстин «La Russie en 1839» (<a href="https://www.gutenberg.org/ebooks/25755" target="_blank" rel="noopener">т. 1</a>).</li>
+        <li><a href="https://archive.org/details/turkistannoteso01schu" target="_blank" rel="noopener">Internet Archive</a> — Скайлер «Turkistan» (1876).</li>
+        <li><a href="https://www.library.illinois.edu/ias/spx/turkestanskii_sbornik/" target="_blank" rel="noopener">«Туркестанский сборник»</a> — указатель и оцифровка (Университет Иллинойса).</li>
+        <li><a href="https://gallica.bnf.fr" target="_blank" rel="noopener">Gallica</a>, <a href="https://rusneb.ru" target="_blank" rel="noopener">НЭБ</a>, <a href="https://feb-web.ru" target="_blank" rel="noopener">ФЭБ</a> — французские травелоги и русские академические издания.</li>
+      </ul>
+    </div>
+    <div class="panel small">
+      <h3 style="margin-top:0">Изображения, данные, теория</h3>
+      <ul>
+        <li><a href="https://www.loc.gov/search/?q=Prokudin-Gorskii+Samarkand" target="_blank" rel="noopener">Библиотека Конгресса</a> — Прокудин-Горский; <a href="https://www.loc.gov/search/?q=Turkestan+album" target="_blank" rel="noopener">«Туркестанский альбом»</a>.</li>
+        <li><a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> — Верещагин, Жером, Делакруа, Гагарин.</li>
+        <li><a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> — координаты, даты, авторы; <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a>.</li>
+        <li><a href="https://imagologica.eu" target="_blank" rel="noopener">imagologica.eu</a> — словарь и библиография имагологии (Лерссен).</li>
+        <li><a href="/samarkand_lectures/courses/digital-humanities/cabinet">Кабинет магистранта</a> курса DH — поиск литературы и список по ГОСТ.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="foot">Словари этнонимов, признаков и мотивов (ru/en/fr/de), газеттир мест и пары текстов — в файлах <a href="data/lexicon.json">lexicon.json</a>, <a href="data/places.json">places.json</a>, <a href="data/presets.json">presets.json</a>; их собирает скрипт <code>scripts/imagology/build_data.py</code>.</p>
+</main>
+<script type="module">
+import { $, h, esc, loadData, topbar } from './lab.js'
+topbar('index.html')
+const presets = await loadData('presets')
+const tb = $('#pairs tbody')
+for (const p of presets.pairs) {
+  const L = presets.texts[p.left], R = presets.texts[p.right]
+  tb.append(h('tr', {},
+    h('td', { html: `<strong>${esc(p.title)}</strong><br><span class="faint small">${esc(L.author)} ↔ ${esc(R.author)}</span>` }),
+    h('td', { class: 'small' }, p.lectures.join(', ')),
+    h('td', { class: 'small', html: `<a href="parallel.html?pair=${p.id}">читатель</a> · <a href="volkertafel.html?pair=${p.id}">таблица</a> · <a href="karta.html?pair=${p.id}">карта</a>` })))
+}
+const NB = [
+  ['Imago01_Volkertafel.ipynb', 'Völkertafel на своих текстах', 'Таблица «народ × признак» для любых текстов Викитеки и Gutenberg, тепловая карта, контексты в Excel.'],
+  ['Imago02_Karta_vzglyada.ipynb', 'Карта взгляда', 'Места текста и маршруты на интерактивной карте (folium), экспорт GeoJSON и PNG для главы.'],
+  ['Imago03_Parallel.ipynb', 'Параллельное чтение', 'Профили мотивов двух текстов, ключевые слова (log-likelihood), сцена в обоих текстах.'],
+  ['Imago04_Dosye_obraza.ipynb', 'Досье одного образа', 'Собрать контексты одного образа по корпусу, таблицу признаков и черновик досье в Word.'],
+]
+const base = 'https://colab.research.google.com/github/pavelaleks/samarkand_lectures/blob/main/public/imagology/lab/colab/'
+for (const [f, t, d] of NB) {
+  $('#colab').append(h('a', { class: 'card', href: base + f, target: '_blank', rel: 'noopener' },
+    h('p', { class: 'kicker' }, 'Colab'), h('h3', {}, t), h('p', {}, d), h('span', { class: 'more' }, 'Открыть в Colab →')))
+}
+</script>
+</body>
+</html>

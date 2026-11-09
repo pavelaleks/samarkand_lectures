@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import LectureCard from '../components/LectureCard'
 import DhDoors from '../components/DhDoors'
+import ImagologyDoors from '../components/ImagologyDoors'
 import coursesData from '../data/courses.json'
 import lecturesIndex from '../data/lectures.json'
 
@@ -82,6 +83,7 @@ export default function CoursePage() {
         </p>
 
         {slug === 'digital-humanities' && <DhDoors />}
+        {slug === 'imagology' && <ImagologyDoors />}
       </motion.div>
 
       <div id="lectures" className="space-y-4 sm:space-y-6 scroll-mt-24">

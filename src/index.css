@@ -62,3 +62,36 @@ html {
 .demo-stage .student-action {
   display: none !important;
 }
+
+/* Краткие содержания лекций (HTML из src/data/<курс>/лекции): плагина typography нет, поэтому стили здесь */
+.lecture-html-content { line-height: 1.7; }
+.lecture-html-content > h2:first-child { font-size: 1.45rem; margin-top: 0; color: #111827; }
+.lecture-html-content h2 { font-size: 1.2rem; font-weight: 700; margin: 1.6rem 0 .6rem; color: #1f2937; letter-spacing: -.01em; }
+.lecture-html-content h3 { font-size: 1.05rem; font-weight: 700; margin: 1.2rem 0 .4rem; }
+.lecture-html-content p { margin: 0 0 .85rem; }
+.lecture-html-content ul, .lecture-html-content ol { margin: 0 0 1rem; padding-left: 1.25rem; }
+.lecture-html-content ul { list-style: disc; }
+.lecture-html-content ol { list-style: decimal; }
+.lecture-html-content li { margin: .35rem 0; }
+.lecture-html-content a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #93c5fd; }
+.lecture-html-content a:hover { text-decoration-color: currentColor; }
+.lecture-html-content .imago-block { margin: 1.4rem 0; padding: 1rem 1.15rem; border-radius: .9rem; border: 1px solid; }
+.lecture-html-content .imago-block h2 { margin-top: 0; font-size: 1.08rem; }
+.lecture-html-content .imago-block p:last-child, .lecture-html-content .imago-block ul:last-child { margin-bottom: 0; }
+.lecture-html-content .imago-west { background: #fdf6ee; border-color: #ead6c2; }
+.lecture-html-content .imago-west h2 { color: #7a3428; }
+.lecture-html-content .imago-dh { background: #eef6f5; border-color: #c4e1dc; }
+.lecture-html-content .imago-dh h2 { color: #0f5f57; }
+.lecture-html-content .imago-task { background: #f4f2fb; border-color: #d8d2ef; }
+.lecture-html-content .imago-task h2 { color: #4c3b8f; }
+.lecture-html-content .imago-links { font-weight: 600; }
+.lecture-html-content .imago-muted { color: #6b7280; font-size: .92em; font-weight: 400; }
+.dark .lecture-html-content > h2:first-child, .dark .lecture-html-content h2 { color: #f3f4f6; }
+.dark .lecture-html-content a { color: #93c5fd; text-decoration-color: #1e40af; }
+.dark .lecture-html-content .imago-west { background: rgba(122, 52, 40, .18); border-color: rgba(234, 214, 194, .2); }
+.dark .lecture-html-content .imago-west h2 { color: #f0b8a8; }
+.dark .lecture-html-content .imago-dh { background: rgba(15, 95, 87, .2); border-color: rgba(196, 225, 220, .2); }
+.dark .lecture-html-content .imago-dh h2 { color: #8fd6cc; }
+.dark .lecture-html-content .imago-task { background: rgba(76, 59, 143, .22); border-color: rgba(216, 210, 239, .2); }
+.dark .lecture-html-content .imago-task h2 { color: #c7bdf2; }
+.dark .lecture-html-content .imago-muted { color: #9ca3af; }
