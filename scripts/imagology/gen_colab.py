@@ -49,7 +49,7 @@ HOWTO = md("""
 3. Сначала запустите всё как есть: демо на готовой паре текстов из Викитеки. Потом впишите свои тексты.
 
 **Как задать тексты** (в полях через `;`):
-- ключ готового текста: `pushkin-arzrum`, `custine`, `vambery` — список выводит `list_texts()`; русский перевод западного текста — `hugo-orientales@ru`;
+- ключ готового текста: `pushkin-arzrum`, `custine`, `vambery` — список выводит `list_texts()`; русский перевод западного текста — `byron-giaour@ru`;
 - страница Викитеки: `ws:ru:Мцыри (Лермонтов)`, `ws:en:The Giaour`, `ws:fr:Les Orientales`;
 - ссылка на .txt: `https://www.gutenberg.org/cache/epub/41751/pg41751.txt`;
 - `МОИ ФАЙЛЫ` — появится кнопка загрузки .txt или .docx.
@@ -155,7 +155,7 @@ save([
            "Интерактивную карту маршрутов и мест текста, таблицу мест, GeoJSON для QGIS или geojson.io, список неизвестных имён.",
            ("Карта взгляда", "karta.html"), "4, 8"),
     HOWTO, SETUP,
-    texts_cell("pushkin-arzrum", "dumas-caucase", "arzrum"),
+    texts_cell("pushkin-arzrum", "lamartine", "arzrum"),
     code("""
 #@title 🧭 Маршруты { display-mode: "form" }
 #@markdown Ключи через запятую: nikitin, karamzin, pushkin, lermontov, custine, dumas, vambery, vereshchagin, schuyler, burnaby.
@@ -246,7 +246,7 @@ STEMS = "черкешенк, circassian, бэл"  #@param {type:"string"}
 _g = find_id("groups", GROUP) if GROUP.strip() else None
 _s = [x for x in STEMS.split(",") if x.strip()]
 """),
-    texts_cell("pushkin-plennik; lermontov-bela; marlinsky-ammalat", "byron-giaour; montagu", "—"),
+    texts_cell("pushkin-plennik; lermontov-bela; marlinsky-ammalat", "byron-giaour; byron-abydos", "—"),
     code("""
 #@title 🔎 Контексты образа { display-mode: "form" }
 CTX = image_contexts(A + B, group=_g, stems=_s)

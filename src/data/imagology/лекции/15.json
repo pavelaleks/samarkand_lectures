@@ -28,8 +28,12 @@
       "url": "https://ru.wikisource.org/wiki/%D0%9D%D0%BE%D1%87%D0%BD%D0%BE%D0%B9_%D0%B7%D0%B5%D1%84%D0%B8%D1%80_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)"
     },
     {
-      "displayName": "Дюма. Le Caucase (1859) — Викитека",
-      "url": "https://fr.wikisource.org/w/index.php?search=Dumas%20Le%20Caucase"
+      "displayName": "Ламартин. Voyage en Orient (1835) — Викитека",
+      "url": "https://fr.wikisource.org/wiki/Voyage_en_Orient_%28Lamartine%29"
+    },
+    {
+      "displayName": "Дюма. Le Caucase (1859) — Gallica",
+      "url": "https://gallica.bnf.fr/services/engine/search/sru?operation=searchRetrieve&query=%28gallica%20all%20%22Dumas%22%20and%20gallica%20all%20%22Le%20Caucase%22%29"
     }
   ]
 }

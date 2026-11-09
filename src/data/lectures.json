@@ -960,13 +960,18 @@
           "kind": "link"
         },
         {
-          "displayName": "Монтескьё. Lettres persanes (1721) — Викитека",
-          "url": "https://fr.wikisource.org/w/index.php?search=Lettres%20persanes",
+          "displayName": "Карамзин. Письма русского путешественника — Викитека",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%B8%D1%81%D1%8C%D0%BC%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BF%D1%83%D1%82%D0%B5%D1%88%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA%D0%B0_(%D0%9A%D0%B0%D1%80%D0%B0%D0%BC%D0%B7%D0%B8%D0%BD)",
           "kind": "link"
         },
         {
-          "displayName": "Карамзин. Письма русского путешественника — Викитека",
-          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%B8%D1%81%D1%8C%D0%BC%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BF%D1%83%D1%82%D0%B5%D1%88%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA%D0%B0_(%D0%9A%D0%B0%D1%80%D0%B0%D0%BC%D0%B7%D0%B8%D0%BD)",
+          "displayName": "Монтескьё. Lettres persanes (1721) — Викитека",
+          "url": "https://fr.wikisource.org/wiki/Lettres_persanes",
+          "kind": "link"
+        },
+        {
+          "displayName": "Монтескьё. Персидские письма — русский перевод (дореформенное издание), Викитека",
+          "url": "https://ru.wikisource.org/wiki/%D0%9F%D0%B5%D1%80%D1%81%D0%B8%D0%B4%D1%81%D0%BA%D0%B8%D0%B5_%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B0_%28%D0%9C%D0%BE%D0%BD%D1%82%D0%B5%D1%81%D0%BA%D1%8C%D0%B5%29/%D0%94%D0%9E",
           "kind": "link"
         }
       ]
@@ -1250,8 +1255,13 @@
           "kind": "link"
         },
         {
-          "displayName": "Дюма. Le Caucase (1859) — Викитека",
-          "url": "https://fr.wikisource.org/w/index.php?search=Dumas%20Le%20Caucase",
+          "displayName": "Ламартин. Voyage en Orient (1835) — Викитека",
+          "url": "https://fr.wikisource.org/wiki/Voyage_en_Orient_%28Lamartine%29",
+          "kind": "link"
+        },
+        {
+          "displayName": "Дюма. Le Caucase (1859) — Gallica",
+          "url": "https://gallica.bnf.fr/services/engine/search/sru?operation=searchRetrieve&query=%28gallica%20all%20%22Dumas%22%20and%20gallica%20all%20%22Le%20Caucase%22%29",
           "kind": "link"
         }
       ]
@@ -1375,13 +1385,23 @@
           "kind": "link"
         },
         {
-          "displayName": "ЭСБЕ. Самарканд; Сарты — Викитека",
-          "url": "https://ru.wikisource.org/w/index.php?search=%D0%AD%D0%A1%D0%91%D0%95%20%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%B4",
+          "displayName": "ЭСБЕ. Самарканд, город — Викитека",
+          "url": "https://ru.wikisource.org/wiki/%D0%AD%D0%A1%D0%91%D0%95/%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%B4%2C_%D0%B3%D0%BE%D1%80%D0%BE%D0%B4",
           "kind": "link"
         },
         {
-          "displayName": "Britannica 1911. Samarkand; Sarts — Викитека",
-          "url": "https://en.wikisource.org/w/index.php?search=1911%20Encyclop%C3%A6dia%20Britannica%20Samarkand",
+          "displayName": "ЭСБЕ. Сарты — Викитека",
+          "url": "https://ru.wikisource.org/wiki/%D0%AD%D0%A1%D0%91%D0%95/%D0%A1%D0%B0%D1%80%D1%82%D1%8B",
+          "kind": "link"
+        },
+        {
+          "displayName": "Britannica 1911. Samarkand (city) — Викитека",
+          "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Samarkand_%28city%29",
+          "kind": "link"
+        },
+        {
+          "displayName": "Britannica 1911. Turkestan — Викитека",
+          "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Turkestan",
           "kind": "link"
         },
         {
@@ -1615,13 +1635,18 @@
           "kind": "link"
         },
         {
-          "displayName": "Гёте. West-östlicher Divan (1819) — Викитека",
-          "url": "https://de.wikisource.org/w/index.php?search=West-%C3%B6stlicher%20Divan",
+          "displayName": "Гёте. West-östlicher Divan (1819) — Project Gutenberg",
+          "url": "https://www.gutenberg.org/ebooks/search/?query=West-%C3%B6stlicher%20Divan",
           "kind": "link"
         },
         {
-          "displayName": "Марко Поло. The Travels of Marco Polo — Project Gutenberg",
-          "url": "https://www.gutenberg.org/ebooks/search/?query=Travels%20of%20Marco%20Polo",
+          "displayName": "Гёте. Mahomets Gesang (1773) — Викитека",
+          "url": "https://de.wikisource.org/wiki/Mahomets_Gesang",
+          "kind": "link"
+        },
+        {
+          "displayName": "Марко Поло. Les Merveilleux Voyages de Marco Polo — Викитека",
+          "url": "https://fr.wikisource.org/wiki/Les_Merveilleux_Voyages_de_Marco_Polo_dans_l%E2%80%99Asie_du_XIIIe_si%C3%A8cle",
           "kind": "link"
         }
       ]
@@ -1761,7 +1786,12 @@
         },
         {
           "displayName": "Байрон. The Giaour (1813) — Викитека",
-          "url": "https://en.wikisource.org/w/index.php?search=The%20Giaour",
+          "url": "https://en.wikisource.org/wiki/The_Giaour",
+          "kind": "link"
+        },
+        {
+          "displayName": "Байрон. Абидосская невеста — русский перевод, Викитека",
+          "url": "https://ru.wikisource.org/wiki/%D0%90%D0%B1%D0%B8%D0%B4%D0%BE%D1%81%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%B5%D0%B2%D0%B5%D1%81%D1%82%D0%B0_%28%D0%91%D0%B0%D0%B9%D1%80%D0%BE%D0%BD%29",
           "kind": "link"
         }
       ]
