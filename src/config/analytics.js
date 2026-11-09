@@ -9,7 +9,7 @@
  *
  * Пока здесь 0 — счётчик не загружается и блок статистики в кабинете не показывается.
  */
-export const YM_ID = 0
+export const YM_ID = 114140326
 
 export const metrikaReport = (id = YM_ID) => `https://metrika.yandex.ru/dashboard?id=${id}`
 export const metrikaInformer = (id = YM_ID) => `https://informer.yandex.ru/informer/${id}/3_1_FFFFFFFF_EFEFEFFF_0_pageviews`

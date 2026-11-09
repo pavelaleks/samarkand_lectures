@@ -15,7 +15,7 @@ function load() {
   window.ym.l = Date.now()
   const s = document.createElement('script')
   s.async = true
-  s.src = 'https://mc.yandex.ru/metrika/tag.js'
+  s.src = `https://mc.yandex.ru/metrika/tag.js?id=${YM_ID}`
   document.head.appendChild(s)
   window.ym(YM_ID, 'init', {
     defer: true, // просмотры отправляем сами при каждой смене страницы (сайт одностраничный)
