@@ -453,7 +453,15 @@ export class TextSlot {
     this.showSubpages(page, meta, alternatives)
     const words = (page.text.match(/\p{L}+/gu) || []).length
     if (words < 120 && page.subpages.length) {
-      this.status(`«${page.title}» — оглавление или страница редакций. Выберите главу либо загрузите все главы сразу.`)
+      if (meta.id && this.presets && this.presets[meta.id] && (meta.depth || 0) < 2) {
+        // готовый текст: главы загружаем целиком, из редакций берём одну (лучше в современной орфографии)
+        const chapters = page.subpages.filter((x) => x.title.startsWith(page.title + '/'))
+        if (chapters.length) { await this.loadAll(page, chapters.slice(0, 40), meta); return }
+        const ed = page.subpages.find((x) => !/\(ДО\)|\/ДО$/.test(x.title)) || page.subpages[0]
+        await this.loadWs(lang, ed.title, { ...meta, depth: (meta.depth || 0) + 1 })
+        return
+      }
+      this.status(`«${page.title}» — оглавление или страница редакций. Выберите главу или нажмите «Все главы».`)
       return
     }
     this.set({ id: meta.id || `ws:${lang}:${page.title}`, author: meta.author || '', title: meta.title || page.title, year: meta.year || '',
