@@ -1,3 +1,5 @@
+import { YM_ID } from '../config/analytics'
+
 export default function Footer() {
   return (
     <footer className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 mt-auto">
@@ -35,6 +37,7 @@ export default function Footer() {
           <div className="text-center text-xs text-gray-500 dark:text-gray-500 pt-2 border-t border-gray-200 dark:border-gray-700">
             <p>© {new Date().getFullYear()} Самаркандский государственный университет им. Шарофа Рашидова</p>
             <p className="mt-1">Профессор Павел Викторович Алексеев</p>
+            {YM_ID > 0 && <p className="mt-1 text-xs opacity-80">Сайт использует Яндекс Метрику для обезличенной статистики посещений.</p>}
           </div>
         </div>
       </div>
