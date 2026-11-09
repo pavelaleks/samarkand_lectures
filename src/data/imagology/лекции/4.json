@@ -1,6 +1,6 @@
 {
   "number": "4",
-  "title": "Нация, этничность, стереотип: категории анализа.",
+  "title": "Нация и автообраз: «Клеветникам России», «Бородино» и взгляд Европы.",
   "id": "imagology-4",
   "readings": [
     {
@@ -26,6 +26,10 @@
     {
       "displayName": "Лермонтов. Бородино",
       "url": "https://ru.wikisource.org/wiki/%D0%91%D0%BE%D1%80%D0%BE%D0%B4%D0%B8%D0%BD%D0%BE_(%D0%9B%D0%B5%D1%80%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2)"
+    },
+    {
+      "displayName": "Кюстин. La Russie en 1839 — Викитека (полный текст)",
+      "url": "https://fr.wikisource.org/wiki/La_Russie_en_1839/Texte_entier"
     }
   ]
 }

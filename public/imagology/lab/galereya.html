@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Галерея образов Востока · Лаборатория имагологии</title>
+<meta name="description" content="Верещагин, Туркестанский альбом, Прокудин-Горский, Жером: разметка изображений Востока по кодовой книге." />
+<link rel="stylesheet" href="lab.css" />
+</head>
+<body>
+<main class="wrap">
+  <p class="kicker">Стенд 4 · к лекциям 5, 9, 12, 18 и практическим 3, 8</p>
+  <h1>Галерея образов Востока</h1>
+  <p class="lead">Образ живёт не только в тексте. Верещагин и Жером писали Восток в одни годы; «Туркестанский альбом» и Прокудин-Горский снимали Самарканд с разницей в сорок лет. Откройте серию, разметьте изображения по кодовой книге и сравните, кто смотрит, на что и откуда.</p>
+
+  <section class="panel">
+    <h2 style="margin-top:0">Серии</h2>
+    <div id="series" class="chips"></div>
+    <div class="row" style="margin-top:.8rem">
+      <div class="grow"><input type="search" id="q" placeholder="свой запрос в Wikimedia Commons: Samarkand bazaar 1890" aria-label="Поиск в Commons" style="width:100%" /></div>
+      <button type="button" id="go">Найти</button>
+    </div>
+    <p id="seriesNote" class="muted small" style="margin-bottom:0"></p>
+    <div id="status" class="status"></div>
+  </section>
+
+  <section class="panel" style="margin-top:1rem">
+    <div class="gallery" id="grid"></div>
+  </section>
+
+  <section class="panel" style="margin-top:1rem">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Сводка разметки</h2>
+      <div class="row">
+        <button type="button" class="small" id="csv">CSV</button>
+        <button type="button" class="small" id="json">Сохранить разметку (JSON)</button>
+        <label class="btn small" style="cursor:pointer">Загрузить разметку группы<input type="file" id="imp" accept=".json" class="sr-only" /></label>
+      </div>
+    </div>
+    <p class="faint small">Разметка хранится в этом браузере. Чтобы собрать работу группы, каждый сохраняет JSON, а один загружает все файлы: сводка объединится.</p>
+    <div id="summary" class="muted">Пока ничего не размечено.</div>
+  </section>
+
+  <details class="help panel" style="margin-top:1rem">
+    <summary>Кодовая книга и как с ней работать</summary>
+    <ul>
+      <li><strong>Кто смотрит</strong>: есть ли в кадре европеец или русский (офицер, путешественник), чей взгляд нам предлагают разделить; или изображение притворяется «взглядом ниоткуда».</li>
+      <li><strong>Жанр</strong>: этнографический «тип» (человек как образец народа), батальная сцена, архитектура, жанровая сцена, портрет, пейзаж.</li>
+      <li><strong>Фигуры, пространство, мотивы</strong> — можно отметить несколько. Мотивы совпадают со строками текстовых стендов: оружие, роскошь, бедность, молитва, торговля.</li>
+      <li>Кодовую книгу лучше испытать вдвоём на 10 изображениях и сверить расхождения: так проверяется надёжность разметки.</li>
+      <li>Изображения загружаются из Wikimedia Commons; лицензия и автор показаны в карточке. В работе ссылайтесь на страницу файла в Commons или на исходное собрание (Библиотека Конгресса для «Туркестанского альбома» и Прокудина-Горского).</li>
+    </ul>
+  </details>
+  <p class="foot">Изображения: Wikimedia Commons. Лаборатория имагологии.</p>
+</main>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="viewer">
+    <div class="img"><img id="dImg" alt="" /></div>
+    <div class="side">
+      <div class="row" style="justify-content:space-between;align-items:flex-start">
+        <h3 id="dTitle" style="margin:0"></h3>
+        <button type="button" class="small" id="dClose" aria-label="Закрыть">✕</button>
+      </div>
+      <p id="dMeta" class="meta"></p>
+      <p id="dDesc" class="small muted"></p>
+      <form id="dForm"></form>
+      <label class="sans small" for="dNote"><strong>Комментарий</strong></label>
+      <textarea id="dNote" rows="3" placeholder="что видно, кто смотрит, что за кадром"></textarea>
+      <div class="row" style="margin-top:.6rem">
+        <button type="button" class="primary" id="dSave">Сохранить</button>
+        <button type="button" id="dPrev">←</button>
+        <button type="button" id="dNext">→</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script type="module">
+import { $, $$, h, esc, loadData, params, download, toCSV, topbar, store, sideBadge } from './lab.js'
+topbar('galereya.html')
+
+const presets = await loadData('presets')
+const CB = presets.codebook
+const KEY = 'imago-gallery-v1'
+let tags = store.get(KEY, {})
+let items = []
+let current = -1
+let currentSeries = null
+
+const box = $('#series')
+for (const g of presets.gallery) {
+  const b = h('button', { type: 'button', class: 'chip', 'data-id': g.id, html: `${esc(g.label)} ${sideBadge(g.side)}` })
+  b.addEventListener('click', () => openSeries(g))
+  box.append(b)
+}
+$('#go').addEventListener('click', () => { const q = $('#q').value.trim(); if (q) openSeries({ id: 'q:' + q, label: q, query: q, side: '', note: 'Свой запрос' }) })
+$('#q').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#go').click() })
+
+function strip(html) { const d = document.createElement('div'); d.innerHTML = html || ''; return d.textContent.trim() }
+
+async function openSeries(g) {
+  currentSeries = g
+  $$('#series .chip').forEach((c) => c.classList.toggle('on', c.dataset.id === g.id))
+  $('#seriesNote').textContent = g.note || ''
+  $('#status').className = 'status'
+  $('#status').textContent = 'Загружаю из Wikimedia Commons…'
+  $('#grid').innerHTML = ''
+  const url = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=40' +
+    '&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=480&iiextmetadatafilter=Artist|DateTimeOriginal|LicenseShortName|ImageDescription|ObjectName' +
+    '&gsrsearch=' + encodeURIComponent(g.query + ' filetype:bitmap')
+  try {
+    const j = await fetch(url).then((r) => r.json())
+    const pages = Object.values(j.query?.pages || {}).sort((a, b) => (a.index || 0) - (b.index || 0))
+    items = pages.filter((p) => p.imageinfo?.[0]).map((p) => {
+      const ii = p.imageinfo[0], m = ii.extmetadata || {}
+      return {
+        id: p.title, series: g.label, side: g.side || '', thumb: ii.thumburl || ii.url, full: ii.url, page: ii.descriptionurl,
+        title: strip(m.ObjectName?.value) || p.title.replace(/^File:|^Файл:/, '').replace(/\.[a-z]+$/i, ''),
+        artist: strip(m.Artist?.value), date: strip(m.DateTimeOriginal?.value), license: strip(m.LicenseShortName?.value),
+        desc: strip(m.ImageDescription?.value).slice(0, 500),
+      }
+    })
+    $('#status').textContent = items.length ? `Изображений: ${items.length}. Нажмите, чтобы открыть и разметить.` : 'Ничего не найдено. Уточните запрос.'
+    drawGrid()
+  } catch (e) {
+    $('#status').className = 'status err'
+    $('#status').textContent = 'Commons не отвечает: ' + e.message
+  }
+}
+
+function drawGrid() {
+  const grid = $('#grid')
+  grid.innerHTML = ''
+  items.forEach((it, i) => {
+    const b = h('button', { type: 'button', class: 'thumb', title: it.title },
+      h('img', { src: it.thumb, alt: it.title, loading: 'lazy' }),
+      h('span', { class: 'cap' }, it.title.length > 60 ? it.title.slice(0, 60) + '…' : it.title),
+      tags[it.id] ? h('span', { class: 'tagged' }, '✓') : null)
+    b.addEventListener('click', () => openItem(i))
+    grid.append(b)
+  })
+}
+
+function openItem(i) {
+  current = i
+  const it = items[i]
+  $('#dImg').src = it.full
+  $('#dImg').alt = it.title
+  $('#dTitle').textContent = it.title
+  $('#dMeta').innerHTML = [it.artist, it.date, it.license].filter(Boolean).map(esc).join(' · ') + ` · <a href="${esc(it.page)}" target="_blank" rel="noopener">страница в Commons</a>`
+  $('#dDesc').textContent = it.desc
+  const t = tags[it.id]?.codes || {}
+  const form = $('#dForm')
+  form.innerHTML = ''
+  for (const f of CB) {
+    const fs = h('fieldset', {}, h('legend', {}, f.label))
+    const chips = h('div', { class: 'chips' })
+    for (const o of f.options) {
+      const on = f.multi ? (t[f.id] || []).includes(o) : t[f.id] === o
+      const inp = h('input', { type: f.multi ? 'checkbox' : 'radio', name: f.id, value: o })
+      inp.checked = on
+      const lab = h('label', { class: 'chip' + (on ? ' on' : '') }, inp, o)
+      inp.addEventListener('change', () => $$(`input[name="${f.id}"]`, form).forEach((x) => x.closest('.chip').classList.toggle('on', x.checked)))
+      chips.append(lab)
+    }
+    fs.append(chips)
+    form.append(fs)
+  }
+  $('#dNote').value = tags[it.id]?.note || ''
+  const dlg = $('#dlg')
+  if (!dlg.open) dlg.showModal()
+}
+
+function save() {
+  const it = items[current]
+  if (!it) return
+  const codes = {}
+  for (const f of CB) {
+    const vals = $$(`#dForm input[name="${f.id}"]:checked`).map((x) => x.value)
+    codes[f.id] = f.multi ? vals : (vals[0] || '')
+  }
+  tags[it.id] = { codes, note: $('#dNote').value.trim(), series: it.series, side: it.side, title: it.title, artist: it.artist, date: it.date, page: it.page, thumb: it.thumb, at: new Date().toISOString() }
+  store.set(KEY, tags)
+  drawGrid(); summary()
+}
+$('#dSave').addEventListener('click', () => { save(); $('#dlg').close() })
+$('#dNext').addEventListener('click', () => { save(); if (current < items.length - 1) openItem(current + 1) })
+$('#dPrev').addEventListener('click', () => { save(); if (current > 0) openItem(current - 1) })
+$('#dClose').addEventListener('click', () => $('#dlg').close())
+
+function summary() {
+  const list = Object.values(tags)
+  const box = $('#summary')
+  if (!list.length) { box.textContent = 'Пока ничего не размечено.'; return }
+  const series = [...new Set(list.map((x) => x.series))]
+  let html = `<p class="small">Размечено изображений: <strong>${list.length}</strong> в ${series.length} сериях.</p>`
+  for (const f of CB) {
+    html += `<h3 class="sans">${esc(f.label)}</h3><div class="table-wrap"><table class="table"><thead><tr><th>значение</th>${series.map((s) => `<th class="num">${esc(s)}</th>`).join('')}</tr></thead><tbody>`
+    for (const o of f.options) {
+      html += `<tr><td>${esc(o)}</td>`
+      for (const s of series) {
+        const inS = list.filter((x) => x.series === s)
+        const n = inS.filter((x) => f.multi ? (x.codes[f.id] || []).includes(o) : x.codes[f.id] === o).length
+        const pct = inS.length ? Math.round(100 * n / inS.length) : 0
+        html += `<td class="num" style="${n ? `background:color-mix(in srgb, var(--east) ${Math.round(pct * .5)}%, transparent)` : ''}">${n ? `${n} <span class="faint">(${pct}%)</span>` : '<span class="faint">·</span>'}</td>`
+      }
+      html += '</tr>'
+    }
+    html += '</tbody></table></div>'
+  }
+  box.innerHTML = html
+}
+
+$('#csv').addEventListener('click', () => {
+  const rows = [['серия', 'сторона', 'название', 'автор', 'дата', ...CB.map((f) => f.label), 'комментарий', 'Commons']]
+  for (const t of Object.values(tags)) rows.push([t.series, t.side, t.title, t.artist, t.date, ...CB.map((f) => [].concat(t.codes[f.id] || []).join('; ')), t.note, t.page])
+  download('galereya_razmetka.csv', toCSV(rows), 'text/csv;charset=utf-8')
+})
+$('#json').addEventListener('click', () => download('galereya_razmetka.json', JSON.stringify(tags, null, 1), 'application/json'))
+$('#imp').addEventListener('change', async (e) => {
+  for (const f of e.target.files) {
+    try { Object.assign(tags, JSON.parse(await f.text())) } catch { alert('Не удалось прочитать ' + f.name) }
+  }
+  store.set(KEY, tags); drawGrid(); summary()
+})
+
+summary()
+const s = params().get('series')
+openSeries(presets.gallery.find((g) => g.id === s) || presets.gallery[0])
+</script>
+</body>
+</html>

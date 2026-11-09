@@ -29,6 +29,8 @@ import { STYLES, download, gost, linkOf, toBibTeX, toCSV, toRIS } from '../lab/c
 import { bibliographyDocx } from '../lab/cabinet/exportWord'
 import { EMPTY_PROFILE, EXAMPLE_PROFILE, usePersistent } from '../lab/cabinet/store'
 import { reformulateLocal } from '../lab/litSearchLib'
+import { ymHit } from '../components/Metrika'
+import { YM_ID, metrikaInformer, metrikaReport } from '../config/analytics'
 
 const TABS = [
   { id: 'profile', label: 'Моя тема', icon: '①' },
@@ -1820,6 +1822,7 @@ export default function StudentCabinet() {
     } catch {
       /* ignore */
     }
+    ymHit(window.location.href, `Кабинет: ${TABS.find((x) => x.id === t)?.label || t}`)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   const addItem = (r, group) => {
@@ -1904,6 +1907,24 @@ export default function StudentCabinet() {
           setLastExport={setLastExport}
           go={go}
         />
+      )}
+
+      {YM_ID > 0 && (
+        <section className="mt-12 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a href={metrikaReport()} target="_blank" rel="noopener noreferrer" className="shrink-0" title="Яндекс Метрика: просмотры за сегодня">
+            <img src={metrikaInformer()} width="88" height="31" alt="" onError={(e) => (e.currentTarget.style.display = 'none')} />
+          </a>
+          <div className="flex-1 text-sm text-gray-700 dark:text-gray-300">
+            <p className="font-semibold text-gray-900 dark:text-white">Статистика посещений сайта открыта для всех</p>
+            <p>
+              Откуда заходят (страны и города), с каких устройств и браузеров, какие разделы смотрят и сколько времени проводят.
+              Обезличенно: имён и IP-адресов в открытой статистике нет.
+            </p>
+          </div>
+          <a href={metrikaReport()} target="_blank" rel="noopener noreferrer" className="shrink-0 px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-600 text-white text-sm font-semibold">
+            Открыть статистику →
+          </a>
+        </section>
       )}
 
       {toast && (

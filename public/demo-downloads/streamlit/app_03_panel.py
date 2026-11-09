@@ -128,7 +128,7 @@ elif page.startswith("3"):
     words = st.text_input("Слова через запятую (леммы; звёздочка — любое продолжение)", "вспомнить, помнить, память")
     width = st.slider("Ширина контекста (знаков)", 30, 150, 70)
     if words.strip():
-        df = quiet(dh.kwic, texts, words, width=width, limit=200)
+        df = quiet(dh.kwic, texts, words, width=width, limit=5000)
         st.dataframe(df, use_container_width=True, hide_index=True)
 
 # ---------------------------------------------------------------- 4. дуга

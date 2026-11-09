@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Цифровая Völkertafel · Лаборатория имагологии</title>
+<meta name="description" content="Таблица «народ × признак» по русским и западным текстам: этнотипы в цифрах и в контекстах." />
+<link rel="stylesheet" href="lab.css" />
+</head>
+<body>
+<main class="wrap">
+  <p class="kicker">Стенд 1 · к лекциям 3–4, 9, 12, 18 и практическим 2, 5, 8</p>
+  <h1>Цифровая Völkertafel</h1>
+  <p class="lead">Штирийская таблица народов (около 1720–1730) заполняла одни и те же графы для десяти наций. Здесь графы заполняет корпус: для каждого народа стенд считает, в скольких предложениях о нём встречается признак — коварство, гостеприимство, лень, роскошь, деспотия. Два корпуса рядом показывают, как Россия и Запад заполняют одну и ту же сетку.</p>
+
+  <section class="panel">
+    <div class="row">
+      <label for="pair" class="sans"><strong>Готовая пара</strong></label>
+      <div class="grow"><select id="pair" style="width:100%"></select></div>
+      <button id="loadPair" class="primary" type="button">Загрузить пару</button>
+    </div>
+    <p id="pairQ" class="muted small" style="margin:.5rem 0 0"></p>
+  </section>
+
+  <div class="grid-2" style="margin-top:1rem">
+    <section class="panel">
+      <h2 style="margin-top:0">Корпус A <span class="badge rus">обычно Россия</span></h2>
+      <div id="slotsA" class="stack"></div>
+      <button type="button" class="small ghost" data-add="A" style="margin-top:.5rem">+ ещё текст в корпус A</button>
+    </section>
+    <section class="panel">
+      <h2 style="margin-top:0">Корпус B <span class="badge west">обычно Запад</span></h2>
+      <div id="slotsB" class="stack"></div>
+      <button type="button" class="small ghost" data-add="B" style="margin-top:.5rem">+ ещё текст в корпус B</button>
+    </section>
+  </div>
+
+  <section class="panel" style="margin-top:1rem">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Таблица</h2>
+      <div class="row">
+        <div class="seg" role="group" aria-label="Что показывать" id="view">
+          <button type="button" data-v="AB" class="on">A и B</button>
+          <button type="button" data-v="A">A</button>
+          <button type="button" data-v="B">B</button>
+          <button type="button" data-v="D">A − B</button>
+        </div>
+        <div class="seg" role="group" aria-label="Мера" id="metric">
+          <button type="button" data-m="pct" class="on">% предложений</button>
+          <button type="button" data-m="n">число</button>
+        </div>
+      </div>
+    </div>
+    <p class="small muted" style="margin:.6rem 0">Народы в столбцах (нажмите, чтобы убрать или добавить):</p>
+    <div id="groups" class="chips"></div>
+    <div id="empty" class="note">Загрузите хотя бы один текст: пару сверху или свой текст в корпус A или B.</div>
+    <div class="table-wrap" id="tableWrap" style="margin-top:.8rem"></div>
+    <div class="row" style="margin-top:.7rem">
+      <button type="button" id="csv" class="small">Скачать таблицу (CSV)</button>
+      <button type="button" id="csvCtx" class="small">Скачать все контексты (CSV)</button>
+      <span class="faint small" id="summary"></span>
+    </div>
+  </section>
+
+  <section class="panel" style="margin-top:1rem" id="ctxPanel">
+    <h2 style="margin-top:0" id="ctxTitle">Контексты</h2>
+    <p class="muted small" id="ctxHint">Нажмите на клетку таблицы, чтобы увидеть предложения. Синим отмечен народ, красным признак. Прежде чем делать вывод, прочитайте контексты: словарь не видит отрицания («не ленив») и иронии.</p>
+    <div class="grid-2">
+      <div><h3 class="sans" style="margin-top:0">A</h3><ul class="kwic" id="kwicA"></ul></div>
+      <div><h3 class="sans" style="margin-top:0">B</h3><ul class="kwic" id="kwicB"></ul></div>
+    </div>
+  </section>
+
+  <details class="help panel" style="margin-top:1rem">
+    <summary>Как считает стенд и где его пределы</summary>
+    <ul>
+      <li><strong>Единица</strong> — предложение (в стихах — строка, если предложение очень длинное). Народ и признак засчитываются вместе, если стоят в одном предложении.</li>
+      <li><strong>% предложений</strong> — доля предложений о народе, где есть признак. Так сравниваются тексты разной длины и разного внимания к народу. <strong>Число</strong> — сколько таких предложений.</li>
+      <li><strong>Словари</strong> общие для четырёх языков (русский, английский, французский, немецкий): этноним и признак заданы основами слов. Поэтому строки таблицы сопоставимы между языками, как графы Штирийской таблицы.</li>
+      <li><strong>Пределы</strong>: стенд не видит отрицания, иронии, кавычек, косвенной речи; одно слово может быть омонимом. Цифра — повод открыть контексты, а не вывод. В работе пишите: «в N предложениях о черкесах из M встречается лексика храбрости; в контекстах …».</li>
+      <li>Списки основ лежат в <a href="data/lexicon.json">data/lexicon.json</a>; те же словари работают в блокноте Colab.</li>
+    </ul>
+  </details>
+  <p class="foot">Лаборатория имагологии · курс «Имагология» · тексты загружаются из Викитеки в вашем браузере, ничего не сохраняется на сервере.</p>
+</main>
+
+<script type="module">
+import { $, $$, h, esc, TextSlot, analyze, loadData, params, highlight, download, toCSV, topbar } from './lab.js'
+topbar('volkertafel.html')
+
+const lex = await loadData('lexicon')
+const presets = await loadData('presets')
+const state = { A: [], B: [], analyses: new Map(), view: 'AB', metric: 'pct', groups: null, sel: null }
+const groupById = Object.fromEntries(lex.groups.map((g) => [g.id, g]))
+
+// пары
+const pairSel = $('#pair')
+pairSel.append(h('option', { value: '' }, '— выберите пару —'))
+for (const p of presets.pairs) pairSel.append(h('option', { value: p.id }, `${p.title} (лекц. ${p.lectures.join(', ')})`))
+pairSel.addEventListener('change', () => {
+  const p = presets.pairs.find((x) => x.id === pairSel.value)
+  $('#pairQ').textContent = p ? 'Вопрос: ' + p.question : ''
+})
+
+function addSlot(side) {
+  const box = h('div')
+  $(side === 'A' ? '#slotsA' : '#slotsB').append(box)
+  const slot = new TextSlot(box, {
+    name: `Текст ${state[side].length + 1}`,
+    side: side === 'A' ? 'россия' : 'запад',
+    presets: presets.texts,
+    onLoad: async (doc) => {
+      slot.status('Разбираю текст…')
+      const an = await analyze(doc)
+      state.analyses.set(slot, an)
+      slot.status(`Готово: ${an.sentences.length.toLocaleString('ru')} предложений.`, 'ok')
+      render()
+    },
+  })
+  state[side].push(slot)
+  return slot
+}
+$$('[data-add]').forEach((b) => b.addEventListener('click', () => addSlot(b.dataset.add)))
+addSlot('A'); addSlot('B')
+
+$('#loadPair').addEventListener('click', () => loadPair(pairSel.value))
+async function loadPair(id) {
+  const p = presets.pairs.find((x) => x.id === id)
+  if (!p) return
+  pairSel.value = id
+  $('#pairQ').textContent = 'Вопрос: ' + p.question
+  state.groups = [...p.focus_groups]
+  await Promise.all([state.A[0].loadPreset(p.left), state.B[0].loadPreset(p.right)])
+}
+
+// данные корпуса
+function corpusSentences(side) {
+  const out = []
+  for (const slot of state[side]) {
+    const an = state.analyses.get(slot)
+    if (!an) continue
+    const label = `${an.doc.author ? an.doc.author + '. ' : ''}${an.doc.title}`
+    for (const s of an.sentences) out.push({ ...s, label })
+  }
+  return out
+}
+
+function matrix(sents) {
+  const per = {}
+  for (const g of lex.groups) per[g.id] = { total: 0, traits: {} }
+  for (const s of sents) {
+    for (const gid of s.groups.keys()) {
+      per[gid].total++
+      for (const tid of s.traits.keys()) per[gid].traits[tid] = (per[gid].traits[tid] || 0) + 1
+    }
+  }
+  return per
+}
+
+function value(m, gid, tid) {
+  const g = m[gid]
+  const n = g.traits[tid] || 0
+  if (state.metric === 'n') return n
+  return g.total ? (100 * n) / g.total : 0
+}
+
+function fmt(v) {
+  if (state.metric === 'n') return String(v)
+  return v === 0 ? '0' : v < 1 ? v.toFixed(1) : String(Math.round(v))
+}
+
+function bg(v, max, hue) {
+  if (!v || !max) return ''
+  const a = Math.min(1, v / max) * 0.55 + 0.05
+  return `background: color-mix(in srgb, ${hue} ${Math.round(a * 100)}%, transparent)`
+}
+
+function render() {
+  const sa = corpusSentences('A'), sb = corpusSentences('B')
+  const has = sa.length || sb.length
+  $('#empty').classList.toggle('hidden', has)
+  const mA = matrix(sa), mB = matrix(sb)
+  // столбцы по умолчанию — самые упоминаемые народы
+  if (!state.groups) {
+    state.groups = lex.groups.map((g) => g.id).filter((id) => mA[id].total + mB[id].total > 0)
+      .sort((x, y) => (mB[y].total + mA[y].total) - (mB[x].total + mA[x].total)).slice(0, 8)
+  }
+  // фишки народов
+  const chips = $('#groups')
+  chips.innerHTML = ''
+  for (const g of lex.groups) {
+    const on = state.groups.includes(g.id)
+    const tot = mA[g.id].total + mB[g.id].total
+    const c = h('button', { type: 'button', class: 'chip' + (on ? ' on' : ''), 'aria-pressed': on ? 'true' : 'false' }, `${g.label} `, h('span', { class: 'faint' }, tot ? `${mA[g.id].total}/${mB[g.id].total}` : '—'))
+    c.addEventListener('click', () => {
+      state.groups = on ? state.groups.filter((x) => x !== g.id) : [...state.groups, g.id]
+      render()
+    })
+    chips.append(c)
+  }
+  const wrap = $('#tableWrap')
+  if (!has) { wrap.innerHTML = ''; $('#summary').textContent = ''; return }
+  const cols = state.groups.map((id) => groupById[id]).filter(Boolean)
+  let maxA = 0, maxB = 0, maxD = 0
+  for (const t of lex.traits) for (const g of cols) {
+    const a = value(mA, g.id, t.id), b = value(mB, g.id, t.id)
+    maxA = Math.max(maxA, a); maxB = Math.max(maxB, b); maxD = Math.max(maxD, Math.abs(a - b))
+  }
+  const v = state.view
+  let html = '<table class="table vt"><thead><tr><th>Признак</th>'
+  for (const g of cols) html += `<th class="group" title="${esc(g.label)}">${esc(g.label)}</th>`
+  html += '</tr><tr><th class="faint small">предложений о народе</th>'
+  for (const g of cols) {
+    const a = mA[g.id].total, b = mB[g.id].total
+    html += `<th class="num small faint">${v === 'A' ? a : v === 'B' ? b : `${a}/${b}`}</th>`
+  }
+  html += '</tr></thead><tbody>'
+  for (const r of lex.rubrics) {
+    html += `<tr class="rubric"><td colspan="${cols.length + 1}">${esc(r.label)}</td></tr>`
+    for (const t of lex.traits.filter((x) => x.rubric === r.id)) {
+      html += `<tr><td class="trait">${esc(t.label)}</td>`
+      for (const g of cols) {
+        const a = value(mA, g.id, t.id), b = value(mB, g.id, t.id)
+        const sel = state.sel && state.sel.g === g.id && state.sel.t === t.id ? ' sel' : ''
+        let inner = '', style = ''
+        if (v === 'A') { inner = fmt(a); style = bg(a, maxA, 'var(--rus)') }
+        else if (v === 'B') { inner = fmt(b); style = bg(b, maxB, 'var(--west)') }
+        else if (v === 'D') { const d = a - b; inner = d === 0 ? '0' : (d > 0 ? '+' : '−') + fmt(Math.abs(d)); style = bg(Math.abs(d), maxD, d > 0 ? 'var(--rus)' : 'var(--west)') }
+        else {
+          inner = `<span style="color:var(--rus)">${fmt(a)}</span><span class="faint">/</span><span style="color:var(--west)">${fmt(b)}</span>`
+          style = bg(Math.max(a / (maxA || 1), b / (maxB || 1)), 1, 'var(--east)')
+        }
+        const zero = (v === 'A' ? !a : v === 'B' ? !b : !a && !b) ? ' zero' : ''
+        if (zero) { inner = '·'; style = '' }
+        html += `<td class="cell${sel}${zero}" style="${style}" data-g="${g.id}" data-t="${t.id}" tabindex="0" title="${esc(g.label)} × ${esc(t.label)}">${inner}</td>`
+      }
+      html += '</tr>'
+    }
+  }
+  html += '</tbody></table>'
+  wrap.innerHTML = html
+  $$('td.cell', wrap).forEach((td) => {
+    const open = () => { state.sel = { g: td.dataset.g, t: td.dataset.t }; showCtx(); $$('td.cell', wrap).forEach((x) => x.classList.toggle('sel', x === td)) }
+    td.addEventListener('click', open)
+    td.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open() } })
+  })
+  $('#summary').textContent = `A: ${sa.length.toLocaleString('ru')} предл. · B: ${sb.length.toLocaleString('ru')} предл.`
+  if (state.sel) showCtx()
+}
+
+function contexts(side, gid, tid) {
+  return corpusSentences(side).filter((s) => s.groups.has(gid) && s.traits.has(tid))
+}
+
+function showCtx() {
+  const { g, t } = state.sel
+  const gl = groupById[g].label, tl = lex.traits.find((x) => x.id === t).label
+  $('#ctxTitle').textContent = `Контексты: ${gl} × ${tl}`
+  for (const side of ['A', 'B']) {
+    const ul = $(side === 'A' ? '#kwicA' : '#kwicB')
+    const list = contexts(side, g, t)
+    ul.innerHTML = list.length ? '' : '<li class="faint">нет предложений</li>'
+    for (const s of list.slice(0, 200)) {
+      let html = highlight(s.s, s.groups.get(g), 'g')
+      html = highlightInto(html, s.traits.get(t))
+      ul.append(h('li', { html: `${html}<span class="src">${esc(s.label)}</span>` }))
+    }
+  }
+  if (window.innerWidth < 900) $('#ctxPanel').scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+// второй проход подсветки по уже размеченному HTML: только вне тегов
+function highlightInto(html, words) {
+  if (!words?.length) return html
+  const uniq = [...new Set(words)].sort((a, b) => b.length - a.length).map((w) => esc(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const re = new RegExp(`(^|[^\\p{L}>])(${uniq.join('|')})(?=[^\\p{L}]|$)`, 'gu')
+  return html.split(/(<[^>]+>)/).map((part) => part.startsWith('<') ? part : part.replace(re, (m, pre, w) => `${pre}<mark class="t">${w}</mark>`)).join('')
+}
+
+$$('#view button').forEach((b) => b.addEventListener('click', () => { state.view = b.dataset.v; $$('#view button').forEach((x) => x.classList.toggle('on', x === b)); render() }))
+$$('#metric button').forEach((b) => b.addEventListener('click', () => { state.metric = b.dataset.m; $$('#metric button').forEach((x) => x.classList.toggle('on', x === b)); render() }))
+
+$('#csv').addEventListener('click', () => {
+  const mA = matrix(corpusSentences('A')), mB = matrix(corpusSentences('B'))
+  const rows = [['рубрика', 'признак', 'народ', 'A: предложений о народе', 'A: с признаком', 'A: %', 'B: предложений о народе', 'B: с признаком', 'B: %']]
+  for (const t of lex.traits) for (const gid of state.groups) {
+    const r = lex.rubrics.find((x) => x.id === t.rubric).label
+    const a = mA[gid], b = mB[gid]
+    const na = a.traits[t.id] || 0, nb = b.traits[t.id] || 0
+    rows.push([r, t.label, groupById[gid].label, a.total, na, a.total ? (100 * na / a.total).toFixed(1) : '', b.total, nb, b.total ? (100 * nb / b.total).toFixed(1) : ''])
+  }
+  download('volkertafel.csv', toCSV(rows), 'text/csv;charset=utf-8')
+})
+$('#csvCtx').addEventListener('click', () => {
+  const rows = [['корпус', 'текст', 'народ', 'признак', 'предложение']]
+  for (const side of ['A', 'B']) for (const s of corpusSentences(side)) for (const gid of s.groups.keys()) {
+    if (!state.groups.includes(gid)) continue
+    for (const tid of s.traits.keys()) rows.push([side, s.label, groupById[gid].label, lex.traits.find((x) => x.id === tid).label, s.s])
+  }
+  download('volkertafel_konteksty.csv', toCSV(rows), 'text/csv;charset=utf-8')
+})
+
+render()
+const pp = params().get('pair')
+if (pp) loadPair(pp)
+</script>
+</body>
+</html>

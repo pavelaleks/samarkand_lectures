@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Карта взгляда · Лаборатория имагологии</title>
+<meta name="description" content="Маршруты русских и западных путешественников на Восток и места, которые называет текст." />
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<link rel="stylesheet" href="lab.css" />
+</head>
+<body>
+<main class="wrap">
+  <p class="kicker">Стенд 3 · к лекциям 7–8, 12, 15–16, 18 и практическим 4, 8</p>
+  <h1>Карта взгляда</h1>
+  <p class="lead">Травелог строит пространство: что названо, что пропущено, где проходит граница «своего». На карте — упрощённые маршруты десяти путешественников, от Никитина до Бёрнаби, и места, которые называет загруженный текст. Сравните, как русский и западный автор заполняют одно пространство: Кавказ, Туркестан, Самарканд.</p>
+
+  <div class="grid-2" style="grid-template-columns:minmax(0,2.2fr) minmax(16rem,1fr)">
+    <section class="panel" style="padding:.6rem">
+      <div id="map" role="region" aria-label="Карта"></div>
+      <div class="legend" style="margin:.5rem .3rem 0">
+        <span><i style="background:var(--rus)"></i>места текста A</span>
+        <span><i style="background:var(--west)"></i>места текста B</span>
+        <span><i style="background:#888"></i>маршруты — цвет автора</span>
+      </div>
+    </section>
+    <section class="panel">
+      <h2 style="margin-top:0">Маршруты</h2>
+      <div class="row small" style="margin-bottom:.4rem">
+        <button type="button" class="small" id="allOn">Все</button>
+        <button type="button" class="small" id="allOff">Скрыть</button>
+        <button type="button" class="small" id="ruOnly">Россия</button>
+        <button type="button" class="small" id="westOnly">Запад</button>
+      </div>
+      <div id="routes" class="route-list"></div>
+    </section>
+  </div>
+
+  <div class="grid-2" style="margin-top:1rem">
+    <section class="panel"><div id="slotA"></div></section>
+    <section class="panel"><div id="slotB"></div></section>
+  </div>
+
+  <div class="grid-2" style="margin-top:1rem">
+    <section class="panel">
+      <h2 style="margin-top:0">Места в текстах</h2>
+      <div id="placesTable" class="muted">Загрузите текст — места появятся на карте и в таблице.</div>
+      <div class="row" style="margin-top:.7rem">
+        <button type="button" class="small" id="geojson">Скачать GeoJSON</button>
+        <button type="button" class="small" id="csv">Скачать CSV</button>
+      </div>
+    </section>
+    <section class="panel">
+      <h2 style="margin-top:0">По регионам</h2>
+      <div id="regions" class="muted">—</div>
+      <h3>Неизвестные имена</h3>
+      <p class="faint small" style="margin-top:0">Слова с заглавной буквы не в начале предложения, которых нет в газеттире: города, реки, люди. Если это место — найдите его в Wikidata, и оно встанет на карту.</p>
+      <div id="unknown" class="chips"></div>
+      <div id="wdStatus" class="status"></div>
+    </section>
+  </div>
+
+  <details class="help panel" style="margin-top:1rem">
+    <summary>Как работает карта и что с ней делать</summary>
+    <ul>
+      <li>Место узнаётся по слову с заглавной буквы через газеттир из ~150 мест (русские, английские, французские, немецкие написания XIX века: Тифлис/Tiflis, Бухара/Bokhara, Арзрум/Erzeroum). Падежи учитываются: «Самарканда», «в Тифлисе».</li>
+      <li>Маршруты упрощены до основных пунктов; порядок и точность отмечены в подписи. Для работы сверяйтесь с текстом путешествия.</li>
+      <li><strong>Вопросы к карте</strong>: где текст «сгущается» и где молчит? Совпадают ли названные места с маршрутом? Какие имена — старые («Оксус», «Яксарт») и какие — имперские («Перовск», «Верный»)? Кто называет край «Туркестаном», кто «Татарией», кто «Средней Азией»?</li>
+      <li>GeoJSON открывается в <a href="https://geojson.io" target="_blank" rel="noopener">geojson.io</a>, QGIS, Google My Maps — для карты в тексте диссертации.</li>
+    </ul>
+  </details>
+  <p class="foot">Подложка © участники OpenStreetMap. Координаты газеттира округлены до ~5 км; места, добавленные через Wikidata, — CC0. Лаборатория имагологии.</p>
+</main>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script type="module">
+import { $, $$, h, esc, TextSlot, analyze, loadData, params, download, toCSV, topbar, highlight, sideBadge } from './lab.js'
+topbar('karta.html')
+
+const geo = await loadData('places')
+const presets = await loadData('presets')
+const byId = Object.fromEntries(geo.places.map((p) => [p.id, p]))
+const L = window.L
+
+const map = L.map('map', { scrollWheelZoom: false, worldCopyJump: true }).setView([44, 55], 4)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 12, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+}).addTo(map)
+map.on('click', () => map.scrollWheelZoom.enable())
+
+// ── маршруты
+const routeLayers = new Map()
+for (const r of geo.routes) {
+  const pts = r.stops.map((id) => byId[id]).filter(Boolean)
+  const grp = L.layerGroup()
+  L.polyline(pts.map((p) => [p.lat, p.lon]), { color: r.color, weight: 3, opacity: .85, dashArray: r.side === 'запад' ? '7 6' : null })
+    .bindPopup(`<strong>${esc(r.author)}</strong><br>${esc(r.work)}, ${esc(r.years)}<br><span class="src">${esc(r.note)}</span>`).addTo(grp)
+  pts.forEach((p, i) => {
+    L.circleMarker([p.lat, p.lon], { radius: 5, color: '#fff', weight: 1.5, fillColor: r.color, fillOpacity: 1 })
+      .bindTooltip(`${i + 1}. ${p.label}`, { direction: 'top' })
+      .bindPopup(`<strong>${esc(p.label)}</strong><br>${esc(r.author)} · ${esc(r.work)} (${esc(r.years)})<br><span class="src">пункт ${i + 1} из ${pts.length}</span>`).addTo(grp)
+  })
+  routeLayers.set(r.id, grp)
+}
+const routesBox = $('#routes')
+const pre = (params().get('route') || '').split(',').filter(Boolean)
+for (const r of geo.routes) {
+  const cb = h('input', { type: 'checkbox', 'data-r': r.id })
+  cb.checked = pre.length ? pre.includes(r.id) : ['pushkin', 'vambery'].includes(r.id)
+  cb.addEventListener('change', () => { toggle(r.id, cb.checked); fitVisible() })
+  routesBox.append(h('label', {}, cb, h('span', { class: 'swatch', style: { background: r.color } }),
+    h('span', { html: `<strong class="sans small">${esc(r.author)}</strong> ${sideBadge(r.side)}<br><span class="small">${esc(r.work)}, ${esc(r.years)}</span>` })))
+  toggle(r.id, cb.checked)
+}
+function toggle(id, on) { const l = routeLayers.get(id); on ? l.addTo(map) : l.remove() }
+function setAll(fn) { $$('#routes input').forEach((cb) => { const r = geo.routes.find((x) => x.id === cb.dataset.r); cb.checked = fn(r); toggle(r.id, cb.checked) }); fitVisible() }
+$('#allOn').onclick = () => setAll(() => true)
+$('#allOff').onclick = () => setAll(() => false)
+$('#ruOnly').onclick = () => setAll((r) => r.side === 'россия')
+$('#westOnly').onclick = () => setAll((r) => r.side === 'запад')
+
+function fitVisible() {
+  const b = L.latLngBounds([])
+  for (const r of geo.routes) if (map.hasLayer(routeLayers.get(r.id))) r.stops.forEach((id) => byId[id] && b.extend([byId[id].lat, byId[id].lon]))
+  for (const k of ['a', 'b']) for (const m of textMarkers[k]) b.extend(m.getLatLng())
+  if (b.isValid()) map.fitBounds(b.pad(0.15), { maxZoom: 7 })
+}
+
+// ── тексты
+const st = { a: null, b: null, extra: new Map() }
+const textMarkers = { a: [], b: [] }
+const layerText = L.layerGroup().addTo(map)
+
+const mk = (sel, key, name, side) => new TextSlot($(sel), {
+  name, side, presets: presets.texts,
+  onLoad: async (doc) => { st[key] = await analyze(doc); draw(); fitVisible() },
+})
+const slotA = mk('#slotA', 'a', 'Текст A на карте', 'россия')
+const slotB = mk('#slotB', 'b', 'Текст B на карте', 'запад')
+
+function mentions(an) {
+  const res = new Map()
+  if (!an) return res
+  for (const s of an.sentences) {
+    for (const [pid, words] of s.places) {
+      if (!res.has(pid)) res.set(pid, { n: 0, ctx: [] })
+      const r = res.get(pid)
+      r.n += words.length
+      if (r.ctx.length < 4) r.ctx.push(highlight(s.s.length > 320 ? s.s.slice(0, 320) + '…' : s.s, words))
+    }
+  }
+  return res
+}
+function placeOf(id) { return byId[id] || st.extra.get(id) }
+
+function draw() {
+  layerText.clearLayers()
+  textMarkers.a = []; textMarkers.b = []
+  const all = new Map()
+  for (const [k, color] of [['a', '#a1392b'], ['b', '#2c5f8a']]) {
+    const m = mentions(st[k])
+    // дополнительные места из Wikidata ищем по имени
+    for (const [id, pl] of st.extra) {
+      if (!st[k]) continue
+      let n = 0; const ctx = []
+      for (const s of st[k].sentences) if (s.propers.includes(pl.word)) { n++; if (ctx.length < 4) ctx.push(highlight(s.s, [pl.word])) }
+      if (n) m.set(id, { n, ctx })
+    }
+    for (const [pid, r] of m) {
+      const p = placeOf(pid)
+      if (!p) continue
+      const off = k === 'b' ? 0.12 : -0.12
+      const mk = L.circleMarker([p.lat, p.lon + off], { radius: Math.min(26, 5 + Math.sqrt(r.n) * 3), color, weight: 2, fillColor: color, fillOpacity: .35 })
+        .bindPopup(`<strong>${esc(p.label)}</strong> · ${r.n} упом. в ${k.toUpperCase()}${p.wd ? ' <span class="src">(Wikidata)</span>' : ''}<hr style="border:0;border-top:1px solid #ddd">${r.ctx.map((c) => `<p style="margin:.3rem 0">${c}</p>`).join('')}`, { maxWidth: 340 })
+      mk.addTo(layerText)
+      textMarkers[k].push(mk)
+      if (!all.has(pid)) all.set(pid, { a: 0, b: 0 })
+      all.get(pid)[k] = r.n
+    }
+  }
+  table(all)
+  regions(all)
+  unknown()
+}
+
+function table(all) {
+  const rows = [...all.entries()].map(([id, v]) => ({ p: placeOf(id), ...v })).filter((r) => r.p).sort((x, y) => (y.a + y.b) - (x.a + x.b))
+  const box = $('#placesTable')
+  if (!rows.length) { box.innerHTML = '<p class="muted">Мест из газеттира не найдено.</p>'; return }
+  box.innerHTML = `<div class="table-wrap" style="max-height:24rem"><table class="table"><thead><tr><th>место</th><th>регион</th><th class="num">A</th><th class="num">B</th></tr></thead><tbody>${
+    rows.map((r) => `<tr data-id="${esc(r.p.id)}" style="cursor:pointer"><td>${esc(r.p.label)}</td><td class="faint">${esc(r.p.region)}</td><td class="num">${r.a || ''}</td><td class="num">${r.b || ''}</td></tr>`).join('')
+  }</tbody></table></div>`
+  $$('tr[data-id]', box).forEach((tr) => tr.addEventListener('click', () => { const p = placeOf(tr.dataset.id); map.setView([p.lat, p.lon], 7); $('#map').scrollIntoView({ behavior: 'smooth', block: 'center' }) }))
+}
+
+function regions(all) {
+  const agg = {}
+  for (const [id, v] of all) { const p = placeOf(id); if (!p) continue; agg[p.region] ??= { a: 0, b: 0 }; agg[p.region].a += v.a; agg[p.region].b += v.b }
+  const ta = Object.values(agg).reduce((s, x) => s + x.a, 0) || 1, tb = Object.values(agg).reduce((s, x) => s + x.b, 0) || 1
+  const rows = Object.entries(agg).sort((x, y) => (y[1].a / ta + y[1].b / tb) - (x[1].a / ta + x[1].b / tb))
+  $('#regions').innerHTML = rows.length ? `<div class="bars">${rows.map(([r, v]) => `<div class="bar" style="cursor:default"><span class="bar-label">${esc(r)}</span><span class="bar-tracks"><span class="track a"><i style="width:${(100 * v.a / ta).toFixed(1)}%"></i></span><span class="track b"><i style="width:${(100 * v.b / tb).toFixed(1)}%"></i></span><span class="vals">A ${Math.round(100 * v.a / ta)}% · B ${Math.round(100 * v.b / tb)}%</span></span></div>`).join('')}</div>` : '—'
+}
+
+function unknown() {
+  const freq = new Map()
+  for (const k of ['a', 'b']) if (st[k]) for (const s of st[k].sentences) for (const w of s.propers) freq.set(w, (freq.get(w) || 0) + 1)
+  for (const [, pl] of st.extra) freq.delete(pl.word)
+  const top = [...freq.entries()].filter(([w, n]) => n >= 2 && w.length > 3).sort((x, y) => y[1] - x[1]).slice(0, 24)
+  const box = $('#unknown')
+  box.innerHTML = top.length ? '' : '<span class="faint small">нет</span>'
+  for (const [w, n] of top) {
+    const b = h('button', { type: 'button', class: 'chip', title: 'Найти координаты в Wikidata' }, `${w} `, h('span', { class: 'faint' }, n))
+    b.addEventListener('click', () => wikidata(w))
+    box.append(b)
+  }
+}
+
+async function wikidata(word) {
+  const lang = (st.a?.lang) || (st.b?.lang) || 'ru'
+  const s = $('#wdStatus')
+  s.className = 'status'; s.textContent = `Ищу «${word}» в Wikidata…`
+  try {
+    const q = await fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&origin=*&limit=7&language=${lang}&uselang=ru&search=${encodeURIComponent(word)}`).then((r) => r.json())
+    const ids = (q.search || []).map((x) => x.id)
+    if (!ids.length) { s.textContent = `«${word}» в Wikidata не найдено.`; s.className = 'status err'; return }
+    const e = await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&origin=*&props=claims|labels&languages=ru|en&ids=${ids.join('|')}`).then((r) => r.json())
+    const hit = ids.map((id) => e.entities[id]).find((x) => x?.claims?.P625)
+    if (!hit) { s.textContent = `У найденных объектов «${word}» нет координат: возможно, это не место.`; s.className = 'status err'; return }
+    const c = hit.claims.P625[0].mainsnak.datavalue.value
+    const lab = hit.labels?.ru?.value || hit.labels?.en?.value || word
+    st.extra.set('wd:' + hit.id, { id: 'wd:' + hit.id, label: `${lab} (${hit.id})`, lat: c.latitude, lon: c.longitude, region: 'из Wikidata', word, wd: true })
+    s.className = 'status ok'; s.innerHTML = `«${esc(word)}» → ${esc(lab)} <a href="https://www.wikidata.org/wiki/${hit.id}" target="_blank" rel="noopener">${hit.id}</a>. Проверьте, то ли это место.`
+    draw()
+  } catch (err) { s.className = 'status err'; s.textContent = 'Wikidata не отвечает: ' + err.message }
+}
+
+$('#geojson').addEventListener('click', () => {
+  const feats = []
+  for (const k of ['a', 'b']) {
+    if (!st[k]) continue
+    const m = mentions(st[k])
+    for (const [pid, r] of m) {
+      const p = placeOf(pid); if (!p) continue
+      feats.push({ type: 'Feature', geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
+        properties: { place: p.label, region: p.region, text: k.toUpperCase(), work: `${st[k].doc.author} ${st[k].doc.title}`.trim(), mentions: r.n, context: r.ctx[0]?.replace(/<[^>]+>/g, '') || '' } })
+    }
+  }
+  for (const r of geo.routes) {
+    const cb = $(`#routes input[data-r="${r.id}"]`)
+    if (!cb?.checked) continue
+    feats.push({ type: 'Feature', geometry: { type: 'LineString', coordinates: r.stops.map((id) => [byId[id].lon, byId[id].lat]) },
+      properties: { route: r.author, work: r.work, years: r.years, side: r.side, stroke: r.color } })
+  }
+  download('karta_vzglyada.geojson', JSON.stringify({ type: 'FeatureCollection', features: feats }, null, 1), 'application/geo+json')
+})
+$('#csv').addEventListener('click', () => {
+  const rows = [['текст', 'произведение', 'место', 'регион', 'широта', 'долгота', 'упоминаний', 'контекст']]
+  for (const k of ['a', 'b']) {
+    if (!st[k]) continue
+    for (const [pid, r] of mentions(st[k])) {
+      const p = placeOf(pid); if (!p) continue
+      rows.push([k.toUpperCase(), `${st[k].doc.author} ${st[k].doc.title}`.trim(), p.label, p.region, p.lat, p.lon, r.n, (r.ctx[0] || '').replace(/<[^>]+>/g, '')])
+    }
+  }
+  download('karta_vzglyada.csv', toCSV(rows), 'text/csv;charset=utf-8')
+})
+
+fitVisible()
+const pp = params().get('pair')
+if (pp) {
+  const p = presets.pairs.find((x) => x.id === pp)
+  if (p) { slotA.loadPreset(p.left); slotB.loadPreset(p.right) }
+}
+const tx = params().get('text')
+if (tx && presets.texts[tx]) slotA.loadPreset(tx)
+</script>
+</body>
+</html>

@@ -4,6 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import demos from '../data/demos.json'
 import { LECTURE_TO_METHOD, methodById } from '../data/dhMethods'
 
+// Лекция курса «Имагология» → номер практического занятия (public/imagology/lab/practicum.html)
+const IMAGO_PRACTICUM = {
+  1: 1, 2: 2, 3: 2, 4: 2, 5: 3, 6: 1, 7: 4, 8: 4, 9: 5, 10: 6, 11: 7, 12: 8, 13: 3, 14: 2, 15: 4, 16: 4, 17: 9, 18: 8,
+}
+
 export default function LectureCard({ lecture, courseSlug, index, defaultOpen = false }) {
   const [isOpen, setIsOpen] = useState(defaultOpen)
   const rootRef = useRef(null)
@@ -159,6 +164,26 @@ export default function LectureCard({ lecture, courseSlug, index, defaultOpen = 
                     </svg>
                   </a>
                 </div>
+              )}
+
+              {courseSlug === 'imagology' && IMAGO_PRACTICUM[String(lecture.number)] && (
+                <a
+                  href={`${import.meta.env.BASE_URL}imagology/lab/practicum.html#p${IMAGO_PRACTICUM[String(lecture.number)]}`}
+                  className="mb-6 flex items-center gap-3 p-4 rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 hover:shadow-md transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-amber-700 text-white flex items-center justify-center flex-shrink-0 font-bold">
+                    {IMAGO_PRACTICUM[String(lecture.number)]}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-amber-950 dark:text-amber-100">
+                      Практическое {IMAGO_PRACTICUM[String(lecture.number)]} · Запад ↔ Россия
+                    </p>
+                    <p className="text-xs text-amber-900/80 dark:text-amber-200/80 mt-0.5">
+                      Пара текстов, задание по шагам и цифровой стенд в лаборатории курса
+                    </p>
+                  </div>
+                  <span className="text-amber-700 dark:text-amber-300 font-semibold">→</span>
+                </a>
               )}
 
               {courseSlug === 'imagology' && ['1', '2', '3'].includes(String(lecture.number)) && (

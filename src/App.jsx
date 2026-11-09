@@ -17,6 +17,7 @@ import MethodNavigator from './pages/MethodNavigator'
 import ThesisPassport from './pages/ThesisPassport'
 import StudentCabinet from './pages/StudentCabinet'
 import MyLab from './pages/MyLab'
+import Metrika from './components/Metrika'
 
 function LabWorkRedirect() {
   const { workSlug } = useParams()
@@ -47,6 +48,7 @@ function App() {
       <ThemeProvider>
         <BrowserRouter basename={baseUrl}>
           <SpaPathRestore />
+          <Metrika />
           <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
             <Header />
             <main className="flex-grow">
