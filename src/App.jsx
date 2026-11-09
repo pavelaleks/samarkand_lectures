@@ -16,6 +16,7 @@ import IntertextAnalysis from './pages/IntertextAnalysis'
 import MethodNavigator from './pages/MethodNavigator'
 import ThesisPassport from './pages/ThesisPassport'
 import StudentCabinet from './pages/StudentCabinet'
+import MyLab from './pages/MyLab'
 import Metrika from './components/Metrika'
 
 function LabWorkRedirect() {
@@ -57,6 +58,7 @@ function App() {
                 <Route path="/courses/digital-humanities/navigator" element={<MethodNavigator />} />
                 <Route path="/courses/digital-humanities/passport" element={<ThesisPassport />} />
                 <Route path="/courses/digital-humanities/cabinet" element={<StudentCabinet />} />
+                <Route path="/courses/digital-humanities/my-lab" element={<MyLab />} />
                 <Route
                   path="/courses/digital-humanities/demo/corpus/bunin-temnye-allei"
                   element={<BuninReader />}

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import demos from '../data/demos.json'
 import { STAND_TO_METHOD, methodById } from '../data/dhMethods'
+import { STAND_PANELS } from '../lab/mine/panels'
 
 const stands = demos.works
   .filter((w) => w.slug !== 'colab-bunin')
@@ -38,11 +39,28 @@ export default function LabHub() {
           Инструменты курса
         </h1>
         <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl leading-relaxed">
-          Здесь два вида практики. <strong>Стенды</strong> — интерактивные демонстрации к лекциям прямо в браузере, на
-          рассказах Бунина: понять, как работает метод. <strong>Пары в Colab</strong> — тот же метод на настоящем коде,
-          сначала на Бунине, потом на текстах вашей диссертации.
+          <strong>Стенды</strong> показывают метод на рассказах Бунина, а под каждым стендом — блок{' '}
+          <strong>«На своём тексте»</strong>: загрузите свои главы или произведения своего автора и повторите метод сами.{' '}
+          <strong>Лаборатория «Мои тексты»</strong> собирает все методы на одной странице. <strong>Пары в Colab</strong> — тот
+          же метод на настоящем коде.
         </p>
       </motion.header>
+
+      <Link
+        to="/courses/digital-humanities/my-lab"
+        className="group mb-5 flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border-2 border-teal-500 bg-gradient-to-r from-teal-600 to-cyan-700 text-white p-6 hover:shadow-xl transition-all"
+      >
+        <span className="text-4xl" aria-hidden="true">🧪</span>
+        <span className="flex-1">
+          <span className="block text-xs font-bold uppercase tracking-wide text-teal-100">Сами · на своих текстах · в браузере</span>
+          <span className="block text-2xl font-bold">Лаборатория «Мои тексты»</span>
+          <span className="block text-teal-50 leading-relaxed">
+            Загрузите свои .txt или .docx один раз — и запускайте 14 методов курса: частоты, контексты, смысловые поля, ключевые слова, Ципф,
+            стилометрия, имена, сеть персонажей, дуга тональности, темы, промпт и проверку цитат ИИ. Таблицы — в CSV.
+          </span>
+        </span>
+        <span className="font-semibold shrink-0 group-hover:underline">Открыть →</span>
+      </Link>
 
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-12">
         <Link
@@ -112,6 +130,11 @@ export default function LabHub() {
                   <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-1">{work.question}</p>
                   {m && (
                     <p className="mt-3 text-xs font-semibold text-gray-500 dark:text-gray-400">Метод: {m.title}</p>
+                  )}
+                  {STAND_PANELS[work.slug] && (
+                    <p className="mt-2 self-start text-xs font-bold px-2 py-0.5 rounded-full bg-teal-100 text-teal-900 dark:bg-teal-900/40 dark:text-teal-100">
+                      🧪 + на своём тексте
+                    </p>
                   )}
                 </Link>
               </motion.div>

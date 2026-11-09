@@ -28,6 +28,9 @@ export default function Header() {
             <Link to="/courses/digital-humanities/navigator" className="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
               Методы
             </Link>
+            <Link to="/courses/digital-humanities/my-lab" className="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800">
+              Мои тексты
+            </Link>
             <Link to="/courses/digital-humanities/cabinet" className="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-gray-950">
               Кабинет магистранта
             </Link>

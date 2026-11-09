@@ -8,6 +8,13 @@ const TOPICS = ['имагология', 'русский ориентализм',
 
 const TOOLS = [
   {
+    to: '/courses/digital-humanities/my-lab',
+    title: 'Мои тексты: все методы',
+    text: 'Свои .txt/.docx → частоты, контексты, поля, ключевые слова, стилометрия, сеть, тональность — в браузере',
+    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6M10 3v6L4.5 18.5A1.5 1.5 0 005.8 21h12.4a1.5 1.5 0 001.3-2.5L14 9V3M7 15h10" />,
+    accent: 'bg-teal-600',
+  },
+  {
     to: '/courses/digital-humanities/cabinet',
     title: 'Кабинет магистранта',
     text: 'Литература по теме диссертации из научных баз → список по ГОСТу в Word',
@@ -153,7 +160,7 @@ export default function Home() {
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Для работы над диссертацией</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {TOOLS.map((t) => (
             <Link
               key={t.to}
