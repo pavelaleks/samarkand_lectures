@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Параллельный читатель · Лаборатория имагологии</title>
+<meta name="description" content="Два текста рядом: русский и западный взгляд на Восток, профили мотивов и признаков, контексты одной сцены." />
+<link rel="stylesheet" href="lab.css" />
+</head>
+<body>
+<main class="wrap">
+  <p class="kicker">Стенд 2 · к лекциям 1–2, 5–7, 10–17 и практическим 1, 3, 6, 7</p>
+  <h1>Параллельный читатель</h1>
+  <p class="lead">Два текста рядом: Пушкин и Гюго, Лермонтов и Киплинг, Карамзин и Монтескьё. Тексты на разных языках сравниваются через общие словари мотивов и признаков: гарем и harem, кинжал и poignard попадают в одну строку. Нажмите на строку профиля, чтобы прочитать одну и ту же «сцену» в обоих текстах.</p>
+
+  <section class="panel">
+    <div class="row">
+      <label for="pair" class="sans"><strong>Готовая пара</strong></label>
+      <div class="grow"><select id="pair" style="width:100%"></select></div>
+      <button id="loadPair" class="primary" type="button">Загрузить пару</button>
+    </div>
+    <p id="pairQ" class="muted small" style="margin:.5rem 0 0"></p>
+  </section>
+
+  <div class="grid-2" style="margin-top:1rem">
+    <section class="panel"><div id="slotA"></div></section>
+    <section class="panel"><div id="slotB"></div></section>
+  </div>
+
+  <section class="panel" style="margin-top:1rem">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Профили</h2>
+      <div class="seg" role="group" aria-label="Профиль" id="kind">
+        <button type="button" data-k="motifs" class="on">Мотивы</button>
+        <button type="button" data-k="traits">Признаки</button>
+        <button type="button" data-k="groups">Народы</button>
+      </div>
+    </div>
+    <div class="legend" style="margin:.7rem 0" id="legend"></div>
+    <p class="faint small" style="margin-top:0">Длина полосы — упоминаний на 10 000 слов: так сравниваются тексты разной длины. Число в скобках — сколько раз.</p>
+    <div id="bars" class="bars"></div>
+    <div class="row" style="margin-top:.8rem"><button type="button" id="csv" class="small">Скачать профили (CSV)</button></div>
+  </section>
+
+  <section class="panel" style="margin-top:1rem" id="scene">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0" id="sceneTitle">Сцена</h2>
+      <div class="row">
+        <input type="search" id="q" placeholder="свой поиск: гарем, harem, serail" aria-label="Поиск в обоих текстах" style="min-width:16rem" />
+        <button type="button" id="qgo">Найти в обоих</button>
+      </div>
+    </div>
+    <p class="faint small">Выберите строку профиля или впишите основы слов через запятую: «гарем, harem» найдёт «гарема», «harems». Поиск по началу слова, без учёта регистра и ударений.</p>
+    <div class="grid-2">
+      <div><h3 class="sans" style="margin-top:0" id="hA">A</h3><ul class="kwic" id="kwicA"></ul></div>
+      <div><h3 class="sans" style="margin-top:0" id="hB">B</h3><ul class="kwic" id="kwicB"></ul></div>
+    </div>
+  </section>
+
+  <section class="panel" style="margin-top:1rem">
+    <h2 style="margin-top:0">Ключевые слова</h2>
+    <div id="keyness" class="muted">Загрузите два текста.</div>
+  </section>
+
+  <details class="help panel" style="margin-top:1rem">
+    <summary>Как читать результаты</summary>
+    <ul>
+      <li>Профиль показывает, <em>о чём</em> говорит текст, а не <em>как</em>. Высокая полоса «гарем» у Гюго и низкая у Пушкина — вопрос для медленного чтения, а не ответ.</li>
+      <li>Если оба текста на одном языке, внизу появятся ключевые слова по log-likelihood (G²): слова, частота которых в одном тексте значимо выше, чем в другом. G² &gt; 10,83 соответствует p &lt; 0,001.</li>
+      <li>Для разных языков ключевые слова не считаются: словарь у каждого свой. Сравнение идёт через общие строки мотивов и признаков.</li>
+      <li>Списки основ — в <a href="data/lexicon.json">data/lexicon.json</a>. Если мотив не найден, проверьте написание: тексты XIX века бывают в дореформенной орфографии (стенд приводит ѣ к е и і к и).</li>
+    </ul>
+  </details>
+  <p class="foot">Лаборатория имагологии · курс «Имагология».</p>
+</main>
+
+<script type="module">
+import { $, $$, h, esc, TextSlot, analyze, loadData, params, highlight, download, toCSV, topbar, logLikelihood, norm, tokens, LANG_NAMES } from './lab.js'
+topbar('parallel.html')
+
+const lex = await loadData('lexicon')
+const presets = await loadData('presets')
+const st = { a: null, b: null, kind: 'motifs', sel: null }
+const items = { motifs: lex.motifs, traits: lex.traits, groups: lex.groups }
+
+const pairSel = $('#pair')
+pairSel.append(h('option', { value: '' }, '— выберите пару —'))
+for (const p of presets.pairs) pairSel.append(h('option', { value: p.id }, `${p.title} (лекц. ${p.lectures.join(', ')})`))
+pairSel.addEventListener('change', () => {
+  const p = presets.pairs.find((x) => x.id === pairSel.value)
+  $('#pairQ').textContent = p ? 'Вопрос: ' + p.question : ''
+})
+
+const mk = (sel, key, name, side) => new TextSlot($(sel), {
+  name, side, presets: presets.texts,
+  onLoad: async (doc) => { st[key] = await analyze(doc); render() },
+})
+const slotA = mk('#slotA', 'a', 'Текст A', 'россия')
+const slotB = mk('#slotB', 'b', 'Текст B', 'запад')
+
+$('#loadPair').addEventListener('click', () => loadPair(pairSel.value))
+async function loadPair(id) {
+  const p = presets.pairs.find((x) => x.id === id)
+  if (!p) return
+  pairSel.value = id
+  $('#pairQ').textContent = 'Вопрос: ' + p.question
+  st.focus = p.focus_motifs
+  await Promise.all([slotA.loadPreset(p.left), slotB.loadPreset(p.right)])
+}
+
+function label(an) { return an ? `${an.doc.author ? an.doc.author + '. ' : ''}${an.doc.title}` : '—' }
+function count(an, kind, id) {
+  if (!an) return 0
+  let n = 0
+  for (const s of an.sentences) { const m = s[kind].get(id); if (m) n += m.length }
+  return n
+}
+function per10k(an, n) { return an && an.nWords ? (n * 10000) / an.nWords : 0 }
+
+function render() {
+  $('#legend').innerHTML = `<span><i style="background:var(--rus)"></i>A: ${esc(label(st.a))}</span><span><i style="background:var(--west)"></i>B: ${esc(label(st.b))}</span>`
+  $('#hA').textContent = 'A · ' + label(st.a)
+  $('#hB').textContent = 'B · ' + label(st.b)
+  const list = items[st.kind].map((it) => {
+    const na = count(st.a, st.kind, it.id), nb = count(st.b, st.kind, it.id)
+    return { it, na, nb, ra: per10k(st.a, na), rb: per10k(st.b, nb) }
+  }).filter((r) => r.na || r.nb).sort((x, y) => (y.ra + y.rb) - (x.ra + x.rb))
+  const max = Math.max(1e-9, ...list.map((r) => Math.max(r.ra, r.rb)))
+  const box = $('#bars')
+  box.innerHTML = list.length ? '' : '<p class="faint">Нет совпадений со словарём — загрузите тексты или выберите другой профиль.</p>'
+  for (const r of list) {
+    const row = h('div', { class: 'bar' + (st.sel && st.sel.id === r.it.id ? ' sel' : ''), role: 'button', tabindex: '0', title: 'Показать контексты' },
+      h('span', { class: 'bar-label' }, r.it.label),
+      h('span', { class: 'bar-tracks' },
+        h('span', { class: 'track a' }, h('i', { style: { width: `${(100 * r.ra) / max}%` } })),
+        h('span', { class: 'track b' }, h('i', { style: { width: `${(100 * r.rb) / max}%` } })),
+        h('span', { class: 'vals' }, `A ${r.ra.toFixed(1)} (${r.na}) · B ${r.rb.toFixed(1)} (${r.nb})`)))
+    const open = () => { st.sel = { kind: st.kind, id: r.it.id, label: r.it.label }; scene(); render() }
+    row.addEventListener('click', open)
+    row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open() } })
+    box.append(row)
+  }
+  keyness()
+}
+
+function scene() {
+  const { kind, id, label: l } = st.sel
+  $('#sceneTitle').textContent = 'Сцена: ' + l
+  for (const [an, ul] of [[st.a, $('#kwicA')], [st.b, $('#kwicB')]]) {
+    ul.innerHTML = ''
+    if (!an) { ul.innerHTML = '<li class="faint">текст не загружен</li>'; continue }
+    const hits = an.sentences.filter((s) => s[kind].has(id))
+    if (!hits.length) ul.innerHTML = '<li class="faint">в этом тексте нет</li>'
+    for (const s of hits.slice(0, 150)) ul.append(h('li', { html: highlight(s.s, s[kind].get(id)) }))
+  }
+  if (window.innerWidth < 900) $('#scene').scrollIntoView({ behavior: 'smooth' })
+}
+
+function search() {
+  const stems = $('#q').value.split(',').map((x) => norm(x.trim())).filter(Boolean)
+  if (!stems.length) return
+  st.sel = null
+  $('#sceneTitle').textContent = 'Поиск: ' + $('#q').value
+  for (const [an, ul] of [[st.a, $('#kwicA')], [st.b, $('#kwicB')]]) {
+    ul.innerHTML = ''
+    if (!an) { ul.innerHTML = '<li class="faint">текст не загружен</li>'; continue }
+    let n = 0
+    for (const s of an.sentences) {
+      const words = tokens(s.s).filter((t) => stems.some((x) => t.n.startsWith(x))).map((t) => t.raw)
+      if (!words.length) continue
+      if (n++ < 150) ul.append(h('li', { html: highlight(s.s, words) }))
+    }
+    if (!n) ul.innerHTML = '<li class="faint">не найдено</li>'
+    else ul.prepend(h('li', { class: 'faint small' }, `предложений: ${n}`))
+  }
+  render()
+}
+$('#qgo').addEventListener('click', search)
+$('#q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search() })
+
+function keyness() {
+  const box = $('#keyness')
+  if (!st.a || !st.b) { box.textContent = 'Загрузите два текста.'; return }
+  if (st.a.lang !== st.b.lang) {
+    box.innerHTML = `Тексты на разных языках (${esc(LANG_NAMES[st.a.lang])} и ${esc(LANG_NAMES[st.b.lang])}): сравнивайте через профили выше. Чтобы получить ключевые слова, загрузите в пару текст на том же языке (например, перевод).`
+    return
+  }
+  const na = [...st.a.freq.values()].reduce((x, y) => x + y, 0), nb = [...st.b.freq.values()].reduce((x, y) => x + y, 0)
+  const words = new Set([...st.a.freq.keys(), ...st.b.freq.keys()])
+  const res = []
+  for (const w of words) {
+    const a = st.a.freq.get(w) || 0, b = st.b.freq.get(w) || 0
+    if (a + b < 4) continue
+    const ll = logLikelihood(a, b, na, nb)
+    res.push({ w, a, b, ll, side: a / na > b / nb ? 'a' : 'b' })
+  }
+  const top = (side) => res.filter((r) => r.side === side).sort((x, y) => y.ll - x.ll).slice(0, 25)
+  const table = (rows, side) => `<div class="table-wrap"><table class="table"><thead><tr><th>слово</th><th class="num">A</th><th class="num">B</th><th class="num">G²</th></tr></thead><tbody>${
+    rows.map((r) => `<tr><td>${esc(r.w)}</td><td class="num">${r.a}</td><td class="num">${r.b}</td><td class="num" style="color:${r.ll > 10.83 ? 'var(--ok)' : 'var(--faint)'}">${r.ll.toFixed(1)}</td></tr>`).join('')
+  }</tbody></table></div>`
+  box.innerHTML = `<div class="grid-2"><div><h3 class="sans" style="margin-top:0">Чаще в A</h3>${table(top('a'))}</div><div><h3 class="sans" style="margin-top:0">Чаще в B</h3>${table(top('b'))}</div></div>`
+}
+
+$$('#kind button').forEach((b) => b.addEventListener('click', () => { st.kind = b.dataset.k; $$('#kind button').forEach((x) => x.classList.toggle('on', x === b)); render() }))
+$('#csv').addEventListener('click', () => {
+  const rows = [['профиль', 'строка', 'A: упоминаний', 'A: на 10 тыс. слов', 'B: упоминаний', 'B: на 10 тыс. слов']]
+  for (const kind of ['motifs', 'traits', 'groups']) for (const it of items[kind]) {
+    const na = count(st.a, kind, it.id), nb = count(st.b, kind, it.id)
+    if (na || nb) rows.push([{ motifs: 'мотив', traits: 'признак', groups: 'народ' }[kind], it.label, na, per10k(st.a, na).toFixed(2), nb, per10k(st.b, nb).toFixed(2)])
+  }
+  rows.push([], ['A', label(st.a), st.a?.nWords || 0, 'слов'], ['B', label(st.b), st.b?.nWords || 0, 'слов'])
+  download('profili.csv', toCSV(rows), 'text/csv;charset=utf-8')
+})
+
+render()
+const pp = params().get('pair')
+if (pp) loadPair(pp)
+</script>
+</body>
+</html>

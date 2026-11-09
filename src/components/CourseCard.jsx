@@ -19,8 +19,12 @@ const EXTRAS = {
     ],
   },
   imagology: {
-    facts: ['полные тексты и презентации'],
-    links: [{ to: '/courses/imagology/demo/lecture-3', label: 'Лекция 3: Леерссен (интерактивная)' }],
+    facts: ['Запад ↔ Россия', '4 цифровых стенда', '9 практических', 'досье образа'],
+    links: [
+      { href: 'imagology/lab/index.html', label: 'Лаборатория' },
+      { href: 'imagology/lab/practicum.html', label: 'Практические' },
+      { to: '/courses/imagology/demo/lecture-3', label: 'Лекция 3 (интерактивная)' },
+    ],
   },
 }
 
@@ -79,11 +83,18 @@ export default function CourseCard({ course, index = 0, lectures = 0 }) {
             Открыть курс
             <span className="transition-transform group-hover:translate-x-1">→</span>
           </span>
-          {extra.links.map((l) => (
-            <Link key={l.to} to={l.to} className="relative z-10 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600">
-              {l.label}
-            </Link>
-          ))}
+          {extra.links.map((l) => {
+            const cls = 'relative z-10 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white underline underline-offset-4 decoration-gray-300 dark:decoration-gray-600'
+            return l.href ? (
+              <a key={l.href} href={`${import.meta.env.BASE_URL}${l.href}`} className={cls}>
+                {l.label}
+              </a>
+            ) : (
+              <Link key={l.to} to={l.to} className={cls}>
+                {l.label}
+              </Link>
+            )
+          })}
         </div>
       </div>
     </motion.article>
