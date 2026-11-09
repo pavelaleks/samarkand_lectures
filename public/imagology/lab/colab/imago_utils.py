@@ -287,7 +287,8 @@ def list_texts():
     pr = _data("presets")
     for k, t in pr["texts"].items():
         src = "Gutenberg" if t.get("src", {}).get("type") == "gutenberg" else "Викитека"
-        print(f"{k:22s} {t['side']:7s} {t['lang']}  {t['author']}. {t['title']} ({t['year']}) · {src}")
+        tr = "  + перевод: " + k + "@ru" if t.get("tr") else ""
+        print(f"{k:22s} {t['side']:7s} {t['lang']}  {t['author']}. {t['title']} ({t['year']}) · {src}{tr}")
 
 
 def list_pairs():
@@ -297,7 +298,19 @@ def list_pairs():
 
 
 def load_preset(key, parts=40):
+    """Готовый текст по ключу; «ключ@ru» — русский перевод западного текста с Викитеки (если есть)."""
     pr = _data("presets")
+    if key.endswith("@ru"):
+        base = pr["texts"][key[:-3]]
+        if "tr" not in base:
+            raise KeyError(f"для {key[:-3]} перевод не задан")
+        s = base["tr"]
+        print(f"→ {base['author']}. {base['title']} — русский перевод (Викитека, поиск: {s.get('query')})")
+        d = load_wikisource("ru", s.get("title"), s.get("query"), parts=parts, author=base["author"],
+                            label=base["title"] + " — русский перевод", side=base["side"])
+        d["lang"], d["id"] = "ru", key
+        print("  проверьте, тот ли это текст:", d["url"])
+        return d
     t = pr["texts"][key]
     print(f"→ {t['author']}. {t['title']}")
     if t.get("gutenberg") and (t.get("src", {}).get("type") == "gutenberg"):

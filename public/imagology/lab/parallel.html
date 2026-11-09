@@ -50,7 +50,8 @@
         <button type="button" id="qgo">Найти в обоих</button>
       </div>
     </div>
-    <p class="faint small">Выберите строку профиля или впишите основы слов через запятую: «гарем, harem» найдёт «гарема», «harems». Поиск по началу слова, без учёта регистра и ударений.</p>
+    <p class="faint small">Выберите строку профиля или впишите основы слов через запятую. Поиск идёт по началу слова, без учёта регистра и ударений, в оригинале и в русском переводе. Если слово есть в словаре курса («гарем», «кинжал», «черкес»), во французском или английском тексте ищутся и его переводы (harem, sérail, poignard, Circassian).</p>
+    <p class="note small" id="bridgeNote" style="margin-top:0"></p>
     <div class="grid-2">
       <div><h3 class="sans" style="margin-top:0" id="hA">A</h3><ul class="kwic" id="kwicA"></ul></div>
       <div><h3 class="sans" style="margin-top:0" id="hB">B</h3><ul class="kwic" id="kwicB"></ul></div>
@@ -75,12 +76,12 @@
 </main>
 
 <script type="module">
-import { $, $$, h, esc, TextSlot, analyze, loadData, params, highlight, download, toCSV, topbar, logLikelihood, norm, tokens, LANG_NAMES } from './lab.js'
+import { $, $$, h, esc, TextSlot, analyze, loadData, params, highlight, download, toCSV, topbar, logLikelihood, LANG_NAMES, bridgeQuery, bridgeHits } from './lab.js'
 topbar('parallel.html')
 
 const lex = await loadData('lexicon')
 const presets = await loadData('presets')
-const st = { a: null, b: null, kind: 'motifs', sel: null }
+const st = { a: null, b: null, aTr: null, bTr: null, kind: 'motifs', sel: null, query: '' }
 const items = { motifs: lex.motifs, traits: lex.traits, groups: lex.groups }
 
 const pairSel = $('#pair')
@@ -92,9 +93,11 @@ pairSel.addEventListener('change', () => {
 })
 
 const mk = (sel, key, name, side) => new TextSlot($(sel), {
-  name, side, presets: presets.texts,
-  onLoad: async (doc) => { st[key] = await analyze(doc); render() },
+  name, side, presets: presets.texts, withTranslation: true,
+  onLoad: async (doc) => { st[key] = await analyze(doc); render(); refresh() },
+  onTranslation: async (tr) => { st[key + 'Tr'] = tr ? await analyze(tr) : null; render(); refresh() },
 })
+function refresh() { if (st.query) search(); else if (st.sel) scene() }
 const slotA = mk('#slotA', 'a', 'Текст A', 'россия')
 const slotB = mk('#slotB', 'b', 'Текст B', 'запад')
 
@@ -145,34 +148,42 @@ function render() {
 
 function scene() {
   const { kind, id, label: l } = st.sel
+  st.query = ''
   $('#sceneTitle').textContent = 'Сцена: ' + l
-  for (const [an, ul] of [[st.a, $('#kwicA')], [st.b, $('#kwicB')]]) {
-    ul.innerHTML = ''
-    if (!an) { ul.innerHTML = '<li class="faint">текст не загружен</li>'; continue }
-    const hits = an.sentences.filter((s) => s[kind].has(id))
-    if (!hits.length) ul.innerHTML = '<li class="faint">в этом тексте нет</li>'
-    for (const s of hits.slice(0, 150)) ul.append(h('li', { html: highlight(s.s, s[kind].get(id)) }))
-  }
+  const item = items[kind].find((x) => x.id === id)
+  showHits({ stems: [], items: [{ kind, id, label: l, forms: item.forms }] })
   if (window.innerWidth < 900) $('#scene').scrollIntoView({ behavior: 'smooth' })
 }
 
-function search() {
-  const stems = $('#q').value.split(',').map((x) => norm(x.trim())).filter(Boolean)
-  if (!stems.length) return
-  st.sel = null
-  $('#sceneTitle').textContent = 'Поиск: ' + $('#q').value
-  for (const [an, ul] of [[st.a, $('#kwicA')], [st.b, $('#kwicB')]]) {
+// Вывод совпадений: для каждой стороны — оригинал и, если есть, русский перевод.
+function showHits(bridge) {
+  for (const [side, ul] of [['a', $('#kwicA')], ['b', $('#kwicB')]]) {
     ul.innerHTML = ''
-    if (!an) { ul.innerHTML = '<li class="faint">текст не загружен</li>'; continue }
-    let n = 0
-    for (const s of an.sentences) {
-      const words = tokens(s.s).filter((t) => stems.some((x) => t.n.startsWith(x))).map((t) => t.raw)
-      if (!words.length) continue
-      if (n++ < 150) ul.append(h('li', { html: highlight(s.s, words) }))
+    const parts = [[st[side], 'оригинал'], [st[side + 'Tr'], 'русский перевод']].filter(([an]) => an)
+    if (!parts.length) { ul.innerHTML = '<li class="faint">текст не загружен</li>'; continue }
+    for (const [an, kindLabel] of parts) {
+      const hits = bridgeHits(an, bridge)
+      const forms = bridge.items.flatMap((it) => [...(it.forms[an.lang]?.p || []), ...(it.forms[an.lang]?.x || [])])
+      const head = parts.length > 1 || an.lang !== 'ru' ? `${kindLabel} · ${LANG_NAMES[an.lang]} · ` : ''
+      ul.append(h('li', { class: 'faint small' }, `${head}предложений: ${hits.length}` +
+        (bridge.items.length && an.lang !== 'ru' ? ` · по словарю искали: ${[...new Set(forms)].slice(0, 10).join(', ')}` : '')))
+      for (const x of hits.slice(0, 120)) ul.append(h('li', { html: highlight(x.s.s, x.words) }))
     }
-    if (!n) ul.innerHTML = '<li class="faint">не найдено</li>'
-    else ul.prepend(h('li', { class: 'faint small' }, `предложений: ${n}`))
   }
+}
+
+function search() {
+  const q = $('#q').value.trim()
+  if (!q) return
+  st.query = q
+  st.sel = null
+  const bridge = bridgeQuery(q, lex)
+  $('#sceneTitle').textContent = 'Поиск: ' + q
+  const note = $('#bridgeNote')
+  note.innerHTML = bridge.items.length
+    ? `Слова запроса найдены в словаре курса: <strong>${bridge.items.map((x) => esc(x.label)).join('</strong>; <strong>')}</strong>. Поэтому в тексте на другом языке ищутся и их формы (список над результатами). Чтобы искать только буквально, впишите слово, которого нет в словаре.`
+    : 'Этих слов нет в словаре курса: поиск идёт только буквально. Для текста на другом языке впишите и иноязычную основу через запятую («гарем, harem») или загрузите русский перевод.'
+  showHits(bridge)
   render()
 }
 $('#qgo').addEventListener('click', search)
@@ -181,15 +192,20 @@ $('#q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search() })
 function keyness() {
   const box = $('#keyness')
   if (!st.a || !st.b) { box.textContent = 'Загрузите два текста.'; return }
-  if (st.a.lang !== st.b.lang) {
-    box.innerHTML = `Тексты на разных языках (${esc(LANG_NAMES[st.a.lang])} и ${esc(LANG_NAMES[st.b.lang])}): сравнивайте через профили выше. Чтобы получить ключевые слова, загрузите в пару текст на том же языке (например, перевод).`
+  let A = st.a, B = st.b, note = ''
+  if (A.lang !== B.lang) {
+    if (A.lang === 'ru' && st.bTr) { B = st.bTr; note = 'Текст B сравнивается по русскому переводу: ключевые слова показывают и автора, и переводчика.' }
+    else if (B.lang === 'ru' && st.aTr) { A = st.aTr; note = 'Текст A сравнивается по русскому переводу: ключевые слова показывают и автора, и переводчика.' }
+  }
+  if (A.lang !== B.lang) {
+    box.innerHTML = `Тексты на разных языках (${esc(LANG_NAMES[st.a.lang])} и ${esc(LANG_NAMES[st.b.lang])}): сравнивайте через профили выше. Чтобы получить ключевые слова, загрузите текст на том же языке или русский перевод (флажок под выбором текста).`
     return
   }
-  const na = [...st.a.freq.values()].reduce((x, y) => x + y, 0), nb = [...st.b.freq.values()].reduce((x, y) => x + y, 0)
-  const words = new Set([...st.a.freq.keys(), ...st.b.freq.keys()])
+  const na = [...A.freq.values()].reduce((x, y) => x + y, 0), nb = [...B.freq.values()].reduce((x, y) => x + y, 0)
+  const words = new Set([...A.freq.keys(), ...B.freq.keys()])
   const res = []
   for (const w of words) {
-    const a = st.a.freq.get(w) || 0, b = st.b.freq.get(w) || 0
+    const a = A.freq.get(w) || 0, b = B.freq.get(w) || 0
     if (a + b < 4) continue
     const ll = logLikelihood(a, b, na, nb)
     res.push({ w, a, b, ll, side: a / na > b / nb ? 'a' : 'b' })
@@ -198,7 +214,7 @@ function keyness() {
   const table = (rows, side) => `<div class="table-wrap"><table class="table"><thead><tr><th>слово</th><th class="num">A</th><th class="num">B</th><th class="num">G²</th></tr></thead><tbody>${
     rows.map((r) => `<tr><td>${esc(r.w)}</td><td class="num">${r.a}</td><td class="num">${r.b}</td><td class="num" style="color:${r.ll > 10.83 ? 'var(--ok)' : 'var(--faint)'}">${r.ll.toFixed(1)}</td></tr>`).join('')
   }</tbody></table></div>`
-  box.innerHTML = `<div class="grid-2"><div><h3 class="sans" style="margin-top:0">Чаще в A</h3>${table(top('a'))}</div><div><h3 class="sans" style="margin-top:0">Чаще в B</h3>${table(top('b'))}</div></div>`
+  box.innerHTML = (note ? `<p class="note small">${esc(note)}</p>` : '') + `<div class="grid-2"><div><h3 class="sans" style="margin-top:0">Чаще в A</h3>${table(top('a'))}</div><div><h3 class="sans" style="margin-top:0">Чаще в B</h3>${table(top('b'))}</div></div>`
 }
 
 $$('#kind button').forEach((b) => b.addEventListener('click', () => { st.kind = b.dataset.k; $$('#kind button').forEach((x) => x.classList.toggle('on', x === b)); render() }))
