@@ -238,25 +238,49 @@ def wikisource_page(lang, title):
             "url": f"https://{lang}.wikisource.org/wiki/" + real.replace(" ", "_")}
 
 
-def load_wikisource(lang, title=None, query=None, parts=40, author="", label=None, side=""):
-    """Текст из Викитеки. Если страница — оглавление или список редакций, загружаются главы (до parts)."""
+_EDITION = re.compile(r"\((ДО|СО|ВТ)[^)]*\)\s*$|/(ДО|СО)$")
+
+
+def toc_plan(page):
+    """Как в стендах: 'one' — полный текст или редакция, 'chapters' — главы, 'none' — текст как есть."""
+    inner = [t for t in page["subpages"] if t.startswith(page["title"] + "/")]
+    whole = [t for t in inner if re.search(r"/(Texte entier|Полный текст|Full text|Volltext)$", t, re.I)]
+    if whole:
+        return "one", whole[:1]
+    ch = [t for t in inner if not _EDITION.search(t)]
+    ch = [t for t in ch if not any(o != t and o.startswith(t + "/") for o in ch)]
+    words = len(re.findall(r"\w+", page["text"]))
+    if len(ch) >= 2 and words < 40 * len(ch) + 400:
+        return "chapters", ch
+    eds = [t for t in page["subpages"] if _EDITION.search(t)]
+    if words < 120 and eds:
+        return "one", [next((e for e in eds if "ДО" not in e), eds[0])]
+    return "none", []
+
+
+def load_wikisource(lang, title=None, query=None, parts=60, author="", label=None, side="", _depth=0):
+    """Текст из Викитеки по точному названию (или по поиску, если названия нет).
+    Оглавление → главы (до parts), список редакций → одна редакция, «Texte entier» → полный текст."""
     page = None
     if title:
         try:
             page = wikisource_page(lang, title)
         except LookupError:
-            page = None
+            if not query:
+                raise
     if page is None:
         hits = wikisource_search(lang, query or title)
         if not hits:
             raise LookupError(f"В Викитеке ({lang}) не найдено: {query or title}")
         page = wikisource_page(lang, hits[0])
         print("  найдено:", hits[0], "| другие варианты:", "; ".join(hits[1:5]))
-    words = len(re.findall(r"\w+", page["text"]))
-    if words < 120 and page["subpages"]:
-        print(f"  «{page['title']}» — оглавление: загружаю {min(parts, len(page['subpages']))} частей…")
+    kind, lst = toc_plan(page) if _depth < 3 else ("none", [])
+    if kind == "one":
+        return load_wikisource(lang, lst[0], None, parts, author, label or page["title"], side, _depth + 1)
+    if kind == "chapters":
+        print(f"  «{page['title']}» — оглавление: загружаю {min(parts, len(lst))} частей из {len(lst)}…")
         texts = []
-        for t in page["subpages"][:parts]:
+        for t in lst[:parts]:
             try:
                 texts.append(wikisource_page(lang, t)["text"])
             except Exception as e:  # noqa: BLE001
@@ -305,11 +329,10 @@ def load_preset(key, parts=40):
         if "tr" not in base:
             raise KeyError(f"для {key[:-3]} перевод не задан")
         s = base["tr"]
-        print(f"→ {base['author']}. {base['title']} — русский перевод (Викитека, поиск: {s.get('query')})")
-        d = load_wikisource("ru", s.get("title"), s.get("query"), parts=parts, author=base["author"],
+        print(f"→ {base['author']}. {base['title']} — русский перевод: {s.get('title')}")
+        d = load_wikisource("ru", s.get("title"), None, parts=parts, author=base["author"],
                             label=base["title"] + " — русский перевод", side=base["side"])
         d["lang"], d["id"] = "ru", key
-        print("  проверьте, тот ли это текст:", d["url"])
         return d
     t = pr["texts"][key]
     print(f"→ {t['author']}. {t['title']}")
@@ -317,7 +340,7 @@ def load_preset(key, parts=40):
         d = load_url(t["gutenberg"], t["author"], t["title"], t["side"])
     else:
         s = t["src"]
-        d = load_wikisource(s["lang"], s.get("title"), s.get("query"), parts=parts, author=t["author"], label=t["title"], side=t["side"])
+        d = load_wikisource(s["lang"], s.get("title"), None, parts=parts, author=t["author"], label=t["title"], side=t["side"])
     d["lang"] = t["lang"]
     d["id"] = key
     n = len(re.findall(r"\w+", d["text"]))

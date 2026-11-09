@@ -83,6 +83,9 @@ def render(title, summary_html, keep_html, west, dh, task, questions, lit_intro,
             f"<h2>Вопросы для закрепления</h2><ol>\n{q}\n</ol>\n<h2>Литература</h2>\n<p>{html.escape(lit_intro)}</p><ol>\n{lit}\n</ol>\n")
 
 
+# Поисковые ссылки, которые ставил сам генератор: при пересборке убираются и добавляются заново из lectures_src.
+STALE = re.compile(r"wikisource\.org/w/index\.php\?search=|gutenberg\.org/ebooks/search/|gallica\.bnf\.fr/services/engine/search")
+
 LIT_INTRO = "Полные тексты в открытом доступе. Сначала теория и русские тексты, затем западная параллель."
 
 
@@ -114,7 +117,7 @@ def build_existing(n, cfg):
             continue
         for li in ul.find_all("li"):
             a = li.find("a")
-            if a and a.get("href") in added_urls:
+            if a and (a.get("href") in added_urls or STALE.search(a.get("href", ""))):
                 continue
             inner = "".join(str(c) for c in li.contents)
             lit_items.append(re.sub(r"^\s*\d+\.\s*", "", inner))
@@ -126,6 +129,7 @@ def build_existing(n, cfg):
 
     j = json.load(open(jp, encoding="utf-8"))
     j["title"] = title + "."
+    j["readings"] = [r for r in j.get("readings", []) if not STALE.search(r["url"]) or r["url"] in added_urls]
     have = {r["url"] for r in j.get("readings", [])}
     for name, url, _ in cfg.get("add", []):
         if url not in have:

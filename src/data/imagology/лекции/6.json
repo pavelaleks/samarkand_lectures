@@ -28,12 +28,16 @@
       "url": "https://ru.wikisource.org/wiki/%D0%A6%D1%8B%D0%B3%D0%B0%D0%BD%D1%8B_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)"
     },
     {
-      "displayName": "Гёте. West-östlicher Divan (1819) — Викитека",
-      "url": "https://de.wikisource.org/w/index.php?search=West-%C3%B6stlicher%20Divan"
+      "displayName": "Гёте. West-östlicher Divan (1819) — Project Gutenberg",
+      "url": "https://www.gutenberg.org/ebooks/search/?query=West-%C3%B6stlicher%20Divan"
     },
     {
-      "displayName": "Марко Поло. The Travels of Marco Polo — Project Gutenberg",
-      "url": "https://www.gutenberg.org/ebooks/search/?query=Travels%20of%20Marco%20Polo"
+      "displayName": "Гёте. Mahomets Gesang (1773) — Викитека",
+      "url": "https://de.wikisource.org/wiki/Mahomets_Gesang"
+    },
+    {
+      "displayName": "Марко Поло. Les Merveilleux Voyages de Marco Polo — Викитека",
+      "url": "https://fr.wikisource.org/wiki/Les_Merveilleux_Voyages_de_Marco_Polo_dans_l%E2%80%99Asie_du_XIIIe_si%C3%A8cle"
     }
   ]
 }

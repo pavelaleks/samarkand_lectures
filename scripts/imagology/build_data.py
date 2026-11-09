@@ -89,6 +89,10 @@ def main():
         for s in r["stops"]:
             assert s in ids, (r["id"], s)
 
+    for key, t in PR.TEXTS.items():
+        for src in [t["src"]] + ([t["tr"]] if t.get("tr") else []):
+            if src["type"] == "wikisource":
+                assert src.get("title"), f"{key}: у текста Викитеки нет точного названия страницы"
     for pair in PR.PAIRS:
         assert pair["left"] in PR.TEXTS and pair["right"] in PR.TEXTS, pair["id"]
         gids = {g["id"] for g in LX.GROUPS}

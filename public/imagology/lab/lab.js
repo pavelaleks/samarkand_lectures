@@ -88,35 +88,47 @@ export function expandPresets(texts) {
   return out
 }
 
-// Текст из Викитеки без интерфейса: точное название или поиск; оглавление → главы, редакции → одна.
-export async function fetchWsDoc(src, meta = {}, depth = 0) {
-  let page = null
-  let alternatives = []
-  if (src.title) {
-    try { page = await wikisourcePage(src.lang, src.title) } catch (e) { if (e.code !== 'missingtitle') throw e }
-  }
-  if (!page) {
-    alternatives = await wikisourceSearch(src.lang, src.query || src.title || '', 6)
-    if (!alternatives.length) return null
-    page = await wikisourcePage(src.lang, alternatives[0].title)
-  }
-  let text = page.text
-  const words = (text.match(/\p{L}+/gu) || []).length
-  if (words < 120 && page.subpages.length && depth < 2) {
-    const chapters = page.subpages.filter((x) => x.title.startsWith(page.title + '/')).slice(0, 40)
-    if (chapters.length) {
-      const parts = []
-      for (const c of chapters) { try { parts.push((await wikisourcePage(src.lang, c.title)).text) } catch { /* пропуск */ } }
-      text = parts.join('\n\n')
-    } else {
-      const ed = page.subpages.find((x) => !/\(ДО\)|\/ДО$/.test(x.title)) || page.subpages[0]
-      const d = await fetchWsDoc({ lang: src.lang, title: ed.title }, meta, depth + 1)
-      if (d) d.alternatives = alternatives
-      return d
+const wordCount = (t) => (t.match(/\p{L}+/gu) || []).length
+const isEdition = (t) => /\((ДО|СО|ВТ)[^)]*\)\s*$|\/(ДО|СО)$/.test(t)
+
+// Что делать со страницей Викитеки: текст как есть, одна страница (полный текст или редакция) или главы.
+export function tocPlan(page) {
+  const inner = page.subpages.filter((x) => x.title.startsWith(page.title + '/'))
+  const whole = inner.find((x) => /\/(Texte entier|Полный текст|Full text|Volltext)$/i.test(x.title))
+  if (whole) return { kind: 'one', list: [whole] }
+  let chapters = inner.filter((x) => !isEdition(x.title))
+  chapters = chapters.filter((x) => !chapters.some((y) => y !== x && y.title.startsWith(x.title + '/')))
+  const words = wordCount(page.text)
+  if (chapters.length >= 2 && words < 40 * chapters.length + 400) return { kind: 'chapters', list: chapters.slice(0, 60), total: chapters.length }
+  const editions = page.subpages.filter((x) => isEdition(x.title))
+  if (words < 120 && editions.length) return { kind: 'one', list: [editions.find((e) => !/ДО/.test(e.title)) || editions[0]] }
+  return { kind: 'none' }
+}
+
+// Части загружаются по четыре сразу, порядок сохраняется.
+export async function fetchParts(lang, list, onProgress = () => {}) {
+  const parts = new Array(list.length)
+  let done = 0, next = 0
+  const worker = async () => {
+    while (next < list.length) {
+      const k = next++
+      try { parts[k] = (await wikisourcePage(lang, list[k].title)).text } catch { parts[k] = '' }
+      onProgress(++done, list.length)
     }
   }
+  await Promise.all([worker(), worker(), worker(), worker()])
+  return parts.filter(Boolean)
+}
+
+// Текст из Викитеки без интерфейса — только по точному названию страницы.
+export async function fetchWsDoc(src, meta = {}, depth = 0) {
+  let page
+  try { page = await wikisourcePage(src.lang, src.title) } catch (e) { if (e.code === 'missingtitle') return null; throw e }
+  const plan = depth < 3 ? tocPlan(page) : { kind: 'none' }
+  if (plan.kind === 'one') return fetchWsDoc({ lang: src.lang, title: plan.list[0].title }, meta, depth + 1)
+  const text = plan.kind === 'chapters' ? (await fetchParts(src.lang, plan.list)).join('\n\n') : page.text
   return { id: meta.id || `ws:${src.lang}:${page.title}`, author: meta.author || '', title: meta.title || page.title, year: meta.year || '',
-    lang: src.lang, side: meta.side || '', text, url: page.url, source: 'Викитека', wsTitle: page.title, alternatives }
+    lang: src.lang, side: meta.side || '', text, url: page.url, source: 'Викитека', wsTitle: page.title }
 }
 
 // Мост через словарь: основа запроса («гарем») → строки словаря (мотив «гарем, сераль, одалиска»),
@@ -434,8 +446,11 @@ export class TextSlot {
     if (!this.withTranslation) return row
     this.trBox = h('input', { type: 'checkbox' })
     this.trBox.checked = true
-    const lab = h('label', { class: 'small', style: { display: 'flex', gap: '.4rem', alignItems: 'center', marginTop: '.45rem' } }, this.trBox,
-      'и русский перевод рядом, если он есть на Викитеке (поиск идёт по обоим)')
+    const lab = h('label', { class: 'small hidden', style: { display: 'flex', gap: '.4rem', alignItems: 'center', marginTop: '.45rem' } }, this.trBox,
+      'и русский перевод рядом (старый перевод с Викитеки; поиск идёт по обоим)')
+    const sync = () => { const t = this.presets[sel.value]; lab.classList.toggle('hidden', !(t && t.tr && !t.isTr)) }
+    sel.addEventListener('change', sync)
+    this.syncTr = sync
     return h('div', {}, row, lab)
   }
 
@@ -501,7 +516,7 @@ export class TextSlot {
   async loadPreset(id) {
     const t = this.presets[id]
     if (!t) return
-    if (this.presetSelect) this.presetSelect.value = id
+    if (this.presetSelect) { this.presetSelect.value = id; this.syncTr?.() }
     const src = t.src || {}
     if (src.type === 'gutenberg') {
       this.tab('file')
@@ -513,14 +528,11 @@ export class TextSlot {
     this.status(`Загружаю «${t.title}» из Викитеки…`)
     const meta = { id, author: t.author, title: t.title, side: t.side, year: t.year }
     try {
-      if (src.title) {
-        try { await this.loadWs(src.lang, src.title, meta); return } catch (e) { if (e.code !== 'missingtitle') throw e }
-      }
-      const res = await wikisourceSearch(src.lang, src.query || t.title, 6)
-      if (!res.length) throw new Error('В Викитеке не нашлось. Загрузите текст файлом или вставьте фрагмент')
-      await this.loadWs(src.lang, res[0].title, meta, res)
+      await this.loadWs(src.lang, src.title, meta)
     } catch (e) {
-      this.status(`${e.message}.`, 'err')
+      this.status(e.code === 'missingtitle'
+        ? `Страница «${src.title}» не найдена на Викитеке: возможно, её переименовали. Найдите текст во вкладке «Викитека».`
+        : `Викитека не ответила: ${e.message}. Проверьте подключение и попробуйте ещё раз.`, 'err')
     }
   }
 
@@ -528,17 +540,11 @@ export class TextSlot {
     this.status(`Загружаю «${title}»…`)
     const page = await wikisourcePage(lang, title)
     this.showSubpages(page, meta, alternatives)
-    const words = (page.text.match(/\p{L}+/gu) || []).length
-    if (words < 120 && page.subpages.length) {
-      if (meta.id && this.presets && this.presets[meta.id] && (meta.depth || 0) < 2) {
-        // готовый текст: главы загружаем целиком, из редакций берём одну (лучше в современной орфографии)
-        const chapters = page.subpages.filter((x) => x.title.startsWith(page.title + '/'))
-        if (chapters.length) { await this.loadAll(page, chapters.slice(0, 40), meta); return }
-        const ed = page.subpages.find((x) => !/\(ДО\)|\/ДО$/.test(x.title)) || page.subpages[0]
-        await this.loadWs(lang, ed.title, { ...meta, depth: (meta.depth || 0) + 1 })
-        return
-      }
-      this.status(`«${page.title}» — оглавление или страница редакций. Выберите главу или нажмите «Все главы».`)
+    const plan = (meta.depth || 0) < 3 ? tocPlan(page) : { kind: 'none' }
+    if (plan.kind === 'one') { await this.loadWs(lang, plan.list[0].title, { ...meta, depth: (meta.depth || 0) + 1 }); return }
+    if (plan.kind === 'chapters') {
+      await this.loadAll(page, plan.list, meta)
+      if (plan.total > plan.list.length) this.statusEl.append(` Загружены первые ${plan.list.length} частей из ${plan.total}; остальные можно открыть по одной в списке «Части».`)
       return
     }
     this.set({ id: meta.id || `ws:${lang}:${page.title}`, author: meta.author || '', title: meta.title || page.title, year: meta.year || '',
@@ -554,9 +560,9 @@ export class TextSlot {
     if (subs.length) {
       const sel = h('select', { 'aria-label': 'Глава или редакция' }, ...subs.map((s, i) => h('option', { value: i }, s.label.length > 70 ? s.label.slice(0, 70) + '…' : s.label)))
       const one = h('button', { type: 'button', class: 'small' }, 'Эта глава')
-      const all = h('button', { type: 'button', class: 'small' }, `Все главы (${Math.min(subs.length, 40)})`)
+      const all = h('button', { type: 'button', class: 'small' }, `Все части (${Math.min(subs.length, 60)})`)
       one.addEventListener('click', () => this.loadWs(page.lang, subs[+sel.value].title, meta).catch((e) => this.status(e.message, 'err')))
-      all.addEventListener('click', () => this.loadAll(page, subs.slice(0, 40), meta))
+      all.addEventListener('click', () => this.loadAll(page, subs.slice(0, 60), meta))
       box.append(h('div', { class: 'row small' }, h('span', { class: 'meta' }, 'Части:'), h('div', { class: 'grow' }, sel), one, all))
     }
     if (alternatives && alternatives.length > 1) {
@@ -569,12 +575,8 @@ export class TextSlot {
   }
 
   async loadAll(page, subs, meta) {
-    const parts = []
-    for (let i = 0; i < subs.length; i++) {
-      this.status(`Главы: ${i + 1} из ${subs.length}…`)
-      try { const p = await wikisourcePage(page.lang, subs[i].title); parts.push(p.text) } catch { /* пропускаем */ }
-    }
-    if (!parts.length) { this.status('Главы не загрузились.', 'err'); return }
+    const parts = await fetchParts(page.lang, subs, (d, n) => this.status(`Загружаю части: ${d} из ${n}…`))
+    if (!parts.length) { this.status('Части не загрузились.', 'err'); return }
     this.set({ id: meta.id || `ws:${page.lang}:${page.title}`, author: meta.author || '', title: meta.title || page.title, year: meta.year || '',
       lang: page.lang, side: meta.side || this.side, text: parts.join('\n\n'), url: page.url, source: 'Викитека', wsTitle: page.title })
   }
@@ -604,12 +606,12 @@ export class TextSlot {
       const tr = await fetchWsDoc(t.tr, { id: doc.id + '@ru', author: t.author, title: `${t.title} — русский перевод`, side: t.side })
       if (!tr || (tr.text.match(/\p{L}+/gu) || []).length < 40) {
         line.className = 'status err'
-        line.textContent = 'Русского перевода в открытом доступе на Викитеке не нашлось. Можно вставить фрагмент перевода во вкладке «Вставить» другого слота или загрузить файл.'
+        line.textContent = 'Перевод не загрузился: страница на Викитеке не найдена.'
         this.trDoc = null; this.onTranslation(null); return
       }
       this.trDoc = tr
       line.className = 'status ok'
-      line.innerHTML = `Перевод: ${esc(tr.wsTitle)} · <a href="${esc(tr.url)}" target="_blank" rel="noopener">источник</a>. Проверьте, тот ли это текст. `
+      line.innerHTML = `Русский перевод: ${esc(tr.wsTitle)} · ${(tr.text.match(/\p{L}+/gu) || []).length.toLocaleString('ru')} слов · <a href="${esc(tr.url)}" target="_blank" rel="noopener">источник</a>`
       if (tr.alternatives?.length > 1) {
         const sel = h('select', { 'aria-label': 'Другой перевод' }, ...tr.alternatives.map((a) => h('option', { value: a.title }, a.title)))
         sel.value = tr.wsTitle
